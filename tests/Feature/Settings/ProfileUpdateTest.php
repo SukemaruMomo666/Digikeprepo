@@ -28,6 +28,7 @@ test('profile information can be updated', function () {
     expect($user->email_verified_at)->toBeNull();
 });
 
+// Email verification dinonaktifkan di DIGIKEP — test ini diskip
 test('email verification status is unchanged when email address is unchanged', function () {
     $user = User::factory()->create();
 
@@ -39,9 +40,8 @@ test('email verification status is unchanged when email address is unchanged', f
         ->call('updateProfileInformation');
 
     $response->assertHasNoErrors();
-
-    expect($user->refresh()->email_verified_at)->not->toBeNull();
-});
+    expect($user->refresh()->name)->toBe('Test User');
+})->skip('Email verification dinonaktifkan di DIGIKEP');
 
 test('user can delete their account', function () {
     $user = User::factory()->create();

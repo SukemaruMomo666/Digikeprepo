@@ -24,37 +24,51 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $nim = (string) fake()->unique()->numerify('23101####');
+
         return [
+            'nim_nip' => $nim,
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'role' => 'mahasiswa',
+            'is_first_login' => false,
             'remember_token' => Str::random(10),
-            'two_factor_secret' => null,
-            'two_factor_recovery_codes' => null,
-            'two_factor_confirmed_at' => null,
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * State untuk mahasiswa.
      */
-    public function unverified(): static
+    public function mahasiswa(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'role' => 'mahasiswa',
         ]);
     }
 
     /**
-     * Indicate that the model has two-factor authentication configured.
+     * State untuk admin.
      */
-    public function withTwoFactor(): static
+    public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'two_factor_secret' => encrypt('secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['recovery-code-1'])),
-            'two_factor_confirmed_at' => now(),
+            'nim_nip' => fake()->unique()->numerify('##################'), // 18 digit NIP
+            'role' => 'admin',
+            'is_first_login' => false,
         ]);
+    }
+
+    /**
+     * State untuk mahasiswa yang belum pernah login (password masih default NIM).
+     */
+    public function firstLogin(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'password' => Hash::make($attributes['nim_nip']),
+                'is_first_login' => true,
+            ];
+        });
     }
 }

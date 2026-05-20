@@ -1,23 +1,22 @@
 <?php
 
 use App\Models\User;
-use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Hash;
 
 test('login screen can be rendered', function () {
-    $response = $this->get(route('login'));
-
-    $response->assertOk();
+    $this->get(route('login'))->assertOk();
 });
 
 test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
-
-    $response = $this->post(route('login.store'), [
-        'email' => $user->email,
-        'password' => 'password',
+    $user = User::factory()->mahasiswa()->create([
+        'password' => Hash::make('password'),
+        'is_first_login' => false,
     ]);
 
-    $response
+    $this->post(route('login.store'), [
+        'nim_nip' => $user->nim_nip,
+        'password' => 'password',
+    ])
         ->assertSessionHasNoErrors()
         ->assertRedirect(route('dashboard', absolute: false));
 
@@ -25,43 +24,22 @@ test('users can authenticate using the login screen', function () {
 });
 
 test('users can not authenticate with invalid password', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->mahasiswa()->create();
 
-    $response = $this->post(route('login.store'), [
-        'email' => $user->email,
+    $this->post(route('login.store'), [
+        'nim_nip' => $user->nim_nip,
         'password' => 'wrong-password',
-    ]);
+    ])->assertSessionHasErrors();
 
-    $response->assertSessionHasErrorsIn('email');
-
-    $this->assertGuest();
-});
-
-test('users with two factor enabled are redirected to two factor challenge', function () {
-    $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());
-
-    Features::twoFactorAuthentication([
-        'confirm' => true,
-        'confirmPassword' => true,
-    ]);
-
-    $user = User::factory()->withTwoFactor()->create();
-
-    $response = $this->post(route('login.store'), [
-        'email' => $user->email,
-        'password' => 'password',
-    ]);
-
-    $response->assertRedirect(route('two-factor.login'));
     $this->assertGuest();
 });
 
 test('users can logout', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->mahasiswa()->create(['is_first_login' => false]);
 
-    $response = $this->actingAs($user)->post(route('logout'));
-
-    $response->assertRedirect(route('home'));
+    $this->actingAs($user)
+        ->post(route('logout'))
+        ->assertRedirect(route('home'));
 
     $this->assertGuest();
 });

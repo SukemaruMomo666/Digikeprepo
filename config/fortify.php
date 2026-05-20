@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'username' => 'email',
+    'username' => 'nim_nip',
 
     'email' => 'email',
 
@@ -60,7 +60,7 @@ return [
     |
     */
 
-    'lowercase_usernames' => true,
+    'lowercase_usernames' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -161,17 +161,18 @@ return [
     */
 
     'features' => [
-        Features::registration(),
-        Features::resetPasswords(),
-        Features::emailVerification(),
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-            // 'window' => 0
-        ]),
-        Features::passkeys([
-            'confirmPassword' => true,
-        ]),
+        // Registration dinonaktifkan — admin yang membuat akun mahasiswa
+        // Features::registration(),
+
+        // Reset password via email dinonaktifkan — admin reset manual
+        // Features::resetPasswords(),
+
+        // Email verification tidak dipakai
+        // Features::emailVerification(),
+
+        // 2FA & passkeys — bisa diaktifkan di Phase 2 jika diperlukan
+        // Features::twoFactorAuthentication(['confirm' => true, 'confirmPassword' => true]),
+        // Features::passkeys(['confirmPassword' => true]),
     ],
 
 ];
