@@ -4,10 +4,11 @@ use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('Buat Password Baru')] class extends Component
+new #[Layout('layouts.auth')] #[Title('Buat Password Baru')] class extends Component
 {
     public string $password = '';
 
@@ -47,39 +48,38 @@ new #[Title('Buat Password Baru')] class extends Component
             navigate: true
         );
     }
-}; ?>
+};
+?>
 
-<x-layouts::auth :title="__('Buat Password Baru')">
-    <div class="flex flex-col gap-6">
-        <x-auth-header
-            :title="__('Buat Password Baru')"
-            :description="__('Ini adalah login pertama Anda. Silakan buat password baru sebelum melanjutkan.')"
+<div class="flex flex-col gap-6">
+    <x-auth-header
+        :title="__('Buat Password Baru')"
+        :description="__('Ini adalah login pertama Anda. Silakan buat password baru sebelum melanjutkan.')"
+    />
+
+    <form wire:submit="save" class="flex flex-col gap-6">
+        <flux:input
+            wire:model="password"
+            :label="__('Password Baru')"
+            type="password"
+            required
+            autocomplete="new-password"
+            placeholder="Minimal 8 karakter"
+            viewable
         />
 
-        <form wire:submit="save" class="flex flex-col gap-6">
-            <flux:input
-                wire:model="password"
-                :label="__('Password Baru')"
-                type="password"
-                required
-                autocomplete="new-password"
-                placeholder="Minimal 8 karakter"
-                viewable
-            />
+        <flux:input
+            wire:model="password_confirmation"
+            :label="__('Konfirmasi Password')"
+            type="password"
+            required
+            autocomplete="new-password"
+            placeholder="Ulangi password baru"
+            viewable
+        />
 
-            <flux:input
-                wire:model="password_confirmation"
-                :label="__('Konfirmasi Password')"
-                type="password"
-                required
-                autocomplete="new-password"
-                placeholder="Ulangi password baru"
-                viewable
-            />
-
-            <flux:button variant="primary" type="submit" class="w-full">
-                {{ __('Simpan & Lanjutkan') }}
-            </flux:button>
-        </form>
-    </div>
-</x-layouts::auth>
+        <flux:button variant="primary" type="submit" class="w-full">
+            {{ __('Simpan & Lanjutkan') }}
+        </flux:button>
+    </form>
+</div>
