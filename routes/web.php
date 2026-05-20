@@ -25,6 +25,10 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
         Route::livewire('/{pasien}/intervensi', 'pages::mahasiswa.askep.intervensi')->name('intervensi');
         Route::livewire('/{pasien}/askep', 'pages::mahasiswa.askep.show')->name('askep');
     });
+
+    Route::livewire('/askep', 'pages::mahasiswa.askep.index')->name('askep.index');
+    Route::livewire('/riwayat', 'pages::mahasiswa.riwayat.index')->name('riwayat.index');
+    Route::livewire('/arsip', 'pages::mahasiswa.arsip.index')->name('arsip.index');
 });
 
 // ── Admin ──────────────────────────────────────────────────────────────────

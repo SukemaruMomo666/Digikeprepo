@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Database\Factories\PasienFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,9 +54,12 @@ class Pasien extends Model
         return $this->hasManyThrough(LuaranPasien::class, DiagnosaPasien::class);
     }
 
-    public function intervensiPasien(): HasManyThrough
+    public function intervensiPasien(): Builder
     {
-        return $this->hasManyThrough(IntervensiPasien::class, LuaranPasien::class);
+        return IntervensiPasien::whereHas(
+            'luaranPasien.diagnosaPasien',
+            fn ($q) => $q->where('pasien_id', $this->id)
+        );
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────

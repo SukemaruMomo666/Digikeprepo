@@ -33,6 +33,35 @@
                 >
                     Data Pasien
                 </flux:sidebar.item>
+
+                <flux:sidebar.group heading="Asuhan Keperawatan">
+                    <flux:sidebar.item
+                        icon="clipboard-document-list"
+                        :href="route('askep.index')"
+                        :current="request()->routeIs('askep.index')"
+                        wire:navigate
+                    >
+                        Semua Askep
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item
+                        icon="clock"
+                        :href="route('riwayat.index')"
+                        :current="request()->routeIs('riwayat.index')"
+                        wire:navigate
+                    >
+                        Riwayat
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item
+                        icon="archive-box"
+                        :href="route('arsip.index')"
+                        :current="request()->routeIs('arsip.index')"
+                        wire:navigate
+                    >
+                        Arsip Pengkajian
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
             </flux:sidebar.nav>
 
             <flux:spacer />
