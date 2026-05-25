@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable(['diagnosa_pasien_id', 'luaran_id'])]
 class LuaranPasien extends Model
@@ -30,5 +31,10 @@ class LuaranPasien extends Model
     public function intervensiPasien(): HasMany
     {
         return $this->hasMany(IntervensiPasien::class);
+    }
+
+    public function evaluasi(): HasOne
+    {
+        return $this->hasOne(EvaluasiPasien::class);
     }
 }

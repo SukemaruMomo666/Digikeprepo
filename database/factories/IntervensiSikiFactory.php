@@ -11,14 +11,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class IntervensiSikiFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
+        static $counter = 0;
+        $counter++;
+
         return [
-            //
+            'kode_intervensi' => 'I.'.$counter,
+            'label_intervensi' => fake()->sentence(3),
+            'definisi' => fake()->paragraph(),
+            'tindakan' => fake()->paragraph(),
         ];
     }
 }

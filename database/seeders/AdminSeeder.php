@@ -29,6 +29,12 @@ class AdminSeeder extends Seeder
                 'email' => 'hendra@polsub.ac.id',
                 'password' => Hash::make('password'),
             ],
+            [
+                'nim_nip' => '102030405060708090',
+                'name' => 'dosen1',
+                'email' => 'dosen1@polsub.ac.id',
+                'password' => Hash::make('password'),
+            ],
         ];
 
         foreach ($admins as $data) {

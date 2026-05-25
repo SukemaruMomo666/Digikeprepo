@@ -62,6 +62,14 @@ class Pasien extends Model
         );
     }
 
+    public function evaluasiPasien(): Builder
+    {
+        return EvaluasiPasien::whereHas(
+            'luaranPasien.diagnosaPasien',
+            fn ($q) => $q->where('pasien_id', $this->id)
+        );
+    }
+
     // ── Helpers ───────────────────────────────────────────────────────────────
 
     /**
@@ -84,6 +92,10 @@ class Pasien extends Model
 
         if (! $this->intervensiPasien()->exists()) {
             return route('pasien.intervensi', $this);
+        }
+
+        if (! $this->evaluasiPasien()->exists()) {
+            return route('pasien.evaluasi', $this);
         }
 
         return route('pasien.askep', $this);

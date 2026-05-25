@@ -1,9 +1,10 @@
 @php
     $steps = [
-        1 => ['label' => 'Pengkajian',    'route' => 'pasien.pengkajian'],
-        2 => ['label' => 'Diagnosa SDKI', 'route' => 'pasien.diagnosa'],
-        3 => ['label' => 'Luaran SLKI',   'route' => 'pasien.luaran'],
+        1 => ['label' => 'Pengkajian',     'route' => 'pasien.pengkajian'],
+        2 => ['label' => 'Diagnosa SDKI',  'route' => 'pasien.diagnosa'],
+        3 => ['label' => 'Luaran SLKI',    'route' => 'pasien.luaran'],
         4 => ['label' => 'Intervensi SIKI','route' => 'pasien.intervensi'],
+        5 => ['label' => 'Evaluasi',       'route' => 'pasien.evaluasi'],
     ];
 @endphp
 

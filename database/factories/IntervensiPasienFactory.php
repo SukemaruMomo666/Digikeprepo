@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\IntervensiPasien;
+use App\Models\IntervensiSiki;
+use App\Models\LuaranPasien;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,14 +13,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class IntervensiPasienFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
         return [
-            //
+            'luaran_pasien_id' => LuaranPasien::factory(),
+            'intervensi_id' => IntervensiSiki::factory(),
         ];
     }
 }

@@ -17,16 +17,17 @@ class MahasiswaSeeder extends Seeder
      * @var array<int, array<string, string>>
      */
     private array $mahasiswa = [
-        ['nim_nip' => '231010001', 'name' => 'Budi Santoso'],
-        ['nim_nip' => '231010002', 'name' => 'Siti Rahayu'],
-        ['nim_nip' => '231010003', 'name' => 'Ahmad Fauzi'],
-        ['nim_nip' => '231010004', 'name' => 'Dewi Lestari'],
-        ['nim_nip' => '231010005', 'name' => 'Rizky Pratama'],
-        ['nim_nip' => '231010006', 'name' => 'Nur Aisyah'],
-        ['nim_nip' => '231010007', 'name' => 'Eko Purnomo'],
-        ['nim_nip' => '231010008', 'name' => 'Fitri Handayani'],
-        ['nim_nip' => '231010009', 'name' => 'Bagas Setiawan'],
-        ['nim_nip' => '231010010', 'name' => 'Lina Marlina'],
+        ['nim_nip' => '10602001', 'name' => 'Budi Santoso'],
+        ['nim_nip' => '10602002', 'name' => 'Ani Pratiwi'],
+        ['nim_nip' => '10602003', 'name' => 'Andi Gunawan'],
+        ['nim_nip' => '10602004', 'name' => 'Sri Wulandari'],
+        ['nim_nip' => '10602005', 'name' => 'Dedi Supriatna'],
+        ['nim_nip' => '10602006', 'name' => 'Rina Kusumawati'],
+        ['nim_nip' => '10602007', 'name' => 'Agus Setiawan'],
+        ['nim_nip' => '10602008', 'name' => 'Siti Nurhaliza'],
+        ['nim_nip' => '10602009', 'name' => 'Eko Prabowo'],
+        ['nim_nip' => '10602010', 'name' => 'Lina Marlina'],
+
     ];
 
     /**

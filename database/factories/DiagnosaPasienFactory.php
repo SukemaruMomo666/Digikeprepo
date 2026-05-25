@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\DiagnosaPasien;
+use App\Models\DiagnosaSdki;
+use App\Models\Pasien;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,14 +13,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class DiagnosaPasienFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
         return [
-            //
+            'pasien_id' => Pasien::factory(),
+            'diagnosa_id' => DiagnosaSdki::factory(),
+            'data_subjektif' => fake()->sentence(),
+            'data_objektif' => fake()->sentence(),
         ];
     }
 }

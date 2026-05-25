@@ -9,7 +9,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
@@ -23,21 +23,55 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
-    --color-accent-foreground: var(--color-white);
+    /* Polsub Orange Palette */
+    --color-polsub-50:  #fff9e6;
+    --color-polsub-100: #fef3c7;
+    --color-polsub-200: #fdb462;
+    --color-polsub-300: #f39c12;
+    --color-polsub-400: #e67e22;
+    --color-polsub-500: #d35400;
+    --color-polsub-600: #ba4a00;
+    --color-polsub-700: #9c3d00;
+    --color-polsub-800: #7d3100;
+    --color-polsub-900: #5e2400;
+
+    /* Flux accent → Polsub Orange (light mode) */
+    --color-accent:            #e67e22;
+    --color-accent-content:    #e67e22;
+    --color-accent-foreground: #ffffff;
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent:            #f39c12;
+        --color-accent-content:    #f39c12;
+        --color-accent-foreground: #1a1a1a;
+    }
+}
+
+/* Polsub gradient utilities */
+@layer utilities {
+    .bg-gradient-polsub {
+        background-image: linear-gradient(135deg, #f39c12, #e67e22);
+    }
+    .bg-gradient-polsub-light {
+        background-image: linear-gradient(135deg, #fff9e6, #fffbf5);
+    }
+    .shadow-polsub {
+        box-shadow: 0 4px 6px rgba(230, 126, 34, 0.15);
+    }
+    .shadow-polsub-lg {
+        box-shadow: 0 8px 12px rgba(230, 126, 34, 0.25);
+    }
+    .text-polsub {
+        color: #e67e22;
+    }
+    .border-polsub {
+        border-color: #e67e22;
     }
 }
 
 @layer base {
-
     *,
     ::after,
     ::before,
@@ -52,7 +86,7 @@
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply !mb-0 !leading-tight;
 }
 
 input:focus[data-flux-control],
@@ -60,7 +94,3 @@ textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
-
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */

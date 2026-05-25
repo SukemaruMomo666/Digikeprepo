@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <body class="min-h-screen bg-[#fffbf5] dark:bg-zinc-900">
+        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.header>
-                <div class="flex items-center gap-2 px-1 py-1">
-                    <div class="flex size-8 items-center justify-center rounded-lg bg-rose-600">
-                        <flux:icon.shield-check class="size-4 text-white" />
+                <div class="flex items-center gap-2.5 px-1 py-1">
+                    <div class="flex size-9 items-center justify-center rounded-xl bg-gradient-polsub shadow-polsub">
+                        <flux:icon.shield-check class="size-5 text-white" />
                     </div>
                     <div>
-                        <flux:heading class="text-base font-bold leading-none">DIGIKEP</flux:heading>
-                        <flux:text class="text-[10px] text-zinc-500">Admin Panel</flux:text>
+                        <p class="text-sm font-bold leading-tight text-zinc-900 dark:text-white">DIGIKEP</p>
+                        <p class="text-[10px] leading-tight text-zinc-400 dark:text-zinc-500">Admin Panel</p>
                     </div>
                 </div>
                 <flux:sidebar.collapse class="lg:hidden" />
@@ -120,17 +120,17 @@
         </flux:sidebar>
 
         {{-- Mobile Header --}}
-        <flux:header class="lg:hidden">
-            <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+        <flux:header class="lg:hidden bg-gradient-polsub border-b-0 shadow-polsub">
+            <flux:sidebar.toggle class="lg:hidden text-white hover:bg-white/20" icon="bars-2" inset="left" />
             <div class="flex items-center gap-2 ms-2">
-                <div class="flex size-6 items-center justify-center rounded bg-rose-600">
-                    <flux:icon.shield-check class="size-3.5 text-white" />
+                <div class="flex size-7 items-center justify-center rounded-lg bg-white/20">
+                    <flux:icon.shield-check class="size-4 text-white" />
                 </div>
-                <span class="text-sm font-bold">DIGIKEP Admin</span>
+                <span class="text-sm font-bold text-white">DIGIKEP Admin</span>
             </div>
             <flux:spacer />
             <flux:dropdown position="top" align="end">
-                <flux:profile :initials="auth()->user()->initials()" icon-trailing="chevron-down" />
+                <flux:profile :initials="auth()->user()->initials()" icon-trailing="chevron-down" class="text-white" />
                 <flux:menu>
                     <div class="px-3 py-2">
                         <p class="text-sm font-medium">{{ auth()->user()->name }}</p>

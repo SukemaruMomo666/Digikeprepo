@@ -11,14 +11,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class LuaranSlkiFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
+        static $counter = 0;
+        $counter++;
+
         return [
-            //
+            'kode_luaran' => 'L.'.$counter,
+            'label_luaran' => fake()->sentence(3),
+            'definisi' => fake()->paragraph(),
+            'kriteria_hasil' => fake()->paragraph(),
         ];
     }
 }

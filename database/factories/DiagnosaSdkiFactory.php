@@ -11,14 +11,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class DiagnosaSdkiFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
+        static $counter = 0;
+        $counter++;
+
         return [
-            //
+            'kode_diagnosa' => 'D.'.$counter,
+            'label_diagnosa' => fake()->sentence(3),
+            'definisi' => fake()->paragraph(),
         ];
     }
 }

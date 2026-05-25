@@ -23,6 +23,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
         Route::livewire('/{pasien}/diagnosa', 'pages::mahasiswa.askep.diagnosa')->name('diagnosa');
         Route::livewire('/{pasien}/luaran', 'pages::mahasiswa.askep.luaran')->name('luaran');
         Route::livewire('/{pasien}/intervensi', 'pages::mahasiswa.askep.intervensi')->name('intervensi');
+        Route::livewire('/{pasien}/evaluasi', 'pages::mahasiswa.askep.evaluasi')->name('evaluasi');
         Route::livewire('/{pasien}/askep', 'pages::mahasiswa.askep.show')->name('askep');
     });
 

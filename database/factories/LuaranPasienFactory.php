@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\DiagnosaPasien;
 use App\Models\LuaranPasien;
+use App\Models\LuaranSlki;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,14 +13,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class LuaranPasienFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
         return [
-            //
+            'diagnosa_pasien_id' => DiagnosaPasien::factory(),
+            'luaran_id' => LuaranSlki::factory(),
         ];
     }
 }

@@ -75,10 +75,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Intervensi SIKI')] class extends Com
             }
         }
 
-        // Tandai askep selesai
-        $this->pasien->update(['status_askep' => 'selesai']);
-
-        $this->redirectRoute('pasien.askep', $this->pasien, navigate: true);
+        $this->redirectRoute('pasien.evaluasi', $this->pasien, navigate: true);
     }
 };
 ?>
