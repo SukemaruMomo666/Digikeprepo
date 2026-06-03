@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['kode_diagnosa', 'label_diagnosa', 'definisi'])]
+#[Fillable(['kode_diagnosa', 'label_diagnosa', 'kategori', 'subkategori', 'definisi'])]
 class DiagnosaSdki extends Model
 {
     /** @use HasFactory<DiagnosaSdkiFactory> */

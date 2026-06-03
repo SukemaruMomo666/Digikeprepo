@@ -20,6 +20,7 @@ class PengkajianFactory extends Factory
             'pasien_id' => Pasien::factory(),
             'pola_kesehatan' => fake()->randomElement(array_keys(Pengkajian::labelPola())),
             'observasi' => fake()->sentence(),
+            'data' => null,
             'is_abnormal' => false,
             'tipe_data' => fake()->randomElement(['DS', 'DO']),
         ];

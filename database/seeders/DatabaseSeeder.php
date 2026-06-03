@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             MahasiswaSeeder::class,
-            DataMasterSeeder::class,
+            SdkiSlkiSikiSeeder::class, // 148 SDKI + 109 SLKI + 72 SIKI dari Excel resmi
+            DataMasterSeeder::class,   // Relasi SDKI→SLKI→SIKI + definisi/tindakan sample
         ]);
     }
 }
