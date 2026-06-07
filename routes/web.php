@@ -37,8 +37,8 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 
     Route::prefix('askep/{askep}')->name('askep.')->group(function () {
         Route::livewire('/', 'pages::mahasiswa.askep.detail')->name('show');
-        Route::livewire('/pengkajian', 'pages::mahasiswa.askep.perencanaan')->name('pengkajian');
-        Route::livewire('/diagnosa', 'pages::mahasiswa.askep.perencanaan')->name('diagnosa');
+        Route::livewire('/pengkajian', 'pages::mahasiswa.askep.pengkajian')->name('pengkajian');
+        Route::livewire('/diagnosa', 'pages::mahasiswa.askep.diagnosa')->name('diagnosa');
         Route::livewire('/perencanaan', 'pages::mahasiswa.askep.perencanaan')->name('perencanaan');
         Route::livewire('/implementasi', 'pages::mahasiswa.askep.perencanaan')->name('implementasi');
         Route::livewire('/evaluasi', 'pages::mahasiswa.askep.perencanaan')->name('evaluasi');
@@ -46,6 +46,11 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 
     Route::livewire('/riwayat', 'pages::mahasiswa.riwayat.index')->name('riwayat.index');
     Route::livewire('/arsip', 'pages::mahasiswa.arsip.index')->name('arsip.index');
+
+    // ── Panduan & Referensi ───────────────────────────────────────────────────
+    Route::livewire('/panduan', 'pages::mahasiswa.panduan.index')->name('panduan.index');
+    Route::livewire('/video', 'pages::mahasiswa.video.index')->name('video.index');
+    Route::livewire('/faq', 'pages::mahasiswa.faq.index')->name('faq.index');
 });
 
 // ── Admin ──────────────────────────────────────────────────────────────────

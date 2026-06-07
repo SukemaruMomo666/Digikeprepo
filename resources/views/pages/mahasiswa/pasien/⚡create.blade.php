@@ -45,9 +45,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Tambah Pasien')] class extends Compo
             'user_id' => auth()->id(),
         ]);
 
+        $pasien->catatRiwayat('Pasien ditambahkan ke sistem.');
+
         Flux::toast(variant: 'success', text: 'Pasien berhasil ditambahkan. Silakan mulai pengkajian.');
 
-        $this->redirectRoute('pasien.pengkajian', $pasien, navigate: true);
+        $this->redirectRoute('pasien.askep.create', $pasien, navigate: true);
     }
 };
 ?>

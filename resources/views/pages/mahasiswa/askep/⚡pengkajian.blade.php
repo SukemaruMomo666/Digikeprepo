@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Pasien;
-use App\Models\Pengkajian;
+use App\Models\Askep;
+use App\Models\AskepPengkajian;
 use Flux\Flux;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -9,476 +9,410 @@ use Livewire\Component;
 
 new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Component
 {
-    public Pasien $pasien;
+    public Askep $askep;
 
-    public string $tab = 'riwayat';
+    public string $tab = 'identitas';
 
-    /**
-     * @var array<string, array{observasi: string, is_abnormal: bool, tipe_data: string, data: array<string, mixed>}>
-     */
-    public array $pengkajianData = [];
+    // ── Identitas Penanggung Jawab ─────────────────────────────────────────
+    public string $pj_nama = '';
+    public string $pj_umur = '';
+    public string $pj_pendidikan = '';
+    public string $pj_pekerjaan = '';
+    public string $pj_alamat = '';
 
-    public function mount(Pasien $pasien): void
+    // ── EWS / Tanda Vital ──────────────────────────────────────────────────
+    public string $ews_td = '';
+    public string $ews_nadi = '';
+    public string $ews_rr = '';
+    public string $ews_suhu = '';
+    public string $ews_spo2 = '';
+    public string $ews_kesadaran = 'composmentis';
+    public int $ews_skor = 0;
+
+    // ── Anthropometri ──────────────────────────────────────────────────────
+    public string $bb = '';
+    public string $tb = '';
+
+    // ── Riwayat Penyakit ───────────────────────────────────────────────────
+    public string $riwayat_sekarang = '';
+    public string $riwayat_lalu = '';
+    public string $riwayat_keluarga = '';
+
+    // ── Biologis (JSON per section) ────────────────────────────────────────
+    /** @var array<string, mixed> */
+    public array $biologis_nyeri = ['ada' => false, 'lokasi' => '', 'skala' => '', 'sifat' => '', 'frekuensi' => '', 'keterangan' => ''];
+    /** @var array<string, mixed> */
+    public array $biologis_aktivitas = ['ada' => false, 'kemampuan' => 'mandiri', 'bantu_alat' => false, 'keterangan' => ''];
+    /** @var array<string, mixed> */
+    public array $biologis_nutrisi = ['ada' => false, 'frekuensi' => '', 'porsi' => '', 'jenis' => '', 'bb_normal' => true, 'keterangan' => ''];
+    /** @var array<string, mixed> */
+    public array $biologis_cairan = ['ada' => false, 'minum_per_hari' => '', 'infus' => false, 'jenis_infus' => '', 'keterangan' => ''];
+    /** @var array<string, mixed> */
+    public array $biologis_eliminasi_feses = ['ada' => false, 'frekuensi' => '', 'konsistensi' => '', 'warna' => '', 'keterangan' => ''];
+    /** @var array<string, mixed> */
+    public array $biologis_eliminasi_urine = ['ada' => false, 'frekuensi' => '', 'warna' => '', 'jumlah' => '', 'keterangan' => ''];
+    /** @var array<string, mixed> */
+    public array $biologis_istirahat = ['ada' => false, 'jam_per_hari' => '', 'kualitas' => 'baik', 'keterangan' => ''];
+    /** @var array<string, mixed> */
+    public array $biologis_oksigenasi = ['ada' => false, 'pola_napas' => 'teratur', 'suara_napas' => 'vesikuler', 'keterangan' => ''];
+
+    public function mount(Askep $askep): void
     {
-        abort_unless($pasien->user_id === auth()->id(), 403);
+        abort_unless($askep->user_id === auth()->id(), 403);
 
-        $this->pasien = $pasien;
+        $this->askep = $askep->load('pasien');
 
-        // Inisialisasi semua section dengan nilai default
-        $this->pengkajianData = $this->sectionDefaults();
-
-        // Muat data yang sudah tersimpan dari DB
-        $pasien->pengkajian()->get()->each(function (Pengkajian $row): void {
-            if (! isset($this->pengkajianData[$row->pola_kesehatan])) {
-                return;
-            }
-
-            $this->pengkajianData[$row->pola_kesehatan]['observasi']   = $row->observasi ?? '';
-            $this->pengkajianData[$row->pola_kesehatan]['is_abnormal'] = $row->is_abnormal;
-            $this->pengkajianData[$row->pola_kesehatan]['tipe_data']   = $row->tipe_data ?? 'DS';
-
-            if (is_array($row->data) && ! empty($row->data)) {
-                $this->pengkajianData[$row->pola_kesehatan]['data'] = array_merge(
-                    $this->pengkajianData[$row->pola_kesehatan]['data'],
-                    $row->data
-                );
-            }
-        });
-    }
-
-    public function save(): void
-    {
-        foreach ($this->pengkajianData as $pola => $section) {
-            Pengkajian::updateOrCreate(
-                ['pasien_id' => $this->pasien->id, 'pola_kesehatan' => $pola],
-                [
-                    'observasi'   => $section['observasi'] ?: null,
-                    'data'        => ! empty($section['data']) ? $section['data'] : null,
-                    'is_abnormal' => $section['is_abnormal'],
-                    'tipe_data'   => $section['tipe_data'] ?? 'DS',
-                ]
-            );
+        $p = $askep->pengkajian;
+        if (! $p) {
+            return;
         }
 
-        $this->pasien->catatRiwayat('Pengkajian disimpan.');
+        // Identitas PJ
+        $this->pj_nama       = $p->pj_nama ?? '';
+        $this->pj_umur       = (string) ($p->pj_umur ?? '');
+        $this->pj_pendidikan = $p->pj_pendidikan ?? '';
+        $this->pj_pekerjaan  = $p->pj_pekerjaan ?? '';
+        $this->pj_alamat     = $p->pj_alamat ?? '';
 
-        Flux::toast(variant: 'success', text: 'Pengkajian berhasil disimpan.');
+        // EWS
+        $this->ews_td        = $p->ews_td ?? '';
+        $this->ews_nadi      = (string) ($p->ews_nadi ?? '');
+        $this->ews_rr        = (string) ($p->ews_rr ?? '');
+        $this->ews_suhu      = (string) ($p->ews_suhu ?? '');
+        $this->ews_spo2      = (string) ($p->ews_spo2 ?? '');
+        $this->ews_kesadaran = $p->ews_kesadaran ?? 'composmentis';
+        $this->ews_skor      = $p->ews_skor ?? 0;
 
-        $this->redirectRoute('pasien.diagnosa', $this->pasien, navigate: true);
+        // Anthropometri
+        $this->bb = (string) ($p->bb ?? '');
+        $this->tb = (string) ($p->tb ?? '');
+
+        // Riwayat
+        $this->riwayat_sekarang = $p->riwayat_sekarang['narasi'] ?? '';
+        $this->riwayat_lalu     = $p->riwayat_lalu['narasi'] ?? '';
+        $this->riwayat_keluarga = $p->riwayat_keluarga['narasi'] ?? '';
+
+        // Biologis
+        foreach (['biologis_nyeri', 'biologis_aktivitas', 'biologis_nutrisi', 'biologis_cairan',
+                  'biologis_eliminasi_feses', 'biologis_eliminasi_urine', 'biologis_istirahat', 'biologis_oksigenasi'] as $field) {
+            if (! empty($p->$field)) {
+                $this->$field = array_merge($this->$field, $p->$field);
+            }
+        }
     }
 
-    /** Default structure untuk semua 32 section pengkajian. */
-    private function sectionDefaults(): array
+    public function hitungEws(): void
     {
-        $text = fn (string $tipe = 'DS'): array => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => $tipe, 'data' => []];
+        if ($this->ews_td && $this->ews_nadi && $this->ews_rr && $this->ews_suhu && $this->ews_spo2) {
+            $this->ews_skor = AskepPengkajian::hitungEws(
+                $this->ews_td,
+                (int) $this->ews_nadi,
+                (int) $this->ews_rr,
+                (float) $this->ews_suhu,
+                (int) $this->ews_spo2,
+                $this->ews_kesadaran
+            );
+        }
+    }
 
-        return [
-            // ── Riwayat Penyakit ──────────────────────────────────────────
-            'riwayat_sekarang'      => $text(),
-            'riwayat_lalu'          => $text(),
-            'riwayat_keluarga'      => $text(),
-            // ── Biologis ──────────────────────────────────────────────────
-            'bio_nyaman'            => $text(),
-            'bio_aktivitas'         => $text(),
-            'bio_istirahat'         => $text(),
-            'bio_tidur'             => $text(),
-            'bio_cairan'            => $text(),
-            'bio_nutrisi'           => $text(),
-            'bio_eliminasi_feses'   => $text(),
-            'bio_eliminasi_urine'   => $text(),
-            'bio_oksigenasi'        => $text(),
-            'bio_kardiovaskuler'    => $text(),
-            'bio_hygiene'           => $text(),
-            'bio_seks'              => $text(),
-            // ── Psikososial ───────────────────────────────────────────────
-            'psiko_emosi'           => $text(),
-            'psiko_konsep_diri'     => $text(),
-            'psiko_sosial'          => $text(),
-            'psiko_spiritual'       => $text(),
-            // ── Pemeriksaan Fisik ─────────────────────────────────────────
-            'fisik_penglihatan'     => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'posisi_mata' => '', 'kelopak_mata' => '', 'gerakan' => '', 'pergerakan_bola_mata' => '',
-                'konjungtiva' => '', 'kornea' => '', 'sklera' => '',
-                'pupil' => [], 'otot_mata' => [], 'fungsi_penglihatan' => [],
-                'tanda_radang' => '', 'kacamata' => '', 'lensa_kontak' => '',
-            ]],
-            'fisik_pendengaran'     => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'daun_telinga' => '', 'kondisi_telinga' => [], 'cairan_telinga' => '',
-                'tinnitus' => '', 'fungsi_pendengaran' => '', 'alat_bantu' => '', 'perasaan_penuh' => '',
-            ]],
-            'fisik_wicara'          => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'gangguan' => [],
-            ]],
-            'fisik_pernafasan'      => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'frekuensi' => '', 'jalan_nafas' => [], 'sesak' => '', 'otot_bantu' => '',
-                'irama' => '', 'kedalaman' => '', 'batuk' => '', 'batuk_jenis' => '',
-                'sputum_warna' => [], 'sputum_konsistensi' => '', 'sputum_darah' => '',
-                'suara_nafas' => [],
-            ]],
-            'fisik_kardiovaskuler'  => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'nadi' => '', 'irama_nadi' => '', 'denyut' => '', 'tekanan_darah' => '',
-                'distensi_vena_kanan' => '', 'distensi_vena_kiri' => '',
-                'temperatur_kulit' => '', 'warna_kulit' => [], 'pengisian_kapiler' => '',
-                'edema' => '', 'edema_lokasi' => [],
-                'irama_jantung' => '', 'bunyi_jantung' => [],
-                'nyeri_dada' => '', 'nyeri_timbul' => '', 'nyeri_karakter' => [],
-            ]],
-            'fisik_hematologi'      => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'hb' => '', 'ht' => '', 'leukosit' => '', 'eritrosit' => '', 'trombosit' => '',
-            ]],
-            'fisik_saraf'           => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'kesadaran' => '', 'pupil' => '',
-                'reaksi_cahaya_kanan' => '', 'reaksi_cahaya_kiri' => '',
-                'peningkatan_tik' => '', 'kelainan' => [],
-                'gcs_e' => '', 'gcs_m' => '', 'gcs_v' => '',
-            ]],
-            'fisik_pencernaan'      => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'gigi_caries' => '', 'gigi_palsu' => '', 'stomatitis' => '',
-                'lidah_kotor' => '', 'saliva' => '',
-                'muntah' => '', 'isi_muntah' => [], 'warna_muntah' => [],
-                'mual' => '', 'nafsu_makan' => '',
-                'nyeri_perut' => '', 'nyeri_karakter' => [],
-                'bab_kebiasaan' => '', 'bising_usus' => '',
-                'warna_feces' => [], 'konsistensi_feces' => [],
-                'hepar' => '', 'abdomen' => [],
-            ]],
-            'fisik_endokrin'        => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'nafas_bau_keton' => '', 'kelainan' => [],
-                'gangren' => '', 'gangren_warna' => '', 'gangren_bau' => '',
-                'exopthalmus' => '', 'tremor' => '', 'kelenjar_tiroid' => '',
-            ]],
-            'fisik_urogenital'      => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'perubahan_pola' => [], 'bak_frekuensi' => '',
-                'bak_kontrol' => '', 'bak_jumlah' => '', 'bak_warna' => '',
-                'distensi_kandung_kemih' => '', 'nyeri_pinggang' => '',
-                'pembesaran_prostat' => '', 'keadaan_genitalia' => '',
-            ]],
-            'fisik_integumen'       => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'turgor' => '', 'warna_kulit' => [], 'keadaan_kulit' => [],
-                'tekstur_rambut' => '', 'kebersihan_rambut' => '',
-            ]],
-            'fisik_muskuloskeletal' => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'kesulitan_pergerakan' => '', 'nyeri_tulang' => '',
-                'fraktur' => '', 'lokasi_fraktur' => '', 'jenis_fraktur' => '',
-                'kelainan_bentuk' => [], 'tonus_otot' => '',
-            ]],
-            'fisik_imun'            => ['observasi' => '', 'is_abnormal' => false, 'tipe_data' => 'DO', 'data' => [
-                'suhu' => '', 'bb_sebelum' => '', 'bb_sesudah' => '', 'pembesaran_kelenjar' => '',
-            ]],
-        ];
+    /** Isi preset "Normal" untuk semua biologis. */
+    public function presetNormal(): void
+    {
+        $this->biologis_nyeri            = ['ada' => false, 'lokasi' => '', 'skala' => '', 'sifat' => '', 'frekuensi' => '', 'keterangan' => 'Tidak ada nyeri'];
+        $this->biologis_aktivitas        = ['ada' => false, 'kemampuan' => 'mandiri', 'bantu_alat' => false, 'keterangan' => 'Aktivitas mandiri, tidak ada keterbatasan'];
+        $this->biologis_nutrisi          = ['ada' => false, 'frekuensi' => '3x/hari', 'porsi' => '1 porsi habis', 'jenis' => 'biasa', 'bb_normal' => true, 'keterangan' => 'Nafsu makan baik'];
+        $this->biologis_cairan           = ['ada' => false, 'minum_per_hari' => '2000 ml', 'infus' => false, 'jenis_infus' => '', 'keterangan' => 'Intake cairan cukup'];
+        $this->biologis_eliminasi_feses  = ['ada' => false, 'frekuensi' => '1x/hari', 'konsistensi' => 'lembek', 'warna' => 'coklat', 'keterangan' => 'BAB normal'];
+        $this->biologis_eliminasi_urine  = ['ada' => false, 'frekuensi' => '4-6x/hari', 'warna' => 'kuning jernih', 'jumlah' => '1500 ml', 'keterangan' => 'BAK normal'];
+        $this->biologis_istirahat        = ['ada' => false, 'jam_per_hari' => '7-8 jam', 'kualitas' => 'baik', 'keterangan' => 'Tidur cukup, tidak ada keluhan'];
+        $this->biologis_oksigenasi       = ['ada' => false, 'pola_napas' => 'teratur', 'suara_napas' => 'vesikuler', 'keterangan' => 'Tidak ada gangguan pernapasan'];
+
+        Flux::toast(variant: 'success', text: 'Preset normal diterapkan.');
+    }
+
+    public function simpan(): void
+    {
+        $this->validate([
+            'ews_td'    => ['nullable', 'string', 'max:20'],
+            'ews_nadi'  => ['nullable', 'integer', 'min:0', 'max:300'],
+            'ews_rr'    => ['nullable', 'integer', 'min:0', 'max:100'],
+            'ews_suhu'  => ['nullable', 'numeric', 'min:30', 'max:45'],
+            'ews_spo2'  => ['nullable', 'integer', 'min:0', 'max:100'],
+            'bb'        => ['nullable', 'numeric', 'min:0', 'max:300'],
+            'tb'        => ['nullable', 'integer', 'min:0', 'max:250'],
+        ]);
+
+        // Hitung EWS otomatis jika lengkap
+        if ($this->ews_td && $this->ews_nadi && $this->ews_rr && $this->ews_suhu && $this->ews_spo2) {
+            $this->hitungEws();
+        }
+
+        AskepPengkajian::updateOrCreate(
+            ['askep_id' => $this->askep->id],
+            [
+                'pj_nama'       => $this->pj_nama ?: null,
+                'pj_umur'       => $this->pj_umur ?: null,
+                'pj_pendidikan' => $this->pj_pendidikan ?: null,
+                'pj_pekerjaan'  => $this->pj_pekerjaan ?: null,
+                'pj_alamat'     => $this->pj_alamat ?: null,
+                'ews_td'        => $this->ews_td ?: null,
+                'ews_nadi'      => $this->ews_nadi ?: null,
+                'ews_rr'        => $this->ews_rr ?: null,
+                'ews_suhu'      => $this->ews_suhu ?: null,
+                'ews_spo2'      => $this->ews_spo2 ?: null,
+                'ews_kesadaran' => $this->ews_kesadaran ?: null,
+                'ews_skor'      => $this->ews_skor,
+                'bb'            => $this->bb ?: null,
+                'tb'            => $this->tb ?: null,
+                'riwayat_sekarang' => $this->riwayat_sekarang ? ['narasi' => $this->riwayat_sekarang] : null,
+                'riwayat_lalu'     => $this->riwayat_lalu ? ['narasi' => $this->riwayat_lalu] : null,
+                'riwayat_keluarga' => $this->riwayat_keluarga ? ['narasi' => $this->riwayat_keluarga] : null,
+                'biologis_nyeri'           => $this->biologis_nyeri,
+                'biologis_aktivitas'       => $this->biologis_aktivitas,
+                'biologis_nutrisi'         => $this->biologis_nutrisi,
+                'biologis_cairan'          => $this->biologis_cairan,
+                'biologis_eliminasi_feses' => $this->biologis_eliminasi_feses,
+                'biologis_eliminasi_urine' => $this->biologis_eliminasi_urine,
+                'biologis_istirahat'       => $this->biologis_istirahat,
+                'biologis_oksigenasi'      => $this->biologis_oksigenasi,
+            ]
+        );
+
+        // Update step_terakhir jika baru sampai sini
+        if ($this->askep->step_terakhir < 1) {
+            $this->askep->update(['step_terakhir' => 1]);
+        }
+
+        $this->askep->pasien->catatRiwayat('Pengkajian disimpan.');
+
+        Flux::toast(variant: 'success', text: 'Pengkajian tersimpan.');
+    }
+
+    public function simpanLanjut(): void
+    {
+        $this->simpan();
+        $this->redirectRoute('askep.diagnosa', $this->askep, navigate: true);
     }
 };
 ?>
 
-<div>
-    {{-- Header --}}
-    <div class="mb-6">
-        <flux:button :href="route('pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
-            Kembali
-        </flux:button>
-        <flux:heading size="xl" level="1">Pengkajian — {{ $pasien->nama_pasien }}</flux:heading>
-        <flux:text class="mt-1">Isi formulir pengkajian keperawatan dasar sesuai kondisi pasien.</flux:text>
+<div class="p-4 md:p-6">
+    {{-- Stepper --}}
+    @include('partials.askep-stepper', ['askep' => $askep, 'step' => 1])
+
+    <div class="mb-4 flex items-center justify-between">
+        <div>
+            <h2 class="text-xl font-bold text-[#1B4F72]">Langkah 1: Pengkajian</h2>
+            <p class="text-sm text-[#7A8FA6]">Isi data pengkajian keperawatan secara lengkap.</p>
+        </div>
+        <button
+            wire:click="presetNormal"
+            class="flex items-center gap-1.5 rounded-lg border border-[#85B7EB] bg-[#EBF5FB] px-3 py-1.5 text-xs font-semibold text-[#2E86C1] hover:bg-[#D7EAFB] transition"
+        >
+            <flux:icon.check-circle class="size-3.5" />
+            Preset Normal
+        </button>
     </div>
 
-    @include('partials.askep-stepper', ['step' => 1, 'pasien' => $pasien])
-
     {{-- Tab Navigation --}}
-    @php
-        $tabs = [
-            'riwayat'     => ['label' => 'Riwayat Penyakit',       'icon' => 'clock'],
-            'biologis'    => ['label' => 'Biologis',               'icon' => 'heart'],
-            'psikososial' => ['label' => 'Psikososial',            'icon' => 'user'],
-            'fisik'       => ['label' => 'Pemeriksaan Fisik',      'icon' => 'clipboard-document-list'],
-        ];
-
-        // Hitung berapa section per tab yang abnormal (untuk badge)
-        $sectionsByTab = App\Models\Pengkajian::sections();
-        $abnormalCount = [];
-        foreach ($sectionsByTab as $tabKey => $group) {
-            $abnormalCount[$tabKey] = collect($group['keys'])
-                ->filter(fn($k) => ! empty($pengkajianData[$k]['is_abnormal']))
-                ->count();
-        }
-    @endphp
-
-    <nav class="mt-6 flex items-center gap-1 overflow-x-auto rounded-xl bg-zinc-100 dark:bg-zinc-800 p-1.5">
-        @foreach ($tabs as $key => $info)
+    <div class="mb-4 flex gap-1 overflow-x-auto rounded-xl bg-[#F4F8FB] p-1">
+        @foreach ([
+            'identitas' => 'Identitas',
+            'ttv'       => 'TTV & EWS',
+            'riwayat'   => 'Riwayat',
+            'biologis'  => 'Biologis',
+        ] as $key => $label)
             <button
-                type="button"
                 wire:click="$set('tab', '{{ $key }}')"
-                class="relative flex flex-1 min-w-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors
-                    {{ $tab === $key
-                        ? 'bg-white dark:bg-zinc-900 shadow-sm text-blue-600 dark:text-blue-400'
-                        : 'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700' }}"
+                class="flex-1 rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap transition
+                    {{ $tab === $key ? 'bg-white text-[#2E86C1] shadow-sm ring-1 ring-[#85B7EB]/40' : 'text-[#7A8FA6] hover:bg-white/60' }}"
             >
-                <span class="truncate">{{ $info['label'] }}</span>
-                @if ($abnormalCount[$key] > 0)
-                    <span class="shrink-0 flex size-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
-                        {{ $abnormalCount[$key] }}
-                    </span>
-                @endif
+                {{ $label }}
             </button>
         @endforeach
-    </nav>
+    </div>
 
-    <form wire:submit="save" class="mt-5 space-y-4">
-
-        {{-- ═══════════════════════════════════════════════════════════════ --}}
-        {{-- TAB 1 — RIWAYAT PENYAKIT                                       --}}
-        {{-- ═══════════════════════════════════════════════════════════════ --}}
-        @if ($tab === 'riwayat')
-            @php
-                $riwayatSections = [
-                    'riwayat_sekarang' => [
-                        'num'   => 1,
-                        'title' => 'Riwayat Penyakit Sekarang',
-                        'hints' => [
-                            'Keluhan utama pasien',
-                            'Kronologi penyakit saat ini (kapan mulai, faktor pencetus, perjalanan penyakit)',
-                            'Apa yang diharapkan pasien dari pelayanan kesehatan',
-                        ],
-                    ],
-                    'riwayat_lalu' => [
-                        'num'   => 2,
-                        'title' => 'Riwayat Penyakit Masa Lalu',
-                        'hints' => [
-                            'Penyakit masa anak-anak',
-                            'Alergi (makanan, obat-obatan, lingkungan)',
-                            'Pengalaman sakit / dirawat sebelumnya',
-                            'Pengobatan terakhir yang pernah diterima',
-                        ],
-                    ],
-                    'riwayat_keluarga' => [
-                        'num'   => 3,
-                        'title' => 'Riwayat Kesehatan Keluarga',
-                        'hints' => [
-                            'Dengan siapa klien tinggal dan jumlah anggota keluarga',
-                            'Apakah ada anggota keluarga yang menderita penyakit serupa',
-                            'Apakah ada keluarga dengan penyakit menular atau penyakit menurun',
-                            'Bagaimana efek pada keluarga bila salah satu anggota sakit (genogram ≥ 3 generasi)',
-                        ],
-                    ],
-                ];
-            @endphp
-
-            @foreach ($riwayatSections as $key => $meta)
-                @include('partials.pengkajian-text-card', [
-                    'key'   => $key,
-                    'num'   => $meta['num'],
-                    'title' => $meta['title'],
-                    'hints' => $meta['hints'],
-                ])
-            @endforeach
-        @endif
-
-        {{-- ═══════════════════════════════════════════════════════════════ --}}
-        {{-- TAB 2 — BIOLOGIS                                               --}}
-        {{-- ═══════════════════════════════════════════════════════════════ --}}
-        @if ($tab === 'biologis')
-            @php
-                $biologisSections = [
-                    'bio_nyaman' => [
-                        'num'   => 1,
-                        'title' => 'Rasa Aman & Nyaman',
-                        'hints' => [
-                            'Apakah ada rasa nyeri? Di bagian mana? Jelaskan secara rinci: PQRST',
-                            'Apakah nyeri mengganggu aktivitas?',
-                            'Apa yang dilakukan untuk mengurangi / menghilangkan nyeri?',
-                            'Apakah ada riwayat pembedahan?',
-                        ],
-                    ],
-                    'bio_aktivitas' => [
-                        'num'   => 2,
-                        'title' => 'Aktivitas',
-                        'hints' => [
-                            'Apakah klien selalu berolahraga? Jenis olahraga?',
-                            'Apakah klien menggunakan alat bantu dalam beraktivitas?',
-                            'Berapa lama melakukan kegiatan per hari? Jam berapa mulai bekerja?',
-                            'Bagaimana aktivitas klien saat sakit sekarang ini? Perlu bantuan?',
-                        ],
-                    ],
-                    'bio_istirahat' => [
-                        'num'   => 3,
-                        'title' => 'Istirahat',
-                        'hints' => [
-                            'Kapan dan berapa lama klien beristirahat?',
-                            'Apa kegiatan untuk mengisi waktu luang?',
-                            'Apakah klien menyediakan waktu khusus untuk istirahat?',
-                            'Bagaimana istirahat klien saat sakit sekarang?',
-                        ],
-                    ],
-                    'bio_tidur' => [
-                        'num'   => 4,
-                        'title' => 'Tidur',
-                        'hints' => [
-                            'Bagaimana pola tidur klien? (jam, berapa lama, nyenyak/tidak?)',
-                            'Apakah kondisi saat ini mengganggu klien?',
-                            'Apakah klien terbiasa menggunakan obat penenang sebelum tidur?',
-                            'Apakah klien sering terjaga saat tidur? Adakah gangguan tidur?',
-                        ],
-                    ],
-                    'bio_cairan' => [
-                        'num'   => 5,
-                        'title' => 'Cairan',
-                        'hints' => [
-                            'Berapa banyak klien minum per hari? (gelas)',
-                            'Minuman apa yang disukai dan yang dipantang klien?',
-                            'Apakah klien terbiasa minum alkohol?',
-                            'Bagaimana pola pemenuhan cairan per hari? Ada program pembatasan cairan?',
-                        ],
-                    ],
-                    'bio_nutrisi' => [
-                        'num'   => 6,
-                        'title' => 'Nutrisi',
-                        'hints' => [
-                            'Apa yang biasa dimakan klien tiap hari? Berapa kali per hari?',
-                            'Adakah makanan kesukaan / yang dipantang?',
-                            'Adakah riwayat alergi terhadap makanan? Kesulitan menelan/mengunyah?',
-                            'Adakah alat bantu dalam makan (sonde, infus)?',
-                            'Bagaimana kondisi gigi geligi klien? Gigi palsu?',
-                        ],
-                    ],
-                    'bio_eliminasi_feses' => [
-                        'num'   => 7,
-                        'title' => 'Eliminasi Feses',
-                        'hints' => [
-                            'Bagaimana pola defekasi klien? Kapan, frekuensi, karakteristik feses?',
-                            'Apakah terbiasa menggunakan obat pencahar?',
-                            'Adakah kesulitan dalam defekasi? Usaha yang dilakukan klien?',
-                        ],
-                    ],
-                    'bio_eliminasi_urine' => [
-                        'num'   => 8,
-                        'title' => 'Eliminasi Urine',
-                        'hints' => [
-                            'Apakah BAK klien teratur?',
-                            'Bagaimana pola, frekuensi, waktu, karakteristik, dan perubahan dalam miksi?',
-                            'Adakah riwayat pembedahan? Apakah menggunakan alat bantu dalam miksi?',
-                        ],
-                    ],
-                    'bio_oksigenasi' => [
-                        'num'   => 9,
-                        'title' => 'Oksigenasi',
-                        'hints' => [
-                            'Adakah kesulitan dalam bernafas? Bunyi nafas? Dispnea?',
-                            'Apakah klien menggunakan alat bantu pernafasan? Jenis?',
-                            'Apakah klien terbiasa merokok? Adakah alergi terhadap debu/obat-obatan?',
-                            'Adakah riwayat gangguan pernafasan dan pengobatannya?',
-                        ],
-                    ],
-                    'bio_kardiovaskuler' => [
-                        'num'   => 10,
-                        'title' => 'Kardiovaskuler',
-                        'hints' => [
-                            'Apakah klien cepat lelah?',
-                            'Adakah keluhan berdebar-debar? Nyeri dada yang menyebar? Pusing?',
-                            'Adakah rasa berat di dada? Apakah menggunakan alat pacu jantung?',
-                            'Apakah mendapat obat untuk gangguan kardiovaskuler?',
-                        ],
-                    ],
-                    'bio_hygiene' => [
-                        'num'   => 11,
-                        'title' => 'Personal Hygiene',
-                        'hints' => [
-                            'Bagaimana pola personal hygiene? Berapa kali mandi, gosok gigi?',
-                            'Berapa hari klien terbiasa cuci rambut?',
-                            'Apakah klien memerlukan bantuan dalam melakukan personal hygiene?',
-                        ],
-                    ],
-                    'bio_seks' => [
-                        'num'   => 12,
-                        'title' => 'Seksualitas',
-                        'hints' => [
-                            'Adakah kesulitan dalam hubungan seksual?',
-                            'Apakah penyakit sekarang mempengaruhi / mengganggu fungsi seksual?',
-                            'Jumlah anak',
-                        ],
-                    ],
-                ];
-            @endphp
-
-            @foreach ($biologisSections as $key => $meta)
-                @include('partials.pengkajian-text-card', [
-                    'key'   => $key,
-                    'num'   => $meta['num'],
-                    'title' => $meta['title'],
-                    'hints' => $meta['hints'],
-                ])
-            @endforeach
-        @endif
-
-        {{-- ═══════════════════════════════════════════════════════════════ --}}
-        {{-- TAB 3 — PSIKOSOSIAL & SPIRITUAL                                --}}
-        {{-- ═══════════════════════════════════════════════════════════════ --}}
-        @if ($tab === 'psikososial')
-            @php
-                $psikSections = [
-                    'psiko_emosi' => [
-                        'num'   => 1,
-                        'title' => 'Status Emosi',
-                        'hints' => [
-                            'Apakah klien dapat mengekspresikan perasaannya?',
-                            'Bagaimana suasana hati klien?',
-                            'Apa yang dilakukan bila suasana hati sedih, marah, atau gembira?',
-                        ],
-                    ],
-                    'psiko_konsep_diri' => [
-                        'num'   => 2,
-                        'title' => 'Konsep Diri',
-                        'hints' => [
-                            'Bagaimana klien memandang dirinya? Hal-hal apa yang disukai klien?',
-                            'Apakah klien mampu mengidentifikasi kekuatan dan kelemahannya?',
-                            'Hal-hal apa yang masih dapat dilakukan klien?',
-                        ],
-                    ],
-                    'psiko_sosial' => [
-                        'num'   => 3,
-                        'title' => 'Hubungan Sosial',
-                        'hints' => [
-                            'Apakah klien mempunyai teman dekat? Siapa yang dipercaya klien?',
-                            'Apakah klien ikut dalam kegiatan masyarakat?',
-                            'Apakah pekerjaan klien saat ini sesuai kemampuan?',
-                        ],
-                    ],
-                    'psiko_spiritual' => [
-                        'num'   => 4,
-                        'title' => 'Spiritual',
-                        'hints' => [
-                            'Apakah klien menganut satu agama?',
-                            'Apakah klien mengalami gangguan dalam menjalankan ibadah?',
-                            'Bagian mana hubungan antara manusia dan Tuhan dalam agama klien?',
-                        ],
-                    ],
-                ];
-            @endphp
-
-            @foreach ($psikSections as $key => $meta)
-                @include('partials.pengkajian-text-card', [
-                    'key'   => $key,
-                    'num'   => $meta['num'],
-                    'title' => $meta['title'],
-                    'hints' => $meta['hints'],
-                ])
-            @endforeach
-        @endif
-
-        {{-- ═══════════════════════════════════════════════════════════════ --}}
-        {{-- TAB 4 — PEMERIKSAAN FISIK                                      --}}
-        {{-- ═══════════════════════════════════════════════════════════════ --}}
-        @if ($tab === 'fisik')
-            @include('partials.pengkajian-fisik')
-        @endif
-
-        {{-- ── Action bar ──────────────────────────────────────────────── --}}
-        <div class="flex items-center gap-3 pt-2 border-t border-gray-100 dark:border-zinc-700">
-            <flux:button type="submit" variant="primary" icon-trailing="arrow-right" wire:loading.attr="disabled">
-                <span wire:loading.remove wire:target="save">Simpan & Lanjut ke Diagnosa</span>
-                <span wire:loading wire:target="save">Menyimpan…</span>
-            </flux:button>
-            <flux:button :href="route('pasien.show', $pasien)" variant="ghost" wire:navigate>
-                Simpan Nanti
-            </flux:button>
+    {{-- ── Tab: Identitas Penanggung Jawab ── --}}
+    @if ($tab === 'identitas')
+        <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+            <h3 class="mb-4 font-semibold text-[#1B4F72]">Identitas Penanggung Jawab</h3>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <flux:input wire:model="pj_nama" label="Nama Penanggung Jawab" placeholder="Nama lengkap" />
+                <flux:input wire:model="pj_umur" label="Umur" type="number" placeholder="Tahun" min="0" max="150" />
+                <flux:input wire:model="pj_pendidikan" label="Pendidikan Terakhir" placeholder="Contoh: S1, SMA" />
+                <flux:input wire:model="pj_pekerjaan" label="Pekerjaan" placeholder="Pekerjaan penanggung jawab" />
+                <div class="sm:col-span-2">
+                    <flux:textarea wire:model="pj_alamat" label="Alamat" placeholder="Alamat lengkap penanggung jawab" rows="2" />
+                </div>
+            </div>
         </div>
+    @endif
 
-    </form>
+    {{-- ── Tab: TTV & EWS ── --}}
+    @if ($tab === 'ttv')
+        <div class="space-y-4">
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+                <div class="mb-4 flex items-center justify-between">
+                    <h3 class="font-semibold text-[#1B4F72]">Tanda-Tanda Vital</h3>
+                    <button
+                        wire:click="hitungEws"
+                        class="flex items-center gap-1.5 rounded-lg bg-[#EBF5FB] px-3 py-1.5 text-xs font-semibold text-[#2E86C1] hover:bg-[#D7EAFB] transition"
+                    >
+                        <flux:icon.calculator class="size-3.5" />
+                        Hitung EWS
+                    </button>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-3">
+                    <flux:input wire:model.live.debounce.500ms="ews_td" label="Tekanan Darah (mmHg)" placeholder="120/80" />
+                    <flux:input wire:model.live.debounce.500ms="ews_nadi" label="Nadi (x/menit)" type="number" placeholder="80" min="0" max="300" />
+                    <flux:input wire:model.live.debounce.500ms="ews_rr" label="Pernapasan (x/menit)" type="number" placeholder="18" min="0" max="100" />
+                    <flux:input wire:model.live.debounce.500ms="ews_suhu" label="Suhu (°C)" type="number" step="0.1" placeholder="36.5" min="30" max="45" />
+                    <flux:input wire:model.live.debounce.500ms="ews_spo2" label="SpO2 (%)" type="number" placeholder="98" min="0" max="100" />
+                    <flux:select wire:model.live="ews_kesadaran" label="Kesadaran">
+                        <flux:select.option value="composmentis">Composmentis</flux:select.option>
+                        <flux:select.option value="apatis">Apatis</flux:select.option>
+                        <flux:select.option value="somnolen">Somnolen</flux:select.option>
+                        <flux:select.option value="koma">Koma</flux:select.option>
+                    </flux:select>
+                </div>
+            </div>
+
+            {{-- EWS Score Card --}}
+            <div class="rounded-2xl border p-5
+                @if ($ews_skor <= 2) border-[#5DCAA5] bg-[#E1F5EE]
+                @elseif ($ews_skor <= 5) border-yellow-300 bg-yellow-50
+                @else border-[#D95C3A]/40 bg-[#FDE8E8]
+                @endif">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-[#1B4F72]">Early Warning Score (EWS)</p>
+                        <p class="text-xs text-[#7A8FA6]">Semakin tinggi skor, semakin kritis kondisi pasien</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-4xl font-bold
+                            @if ($ews_skor <= 2) text-[#0F6E56]
+                            @elseif ($ews_skor <= 5) text-amber-600
+                            @else text-[#D95C3A]
+                            @endif">
+                            {{ $ews_skor }}
+                        </p>
+                        <p class="text-xs font-medium
+                            @if ($ews_skor <= 2) text-[#0F6E56]
+                            @elseif ($ews_skor <= 5) text-amber-600
+                            @else text-[#D95C3A]
+                            @endif">
+                            @if ($ews_skor <= 2) Rendah
+                            @elseif ($ews_skor <= 5) Sedang
+                            @else Tinggi / Kritis
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Anthropometri --}}
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+                <h3 class="mb-4 font-semibold text-[#1B4F72]">Antropometri</h3>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <flux:input wire:model="bb" label="Berat Badan (kg)" type="number" step="0.1" placeholder="60.0" />
+                    <flux:input wire:model="tb" label="Tinggi Badan (cm)" type="number" placeholder="165" />
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- ── Tab: Riwayat ── --}}
+    @if ($tab === 'riwayat')
+        <div class="space-y-4">
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+                <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Penyakit</h3>
+                <div class="space-y-4">
+                    <flux:textarea wire:model="riwayat_sekarang" label="Riwayat Penyakit Sekarang" rows="4"
+                        placeholder="Keluhan utama dan perjalanan penyakit yang sedang dialami..." />
+                    <flux:textarea wire:model="riwayat_lalu" label="Riwayat Penyakit Dahulu" rows="3"
+                        placeholder="Riwayat penyakit yang pernah diderita sebelumnya..." />
+                    <flux:textarea wire:model="riwayat_keluarga" label="Riwayat Penyakit Keluarga" rows="3"
+                        placeholder="Riwayat penyakit yang diderita anggota keluarga..." />
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- ── Tab: Biologis ── --}}
+    @if ($tab === 'biologis')
+        <div class="space-y-3">
+            @foreach ([
+                ['field' => 'biologis_nyeri', 'label' => 'Nyeri', 'icon' => 'bolt'],
+                ['field' => 'biologis_aktivitas', 'label' => 'Aktivitas & Latihan', 'icon' => 'arrow-trending-up'],
+                ['field' => 'biologis_nutrisi', 'label' => 'Nutrisi & Metabolisme', 'icon' => 'beaker'],
+                ['field' => 'biologis_cairan', 'label' => 'Kebutuhan Cairan', 'icon' => 'drop'],
+                ['field' => 'biologis_eliminasi_feses', 'label' => 'Eliminasi Feses (BAB)', 'icon' => 'arrow-path'],
+                ['field' => 'biologis_eliminasi_urine', 'label' => 'Eliminasi Urine (BAK)', 'icon' => 'arrow-path'],
+                ['field' => 'biologis_istirahat', 'label' => 'Istirahat & Tidur', 'icon' => 'moon'],
+                ['field' => 'biologis_oksigenasi', 'label' => 'Oksigenasi & Pernapasan', 'icon' => 'cloud'],
+            ] as $section)
+                @php $field = $section['field']; @endphp
+                <div class="rounded-2xl border border-[#E0EBF5] bg-white overflow-hidden">
+                    <div class="flex items-center justify-between px-5 py-3">
+                        <div class="flex items-center gap-2">
+                            <flux:icon :icon="$section['icon']" class="size-4 text-[#2E86C1]" />
+                            <span class="font-medium text-[#1B4F72]">{{ $section['label'] }}</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            @if (!($this->$field['ada'] ?? false))
+                                <span class="text-xs text-[#1A9B72] font-medium">✓ Tidak ada kelainan</span>
+                            @else
+                                <span class="text-xs text-[#D95C3A] font-medium">⚠ Ada kelainan</span>
+                            @endif
+                            <flux:switch wire:model.live="{{ $field }}.ada" />
+                        </div>
+                    </div>
+                    @if ($this->$field['ada'] ?? false)
+                        <div class="border-t border-[#E0EBF5] px-5 py-4">
+                            <flux:textarea
+                                wire:model="{{ $field }}.keterangan"
+                                label="Keterangan"
+                                placeholder="Deskripsikan kondisi yang ditemukan..."
+                                rows="2"
+                            />
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    @endif
+
+    {{-- ── Navigation Buttons ── --}}
+    <div class="mt-6 flex items-center justify-between border-t border-[#E0EBF5] pt-4">
+        <flux:button
+            :href="route('pasien.show', $askep->pasien_id)"
+            variant="ghost"
+            icon="arrow-left"
+            wire:navigate
+        >
+            Kembali
+        </flux:button>
+
+        <div class="flex items-center gap-3">
+            <button
+                wire:click="simpan"
+                wire:loading.attr="disabled"
+                class="rounded-xl border border-[#85B7EB] px-4 py-2 text-sm font-semibold text-[#2E86C1] hover:bg-[#EBF5FB] transition"
+            >
+                <span wire:loading.remove wire:target="simpan">Simpan</span>
+                <span wire:loading wire:target="simpan">Menyimpan...</span>
+            </button>
+
+            <button
+                wire:click="simpanLanjut"
+                wire:loading.attr="disabled"
+                class="inline-flex items-center gap-2 rounded-xl px-5 py-2 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
+                style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
+            >
+                <span wire:loading.remove wire:target="simpanLanjut">Simpan & Lanjut</span>
+                <span wire:loading wire:target="simpanLanjut">Menyimpan...</span>
+                <flux:icon.arrow-right class="size-4" wire:loading.remove wire:target="simpanLanjut" />
+            </button>
+        </div>
+    </div>
 </div>

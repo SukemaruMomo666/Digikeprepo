@@ -11,158 +11,188 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
 
     public function mount(Pasien $pasien): void
     {
-        // Pastikan pasien milik mahasiswa yang sedang login
         abort_unless($pasien->user_id === auth()->id(), 403);
 
-        $this->pasien = $pasien->load('riwayat');
+        $this->pasien = $pasien->load(['riwayat', 'askep']);
     }
 };
 ?>
 
-<div>
+<div class="p-4 md:p-6">
     <div class="mb-6">
         <flux:button :href="route('pasien.index')" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Daftar Pasien
         </flux:button>
         <div class="flex items-start justify-between">
             <div>
-                <flux:heading size="xl" level="1">{{ $pasien->nama_pasien }}</flux:heading>
-                <flux:text class="mt-1 font-mono text-sm">No. RM: {{ $pasien->no_rm }}</flux:text>
+                <h1 class="text-2xl font-bold text-[#1B4F72]">{{ $pasien->nama_pasien }}</h1>
+                <p class="mt-1 font-mono text-sm text-[#7A8FA6]">No. RM: {{ $pasien->no_rm }}</p>
             </div>
             <div class="flex items-center gap-2">
                 @if ($pasien->isSelesai())
-                    <flux:badge color="green">Askep Selesai</flux:badge>
+                    <span class="rounded-full border border-[#5DCAA5] bg-[#E1F5EE] px-3 py-1 text-xs font-semibold text-[#0F6E56]">Askep Selesai</span>
+                @elseif ($pasien->isDraft())
+                    <span class="rounded-full border border-[#85B7EB] bg-[#EBF5FB] px-3 py-1 text-xs font-semibold text-[#1B4F72]">Dalam Pengerjaan</span>
                 @else
-                    <flux:badge color="yellow">Draft</flux:badge>
+                    <span class="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-xs font-semibold text-zinc-500">Belum Ada Askep</span>
                 @endif
             </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {{-- Info Pasien --}}
+    <div class="grid gap-6 lg:grid-cols-3">
+        {{-- Kolom Utama --}}
         <div class="lg:col-span-2 flex flex-col gap-6">
-            <flux:card>
-                <flux:heading size="lg" class="mb-4">Informasi Pasien</flux:heading>
-                <dl class="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                    <div>
-                        <flux:text class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Umur</flux:text>
-                        <flux:text class="mt-1 font-medium">{{ $pasien->umur }} tahun</flux:text>
-                    </div>
-                    <div>
-                        <flux:text class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Jenis Kelamin</flux:text>
-                        <flux:text class="mt-1 font-medium">{{ $pasien->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</flux:text>
-                    </div>
-                    <div>
-                        <flux:text class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Ruang Rawat</flux:text>
-                        <flux:text class="mt-1 font-medium">{{ $pasien->ruang_rawat ?? '-' }}</flux:text>
-                    </div>
-                    <div>
-                        <flux:text class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Tanggal Masuk</flux:text>
-                        <flux:text class="mt-1 font-medium">{{ $pasien->tanggal_masuk->translatedFormat('d F Y') }}</flux:text>
-                    </div>
-                    <div>
-                        <flux:text class="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Dibuat</flux:text>
-                        <flux:text class="mt-1 font-medium">{{ $pasien->created_at->diffForHumans() }}</flux:text>
-                    </div>
-                </dl>
-            </flux:card>
 
-            {{-- Langkah Askep --}}
-            <flux:card>
-                <flux:heading size="lg" class="mb-4">Progress Asuhan Keperawatan</flux:heading>
-                <div class="flex flex-col gap-3">
-                    @php
-                        $steps = [
-                            ['label' => 'Pengkajian', 'route' => 'pasien.pengkajian', 'done' => $pasien->pengkajian()->exists()],
-                            ['label' => 'Diagnosa SDKI', 'route' => 'pasien.diagnosa', 'done' => $pasien->diagnosaPasien()->exists()],
-                            ['label' => 'Luaran SLKI', 'route' => 'pasien.luaran', 'done' => $pasien->luaranPasien()->exists()],
-                            ['label' => 'Intervensi SIKI', 'route' => 'pasien.intervensi', 'done' => $pasien->intervensiPasien()->exists()],
-                        ];
-                    @endphp
-                    @foreach ($steps as $i => $step)
-                        <div class="flex items-center gap-3">
-                            @if ($step['done'])
-                                <div class="flex size-7 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/40">
-                                    <flux:icon.check class="size-4 text-green-600 dark:text-green-400" />
-                                </div>
-                            @else
-                                <div class="flex size-7 shrink-0 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800">
-                                    <span class="text-xs font-semibold text-zinc-500">{{ $i + 1 }}</span>
-                                </div>
-                            @endif
-                            <flux:text class="{{ $step['done'] ? 'font-medium' : 'text-zinc-500 dark:text-zinc-400' }}">
-                                {{ $step['label'] }}
-                            </flux:text>
-                            @if ($step['done'])
-                                <flux:badge color="green" size="sm" class="ml-auto">Selesai</flux:badge>
-                            @else
-                                <flux:badge color="zinc" size="sm" class="ml-auto">Belum</flux:badge>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </flux:card>
-        </div>
-
-        {{-- Sidebar: Aksi + Riwayat --}}
-        <div class="flex flex-col gap-6">
-            {{-- Aksi --}}
-            <flux:card>
-                <flux:heading size="lg" class="mb-4">Aksi</flux:heading>
-                <div class="flex flex-col gap-2">
-                    @if ($pasien->isDraft())
-                        <flux:button
-                            :href="$pasien->nextAskepStep()"
-                            variant="primary"
-                            icon-trailing="arrow-right"
-                            class="w-full justify-center"
-                            wire:navigate
-                        >
-                            Lanjutkan Askep
-                        </flux:button>
-                    @else
-                        <flux:button
-                            :href="route('pasien.askep', $pasien)"
-                            variant="primary"
-                            icon="document-text"
-                            class="w-full justify-center"
-                            wire:navigate
-                        >
-                            Lihat Hasil Lengkap
-                        </flux:button>
-                    @endif
-                    <flux:button
-                        :href="route('pasien.edit', $pasien)"
-                        variant="ghost"
-                        icon="pencil"
-                        class="w-full justify-center"
-                        wire:navigate
-                    >
-                        Edit Data Pasien
+            {{-- Info Pasien --}}
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+                <div class="mb-4 flex items-center justify-between">
+                    <h2 class="font-semibold text-[#1B4F72]">Informasi Pasien</h2>
+                    <flux:button :href="route('pasien.edit', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
+                        Edit
                     </flux:button>
                 </div>
-            </flux:card>
+                <dl class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                    <div>
+                        <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Umur</dt>
+                        <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->umur }} tahun</dd>
+                    </div>
+                    <div>
+                        <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Jenis Kelamin</dt>
+                        <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Ruang Rawat</dt>
+                        <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->ruang_rawat ?? '-' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Tanggal Masuk</dt>
+                        <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->tanggal_masuk->translatedFormat('d F Y') }}</dd>
+                    </div>
+                    @if ($pasien->diagnosa_medis)
+                        <div class="sm:col-span-2">
+                            <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Diagnosa Medis</dt>
+                            <dd class="mt-1 font-medium text-[#D95C3A]">{{ $pasien->diagnosa_medis }}</dd>
+                        </div>
+                    @endif
+                    @if ($pasien->agama)
+                        <div>
+                            <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Agama</dt>
+                            <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->agama }}</dd>
+                        </div>
+                    @endif
+                    @if ($pasien->bb && $pasien->tb)
+                        <div>
+                            <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">BB / TB</dt>
+                            <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->bb }} kg / {{ $pasien->tb }} cm</dd>
+                        </div>
+                    @endif
+                </dl>
+            </div>
 
-            {{-- Riwayat Aktivitas --}}
-            <flux:card>
-                <flux:heading size="lg" class="mb-4">Riwayat Aktivitas</flux:heading>
-                @if ($pasien->riwayat->isEmpty())
-                    <flux:text class="text-sm text-zinc-500">Belum ada riwayat.</flux:text>
+            {{-- Daftar Askep --}}
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white">
+                <div class="flex items-center justify-between border-b border-[#E0EBF5] px-6 py-4">
+                    <h2 class="font-semibold text-[#1B4F72]">
+                        Asuhan Keperawatan
+                        <span class="ml-1 rounded-full bg-[#EBF5FB] px-2 py-0.5 text-xs text-[#2E86C1]">{{ $pasien->askep->count() }}</span>
+                    </h2>
+                    <a
+                        href="{{ route('pasien.askep.create', $pasien) }}"
+                        wire:navigate
+                        class="flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold text-white"
+                        style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
+                    >
+                        <flux:icon.plus class="size-3.5" />
+                        Buat Askep Baru
+                    </a>
+                </div>
+
+                @if ($pasien->askep->isEmpty())
+                    <div class="py-14 text-center">
+                        <flux:icon.clipboard-document-list class="mx-auto mb-3 size-12 text-[#85B7EB]" />
+                        <p class="text-sm text-[#7A8FA6]">Belum ada askep untuk pasien ini.</p>
+                        <div class="mt-4">
+                            <a
+                                href="{{ route('pasien.askep.create', $pasien) }}"
+                                wire:navigate
+                                class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white"
+                                style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
+                            >
+                                <flux:icon.plus class="size-4" />
+                                Mulai Asuhan Keperawatan
+                            </a>
+                        </div>
+                    </div>
                 @else
-                    <ol class="relative border-s border-zinc-200 dark:border-zinc-700">
-                        @foreach ($pasien->riwayat as $log)
-                            <li class="mb-6 ms-4 last:mb-0">
-                                <div class="absolute -start-1.5 mt-1 size-3 rounded-full border border-white bg-zinc-300 dark:border-zinc-900 dark:bg-zinc-600"></div>
-                                <flux:text class="text-sm font-medium">{{ $log->aktivitas }}</flux:text>
-                                <flux:text class="text-xs text-zinc-500 dark:text-zinc-400">
-                                    {{ $log->created_at->diffForHumans() }}
-                                </flux:text>
+                    <div class="divide-y divide-[#E0EBF5]">
+                        @foreach ($pasien->askep as $askep)
+                            <div class="flex items-center justify-between px-6 py-4 hover:bg-[#F4F8FB] transition">
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sm font-semibold text-[#1B4F72]">Askep #{{ $askep->id }}</span>
+                                        <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold
+                                            @if ($askep->status === 'selesai') bg-[#E1F5EE] text-[#0F6E56]
+                                            @elseif ($askep->status === 'menunggu_review') bg-[#FEF3C7] text-amber-700
+                                            @elseif ($askep->status === 'perlu_revisi') bg-[#FDE8E8] text-[#D95C3A]
+                                            @elseif ($askep->status === 'disetujui') bg-[#E1F5EE] text-[#0F6E56]
+                                            @else bg-[#EBF5FB] text-[#1B4F72]
+                                            @endif">
+                                            {{ $askep->statusLabel() }}
+                                        </span>
+                                    </div>
+                                    <div class="mt-0.5 flex items-center gap-2 text-xs text-[#7A8FA6]">
+                                        <span>Step {{ $askep->step_terakhir }}/5</span>
+                                        <span>•</span>
+                                        <span>{{ $askep->created_at->translatedFormat('d M Y') }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 shrink-0">
+                                    {{-- Progress bar --}}
+                                    <div class="hidden sm:flex items-center gap-1">
+                                        @for ($s = 1; $s <= 5; $s++)
+                                            <div class="h-1.5 w-6 rounded-full {{ $s <= $askep->step_terakhir ? 'bg-[#2E86C1]' : 'bg-[#E0EBF5]' }}"></div>
+                                        @endfor
+                                    </div>
+                                    <a
+                                        href="{{ $askep->nextStepUrl() }}"
+                                        wire:navigate
+                                        class="flex items-center gap-1 rounded-lg border border-[#85B7EB] px-3 py-1.5 text-xs font-semibold text-[#2E86C1] hover:bg-[#EBF5FB] transition"
+                                    >
+                                        @if ($askep->isSelesai())
+                                            <flux:icon.eye class="size-3.5" />
+                                            Lihat
+                                        @else
+                                            <flux:icon.arrow-right class="size-3.5" />
+                                            Lanjutkan
+                                        @endif
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- Sidebar: Riwayat --}}
+        <div class="flex flex-col gap-6">
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-5">
+                <h2 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Aktivitas</h2>
+                @if ($pasien->riwayat->isEmpty())
+                    <p class="text-sm text-[#7A8FA6]">Belum ada riwayat.</p>
+                @else
+                    <ol class="relative border-s border-[#D0DCE8] space-y-4">
+                        @foreach ($pasien->riwayat->take(10) as $log)
+                            <li class="ms-4">
+                                <div class="absolute -start-1.5 mt-1 size-3 rounded-full border border-white bg-[#85B7EB]"></div>
+                                <p class="text-sm font-medium text-[#1B4F72]">{{ $log->aktivitas }}</p>
+                                <p class="text-xs text-[#7A8FA6]">{{ $log->created_at->diffForHumans() }}</p>
                             </li>
                         @endforeach
                     </ol>
                 @endif
-            </flux:card>
+            </div>
         </div>
     </div>
 </div>
