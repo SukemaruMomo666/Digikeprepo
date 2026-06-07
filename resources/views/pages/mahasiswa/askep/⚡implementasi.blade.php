@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 use App\Models\Askep;
 use App\Models\AskepImplementasi;
 use App\Models\AskepIntervensi;
@@ -427,3 +428,16 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
         </div>
     @endif
 </div>
+=======
+use Livewire\Component;
+
+new class extends Component
+{
+    //
+};
+?>
+
+<div>
+    {{-- Well begun is half done. - Aristotle --}}
+</div>
+>>>>>>> 117d1dc8c208298b4203bd2cfc96d174a7009b1d
