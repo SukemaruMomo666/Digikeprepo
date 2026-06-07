@@ -11,34 +11,49 @@
         >
             <flux:sidebar.header>
                 <div class="flex items-center gap-2.5 px-1 py-1">
-                    <div class="flex size-9 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-                        <flux:icon.shield-check class="size-5 text-white" />
+                    {{-- Logo Polsub --}}
+                    <div class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm overflow-hidden">
+                        @if (file_exists(public_path('images/logo-polsub.png')))
+                            <img src="{{ asset('images/logo-polsub.png') }}" alt="Logo Polsub" class="size-7 object-contain" />
+                        @else
+                            <flux:icon.shield-check class="size-5 text-white" />
+                        @endif
                     </div>
                     <div>
                         <p class="text-sm font-bold leading-tight text-white">DIGIKEP</p>
-                        <p class="text-[10px] leading-tight text-white/60">Nursing Care System</p>
+                        <p class="text-[10px] leading-tight text-white/60">Politeknik Negeri Subang</p>
                     </div>
                 </div>
                 <flux:sidebar.collapse class="lg:hidden text-white/70 hover:bg-white/10" />
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
+                {{-- ── Menu Utama ── --}}
                 <flux:sidebar.item
                     icon="home"
                     :href="route('dashboard')"
                     :current="request()->routeIs('dashboard')"
                     wire:navigate
                 >
-                    Dashboard
+                    Beranda
                 </flux:sidebar.item>
 
                 <flux:sidebar.item
                     icon="users"
                     :href="route('pasien.index')"
-                    :current="request()->routeIs('pasien.*')"
+                    :current="request()->routeIs('pasien.*') && !request()->routeIs('pasien.askep*')"
                     wire:navigate
                 >
-                    Pasien
+                    Data Pasien
+                </flux:sidebar.item>
+
+                <flux:sidebar.item
+                    icon="clipboard-document-list"
+                    :href="route('askep.index')"
+                    :current="request()->routeIs('askep.*')"
+                    wire:navigate
+                >
+                    Asuhan Keperawatan
                 </flux:sidebar.item>
 
                 <flux:sidebar.item
@@ -50,22 +65,35 @@
                     Riwayat
                 </flux:sidebar.item>
 
+                {{-- ── Separator ── --}}
+                <div class="mx-3 my-1 border-t border-white/10"></div>
+
+                {{-- ── Panduan & Referensi ── --}}
                 <flux:sidebar.item
-                    icon="clipboard-document-list"
-                    :href="route('askep.index')"
-                    :current="request()->routeIs('askep.index')"
+                    icon="book-open"
+                    :href="route('panduan.index')"
+                    :current="request()->routeIs('panduan.*')"
                     wire:navigate
                 >
-                    Semua Askep
+                    Panduan
                 </flux:sidebar.item>
 
                 <flux:sidebar.item
-                    icon="archive-box"
-                    :href="route('arsip.index')"
-                    :current="request()->routeIs('arsip.index')"
+                    icon="play-circle"
+                    :href="route('video.index')"
+                    :current="request()->routeIs('video.*')"
                     wire:navigate
                 >
-                    Arsip Pengkajian
+                    Video Tutorial
+                </flux:sidebar.item>
+
+                <flux:sidebar.item
+                    icon="question-mark-circle"
+                    :href="route('faq.index')"
+                    :current="request()->routeIs('faq.*')"
+                    wire:navigate
+                >
+                    FAQ
                 </flux:sidebar.item>
             </flux:sidebar.nav>
 
@@ -91,8 +119,12 @@
         <flux:header class="lg:hidden border-b-0 bg-[#1B4F72] shadow-primary">
             <flux:sidebar.toggle class="lg:hidden text-white hover:bg-white/20" icon="bars-2" inset="left" />
             <div class="flex items-center gap-2 ms-2">
-                <div class="flex size-7 items-center justify-center rounded-lg bg-white/20">
-                    <flux:icon.shield-check class="size-4 text-white" />
+                <div class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-white/20 overflow-hidden">
+                    @if (file_exists(public_path('images/logo-polsub.png')))
+                        <img src="{{ asset('images/logo-polsub.png') }}" alt="Logo Polsub" class="size-5 object-contain" />
+                    @else
+                        <flux:icon.shield-check class="size-4 text-white" />
+                    @endif
                 </div>
                 <span class="text-sm font-bold text-white">DIGIKEP</span>
             </div>
