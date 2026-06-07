@@ -1,158 +1,144 @@
 <?php
 
-use App\Models\DiagnosaPasien;
+use App\Models\Askep;
+use App\Models\AskepDiagnosa;
 use App\Models\DiagnosaSdki;
-use App\Models\EvaluasiPasien;
-use App\Models\IntervensiPasien;
-use App\Models\IntervensiSiki;
-use App\Models\LuaranPasien;
-use App\Models\LuaranSlki;
 use App\Models\Pasien;
-use App\Models\Pengkajian;
 
-// ── nextAskepStep ─────────────────────────────────────────────────────────────
+// ── Pasien.nextAskepStep ──────────────────────────────────────────────────────
 
-test('nextAskepStep mengarahkan ke pengkajian ketika belum ada data', function () {
+test('nextAskepStep mengarahkan ke create askep ketika belum ada askep', function () {
     $pasien = Pasien::factory()->create();
 
-    expect($pasien->nextAskepStep())->toBe(route('pasien.pengkajian', $pasien));
+    expect($pasien->nextAskepStep())->toBe(route('pasien.askep.create', $pasien));
 });
 
-test('nextAskepStep mengarahkan ke diagnosa setelah pengkajian ada', function () {
+test('nextAskepStep mendelegasikan ke askepAktif ketika ada askep draft', function () {
     $pasien = Pasien::factory()->create();
-    Pengkajian::factory()->create(['pasien_id' => $pasien->id]);
-
-    expect($pasien->nextAskepStep())->toBe(route('pasien.diagnosa', $pasien));
-});
-
-test('nextAskepStep mengarahkan ke luaran setelah diagnosa ada', function () {
-    $pasien = Pasien::factory()->create();
-    Pengkajian::factory()->create(['pasien_id' => $pasien->id]);
-    $diagnosa = DiagnosaSdki::factory()->create();
-    DiagnosaPasien::factory()->create([
+    $askep = Askep::factory()->create([
         'pasien_id' => $pasien->id,
-        'diagnosa_id' => $diagnosa->id,
+        'user_id' => $pasien->user_id,
+        'status' => Askep::STATUS_DRAFT,
+        'step_terakhir' => 1,
     ]);
 
-    expect($pasien->nextAskepStep())->toBe(route('pasien.luaran', $pasien));
+    // step_terakhir 1 → pengkajian sudah selesai → lanjut ke diagnosa
+    expect($pasien->nextAskepStep())->toBe(route('askep.diagnosa', $askep));
 });
 
-test('nextAskepStep mengarahkan ke intervensi setelah luaran ada', function () {
+// ── Askep.nextStepUrl ────────────────────────────────────────────────────────
+
+test('nextStepUrl mengarahkan ke pengkajian ketika step_terakhir kurang dari 1', function () {
+    $askep = Askep::factory()->create(['step_terakhir' => 0]);
+
+    expect($askep->nextStepUrl())->toBe(route('askep.pengkajian', $askep));
+});
+
+test('nextStepUrl mengarahkan ke diagnosa ketika step_terakhir 1', function () {
+    $askep = Askep::factory()->create(['step_terakhir' => 1]);
+
+    expect($askep->nextStepUrl())->toBe(route('askep.diagnosa', $askep));
+});
+
+test('nextStepUrl mengarahkan ke perencanaan ketika step_terakhir 2', function () {
+    $askep = Askep::factory()->create(['step_terakhir' => 2]);
+
+    expect($askep->nextStepUrl())->toBe(route('askep.perencanaan', $askep));
+});
+
+test('nextStepUrl mengarahkan ke implementasi ketika step_terakhir 3', function () {
+    $askep = Askep::factory()->create(['step_terakhir' => 3]);
+
+    expect($askep->nextStepUrl())->toBe(route('askep.implementasi', $askep));
+});
+
+test('nextStepUrl mengarahkan ke evaluasi ketika step_terakhir 4', function () {
+    $askep = Askep::factory()->create(['step_terakhir' => 4]);
+
+    expect($askep->nextStepUrl())->toBe(route('askep.evaluasi', $askep));
+});
+
+test('nextStepUrl mengarahkan ke show ketika step_terakhir 5 atau lebih', function () {
+    $askep = Askep::factory()->create(['step_terakhir' => 5]);
+
+    expect($askep->nextStepUrl())->toBe(route('askep.show', $askep));
+});
+
+// ── Pasien status helpers ────────────────────────────────────────────────────
+
+test('isDraft mengembalikan false ketika tidak ada askep sama sekali', function () {
     $pasien = Pasien::factory()->create();
-    Pengkajian::factory()->create(['pasien_id' => $pasien->id]);
-    $diagnosa = DiagnosaSdki::factory()->create();
-    $diagnosaPasien = DiagnosaPasien::factory()->create([
+
+    expect($pasien->isDraft())->toBeFalse();
+});
+
+test('isDraft mengembalikan true ketika ada askep berstatus draft', function () {
+    $pasien = Pasien::factory()->create();
+    Askep::factory()->create([
         'pasien_id' => $pasien->id,
-        'diagnosa_id' => $diagnosa->id,
-    ]);
-    $luaran = LuaranSlki::factory()->create();
-    LuaranPasien::factory()->create([
-        'diagnosa_pasien_id' => $diagnosaPasien->id,
-        'luaran_id' => $luaran->id,
+        'user_id' => $pasien->user_id,
+        'status' => Askep::STATUS_DRAFT,
     ]);
 
-    expect($pasien->nextAskepStep())->toBe(route('pasien.intervensi', $pasien));
+    expect($pasien->isDraft())->toBeTrue();
 });
 
-test('nextAskepStep mengarahkan ke evaluasi setelah intervensi ada', function () {
+test('isSelesai mengembalikan false ketika tidak ada askep', function () {
     $pasien = Pasien::factory()->create();
-    Pengkajian::factory()->create(['pasien_id' => $pasien->id]);
-    $diagnosa = DiagnosaSdki::factory()->create();
-    $diagnosaPasien = DiagnosaPasien::factory()->create([
+
+    expect($pasien->isSelesai())->toBeFalse();
+});
+
+test('isSelesai mengembalikan true ketika semua askep berstatus selesai', function () {
+    $pasien = Pasien::factory()->create();
+    Askep::factory()->create([
         'pasien_id' => $pasien->id,
-        'diagnosa_id' => $diagnosa->id,
-    ]);
-    $luaran = LuaranSlki::factory()->create();
-    $luaranPasien = LuaranPasien::factory()->create([
-        'diagnosa_pasien_id' => $diagnosaPasien->id,
-        'luaran_id' => $luaran->id,
-    ]);
-    $intervensi = IntervensiSiki::factory()->create();
-    IntervensiPasien::factory()->create([
-        'luaran_pasien_id' => $luaranPasien->id,
-        'intervensi_id' => $intervensi->id,
+        'user_id' => $pasien->user_id,
+        'status' => Askep::STATUS_SELESAI,
     ]);
 
-    expect($pasien->nextAskepStep())->toBe(route('pasien.evaluasi', $pasien));
+    expect($pasien->isSelesai())->toBeTrue();
 });
 
-test('nextAskepStep mengarahkan ke askep setelah semua langkah selesai termasuk evaluasi', function () {
+test('isSelesai mengembalikan false ketika masih ada askep draft', function () {
     $pasien = Pasien::factory()->create();
-    Pengkajian::factory()->create(['pasien_id' => $pasien->id]);
-    $diagnosa = DiagnosaSdki::factory()->create();
-    $diagnosaPasien = DiagnosaPasien::factory()->create([
+    Askep::factory()->create([
         'pasien_id' => $pasien->id,
-        'diagnosa_id' => $diagnosa->id,
+        'user_id' => $pasien->user_id,
+        'status' => Askep::STATUS_SELESAI,
     ]);
-    $luaran = LuaranSlki::factory()->create();
-    $luaranPasien = LuaranPasien::factory()->create([
-        'diagnosa_pasien_id' => $diagnosaPasien->id,
-        'luaran_id' => $luaran->id,
-    ]);
-    $intervensi = IntervensiSiki::factory()->create();
-    IntervensiPasien::factory()->create([
-        'luaran_pasien_id' => $luaranPasien->id,
-        'intervensi_id' => $intervensi->id,
-    ]);
-    EvaluasiPasien::create([
-        'luaran_pasien_id' => $luaranPasien->id,
-        'hasil' => 'tercapai',
-    ]);
-
-    expect($pasien->nextAskepStep())->toBe(route('pasien.askep', $pasien));
-});
-
-// ── intervensiPasien ──────────────────────────────────────────────────────────
-
-test('intervensiPasien exists mengembalikan false ketika belum ada', function () {
-    $pasien = Pasien::factory()->create();
-
-    expect($pasien->intervensiPasien()->exists())->toBeFalse();
-});
-
-test('intervensiPasien exists mengembalikan true setelah data ditambahkan', function () {
-    $pasien = Pasien::factory()->create();
-    $diagnosa = DiagnosaSdki::factory()->create();
-    $diagnosaPasien = DiagnosaPasien::factory()->create([
+    Askep::factory()->create([
         'pasien_id' => $pasien->id,
-        'diagnosa_id' => $diagnosa->id,
-    ]);
-    $luaran = LuaranSlki::factory()->create();
-    $luaranPasien = LuaranPasien::factory()->create([
-        'diagnosa_pasien_id' => $diagnosaPasien->id,
-        'luaran_id' => $luaran->id,
-    ]);
-    $intervensi = IntervensiSiki::factory()->create();
-    IntervensiPasien::factory()->create([
-        'luaran_pasien_id' => $luaranPasien->id,
-        'intervensi_id' => $intervensi->id,
+        'user_id' => $pasien->user_id,
+        'status' => Askep::STATUS_DRAFT,
     ]);
 
-    expect($pasien->intervensiPasien()->exists())->toBeTrue();
+    expect($pasien->isSelesai())->toBeFalse();
 });
 
-test('intervensiPasien tidak mengembalikan data milik pasien lain', function () {
-    $pasienA = Pasien::factory()->create();
-    $pasienB = Pasien::factory()->create();
+// ── Askep status helpers ──────────────────────────────────────────────────────
 
-    // Hanya pasien B yang punya intervensi
-    $diagnosa = DiagnosaSdki::factory()->create();
-    $diagnosaPasien = DiagnosaPasien::factory()->create([
-        'pasien_id' => $pasienB->id,
-        'diagnosa_id' => $diagnosa->id,
-    ]);
-    $luaran = LuaranSlki::factory()->create();
-    $luaranPasien = LuaranPasien::factory()->create([
-        'diagnosa_pasien_id' => $diagnosaPasien->id,
-        'luaran_id' => $luaran->id,
-    ]);
-    $intervensi = IntervensiSiki::factory()->create();
-    IntervensiPasien::factory()->create([
-        'luaran_pasien_id' => $luaranPasien->id,
-        'intervensi_id' => $intervensi->id,
-    ]);
+test('Askep.isDraft mengembalikan true ketika status draft', function () {
+    $askep = Askep::factory()->create(['status' => Askep::STATUS_DRAFT]);
 
-    // pasien A tetap tidak punya intervensi
-    expect($pasienA->intervensiPasien()->exists())->toBeFalse();
-    expect($pasienB->intervensiPasien()->exists())->toBeTrue();
+    expect($askep->isDraft())->toBeTrue();
+    expect($askep->isSelesai())->toBeFalse();
+});
+
+test('Askep.isSelesai mengembalikan true ketika status selesai', function () {
+    $askep = Askep::factory()->create(['status' => Askep::STATUS_SELESAI]);
+
+    expect($askep->isSelesai())->toBeTrue();
+    expect($askep->isDraft())->toBeFalse();
+});
+
+test('Askep memiliki relasi diagnosa yang menampilkan urutan prioritas', function () {
+    $askep = Askep::factory()->create();
+    $sdki = DiagnosaSdki::inRandomOrder()->first() ?? DiagnosaSdki::factory()->create();
+
+    AskepDiagnosa::factory()->create(['askep_id' => $askep->id, 'sdki_id' => $sdki->id, 'prioritas' => 2]);
+    AskepDiagnosa::factory()->create(['askep_id' => $askep->id, 'sdki_id' => $sdki->id, 'prioritas' => 1]);
+
+    $prioritas = $askep->diagnosa()->pluck('prioritas')->toArray();
+    expect($prioritas)->toBe([1, 2]);
 });

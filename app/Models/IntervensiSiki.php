@@ -24,9 +24,9 @@ class IntervensiSiki extends Model
         return $this->belongsToMany(LuaranSlki::class, 'slki_siki_relations', 'intervensi_id', 'luaran_id');
     }
 
-    /** Intervensi yang sudah dipilih mahasiswa. */
-    public function intervensiPasien(): HasMany
+    /** Intervensi askep mahasiswa yang menggunakan SIKI ini. */
+    public function askepIntervensi(): HasMany
     {
-        return $this->hasMany(IntervensiPasien::class, 'intervensi_id');
+        return $this->hasMany(AskepIntervensi::class, 'siki_id');
     }
 }

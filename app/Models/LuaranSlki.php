@@ -30,9 +30,9 @@ class LuaranSlki extends Model
         return $this->belongsToMany(IntervensiSiki::class, 'slki_siki_relations', 'luaran_id', 'intervensi_id');
     }
 
-    /** Luaran yang sudah dipilih mahasiswa. */
-    public function luaranPasien(): HasMany
+    /** Luaran askep mahasiswa yang menggunakan SLKI ini. */
+    public function askepDiagnosaLuaran(): HasMany
     {
-        return $this->hasMany(LuaranPasien::class, 'luaran_id');
+        return $this->hasMany(AskepDiagnosaLuaran::class, 'slki_id');
     }
 }

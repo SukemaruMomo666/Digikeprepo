@@ -71,7 +71,7 @@ new #[Layout('layouts.admin')] #[Title('Diagnosa SDKI')] class extends Component
                 $q->where('kode_diagnosa', 'like', "%{$this->search}%")
                     ->orWhere('label_diagnosa', 'like', "%{$this->search}%");
             }))
-                ->withCount('diagnosaPasien')
+                ->withCount('askepDiagnosa')
                 ->orderBy('kode_diagnosa')
                 ->paginate(20),
         ];
@@ -118,8 +118,8 @@ new #[Layout('layouts.admin')] #[Title('Diagnosa SDKI')] class extends Component
                             @endif
                         </flux:table.cell>
                         <flux:table.cell>
-                            <flux:badge color="{{ $item->diagnosa_pasien_count > 0 ? 'blue' : 'zinc' }}" size="sm">
-                                {{ $item->diagnosa_pasien_count }}× dipakai
+                            <flux:badge color="{{ $item->askep_diagnosa_count > 0 ? 'blue' : 'zinc' }}" size="sm">
+                                {{ $item->askep_diagnosa_count }}× dipakai
                             </flux:badge>
                         </flux:table.cell>
                         <flux:table.cell>

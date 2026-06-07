@@ -74,7 +74,7 @@ new #[Layout('layouts.admin')] #[Title('Intervensi SIKI')] class extends Compone
                 $q->where('kode_intervensi', 'like', "%{$this->search}%")
                     ->orWhere('label_intervensi', 'like', "%{$this->search}%");
             }))
-                ->withCount('intervensiPasien')
+                ->withCount('askepIntervensi')
                 ->orderBy('kode_intervensi')
                 ->paginate(20),
         ];
@@ -121,8 +121,8 @@ new #[Layout('layouts.admin')] #[Title('Intervensi SIKI')] class extends Compone
                             @endif
                         </flux:table.cell>
                         <flux:table.cell>
-                            <flux:badge color="{{ $item->intervensi_pasien_count > 0 ? 'orange' : 'zinc' }}" size="sm">
-                                {{ $item->intervensi_pasien_count }}× dipakai
+                            <flux:badge color="{{ $item->askep_intervensi_count > 0 ? 'orange' : 'zinc' }}" size="sm">
+                                {{ $item->askep_intervensi_count }}× dipakai
                             </flux:badge>
                         </flux:table.cell>
                         <flux:table.cell>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Askep;
 use App\Models\Pasien;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -21,9 +22,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
 
         return [
             'jumlahPasien'   => Pasien::where('user_id', $userId)->count(),
-            'totalDiagnosa'  => \App\Models\DiagnosaPasien::whereHas('pasien', fn ($q) => $q->where('user_id', $userId))->count(),
-            'askepSelesai'   => Pasien::where('user_id', $userId)->where('status_askep', 'selesai')->count(),
-            'pasienTerakhir' => Pasien::where('user_id', $userId)->latest()->limit(5)->get(),
+            'totalDiagnosa'  => \App\Models\AskepDiagnosa::whereHas(
+                'askep',
+                fn ($q) => $q->where('user_id', $userId)
+            )->count(),
+            'askepSelesai'   => Askep::where('user_id', $userId)
+                ->where('status', Askep::STATUS_SELESAI)
+                ->count(),
+            'pasienTerakhir' => Pasien::where('user_id', $userId)->with(['askep' => fn ($q) => $q->latest()->limit(1)])->latest()->limit(5)->get(),
         ];
     }
 };
@@ -131,6 +137,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
                                 );
                                 $navyPalette = ['bg-[#2E86C1]', 'bg-[#1A9B72]', 'bg-[#1B4F72]', 'bg-[#5DCAA5]', 'bg-[#85B7EB]', 'bg-[#0F6E56]'];
                                 $avatarBg    = $navyPalette[ord($pasien->nama_pasien[0]) % count($navyPalette)];
+                                $askepAktif  = $pasien->askep->first();
                             @endphp
                             <tr class="transition-colors hover:bg-[#F4F8FB] dark:hover:bg-zinc-700/50">
                                 <td class="px-6 py-3.5">
@@ -148,18 +155,22 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
                                         <span class="inline-flex items-center rounded-full border border-[#5DCAA5] bg-[#E1F5EE] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[#0F6E56]">
                                             Selesai
                                         </span>
-                                    @else
+                                    @elseif ($askepAktif)
                                         <span class="inline-flex items-center rounded-full border border-[#85B7EB] bg-[#EBF5FB] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[#1B4F72]">
-                                            Draft
+                                            {{ $askepAktif->statusLabel() }}
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                                            Belum Ada Askep
                                         </span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-3.5">
                                     <a
-                                        href="{{ $pasien->isDraft() ? $pasien->nextAskepStep() : route('pasien.show', $pasien) }}"
+                                        href="{{ route('pasien.show', $pasien) }}"
                                         wire:navigate
                                         class="text-[#85B7EB] transition-colors hover:text-[#2E86C1]"
-                                        title="{{ $pasien->isDraft() ? 'Lanjutkan Askep' : 'Lihat Detail' }}"
+                                        title="Lihat Detail"
                                     >
                                         <flux:icon.eye class="size-5" />
                                     </a>

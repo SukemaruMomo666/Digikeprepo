@@ -24,10 +24,10 @@ class DiagnosaSdki extends Model
         return $this->belongsToMany(LuaranSlki::class, 'sdki_slki_relations', 'diagnosa_id', 'luaran_id');
     }
 
-    /** Diagnosa yang sudah dipilih oleh mahasiswa. */
-    public function diagnosaPasien(): HasMany
+    /** Diagnosa askep mahasiswa yang menggunakan SDKI ini. */
+    public function askepDiagnosa(): HasMany
     {
-        return $this->hasMany(DiagnosaPasien::class, 'diagnosa_id');
+        return $this->hasMany(AskepDiagnosa::class, 'sdki_id');
     }
 
     /** Penyebab diagnosa (untuk tipe Aktual & Promosi Kesehatan). */

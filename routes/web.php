@@ -28,6 +28,22 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     });
 
     Route::livewire('/askep', 'pages::mahasiswa.askep.index')->name('askep.index');
+
+    // ── Askep baru (berbasis entitas Askep, bukan Pasien) ─────────────────────
+    // Stubs sementara — akan diganti saat Phase 2
+    Route::prefix('pasien/{pasien}/askep')->name('pasien.askep.')->group(function () {
+        Route::livewire('/baru', 'pages::mahasiswa.askep.create')->name('create');
+    });
+
+    Route::prefix('askep/{askep}')->name('askep.')->group(function () {
+        Route::livewire('/', 'pages::mahasiswa.askep.detail')->name('show');
+        Route::livewire('/pengkajian', 'pages::mahasiswa.askep.perencanaan')->name('pengkajian');
+        Route::livewire('/diagnosa', 'pages::mahasiswa.askep.perencanaan')->name('diagnosa');
+        Route::livewire('/perencanaan', 'pages::mahasiswa.askep.perencanaan')->name('perencanaan');
+        Route::livewire('/implementasi', 'pages::mahasiswa.askep.perencanaan')->name('implementasi');
+        Route::livewire('/evaluasi', 'pages::mahasiswa.askep.perencanaan')->name('evaluasi');
+    });
+
     Route::livewire('/riwayat', 'pages::mahasiswa.riwayat.index')->name('riwayat.index');
     Route::livewire('/arsip', 'pages::mahasiswa.arsip.index')->name('arsip.index');
 });

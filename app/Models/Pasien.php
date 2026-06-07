@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Database\Factories\PasienFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-#[Fillable(['user_id', 'no_rm', 'nama_pasien', 'umur', 'jenis_kelamin', 'ruang_rawat', 'tanggal_masuk', 'status_askep'])]
+#[Fillable([
+    'user_id', 'no_rm', 'nama_pasien', 'umur', 'jenis_kelamin',
+    'ruang_rawat', 'tanggal_masuk', 'tanggal_lahir',
+    'agama', 'status_perkawinan', 'pekerjaan', 'pendidikan',
+    'alamat', 'diagnosa_medis', 'bb', 'tb',
+])]
 class Pasien extends Model
 {
     /** @use HasFactory<PasienFactory> */
@@ -23,7 +26,10 @@ class Pasien extends Model
     {
         return [
             'tanggal_masuk' => 'date',
+            'tanggal_lahir' => 'date',
             'umur' => 'integer',
+            'bb' => 'float',
+            'tb' => 'integer',
         ];
     }
 
@@ -34,14 +40,9 @@ class Pasien extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function pengkajian(): HasMany
+    public function askep(): HasMany
     {
-        return $this->hasMany(Pengkajian::class);
-    }
-
-    public function diagnosaPasien(): HasMany
-    {
-        return $this->hasMany(DiagnosaPasien::class);
+        return $this->hasMany(Askep::class)->latest();
     }
 
     public function riwayat(): HasMany
@@ -49,71 +50,49 @@ class Pasien extends Model
         return $this->hasMany(RiwayatPasien::class)->latest();
     }
 
-    public function luaranPasien(): HasManyThrough
+    // ── Computed helpers ──────────────────────────────────────────────────────
+
+    /** Ambil askep aktif (draft / in-progress) terakhir, atau null jika tidak ada. */
+    public function askepAktif(): ?Askep
     {
-        return $this->hasManyThrough(LuaranPasien::class, DiagnosaPasien::class);
+        return $this->askep()
+            ->whereNotIn('status', [Askep::STATUS_SELESAI])
+            ->latest()
+            ->first();
     }
 
-    public function intervensiPasien(): Builder
+    /** Cek apakah masih ada askep yang belum selesai. */
+    public function isDraft(): bool
     {
-        return IntervensiPasien::whereHas(
-            'luaranPasien.diagnosaPasien',
-            fn ($q) => $q->where('pasien_id', $this->id)
-        );
+        return $this->askep()
+            ->whereNotIn('status', [Askep::STATUS_SELESAI])
+            ->exists();
     }
 
-    public function evaluasiPasien(): Builder
+    /** Cek apakah semua askep sudah selesai (dan minimal ada 1). */
+    public function isSelesai(): bool
     {
-        return EvaluasiPasien::whereHas(
-            'luaranPasien.diagnosaPasien',
-            fn ($q) => $q->where('pasien_id', $this->id)
-        );
+        $total = $this->askep()->count();
+        $selesai = $this->askep()->where('status', Askep::STATUS_SELESAI)->count();
+
+        return $total > 0 && $total === $selesai;
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
-    /**
-     * Kembalikan URL langkah Askep berikutnya yang belum selesai.
-     * Digunakan oleh tombol "Lanjutkan Askep".
-     */
+    /** URL langkah Askep aktif berikutnya. */
     public function nextAskepStep(): string
     {
-        if (! $this->pengkajian()->exists()) {
-            return route('pasien.pengkajian', $this);
+        $aktif = $this->askepAktif();
+
+        if (! $aktif) {
+            return route('pasien.askep.create', $this);
         }
 
-        if (! $this->diagnosaPasien()->exists()) {
-            return route('pasien.diagnosa', $this);
-        }
-
-        if (! $this->luaranPasien()->exists()) {
-            return route('pasien.luaran', $this);
-        }
-
-        if (! $this->intervensiPasien()->exists()) {
-            return route('pasien.intervensi', $this);
-        }
-
-        if (! $this->evaluasiPasien()->exists()) {
-            return route('pasien.evaluasi', $this);
-        }
-
-        return route('pasien.askep', $this);
+        return $aktif->nextStepUrl();
     }
 
     /** Catat aktivitas ke tabel riwayat_pasien. */
     public function catatRiwayat(string $aktivitas): void
     {
         $this->riwayat()->create(['aktivitas' => $aktivitas]);
-    }
-
-    public function isDraft(): bool
-    {
-        return $this->status_askep === 'draft';
-    }
-
-    public function isSelesai(): bool
-    {
-        return $this->status_askep === 'selesai';
     }
 }

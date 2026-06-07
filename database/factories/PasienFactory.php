@@ -24,12 +24,15 @@ class PasienFactory extends Factory
             'jenis_kelamin' => fake()->randomElement(['L', 'P']),
             'ruang_rawat' => fake()->randomElement(['Bougenville', 'Mawar', 'ICU', null]),
             'tanggal_masuk' => fake()->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
-            'status_askep' => 'draft',
+            'tanggal_lahir' => fake()->dateTimeBetween('-80 years', '-1 year')->format('Y-m-d'),
+            'agama' => fake()->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', null]),
+            'status_perkawinan' => fake()->randomElement(['Belum Kawin', 'Kawin', 'Cerai', null]),
+            'pekerjaan' => fake()->jobTitle(),
+            'pendidikan' => fake()->randomElement(['SD', 'SMP', 'SMA', 'D3', 'S1', null]),
+            'alamat' => fake()->address(),
+            'diagnosa_medis' => fake()->randomElement(['Hipertensi', 'Diabetes Mellitus', 'Pneumonia', 'Gagal Jantung', null]),
+            'bb' => fake()->randomFloat(1, 40, 120),
+            'tb' => fake()->numberBetween(140, 185),
         ];
-    }
-
-    public function selesai(): static
-    {
-        return $this->state(['status_askep' => 'selesai']);
     }
 }
