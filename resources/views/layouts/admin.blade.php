@@ -3,19 +3,23 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-[#fffbf5] dark:bg-zinc-900">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
+    <body class="min-h-screen bg-[#F4F8FB] dark:bg-zinc-900">
+        {{-- Dark navy sidebar --}}
+        <flux:sidebar sticky collapsible="mobile"
+            class="dark border-e-0 bg-[#0A2D45] dark:bg-[#050F1A]"
+            style="--sidebar-width: 240px"
+        >
             <flux:sidebar.header>
                 <div class="flex items-center gap-2.5 px-1 py-1">
-                    <div class="flex size-9 items-center justify-center rounded-xl bg-gradient-polsub shadow-polsub">
+                    <div class="flex size-9 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
                         <flux:icon.shield-check class="size-5 text-white" />
                     </div>
                     <div>
-                        <p class="text-sm font-bold leading-tight text-zinc-900 dark:text-white">DIGIKEP</p>
-                        <p class="text-[10px] leading-tight text-zinc-400 dark:text-zinc-500">Admin Panel</p>
+                        <p class="text-sm font-bold leading-tight text-white">DIGIKEP</p>
+                        <p class="text-[10px] leading-tight text-white/60">Admin Panel</p>
                     </div>
                 </div>
-                <flux:sidebar.collapse class="lg:hidden" />
+                <flux:sidebar.collapse class="lg:hidden text-white/70 hover:bg-white/10" />
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
@@ -120,7 +124,7 @@
         </flux:sidebar>
 
         {{-- Mobile Header --}}
-        <flux:header class="lg:hidden bg-gradient-polsub border-b-0 shadow-polsub">
+        <flux:header class="lg:hidden border-b-0 bg-[#0A2D45] shadow-primary">
             <flux:sidebar.toggle class="lg:hidden text-white hover:bg-white/20" icon="bars-2" inset="left" />
             <div class="flex items-center gap-2 ms-2">
                 <div class="flex size-7 items-center justify-center rounded-lg bg-white/20">

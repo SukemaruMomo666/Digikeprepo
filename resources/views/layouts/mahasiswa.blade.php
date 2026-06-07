@@ -3,19 +3,23 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-gray-100 dark:bg-zinc-900">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
+    <body class="min-h-screen bg-[#F4F8FB] dark:bg-zinc-900">
+        {{-- Dark navy sidebar --}}
+        <flux:sidebar sticky collapsible="mobile"
+            class="dark border-e-0 bg-[#1B4F72] dark:bg-[#0A2D45]"
+            style="--sidebar-width: 240px"
+        >
             <flux:sidebar.header>
                 <div class="flex items-center gap-2.5 px-1 py-1">
-                    <div class="flex size-9 items-center justify-center rounded-xl bg-gradient-polsub shadow-polsub">
+                    <div class="flex size-9 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
                         <flux:icon.shield-check class="size-5 text-white" />
                     </div>
                     <div>
-                        <p class="text-sm font-bold leading-tight text-zinc-900 dark:text-white">DIGIKEP</p>
-                        <p class="text-[10px] leading-tight text-zinc-400 dark:text-zinc-500">Nursing Care System</p>
+                        <p class="text-sm font-bold leading-tight text-white">DIGIKEP</p>
+                        <p class="text-[10px] leading-tight text-white/60">Nursing Care System</p>
                     </div>
                 </div>
-                <flux:sidebar.collapse class="lg:hidden" />
+                <flux:sidebar.collapse class="lg:hidden text-white/70 hover:bg-white/10" />
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
@@ -34,7 +38,7 @@
                     :current="request()->routeIs('pasien.*')"
                     wire:navigate
                 >
-                    Patients
+                    Pasien
                 </flux:sidebar.item>
 
                 <flux:sidebar.item
@@ -43,7 +47,7 @@
                     :current="request()->routeIs('riwayat.index')"
                     wire:navigate
                 >
-                    History
+                    Riwayat
                 </flux:sidebar.item>
 
                 <flux:sidebar.item
@@ -72,10 +76,10 @@
                 <a
                     href="{{ route('pasien.create') }}"
                     wire:navigate
-                    class="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-polsub px-4 py-2.5 text-sm font-semibold text-white shadow-polsub transition-all hover:shadow-polsub-lg"
+                    class="flex w-full items-center justify-center gap-2 rounded-xl bg-white/15 px-4 py-2.5 text-sm font-semibold text-white ring-1 ring-white/20 transition-all hover:bg-white/25 hover:ring-white/40"
                 >
                     <flux:icon.plus class="size-4" />
-                    New Assessment
+                    Tambah Pasien
                 </a>
             </div>
 
@@ -84,7 +88,7 @@
         </flux:sidebar>
 
         {{-- Mobile Header --}}
-        <flux:header class="lg:hidden bg-gradient-polsub border-b-0 shadow-polsub">
+        <flux:header class="lg:hidden border-b-0 bg-[#1B4F72] shadow-primary">
             <flux:sidebar.toggle class="lg:hidden text-white hover:bg-white/20" icon="bars-2" inset="left" />
             <div class="flex items-center gap-2 ms-2">
                 <div class="flex size-7 items-center justify-center rounded-lg bg-white/20">
@@ -112,38 +116,38 @@
         </flux:header>
 
         {{-- Desktop Topbar --}}
-        <div class="sticky top-0 z-40 hidden items-center justify-between border-b border-gray-200 bg-white px-6 py-3 dark:border-zinc-700 dark:bg-zinc-900 lg:flex">
+        <div class="sticky top-0 z-40 hidden items-center justify-between border-b border-[#E0EBF5] bg-white px-6 py-3 dark:border-zinc-700 dark:bg-zinc-900 lg:flex">
             {{-- Search --}}
             <div class="relative w-72">
                 <div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
-                    <flux:icon.magnifying-glass class="size-4 text-gray-400" />
+                    <flux:icon.magnifying-glass class="size-4 text-[#7A8FA6]" />
                 </div>
                 <input
                     type="text"
                     placeholder="Cari rekam medis..."
-                    class="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm text-gray-700 placeholder:text-gray-400 focus:border-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500"
+                    class="w-full rounded-lg border border-[#E0EBF5] bg-[#F4F8FB] py-2 pl-9 pr-4 text-sm text-[#1B4F72] placeholder:text-[#7A8FA6] focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
                 />
             </div>
 
             {{-- Right side actions --}}
             <div class="flex items-center gap-2">
-                <button class="flex size-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
+                <button class="flex size-9 items-center justify-center rounded-full border border-[#E0EBF5] bg-white text-[#7A8FA6] transition-colors hover:bg-[#EBF5FB] hover:text-[#1B4F72] dark:border-zinc-700 dark:bg-zinc-800">
                     <flux:icon.bell class="size-5" />
                 </button>
-                <button class="flex size-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
+                <button class="flex size-9 items-center justify-center rounded-full border border-[#E0EBF5] bg-white text-[#7A8FA6] transition-colors hover:bg-[#EBF5FB] hover:text-[#1B4F72] dark:border-zinc-700 dark:bg-zinc-800">
                     <flux:icon.cog-6-tooth class="size-5" />
                 </button>
 
-                <div class="mx-1 h-6 w-px bg-gray-200 dark:bg-zinc-700"></div>
+                <div class="mx-1 h-6 w-px bg-[#E0EBF5] dark:bg-zinc-700"></div>
 
                 {{-- User dropdown --}}
                 <flux:dropdown position="bottom" align="end">
-                    <button class="flex items-center gap-2.5 rounded-xl px-2 py-1.5 transition-colors hover:bg-gray-50 dark:hover:bg-zinc-800">
+                    <button class="flex items-center gap-2.5 rounded-xl px-2 py-1.5 transition-colors hover:bg-[#EBF5FB] dark:hover:bg-zinc-800">
                         <div class="text-right">
-                            <p class="text-sm font-semibold text-gray-800 dark:text-white">{{ auth()->user()->name }}</p>
-                            <p class="text-xs text-gray-500 dark:text-zinc-400">Student Nurse</p>
+                            <p class="text-sm font-semibold text-[#1B4F72] dark:text-white">{{ auth()->user()->name }}</p>
+                            <p class="text-xs text-[#7A8FA6]">Mahasiswa Keperawatan</p>
                         </div>
-                        <div class="flex size-9 items-center justify-center rounded-full bg-gradient-polsub text-xs font-bold text-white shadow-polsub">
+                        <div class="flex size-9 items-center justify-center rounded-full bg-gradient-primary text-xs font-bold text-white shadow-primary">
                             {{ auth()->user()->initials() }}
                         </div>
                     </button>

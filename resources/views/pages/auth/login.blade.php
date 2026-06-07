@@ -2,18 +2,18 @@
 
     {{-- Heading --}}
     <div class="mb-8">
-        <h2 class="text-2xl font-extrabold text-gray-900 dark:text-white">Selamat datang!</h2>
-        <p class="mt-1 text-sm text-gray-500 dark:text-zinc-400">
+        <h2 class="text-2xl font-extrabold text-[#1B4F72] dark:text-white">Selamat datang!</h2>
+        <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">
             Masuk ke akun DIGIKEP Anda untuk melanjutkan.
         </p>
     </div>
 
     {{-- Session status --}}
-    <x-auth-session-status class="mb-4 rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700" :status="session('status')" />
+    <x-auth-session-status class="mb-4 rounded-lg bg-[#E1F5EE] px-4 py-3 text-sm text-[#0F6E56]" :status="session('status')" />
 
     {{-- Validation errors --}}
     @if ($errors->any())
-        <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+        <div class="mb-4 rounded-lg border border-[#D95C3A]/30 bg-[#FDE8E8] px-4 py-3 text-sm text-[#D95C3A]">
             @foreach ($errors->all() as $error)
                 <p>{{ $error }}</p>
             @endforeach
@@ -25,7 +25,7 @@
 
         {{-- NIM / NIP --}}
         <div class="space-y-1.5">
-            <label for="nim_nip" class="block text-sm font-semibold text-gray-700 dark:text-zinc-300">
+            <label for="nim_nip" class="block text-sm font-semibold text-[#1B4F72] dark:text-zinc-300">
                 NIM / NIP
             </label>
             <input
@@ -39,17 +39,17 @@
                 autofocus
                 autocomplete="username"
                 placeholder="Masukkan NIM atau NIP"
-                class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 transition
-                       focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20
-                       dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500
-                       @error('nim_nip') border-red-400 focus:border-red-400 focus:ring-red-400/20 @enderror"
+                class="w-full rounded-xl border border-[#D0DCE8] bg-white px-4 py-3 text-sm text-[#1B4F72] outline-none placeholder:text-[#7A8FA6] transition
+                       focus:border-[#2E86C1] focus:ring-2 focus:ring-[#2E86C1]/20
+                       dark:border-zinc-700 dark:bg-zinc-800 dark:text-white
+                       @error('nim_nip') border-[#D95C3A] focus:border-[#D95C3A] focus:ring-[#D95C3A]/20 @enderror"
             />
-            <p class="text-xs text-gray-400 dark:text-zinc-500">Gunakan NIM/NIP Anda (angka saja). Password default = NIM Anda.</p>
+            <p class="text-xs text-[#7A8FA6] dark:text-zinc-500">Gunakan NIM/NIP Anda (angka saja). Password default = NIM Anda.</p>
         </div>
 
         {{-- Password --}}
         <div class="space-y-1.5" x-data="{ show: false }">
-            <label for="password" class="block text-sm font-semibold text-gray-700 dark:text-zinc-300">
+            <label for="password" class="block text-sm font-semibold text-[#1B4F72] dark:text-zinc-300">
                 Password
             </label>
             <div class="relative">
@@ -60,15 +60,15 @@
                     required
                     autocomplete="current-password"
                     placeholder="Password"
-                    class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 pr-11 text-sm text-gray-900 outline-none placeholder:text-gray-400 transition
-                           focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20
-                           dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500
-                           @error('password') border-red-400 focus:border-red-400 focus:ring-red-400/20 @enderror"
+                    class="w-full rounded-xl border border-[#D0DCE8] bg-white px-4 py-3 pr-11 text-sm text-[#1B4F72] outline-none placeholder:text-[#7A8FA6] transition
+                           focus:border-[#2E86C1] focus:ring-2 focus:ring-[#2E86C1]/20
+                           dark:border-zinc-700 dark:bg-zinc-800 dark:text-white
+                           @error('password') border-[#D95C3A] focus:border-[#D95C3A] focus:ring-[#D95C3A]/20 @enderror"
                 />
                 <button
                     type="button"
                     @click="show = !show"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-zinc-300"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A8FA6] hover:text-[#1B4F72] dark:hover:text-zinc-300"
                     tabindex="-1"
                 >
                     <svg x-show="!show" class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,25 +90,25 @@
                 name="remember"
                 type="checkbox"
                 {{ old('remember') ? 'checked' : '' }}
-                class="size-4 rounded border-gray-300 text-orange-500 focus:ring-orange-400 dark:border-zinc-600 dark:bg-zinc-800"
+                class="size-4 rounded border-[#D0DCE8] text-[#2E86C1] focus:ring-[#2E86C1] dark:border-zinc-600 dark:bg-zinc-800"
             />
-            <label for="remember" class="text-sm text-gray-600 dark:text-zinc-400">Ingat saya</label>
+            <label for="remember" class="text-sm text-[#7A8FA6] dark:text-zinc-400">Ingat saya</label>
         </div>
 
         {{-- Submit --}}
         <button
             type="submit"
-            class="w-full rounded-xl px-6 py-3 text-sm font-bold text-white shadow-polsub transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-orange-400/40"
-            style="background: linear-gradient(135deg, #f39c12, #e67e22)"
+            class="w-full rounded-xl px-6 py-3 text-sm font-bold text-white shadow-primary transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/40"
+            style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
         >
             Masuk ke DIGIKEP
         </button>
     </form>
 
     {{-- Help text --}}
-    <p class="mt-6 text-center text-xs text-gray-400 dark:text-zinc-500">
+    <p class="mt-6 text-center text-xs text-[#7A8FA6] dark:text-zinc-500">
         Belum punya akun atau lupa password?
-        <span class="font-medium text-gray-600 dark:text-zinc-400">Hubungi admin kampus.</span>
+        <span class="font-medium text-[#1B4F72] dark:text-zinc-400">Hubungi admin kampus.</span>
     </p>
 
 </x-layouts::auth>

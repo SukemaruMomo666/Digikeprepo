@@ -32,63 +32,63 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
 <div class="p-4 md:p-6">
     {{-- Page Header --}}
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">
-            Selamat Datang, <span class="text-polsub">{{ auth()->user()->name }}</span>
+        <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">
+            Selamat Datang, <span class="text-[#2E86C1]">{{ auth()->user()->name }}</span>
         </h1>
-        <p class="mt-1 text-sm text-gray-500 dark:text-zinc-400">Berikut adalah ringkasan asuhan keperawatan Anda hari ini.</p>
+        <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">Berikut adalah ringkasan asuhan keperawatan Anda hari ini.</p>
     </div>
 
     {{-- Stat Cards --}}
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6 mb-6">
-        {{-- Total Pasien — Orange (Polsub) --}}
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-polsub p-6 shadow-polsub">
+        {{-- Total Pasien — Navy Primary --}}
+        <div class="relative overflow-hidden rounded-2xl p-6 shadow-primary" style="background: linear-gradient(135deg, #2E86C1, #1B4F72)">
             <div class="relative z-10">
                 <flux:icon.users class="mb-3 size-8 text-white/90" />
                 <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Total Pasien</p>
                 <h4 class="mt-1 text-5xl font-bold text-white">{{ $jumlahPasien }}</h4>
             </div>
-            <div class="pointer-events-none absolute -right-3 -bottom-3 opacity-[0.15]">
+            <div class="pointer-events-none absolute -right-3 -bottom-3 opacity-[0.12]">
                 <flux:icon.users class="size-32 text-white" />
             </div>
         </div>
 
-        {{-- Total Diagnosa — Emerald --}}
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 p-6 shadow-lg">
+        {{-- Total Diagnosa — Teal Health --}}
+        <div class="relative overflow-hidden rounded-2xl p-6 shadow-lg" style="background: linear-gradient(135deg, #1A9B72, #0F6E56)">
             <div class="relative z-10">
                 <flux:icon.clipboard-document-list class="mb-3 size-8 text-white/90" />
                 <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Diagnosa</p>
                 <h4 class="mt-1 text-5xl font-bold text-white">{{ $totalDiagnosa }}</h4>
             </div>
-            <div class="pointer-events-none absolute -right-3 -bottom-3 opacity-[0.15]">
+            <div class="pointer-events-none absolute -right-3 -bottom-3 opacity-[0.12]">
                 <flux:icon.clipboard-document-list class="size-32 text-white" />
             </div>
         </div>
 
-        {{-- Askep Selesai — Blue --}}
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 p-6 shadow-lg">
+        {{-- Askep Selesai — Deep Navy --}}
+        <div class="relative overflow-hidden rounded-2xl p-6 shadow-lg" style="background: linear-gradient(135deg, #1B4F72, #0A2D45)">
             <div class="relative z-10">
                 <flux:icon.check-badge class="mb-3 size-8 text-white/90" />
                 <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Selesai</p>
                 <h4 class="mt-1 text-5xl font-bold text-white">{{ $askepSelesai }}</h4>
             </div>
-            <div class="pointer-events-none absolute -right-3 -bottom-3 opacity-[0.15]">
+            <div class="pointer-events-none absolute -right-3 -bottom-3 opacity-[0.12]">
                 <flux:icon.check-badge class="size-32 text-white" />
             </div>
         </div>
     </div>
 
     {{-- Pasien Terakhir --}}
-    <div class="rounded-2xl border border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
+    <div class="rounded-2xl border border-[#E0EBF5] bg-white dark:border-zinc-700 dark:bg-zinc-800" style="box-shadow: 0 1px 4px rgba(27, 79, 114, 0.06)">
         {{-- Card Header --}}
-        <div class="flex items-center justify-between border-b border-gray-100 px-6 py-4 dark:border-zinc-700">
+        <div class="flex items-center justify-between border-b border-[#E0EBF5] px-6 py-4 dark:border-zinc-700">
             <div class="flex items-center gap-2">
-                <flux:icon.clipboard-document-list class="size-5 text-gray-400" />
-                <h3 class="text-base font-semibold text-gray-800 dark:text-white">Pasien Terakhir</h3>
+                <flux:icon.clipboard-document-list class="size-5 text-[#2E86C1]" />
+                <h3 class="text-base font-semibold text-[#1B4F72] dark:text-white">Pasien Terakhir</h3>
             </div>
             <a
                 href="{{ route('pasien.index') }}"
                 wire:navigate
-                class="text-sm font-medium text-polsub hover:underline"
+                class="text-sm font-medium text-[#2E86C1] hover:text-[#1B4F72] hover:underline"
             >
                 Lihat Semua
             </a>
@@ -96,13 +96,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
 
         @if ($pasienTerakhir->isEmpty())
             <div class="py-14 text-center">
-                <flux:icon.user-plus class="mx-auto mb-3 size-12 text-gray-200" />
-                <p class="text-sm text-gray-500">Belum ada data pasien.</p>
+                <flux:icon.user-plus class="mx-auto mb-3 size-12 text-[#85B7EB]" />
+                <p class="text-sm text-[#7A8FA6]">Belum ada data pasien.</p>
                 <div class="mt-4">
                     <a
                         href="{{ route('pasien.create') }}"
                         wire:navigate
-                        class="inline-flex items-center gap-2 rounded-xl bg-gradient-polsub px-4 py-2 text-sm font-semibold text-white shadow-polsub"
+                        class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-primary"
+                        style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
                     >
                         <flux:icon.plus class="size-4" />
                         Tambah Pasien Pertama
@@ -113,42 +114,42 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead>
-                        <tr class="border-b border-gray-100 dark:border-zinc-700">
-                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Nama Pasien</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Umur</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-zinc-400">No. Rekam Medis</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Action</th>
+                        <tr class="border-b border-[#E0EBF5] bg-[#F4F8FB] dark:border-zinc-700 dark:bg-zinc-900/50">
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Nama Pasien</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Umur</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">No. Rekam Medis</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 dark:divide-zinc-700">
+                    <tbody class="divide-y divide-[#E0EBF5] dark:divide-zinc-700">
                         @foreach ($pasienTerakhir as $pasien)
                             @php
-                                $words = explode(' ', trim($pasien->nama_pasien));
+                                $words    = explode(' ', trim($pasien->nama_pasien));
                                 $initials = strtoupper(
                                     substr($words[0], 0, 1) . (isset($words[1]) ? substr($words[1], 0, 1) : '')
                                 );
-                                $palette = ['bg-orange-400','bg-emerald-400','bg-blue-500','bg-violet-500','bg-rose-400','bg-amber-400','bg-teal-500'];
-                                $avatarBg = $palette[ord($pasien->nama_pasien[0]) % count($palette)];
+                                $navyPalette = ['bg-[#2E86C1]', 'bg-[#1A9B72]', 'bg-[#1B4F72]', 'bg-[#5DCAA5]', 'bg-[#85B7EB]', 'bg-[#0F6E56]'];
+                                $avatarBg    = $navyPalette[ord($pasien->nama_pasien[0]) % count($navyPalette)];
                             @endphp
-                            <tr class="transition-colors hover:bg-gray-50 dark:hover:bg-zinc-700/50">
+                            <tr class="transition-colors hover:bg-[#F4F8FB] dark:hover:bg-zinc-700/50">
                                 <td class="px-6 py-3.5">
                                     <div class="flex items-center gap-3">
                                         <div class="flex size-8 shrink-0 items-center justify-center rounded-full {{ $avatarBg }} text-xs font-bold text-white">
                                             {{ $initials }}
                                         </div>
-                                        <span class="text-sm font-medium text-gray-800 dark:text-white">{{ $pasien->nama_pasien }}</span>
+                                        <span class="text-sm font-medium text-[#1B4F72] dark:text-white">{{ $pasien->nama_pasien }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-3.5 text-sm text-gray-500 dark:text-zinc-400">{{ $pasien->umur }} tahun</td>
-                                <td class="px-6 py-3.5 font-mono text-sm text-gray-500 dark:text-zinc-400">{{ $pasien->no_rm }}</td>
+                                <td class="px-6 py-3.5 text-sm text-[#7A8FA6] dark:text-zinc-400">{{ $pasien->umur }} tahun</td>
+                                <td class="px-6 py-3.5 font-mono text-sm text-[#7A8FA6] dark:text-zinc-400">{{ $pasien->no_rm }}</td>
                                 <td class="px-6 py-3.5">
                                     @if ($pasien->isSelesai())
-                                        <span class="inline-flex items-center rounded-full border border-emerald-400 bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-emerald-600">
+                                        <span class="inline-flex items-center rounded-full border border-[#5DCAA5] bg-[#E1F5EE] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[#0F6E56]">
                                             Selesai
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center rounded-full border border-amber-400 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-amber-600">
+                                        <span class="inline-flex items-center rounded-full border border-[#85B7EB] bg-[#EBF5FB] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[#1B4F72]">
                                             Draft
                                         </span>
                                     @endif
@@ -157,7 +158,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
                                     <a
                                         href="{{ $pasien->isDraft() ? $pasien->nextAskepStep() : route('pasien.show', $pasien) }}"
                                         wire:navigate
-                                        class="text-gray-400 transition-colors hover:text-polsub"
+                                        class="text-[#85B7EB] transition-colors hover:text-[#2E86C1]"
                                         title="{{ $pasien->isDraft() ? 'Lanjutkan Askep' : 'Lihat Detail' }}"
                                     >
                                         <flux:icon.eye class="size-5" />
@@ -169,8 +170,8 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
                 </table>
             </div>
 
-            <div class="border-t border-gray-100 px-6 py-3 dark:border-zinc-700">
-                <p class="text-xs text-gray-400">
+            <div class="border-t border-[#E0EBF5] px-6 py-3 dark:border-zinc-700">
+                <p class="text-xs text-[#7A8FA6]">
                     Menampilkan {{ $pasienTerakhir->count() }} dari total {{ $jumlahPasien }} pasien aktif
                 </p>
             </div>
@@ -182,7 +183,8 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
         <a
             href="{{ route('pasien.create') }}"
             wire:navigate
-            class="flex items-center gap-2 rounded-full bg-gradient-polsub px-5 py-3 text-sm font-semibold text-white shadow-polsub-lg"
+            class="flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white shadow-primary-lg"
+            style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
         >
             <flux:icon.plus class="size-4" />
             Tambah Pasien

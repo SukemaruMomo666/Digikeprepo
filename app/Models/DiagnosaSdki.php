@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['kode_diagnosa', 'label_diagnosa', 'kategori', 'subkategori', 'definisi'])]
+#[Fillable(['kode_diagnosa', 'label_diagnosa', 'kategori', 'subkategori', 'tipe_diagnosa', 'definisi'])]
 class DiagnosaSdki extends Model
 {
     /** @use HasFactory<DiagnosaSdkiFactory> */
@@ -28,5 +28,29 @@ class DiagnosaSdki extends Model
     public function diagnosaPasien(): HasMany
     {
         return $this->hasMany(DiagnosaPasien::class, 'diagnosa_id');
+    }
+
+    /** Penyebab diagnosa (untuk tipe Aktual & Promosi Kesehatan). */
+    public function penyebab(): HasMany
+    {
+        return $this->hasMany(SdkiPenyebab::class, 'sdki_id')->orderBy('kelompok')->orderBy('urutan');
+    }
+
+    /** Faktor risiko (untuk tipe Risiko). */
+    public function faktorRisiko(): HasMany
+    {
+        return $this->hasMany(SdkiFaktorRisiko::class, 'sdki_id')->orderBy('urutan');
+    }
+
+    /** Gejala dan tanda (Mayor/Minor × Subjektif/Objektif). */
+    public function gejala(): HasMany
+    {
+        return $this->hasMany(SdkiGejala::class, 'sdki_id')->orderBy('tipe')->orderBy('jenis')->orderBy('urutan');
+    }
+
+    /** Kondisi klinis terkait. */
+    public function kondisiKlinis(): HasMany
+    {
+        return $this->hasMany(SdkiKondisiKlinis::class, 'sdki_id')->orderBy('urutan');
     }
 }

@@ -16,15 +16,15 @@
 
     {{-- ── Left branding panel (desktop only) ────────────────────────────────── --}}
     <div class="relative hidden w-[52%] flex-col overflow-hidden lg:flex"
-         style="background: linear-gradient(145deg, #f39c12 0%, #e67e22 55%, #d35400 100%);">
+         style="background: linear-gradient(145deg, #2E86C1 0%, #1B4F72 55%, #0A2D45 100%);">
 
         {{-- Decorative blobs --}}
         <div class="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/10 blur-3xl"></div>
-        <div class="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-black/10 blur-3xl"></div>
+        <div class="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-black/15 blur-3xl"></div>
         <div class="pointer-events-none absolute top-1/2 -right-12 h-56 w-56 rounded-full bg-white/10 blur-2xl"></div>
 
         {{-- Dot grid overlay --}}
-        <div class="pointer-events-none absolute inset-0 opacity-[0.07]"
+        <div class="pointer-events-none absolute inset-0 opacity-[0.06]"
              style="background-image: radial-gradient(circle, #fff 1.2px, transparent 1.2px); background-size: 28px 28px;"></div>
 
         {{-- Content --}}
@@ -64,7 +64,7 @@
                         ['icon' => 'M13 10V3L4 14h7v7l9-11h-7z', 'text' => 'Akses cepat, aman & real-time'],
                     ] as $f)
                         <li class="flex items-center gap-3">
-                            <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                            <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/15">
                                 <svg class="size-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $f['icon'] }}" />
                                 </svg>
@@ -87,19 +87,19 @@
     </div>
 
     {{-- ── Right form panel ────────────────────────────────────────────────────── --}}
-    <div class="flex flex-1 flex-col items-center justify-center bg-gray-50 px-6 py-12 dark:bg-zinc-900 sm:px-10 lg:px-16 xl:px-24">
+    <div class="flex flex-1 flex-col items-center justify-center bg-[#F4F8FB] px-6 py-12 dark:bg-zinc-900 sm:px-10 lg:px-16 xl:px-24">
 
         {{-- Mobile logo (only visible when left panel hidden) --}}
         <div class="mb-8 flex flex-col items-center gap-2 lg:hidden">
-            <div class="flex size-14 items-center justify-center rounded-2xl shadow-polsub"
-                 style="background: linear-gradient(135deg, #f39c12, #e67e22)">
+            <div class="flex size-14 items-center justify-center rounded-2xl shadow-primary"
+                 style="background: linear-gradient(135deg, #2E86C1, #1B4F72)">
                 <svg class="size-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
             </div>
-            <p class="text-lg font-extrabold text-gray-900 dark:text-white">DIGIKEP</p>
-            <p class="text-xs text-gray-500 dark:text-zinc-400">Politeknik Negeri Subang</p>
+            <p class="text-lg font-extrabold text-[#1B4F72] dark:text-white">DIGIKEP</p>
+            <p class="text-xs text-[#7A8FA6] dark:text-zinc-400">Politeknik Negeri Subang</p>
         </div>
 
         {{-- Form card --}}
@@ -108,7 +108,7 @@
         </div>
 
         {{-- Footer note --}}
-        <p class="mt-8 text-center text-xs text-gray-400 dark:text-zinc-600">
+        <p class="mt-8 text-center text-xs text-[#7A8FA6] dark:text-zinc-600">
             © {{ date('Y') }} Politeknik Negeri Subang · DIGIKEP
         </p>
     </div>

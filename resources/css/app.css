@@ -23,51 +23,85 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    /* Polsub Orange Palette */
-    --color-polsub-50:  #fff9e6;
-    --color-polsub-100: #fef3c7;
-    --color-polsub-200: #fdb462;
-    --color-polsub-300: #f39c12;
-    --color-polsub-400: #e67e22;
-    --color-polsub-500: #d35400;
-    --color-polsub-600: #ba4a00;
-    --color-polsub-700: #9c3d00;
-    --color-polsub-800: #7d3100;
-    --color-polsub-900: #5e2400;
+    /* === DigiKep Design System === */
 
-    /* Flux accent → Polsub Orange (light mode) */
-    --color-accent:            #e67e22;
-    --color-accent-content:    #e67e22;
+    /* Primary — Navy Blue */
+    --color-primary-900: #0A2D45;
+    --color-primary-700: #1B4F72;
+    --color-primary-500: #2E86C1;
+    --color-primary-200: #85B7EB;
+    --color-primary-50:  #EBF5FB;
+
+    /* Health Accent — Teal */
+    --color-health-700: #0F6E56;
+    --color-health-500: #1A9B72;
+    --color-health-200: #5DCAA5;
+    --color-health-50:  #E1F5EE;
+
+    /* Status — Warning & Danger */
+    --color-warn-500: #E8865A;
+    --color-danger-500: #D95C3A;
+
+    /* Flux accent → Navy Blue primary */
+    --color-accent:            #2E86C1;
+    --color-accent-content:    #2E86C1;
     --color-accent-foreground: #ffffff;
 }
 
 @layer theme {
     .dark {
-        --color-accent:            #f39c12;
-        --color-accent-content:    #f39c12;
-        --color-accent-foreground: #1a1a1a;
+        --color-accent:            #85B7EB;
+        --color-accent-content:    #85B7EB;
+        --color-accent-foreground: #0A2D45;
     }
 }
 
-/* Polsub gradient utilities */
+/* ── Design token utilities ─────────────────────────────────────────────── */
 @layer utilities {
-    .bg-gradient-polsub {
-        background-image: linear-gradient(135deg, #f39c12, #e67e22);
+    /* Background */
+    .bg-app  { background-color: #F4F8FB; }
+    .bg-card { background-color: #FFFFFF; }
+
+    /* Text */
+    .text-main  { color: #1B4F72; }
+    .text-muted { color: #7A8FA6; }
+
+    /* Gradients — Primary (Navy) */
+    .bg-gradient-primary {
+        background-image: linear-gradient(135deg, #2E86C1, #1B4F72);
     }
-    .bg-gradient-polsub-light {
-        background-image: linear-gradient(135deg, #fff9e6, #fffbf5);
+    .bg-gradient-primary-deep {
+        background-image: linear-gradient(145deg, #1B4F72 0%, #0A2D45 100%);
     }
-    .shadow-polsub {
-        box-shadow: 0 4px 6px rgba(230, 126, 34, 0.15);
+
+    /* Shadows — Primary (Navy) */
+    .shadow-primary {
+        box-shadow: 0 4px 6px rgba(46, 134, 193, 0.18);
     }
-    .shadow-polsub-lg {
-        box-shadow: 0 8px 12px rgba(230, 126, 34, 0.25);
+    .shadow-primary-lg {
+        box-shadow: 0 8px 16px rgba(46, 134, 193, 0.28);
     }
-    .text-polsub {
-        color: #e67e22;
+
+    /* Gradients — Health (Teal) */
+    .bg-gradient-health {
+        background-image: linear-gradient(135deg, #1A9B72, #0F6E56);
     }
-    .border-polsub {
-        border-color: #e67e22;
+
+    /* Aliases used by old templates (now navy instead of orange) */
+    .bg-gradient-polsub     { background-image: linear-gradient(135deg, #2E86C1, #1B4F72); }
+    .bg-gradient-polsub-light { background-color: #EBF5FB; }
+    .shadow-polsub          { box-shadow: 0 4px 6px rgba(46, 134, 193, 0.18); }
+    .shadow-polsub-lg       { box-shadow: 0 8px 16px rgba(46, 134, 193, 0.28); }
+    .text-polsub            { color: #2E86C1; }
+    .border-polsub          { border-color: #2E86C1; }
+
+    /* Card style */
+    .card {
+        background-color: #FFFFFF;
+        border: 1px solid #E0EBF5;
+        border-radius: 12px;
+        padding: 20px 24px;
+        box-shadow: 0 1px 4px rgba(27, 79, 114, 0.06);
     }
 }
 
@@ -78,6 +112,11 @@
     ::backdrop,
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
+    }
+
+    body {
+        background-color: #F4F8FB;
+        color: #1B4F72;
     }
 }
 
