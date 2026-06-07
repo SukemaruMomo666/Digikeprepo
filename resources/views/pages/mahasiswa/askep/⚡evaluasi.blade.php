@@ -1,172 +1,457 @@
 <?php
 
-use App\Models\EvaluasiPasien;
-use App\Models\LuaranPasien;
-use App\Models\Pasien;
+use App\Models\Askep;
+use App\Models\AskepEvaluasi;
+use Flux\Flux;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi')] class extends Component
+new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Component
 {
-    public Pasien $pasien;
+    public Askep $askep;
+
+    /** Index diagnosa yang sedang terbuka di accordion. */
+    public ?int $terbuka = 0;
 
     /**
-     * Hasil evaluasi per luaran_pasien_id: ['hasil' => ..., 'catatan' => ...]
-     *
-     * @var array<int, array{hasil: string, catatan: string}>
+     * Data evaluasi per diagnosa.
+     * @var array<int, array{
+     *   diagnosa_id: int,
+     *   kode: string,
+     *   label: string,
+     *   prioritas: int,
+     *   luaran: list<array{kode: string, label: string, target_waktu: string, kriteria: string}>,
+     *   evaluasi: array{
+     *     id: int|null,
+     *     tanggal: string,
+     *     jam: string,
+     *     hari_ke: string,
+     *     catatan_soap: string,
+     *     tv_td: string,
+     *     tv_nadi: string,
+     *     tv_rr: string,
+     *     tv_suhu: string,
+     *     tv_spo2: string,
+     *     skor_indikator: array<string, string>,
+     *     analisis: string,
+     *     analisis_narasi: string,
+     *     tindak_lanjut: string,
+     *     penanggung_jawab: string
+     *   }
+     * }>
      */
-    public array $evaluasi = [];
+    public array $rencana = [];
 
-    public function mount(Pasien $pasien): void
+    public function mount(Askep $askep): void
     {
-        abort_unless($pasien->user_id === auth()->id(), 403);
-        abort_unless($pasien->intervensiPasien()->exists(), 403, 'Selesaikan intervensi terlebih dahulu.');
+        abort_unless($askep->user_id === auth()->id(), 403);
 
-        $this->pasien = $pasien;
-
-        // Muat evaluasi yang sudah tersimpan
-        LuaranPasien::whereIn(
-            'diagnosa_pasien_id',
-            $pasien->diagnosaPasien()->pluck('id')
-        )
-            ->with('evaluasi')
-            ->get()
-            ->each(function (LuaranPasien $lp): void {
-                $this->evaluasi[$lp->id] = [
-                    'hasil'   => $lp->evaluasi?->hasil ?? 'tercapai',
-                    'catatan' => $lp->evaluasi?->catatan ?? '',
-                ];
-            });
-    }
-
-    public function luaranPasienList(): \Illuminate\Database\Eloquent\Collection
-    {
-        return LuaranPasien::whereIn(
-            'diagnosa_pasien_id',
-            $this->pasien->diagnosaPasien()->pluck('id')
-        )
-            ->with(['luaran', 'diagnosaPasien.diagnosa', 'evaluasi'])
-            ->get();
-    }
-
-    public function save(): void
-    {
-        $rules = [];
-        foreach (array_keys($this->evaluasi) as $lpId) {
-            $rules["evaluasi.{$lpId}.hasil"]   = ['required', 'in:tercapai,sebagian,belum_tercapai'];
-            $rules["evaluasi.{$lpId}.catatan"] = ['nullable', 'string', 'max:500'];
-        }
-
-        $this->validate($rules, [
-            'evaluasi.*.hasil.required' => 'Pilih hasil evaluasi untuk setiap luaran.',
+        $this->askep = $askep->load([
+            'pasien',
+            'diagnosa.sdki',
+            'diagnosa.luaran.slki',
+            'diagnosa.evaluasi',
         ]);
 
-        foreach ($this->evaluasi as $lpId => $data) {
-            EvaluasiPasien::updateOrCreate(
-                ['luaran_pasien_id' => $lpId],
-                ['hasil' => $data['hasil'], 'catatan' => $data['catatan'] ?? null]
+        $this->inisialisasi();
+    }
+
+    private function inisialisasi(): void
+    {
+        $this->rencana = [];
+
+        foreach ($this->askep->diagnosa as $diagnosa) {
+            $eval = $diagnosa->evaluasi->first();
+
+            // Bangun array luaran dari step 3 (SLKI terpilih)
+            $luaranList = $diagnosa->luaran->map(fn ($l) => [
+                'kode'        => $l->slki?->kode_luaran ?? '',
+                'label'       => $l->slki?->label_luaran ?? '',
+                'target_waktu' => $l->target_waktu ?? '',
+                'kriteria'    => $l->slki?->kriteria_hasil ?? '',
+            ])->values()->toArray();
+
+            // Bangun skor_indikator awal berdasarkan kriteria SLKI
+            $skorAwal = $eval?->skor_indikator ?? [];
+            if (empty($skorAwal)) {
+                foreach ($luaranList as $l) {
+                    if ($l['kriteria']) {
+                        $skorAwal[$l['label']] = '3'; // default: cukup
+                    }
+                }
+            }
+
+            $this->rencana[] = [
+                'diagnosa_id' => $diagnosa->id,
+                'kode'        => $diagnosa->sdki?->kode_diagnosa ?? '',
+                'label'       => $diagnosa->sdki?->label_diagnosa ?? '',
+                'prioritas'   => $diagnosa->prioritas,
+                'luaran'      => $luaranList,
+                'evaluasi'    => [
+                    'id'               => $eval?->id,
+                    'tanggal'          => $eval?->tanggal?->format('Y-m-d') ?? now()->format('Y-m-d'),
+                    'jam'              => $eval?->jam ?? now()->format('H:i'),
+                    'hari_ke'          => (string) ($eval?->hari_ke ?? '1'),
+                    'catatan_soap'     => $eval?->catatan_soap ?? '',
+                    'tv_td'            => $eval?->tv_td ?? '',
+                    'tv_nadi'          => (string) ($eval?->tv_nadi ?? ''),
+                    'tv_rr'            => (string) ($eval?->tv_rr ?? ''),
+                    'tv_suhu'          => (string) ($eval?->tv_suhu ?? ''),
+                    'tv_spo2'          => (string) ($eval?->tv_spo2 ?? ''),
+                    'skor_indikator'   => $skorAwal,
+                    'analisis'         => $eval?->analisis ?? 'teratasi_sebagian',
+                    'analisis_narasi'  => $eval?->analisis_narasi ?? '',
+                    'tindak_lanjut'    => $eval?->tindak_lanjut ?? '',
+                    'penanggung_jawab' => $eval?->penanggung_jawab ?? '',
+                ],
+            ];
+        }
+    }
+
+    public function toggleDiagnosa(int $index): void
+    {
+        $this->terbuka = $this->terbuka === $index ? null : $index;
+    }
+
+    public function simpan(): void
+    {
+        $rules = [];
+        foreach ($this->rencana as $dIdx => $d) {
+            $rules["rencana.{$dIdx}.evaluasi.tanggal"]         = ['required', 'date'];
+            $rules["rencana.{$dIdx}.evaluasi.analisis"]        = ['required', 'in:teratasi,teratasi_sebagian,belum_teratasi'];
+            $rules["rencana.{$dIdx}.evaluasi.catatan_soap"]    = ['nullable', 'string', 'max:3000'];
+            $rules["rencana.{$dIdx}.evaluasi.analisis_narasi"] = ['nullable', 'string', 'max:2000'];
+            $rules["rencana.{$dIdx}.evaluasi.tindak_lanjut"]   = ['nullable', 'string', 'max:2000'];
+        }
+
+        $this->validate($rules);
+
+        foreach ($this->rencana as $d) {
+            $ev = $d['evaluasi'];
+            AskepEvaluasi::updateOrCreate(
+                ['askep_diagnosa_id' => $d['diagnosa_id']],
+                [
+                    'tanggal'          => $ev['tanggal'],
+                    'jam'              => $ev['jam'],
+                    'hari_ke'          => (int) $ev['hari_ke'],
+                    'catatan_soap'     => $ev['catatan_soap'],
+                    'tv_td'            => $ev['tv_td'],
+                    'tv_nadi'          => $ev['tv_nadi'] !== '' ? (int) $ev['tv_nadi'] : null,
+                    'tv_rr'            => $ev['tv_rr'] !== '' ? (int) $ev['tv_rr'] : null,
+                    'tv_suhu'          => $ev['tv_suhu'] !== '' ? (float) $ev['tv_suhu'] : null,
+                    'tv_spo2'          => $ev['tv_spo2'] !== '' ? (int) $ev['tv_spo2'] : null,
+                    'skor_indikator'   => $ev['skor_indikator'],
+                    'analisis'         => $ev['analisis'],
+                    'analisis_narasi'  => $ev['analisis_narasi'],
+                    'tindak_lanjut'    => $ev['tindak_lanjut'],
+                    'penanggung_jawab' => $ev['penanggung_jawab'],
+                ],
             );
         }
 
-        // Tandai askep selesai
-        $this->pasien->update(['status_askep' => 'selesai']);
-        $this->pasien->catatRiwayat('Evaluasi keperawatan selesai. Askep dinyatakan selesai.');
+        Flux::toast(variant: 'success', text: 'Evaluasi tersimpan.');
+    }
 
-        $this->redirectRoute('pasien.askep', $this->pasien, navigate: true);
+    public function selesaikanDanKirim(): void
+    {
+        $this->simpan();
+
+        $this->askep->update([
+            'step_terakhir' => 5,
+            'status'        => Askep::STATUS_MENUNGGU_REVIEW,
+            'submitted_at'  => now(),
+        ]);
+
+        $this->askep->pasien->catatRiwayat('Askep dikirim untuk review dosen.');
+
+        Flux::toast(variant: 'success', text: 'Askep berhasil dikirim untuk review!');
+        $this->redirectRoute('askep.show', $this->askep, navigate: true);
     }
 };
 ?>
 
-<div>
-    <div class="mb-6">
-        <flux:button :href="route('pasien.intervensi', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
-            Kembali ke Intervensi
-        </flux:button>
-        <flux:heading size="xl" level="1">Evaluasi — {{ $pasien->nama_pasien }}</flux:heading>
-        <flux:text class="mt-1">Evaluasi pencapaian luaran keperawatan (SLKI) yang telah ditetapkan.</flux:text>
+<div class="p-4 md:p-6">
+    @include('partials.askep-stepper', ['askep' => $askep, 'step' => 5])
+
+    <div class="mb-4">
+        <h2 class="text-xl font-bold text-[#1B4F72]">Langkah 5: Evaluasi Keperawatan</h2>
+        <p class="text-sm text-[#7A8FA6]">Evaluasi pencapaian luaran per diagnosa menggunakan metode SOAP.</p>
     </div>
 
-    @include('partials.askep-stepper', ['step' => 5, 'pasien' => $pasien])
-
-    @php $luaranList = $this->luaranPasienList(); @endphp
-
-    <div class="mt-6 space-y-4">
-        @foreach ($luaranList as $lp)
-            <div class="rounded-2xl border border-gray-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-800">
-                {{-- Header: Diagnosa & Luaran --}}
-                <div class="mb-5 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-zinc-500">
-                            {{ $lp->diagnosaPasien->diagnosa->kode_diagnosa }} — {{ $lp->diagnosaPasien->diagnosa->label_diagnosa }}
-                        </p>
-                        <h3 class="mt-1 text-base font-semibold text-gray-800 dark:text-white">
-                            {{ $lp->luaran->label_luaran }}
-                        </h3>
-                        @if ($lp->luaran->kriteria_hasil)
-                            <p class="mt-1 text-sm text-gray-500 dark:text-zinc-400">
-                                <span class="font-medium text-gray-600 dark:text-zinc-300">Kriteria hasil:</span>
-                                {{ $lp->luaran->kriteria_hasil }}
-                            </p>
-                        @endif
-                    </div>
-                    <span class="shrink-0 rounded-full bg-orange-50 px-2.5 py-0.5 text-xs font-mono font-medium text-polsub dark:bg-orange-900/20">
-                        {{ $lp->luaran->kode_luaran }}
-                    </span>
-                </div>
-
-                {{-- Hasil Evaluasi --}}
-                <div class="space-y-4">
-                    <div>
-                        <p class="mb-2 text-sm font-medium text-gray-700 dark:text-zinc-300">Hasil Evaluasi</p>
-                        <div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                            @foreach (EvaluasiPasien::labelHasil() as $value => $label)
-                                @php
-                                    $isSelected = ($this->evaluasi[$lp->id]['hasil'] ?? 'tercapai') === $value;
-                                    $colors = [
-                                        'tercapai'       => ['selected' => 'border-emerald-500 bg-emerald-50 text-emerald-700', 'default' => 'border-gray-200 hover:border-emerald-300'],
-                                        'sebagian'       => ['selected' => 'border-amber-500 bg-amber-50 text-amber-700',       'default' => 'border-gray-200 hover:border-amber-300'],
-                                        'belum_tercapai' => ['selected' => 'border-red-500 bg-red-50 text-red-700',             'default' => 'border-gray-200 hover:border-red-300'],
-                                    ];
-                                    $icons = [
-                                        'tercapai'       => '✓',
-                                        'sebagian'       => '~',
-                                        'belum_tercapai' => '✗',
-                                    ];
-                                @endphp
-                                <button
-                                    type="button"
-                                    wire:click="$set('evaluasi.{{ $lp->id }}.hasil', '{{ $value }}')"
-                                    class="flex items-center gap-2 rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all
-                                        {{ $isSelected ? $colors[$value]['selected'] : 'border-gray-200 text-gray-600 dark:border-zinc-600 dark:text-zinc-300 ' . $colors[$value]['default'] }}"
-                                >
-                                    <span class="text-base">{{ $icons[$value] }}</span>
-                                    {{ $label }}
-                                </button>
-                            @endforeach
+    @if (empty($rencana))
+        <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#D0DCE8] bg-[#F4F8FB] py-16 text-center">
+            <flux:icon.clipboard-document-list class="mb-3 size-12 text-[#85B7EB]" />
+            <p class="font-medium text-[#1B4F72]">Belum ada diagnosa</p>
+            <flux:button :href="route('askep.implementasi', $askep)" variant="ghost" icon="arrow-left" wire:navigate class="mt-4">
+                Kembali ke Implementasi
+            </flux:button>
+        </div>
+    @else
+        <div class="space-y-3">
+            @foreach ($rencana as $dIdx => $d)
+                <div class="overflow-hidden rounded-2xl border border-[#E0EBF5] bg-white">
+                    {{-- Header --}}
+                    <button
+                        wire:click="toggleDiagnosa({{ $dIdx }})"
+                        class="flex w-full items-center justify-between px-5 py-4 text-left hover:bg-[#F4F8FB] transition"
+                    >
+                        <div class="flex items-center gap-3">
+                            <div class="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#2E86C1] text-xs font-bold text-white">
+                                {{ $d['prioritas'] }}
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-mono text-xs font-bold text-[#2E86C1]">{{ $d['kode'] }}</span>
+                                    @php
+                                        $analisis = $d['evaluasi']['analisis'];
+                                        $badgeClass = match ($analisis) {
+                                            'teratasi'          => 'bg-[#E1F5EE] text-[#0F6E56]',
+                                            'teratasi_sebagian' => 'bg-[#FEF3C7] text-amber-700',
+                                            default             => 'bg-[#FDE8E8] text-[#D95C3A]',
+                                        };
+                                        $badgeLabel = match ($analisis) {
+                                            'teratasi'          => 'Teratasi',
+                                            'teratasi_sebagian' => 'Teratasi Sebagian',
+                                            default             => 'Belum Teratasi',
+                                        };
+                                    @endphp
+                                    <span class="rounded-full {{ $badgeClass }} px-2 py-0.5 text-[10px] font-semibold">
+                                        {{ $badgeLabel }}
+                                    </span>
+                                </div>
+                                <p class="mt-0.5 text-sm font-medium text-[#1B4F72]">{{ $d['label'] }}</p>
+                            </div>
                         </div>
-                        @error("evaluasi.{$lp->id}.hasil")
-                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <flux:icon.chevron-down
+                            class="size-5 shrink-0 text-[#7A8FA6] transition-transform {{ $terbuka === $dIdx ? 'rotate-180' : '' }}"
+                        />
+                    </button>
 
-                    {{-- Catatan --}}
-                    <flux:textarea
-                        wire:model="evaluasi.{{ $lp->id }}.catatan"
-                        label="Catatan Evaluasi (opsional)"
-                        placeholder="Tuliskan perkembangan kondisi pasien, respon terhadap intervensi, atau temuan lainnya..."
-                        rows="2"
-                    />
+                    @if ($terbuka === $dIdx)
+                        <div class="border-t border-[#E0EBF5] px-5 py-5 space-y-5">
+
+                            {{-- Luaran yang ditetapkan --}}
+                            @if (! empty($d['luaran']))
+                                <div class="rounded-xl bg-[#F0FBF7] border border-[#5DCAA5] p-4">
+                                    <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-[#0F6E56]">Luaran yang Ditetapkan (SLKI)</p>
+                                    @foreach ($d['luaran'] as $l)
+                                        <div class="flex items-start gap-2 py-1">
+                                            <flux:icon.check-circle class="mt-0.5 size-4 shrink-0 text-[#1A9B72]" />
+                                            <div>
+                                                <span class="font-mono text-xs text-[#1A9B72]">{{ $l['kode'] }}</span>
+                                                <span class="mx-1 text-[#C4D3DF]">·</span>
+                                                <span class="text-sm text-[#1B4F72]">{{ $l['label'] }}</span>
+                                                @if ($l['target_waktu'])
+                                                    <span class="ml-1 text-xs text-[#7A8FA6]">(target: {{ $l['target_waktu'] }})</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            {{-- Tanggal, Jam, Hari ke- --}}
+                            <div class="grid grid-cols-3 gap-3">
+                                <div>
+                                    <label class="text-xs font-medium text-[#7A8FA6]">Tanggal Evaluasi</label>
+                                    <input
+                                        type="date"
+                                        wire:model="rencana.{{ $dIdx }}.evaluasi.tanggal"
+                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                    />
+                                </div>
+                                <div>
+                                    <label class="text-xs font-medium text-[#7A8FA6]">Jam</label>
+                                    <input
+                                        type="time"
+                                        wire:model="rencana.{{ $dIdx }}.evaluasi.jam"
+                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                    />
+                                </div>
+                                <div>
+                                    <label class="text-xs font-medium text-[#7A8FA6]">Hari Ke-</label>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        wire:model="rencana.{{ $dIdx }}.evaluasi.hari_ke"
+                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                    />
+                                </div>
+                            </div>
+
+                            {{-- Catatan SOAP --}}
+                            <div>
+                                <label class="text-xs font-medium text-[#7A8FA6]">Catatan SOAP</label>
+                                <textarea
+                                    wire:model="rencana.{{ $dIdx }}.evaluasi.catatan_soap"
+                                    rows="4"
+                                    placeholder="S: Subjektif — keluhan yang disampaikan pasien&#10;O: Objektif — hasil pemeriksaan&#10;A: Analisis — kesimpulan kondisi&#10;P: Planning — rencana selanjutnya"
+                                    class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                ></textarea>
+                            </div>
+
+                            {{-- TTV --}}
+                            <div>
+                                <p class="mb-2 text-xs font-medium text-[#7A8FA6]">Tanda-Tanda Vital Saat Evaluasi</p>
+                                <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
+                                    <div>
+                                        <label class="text-xs text-[#7A8FA6]">TD (mmHg)</label>
+                                        <input
+                                            type="text"
+                                            wire:model="rencana.{{ $dIdx }}.evaluasi.tv_td"
+                                            placeholder="120/80"
+                                            class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-[#7A8FA6]">Nadi (/mnt)</label>
+                                        <input
+                                            type="number"
+                                            wire:model="rencana.{{ $dIdx }}.evaluasi.tv_nadi"
+                                            placeholder="80"
+                                            class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-[#7A8FA6]">RR (/mnt)</label>
+                                        <input
+                                            type="number"
+                                            wire:model="rencana.{{ $dIdx }}.evaluasi.tv_rr"
+                                            placeholder="18"
+                                            class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-[#7A8FA6]">Suhu (°C)</label>
+                                        <input
+                                            type="number"
+                                            step="0.1"
+                                            wire:model="rencana.{{ $dIdx }}.evaluasi.tv_suhu"
+                                            placeholder="36.5"
+                                            class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-[#7A8FA6]">SpO₂ (%)</label>
+                                        <input
+                                            type="number"
+                                            wire:model="rencana.{{ $dIdx }}.evaluasi.tv_spo2"
+                                            placeholder="98"
+                                            class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Skor Indikator SLKI --}}
+                            @if (! empty($d['evaluasi']['skor_indikator']))
+                                <div>
+                                    <p class="mb-2 text-xs font-medium text-[#7A8FA6]">Skor Indikator Luaran (1 = Sangat Buruk → 5 = Sangat Baik)</p>
+                                    <div class="space-y-2">
+                                        @foreach ($d['evaluasi']['skor_indikator'] as $namaIndikator => $skor)
+                                            <div class="flex items-center gap-3 rounded-lg border border-[#E0EBF5] bg-[#F4F8FB] px-3 py-2">
+                                                <span class="flex-1 text-xs text-[#1B4F72]">{{ $namaIndikator }}</span>
+                                                <div class="flex gap-1">
+                                                    @for ($s = 1; $s <= 5; $s++)
+                                                        <button
+                                                            wire:click="$set('rencana.{{ $dIdx }}.evaluasi.skor_indikator.{{ $namaIndikator }}', '{{ $s }}')"
+                                                            class="flex size-7 items-center justify-center rounded-lg border text-xs font-bold transition
+                                                                {{ (string) $skor === (string) $s
+                                                                    ? 'border-[#2E86C1] bg-[#2E86C1] text-white'
+                                                                    : 'border-[#D0DCE8] text-[#7A8FA6] hover:border-[#85B7EB]' }}"
+                                                        >
+                                                            {{ $s }}
+                                                        </button>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+
+                            {{-- Analisis --}}
+                            <div>
+                                <p class="mb-2 text-xs font-medium text-[#7A8FA6]">Analisis Diagnosa <span class="text-[#D95C3A]">*</span></p>
+                                <div class="grid grid-cols-3 gap-2">
+                                    @foreach (['teratasi' => ['label' => 'Teratasi', 'color' => 'text-[#0F6E56] border-[#5DCAA5] bg-[#E1F5EE]', 'default' => 'border-[#D0DCE8] hover:border-[#5DCAA5]'], 'teratasi_sebagian' => ['label' => 'Teratasi Sebagian', 'color' => 'text-amber-700 border-amber-400 bg-amber-50', 'default' => 'border-[#D0DCE8] hover:border-amber-300'], 'belum_teratasi' => ['label' => 'Belum Teratasi', 'color' => 'text-[#D95C3A] border-[#F4A58C] bg-[#FDE8E8]', 'default' => 'border-[#D0DCE8] hover:border-[#F4A58C]']] as $val => $opt)
+                                        <button
+                                            wire:click="$set('rencana.{{ $dIdx }}.evaluasi.analisis', '{{ $val }}')"
+                                            class="rounded-xl border-2 px-3 py-2.5 text-sm font-semibold transition
+                                                {{ $d['evaluasi']['analisis'] === $val ? $opt['color'] : 'border-[#D0DCE8] text-[#7A8FA6] ' . $opt['default'] }}"
+                                        >
+                                            {{ $opt['label'] }}
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            {{-- Narasi & Tindak Lanjut --}}
+                            <div class="grid gap-4 sm:grid-cols-2">
+                                <div>
+                                    <label class="text-xs font-medium text-[#7A8FA6]">Narasi Analisis</label>
+                                    <textarea
+                                        wire:model="rencana.{{ $dIdx }}.evaluasi.analisis_narasi"
+                                        rows="3"
+                                        placeholder="Uraikan perkembangan kondisi pasien..."
+                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-medium text-[#7A8FA6]">Tindak Lanjut</label>
+                                    <textarea
+                                        wire:model="rencana.{{ $dIdx }}.evaluasi.tindak_lanjut"
+                                        rows="3"
+                                        placeholder="Intervensi dilanjutkan / dimodifikasi / dihentikan..."
+                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                    ></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="text-xs font-medium text-[#7A8FA6]">Penanggung Jawab</label>
+                                <input
+                                    type="text"
+                                    wire:model="rencana.{{ $dIdx }}.evaluasi.penanggung_jawab"
+                                    placeholder="Nama mahasiswa / ttd"
+                                    class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                />
+                            </div>
+                        </div>
+                    @endif
                 </div>
-            </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
 
-    {{-- Action --}}
-    <div class="mt-6 flex justify-end">
-        <flux:button variant="primary" icon="check" wire:click="save" wire:loading.attr="disabled">
-            <span wire:loading.remove wire:target="save">Selesaikan Askep</span>
-            <span wire:loading wire:target="save">Menyimpan...</span>
-        </flux:button>
-    </div>
+        {{-- Navigation --}}
+        <div class="mt-6 flex flex-col items-stretch gap-3 border-t border-[#E0EBF5] pt-4 sm:flex-row sm:items-center sm:justify-between">
+            <flux:button :href="route('askep.implementasi', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
+                Kembali
+            </flux:button>
+
+            <div class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
+                <button
+                    wire:click="simpan"
+                    wire:loading.attr="disabled"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#85B7EB] px-5 py-2.5 text-sm font-semibold text-[#2E86C1] transition hover:bg-[#EBF5FB] disabled:opacity-50"
+                >
+                    <flux:icon.document-check class="size-4" wire:loading.remove wire:target="simpan" />
+                    <span wire:loading.remove wire:target="simpan">Simpan Draft</span>
+                    <span wire:loading wire:target="simpan">Menyimpan...</span>
+                </button>
+
+                <button
+                    wire:click="selesaikanDanKirim"
+                    wire:loading.attr="disabled"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
+                    style="background: linear-gradient(135deg, #1A9B72, #0F6E56)"
+                >
+                    <span wire:loading.remove wire:target="selesaikanDanKirim">Selesai & Kirim untuk Review</span>
+                    <span wire:loading wire:target="selesaikanDanKirim">Mengirim...</span>
+                    <flux:icon.paper-airplane class="size-4" wire:loading.remove wire:target="selesaikanDanKirim" />
+                </button>
+            </div>
+        </div>
+    @endif
 </div>

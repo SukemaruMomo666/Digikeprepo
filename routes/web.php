@@ -40,8 +40,8 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
         Route::livewire('/pengkajian', 'pages::mahasiswa.askep.pengkajian')->name('pengkajian');
         Route::livewire('/diagnosa', 'pages::mahasiswa.askep.diagnosa')->name('diagnosa');
         Route::livewire('/perencanaan', 'pages::mahasiswa.askep.perencanaan')->name('perencanaan');
-        Route::livewire('/implementasi', 'pages::mahasiswa.askep.perencanaan')->name('implementasi');
-        Route::livewire('/evaluasi', 'pages::mahasiswa.askep.perencanaan')->name('evaluasi');
+        Route::livewire('/implementasi', 'pages::mahasiswa.askep.implementasi')->name('implementasi');
+        Route::livewire('/evaluasi', 'pages::mahasiswa.askep.evaluasi')->name('evaluasi');
     });
 
     Route::livewire('/riwayat', 'pages::mahasiswa.riwayat.index')->name('riwayat.index');
