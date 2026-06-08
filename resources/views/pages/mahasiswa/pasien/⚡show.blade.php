@@ -52,41 +52,63 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
                         Edit
                     </flux:button>
                 </div>
-                <dl class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                <dl class="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
                     <div>
-                        <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Umur</dt>
-                        <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->umur }} tahun</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Umur</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->umur }} tahun</dd>
                     </div>
                     <div>
-                        <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Jenis Kelamin</dt>
-                        <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Jenis Kelamin</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</dd>
                     </div>
-                    <div>
-                        <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Ruang Rawat</dt>
-                        <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->ruang_rawat ?? '-' }}</dd>
-                    </div>
-                    <div>
-                        <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Tanggal Masuk</dt>
-                        <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->tanggal_masuk->translatedFormat('d F Y') }}</dd>
-                    </div>
-                    @if ($pasien->diagnosa_medis)
-                        <div class="sm:col-span-2">
-                            <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Diagnosa Medis</dt>
-                            <dd class="mt-1 font-medium text-[#D95C3A]">{{ $pasien->diagnosa_medis }}</dd>
-                        </div>
-                    @endif
-                    @if ($pasien->agama)
+                    @if ($pasien->tanggal_lahir)
                         <div>
-                            <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">Agama</dt>
-                            <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->agama }}</dd>
+                            <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Tanggal Lahir</dt>
+                            <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->tanggal_lahir->translatedFormat('d F Y') }}</dd>
                         </div>
                     @endif
-                    @if ($pasien->bb && $pasien->tb)
-                        <div>
-                            <dt class="text-xs uppercase tracking-wide text-[#7A8FA6]">BB / TB</dt>
-                            <dd class="mt-1 font-medium text-[#1B4F72]">{{ $pasien->bb }} kg / {{ $pasien->tb }} cm</dd>
-                        </div>
-                    @endif
+                    <div>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Agama</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->agama ?? '-' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Status Nikah</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->status_perkawinan ?? '-' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Pekerjaan</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->pekerjaan ?? '-' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Pendidikan</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->pendidikan ?? '-' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">BB / TB</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">
+                            @if($pasien->bb || $pasien->tb)
+                                {{ $pasien->bb ?? '-' }} kg / {{ $pasien->tb ?? '-' }} cm
+                            @else
+                                -
+                            @endif
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Ruang Rawat</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->ruang_rawat ?? '-' }}</dd>
+                    </div>
+                    <div class="sm:col-span-3">
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Alamat</dt>
+                        <dd class="mt-0.5 text-sm font-medium text-[#1B4F72]">{{ $pasien->alamat ?? '-' }}</dd>
+                    </div>
+                    <div class="sm:col-span-3">
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Diagnosa Medis</dt>
+                        <dd class="mt-0.5 text-sm font-bold text-[#D95C3A]">{{ $pasien->diagnosa_medis ?? '-' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Tanggal Masuk</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->tanggal_masuk->translatedFormat('d F Y') }}</dd>
+                    </div>
                 </dl>
             </div>
 

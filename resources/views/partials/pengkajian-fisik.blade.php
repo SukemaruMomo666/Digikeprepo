@@ -106,10 +106,10 @@
         {!! $radio('fisik_penglihatan', 'kelopak_mata', 'Kelopak Mata', ['normal' => 'Normal', 'ptosis' => 'Ptosis']) !!}
         {!! $radio('fisik_penglihatan', 'gerakan', 'Gerakan', ['normal' => 'Normal', 'abnormal' => 'Abnormal']) !!}
         {!! $radio('fisik_penglihatan', 'pergerakan_bola_mata', 'Pergerakan Bola Mata', ['normal' => 'Normal', 'abnormal' => 'Abnormal']) !!}
-        {!! $radio('fisik_penglihatan', 'konjungtiva', 'Konjungtiva', ['normal' => 'Normal/Merah', 'sangat_merah' => 'Sangat Merah', 'anemis' => 'Anemis']) !!}
+        {!! $radio('fisik_penglihatan', 'konjungtiva', 'Konjungtiva', ['normal' => 'Normal/Merah muda', 'sangat_merah' => 'Sangat Merah', 'anemis' => 'Anemis']) !!}
         {!! $radio('fisik_penglihatan', 'kornea', 'Kornea', ['normal' => 'Normal', 'keruh' => 'Keruh/Berkabut']) !!}
-        {!! $radio('fisik_penglihatan', 'sklera', 'Sklera', ['ikterik' => 'Ikterik', 'anikterik' => 'Anikterik']) !!}
-        {!! $checkboxes('fisik_penglihatan', 'pupil', 'Pupil', ['isokor' => 'Isokor', 'anisokor' => 'Anisokor', 'midriasis' => 'Midriasis', 'miosis' => 'Miosis']) !!}
+        {!! $radio('fisik_penglihatan', 'sklera', 'Sklera', ['anikterik' => 'Anikterik (Normal)', 'ikterik' => 'Ikterik']) !!}
+        {!! $checkboxes('fisik_penglihatan', 'pupil', 'Pupil', ['isokor' => 'Isokor (Normal)', 'anisokor' => 'Anisokor', 'midriasis' => 'Midriasis', 'miosis' => 'Miosis']) !!}
         {!! $checkboxes('fisik_penglihatan', 'otot_mata', 'Otot-Otot Mata', ['tidak_ada_kelainan' => 'Tidak ada kelainan', 'juling_keluar' => 'Juling keluar', 'juling_dalam' => 'Juling ke dalam', 'berada_atas' => 'Berada di atas']) !!}
         {!! $checkboxes('fisik_penglihatan', 'fungsi_penglihatan', 'Fungsi Penglihatan', ['baik' => 'Baik', 'kabur' => 'Kabur', 'diplopia' => 'Diplopia']) !!}
         <div class="space-y-1.5">
@@ -118,8 +118,8 @@
                 placeholder="Deskripsi..."
                 class="w-full rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white" />
         </div>
-        {!! $radio('fisik_penglihatan', 'kacamata', 'Pemakaian Kacamata', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_penglihatan', 'lensa_kontak', 'Pemakaian Lensa Kontak', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_penglihatan', 'kacamata', 'Pemakaian Kacamata', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_penglihatan', 'lensa_kontak', 'Pemakaian Lensa Kontak', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
     </div>
 
     @elseif ($key === 'fisik_pendengaran')
@@ -127,18 +127,17 @@
         {!! $radio('fisik_pendengaran', 'daun_telinga', 'Daun Telinga', ['normal' => 'Normal / Tidak sakit', 'sakit' => 'Sakit saat digerakkan']) !!}
         {!! $checkboxes('fisik_pendengaran', 'kondisi_telinga', 'Kondisi Telinga', ['normal' => 'Normal', 'kemerahan' => 'Kemerahan', 'bengkak' => 'Bengkak', 'lesi' => 'Terdapat lesi']) !!}
         {!! $radio('fisik_pendengaran', 'cairan_telinga', 'Cairan dari Telinga', ['tidak_ada' => 'Tidak ada', 'darah' => 'Darah', 'nanah' => 'Nanah']) !!}
-        {!! $radio('fisik_pendengaran', 'tinnitus', 'Tinitus', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_pendengaran', 'tinnitus', 'Tinitus', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
         {!! $radio('fisik_pendengaran', 'fungsi_pendengaran', 'Fungsi Pendengaran', ['normal' => 'Normal', 'kurang' => 'Kurang', 'tuli' => 'Tuli']) !!}
-        {!! $radio('fisik_pendengaran', 'alat_bantu', 'Alat Bantu Dengar', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_pendengaran', 'perasaan_penuh', 'Perasaan Penuh pada Telinga', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_pendengaran', 'alat_bantu', 'Alat Bantu Dengar', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_pendengaran', 'perasaan_penuh', 'Perasaan Penuh pada Telinga', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
     </div>
 
     @elseif ($key === 'fisik_wicara')
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {!! $checkboxes('fisik_wicara', 'gangguan', 'Kesulitan / Gangguan Wicara', [
-            'aphasia' => 'Aphasia', 'dysphasia' => 'Dysphasia',
-            'aphonia' => 'Aphonia', 'anarthria' => 'Anarthria',
-            'dysarthria' => 'Dysarthria', 'tidak_ada' => 'Tidak Ada',
+            'tidak_ada' => 'Tidak Ada', 'aphasia' => 'Aphasia', 'dysphasia' => 'Dysphasia',
+            'aphonia' => 'Aphonia', 'anarthria' => 'Anarthria', 'dysarthria' => 'Dysarthria'
         ]) !!}
     </div>
 
@@ -146,15 +145,15 @@
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {!! $textInput('fisik_pernafasan', 'frekuensi', 'Frekuensi', 'x/mnt', '0') !!}
         {!! $checkboxes('fisik_pernafasan', 'jalan_nafas', 'Jalan Nafas', ['bersih' => 'Bersih', 'sputum' => 'Sputum', 'lendir' => 'Lendir', 'darah' => 'Darah', 'sumbatan' => 'Sumbatan', 'lidah' => 'Lidah']) !!}
-        {!! $radio('fisik_pernafasan', 'sesak', 'Pernafasan', ['sesak' => 'Sesak', 'tidak_sesak' => 'Tidak Sesak']) !!}
-        {!! $radio('fisik_pernafasan', 'otot_bantu', 'Otot Bantu Pernafasan', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_pernafasan', 'sesak', 'Pernafasan', ['tidak_sesak' => 'Tidak Sesak', 'sesak' => 'Sesak']) !!}
+        {!! $radio('fisik_pernafasan', 'otot_bantu', 'Otot Bantu Pernafasan', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
         {!! $radio('fisik_pernafasan', 'irama', 'Irama', ['teratur' => 'Teratur', 'tidak_teratur' => 'Tidak Teratur']) !!}
-        {!! $radio('fisik_pernafasan', 'kedalaman', 'Kedalaman', ['dalam' => 'Dalam', 'dangkal' => 'Dangkal']) !!}
-        {!! $radio('fisik_pernafasan', 'batuk', 'Batuk', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_pernafasan', 'batuk_jenis', 'Jenis Batuk', ['produktif' => 'Produktif', 'non_produktif' => 'Non Produktif']) !!}
-        {!! $checkboxes('fisik_pernafasan', 'sputum_warna', 'Warna Sputum', ['putih' => 'Putih', 'kuning' => 'Kuning', 'hijau' => 'Hijau']) !!}
-        {!! $radio('fisik_pernafasan', 'sputum_konsistensi', 'Konsistensi Sputum', ['kental' => 'Kental', 'encer' => 'Encer']) !!}
-        {!! $radio('fisik_pernafasan', 'sputum_darah', 'Terdapat Darah', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_pernafasan', 'kedalaman', 'Kedalaman', ['normal' => 'Normal', 'dalam' => 'Dalam', 'dangkal' => 'Dangkal']) !!}
+        {!! $radio('fisik_pernafasan', 'batuk', 'Batuk', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_pernafasan', 'batuk_jenis', 'Jenis Batuk', ['tidak_ada' => 'Tidak ada', 'produktif' => 'Produktif', 'non_produktif' => 'Non Produktif']) !!}
+        {!! $checkboxes('fisik_pernafasan', 'sputum_warna', 'Warna Sputum', ['tidak_ada' => 'Tidak ada', 'putih' => 'Putih', 'kuning' => 'Kuning', 'hijau' => 'Hijau']) !!}
+        {!! $radio('fisik_pernafasan', 'sputum_konsistensi', 'Konsistensi Sputum', ['tidak_ada' => 'Tidak ada', 'kental' => 'Kental', 'encer' => 'Encer']) !!}
+        {!! $radio('fisik_pernafasan', 'sputum_darah', 'Terdapat Darah', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
         {!! $checkboxes('fisik_pernafasan', 'suara_nafas', 'Suara Nafas', ['normal' => 'Normal', 'ronchi' => 'Ronchi', 'wheezing' => 'Wheezing', 'rales' => 'Rales']) !!}
     </div>
 
@@ -162,20 +161,20 @@
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {!! $textInput('fisik_kardiovaskuler', 'nadi', 'Nadi', 'x/mnt') !!}
         {!! $radio('fisik_kardiovaskuler', 'irama_nadi', 'Irama Nadi', ['teratur' => 'Teratur', 'tidak_teratur' => 'Tidak Teratur']) !!}
-        {!! $radio('fisik_kardiovaskuler', 'denyut', 'Denyut', ['lemah' => 'Lemah', 'kuat' => 'Kuat']) !!}
+        {!! $radio('fisik_kardiovaskuler', 'denyut', 'Denyut', ['kuat' => 'Kuat', 'lemah' => 'Lemah']) !!}
         {!! $textInput('fisik_kardiovaskuler', 'tekanan_darah', 'Tekanan Darah', 'mmHg', '120/80') !!}
-        {!! $radio('fisik_kardiovaskuler', 'distensi_vena_kanan', 'Distensi Vena Jugularis Kanan', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_kardiovaskuler', 'distensi_vena_kiri', 'Distensi Vena Jugularis Kiri', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_kardiovaskuler', 'temperatur_kulit', 'Temperatur Kulit', ['hangat' => 'Hangat', 'dingin' => 'Dingin']) !!}
-        {!! $checkboxes('fisik_kardiovaskuler', 'warna_kulit', 'Warna Kulit', ['pucat' => 'Pucat', 'sianosis' => 'Sianosis', 'kemerahan' => 'Kemerahan']) !!}
-        {!! $textInput('fisik_kardiovaskuler', 'pengisian_kapiler', 'Pengisian Kapiler', 'detik') !!}
-        {!! $radio('fisik_kardiovaskuler', 'edema', 'Edema', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $checkboxes('fisik_kardiovaskuler', 'edema_lokasi', 'Lokasi Edema', ['tungkai_atas' => 'Tungkai atas', 'tungkai_bawah' => 'Tungkai bawah', 'periorbital' => 'Periorbital', 'muka' => 'Muka']) !!}
+        {!! $radio('fisik_kardiovaskuler', 'distensi_vena_kanan', 'Distensi Vena Jugularis Kanan', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_kardiovaskuler', 'distensi_vena_kiri', 'Distensi Vena Jugularis Kiri', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_kardiovaskuler', 'temperatur_kulit', 'Temperatur Kulit', ['hangat' => 'Hangat (Normal)', 'dingin' => 'Dingin']) !!}
+        {!! $checkboxes('fisik_kardiovaskuler', 'warna_kulit', 'Warna Kulit', ['normal' => 'Normal', 'pucat' => 'Pucat', 'sianosis' => 'Sianosis', 'kemerahan' => 'Kemerahan']) !!}
+        {!! $textInput('fisik_kardiovaskuler', 'pengisian_kapiler', 'Pengisian Kapiler (CRT)', 'detik') !!}
+        {!! $radio('fisik_kardiovaskuler', 'edema', 'Edema', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $checkboxes('fisik_kardiovaskuler', 'edema_lokasi', 'Lokasi Edema', ['tidak_ada' => 'Tidak ada', 'tungkai_atas' => 'Tungkai atas', 'tungkai_bawah' => 'Tungkai bawah', 'periorbital' => 'Periorbital', 'muka' => 'Muka']) !!}
         {!! $radio('fisik_kardiovaskuler', 'irama_jantung', 'Irama Jantung', ['teratur' => 'Teratur', 'tidak_teratur' => 'Tidak Teratur']) !!}
-        {!! $checkboxes('fisik_kardiovaskuler', 'bunyi_jantung', 'Bunyi Jantung', ['normal' => 'Normal', 'murmur' => 'Murmur', 'gallop' => 'Gallop']) !!}
-        {!! $radio('fisik_kardiovaskuler', 'nyeri_dada', 'Nyeri Dada', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_kardiovaskuler', 'nyeri_timbul', 'Timbulnya Nyeri', ['saat_aktivitas' => 'Saat Aktivitas', 'tanpa_aktivitas' => 'Tanpa Aktivitas']) !!}
-        {!! $checkboxes('fisik_kardiovaskuler', 'nyeri_karakter', 'Karakter Nyeri', ['ditusuk' => 'Seperti ditusuk-tusuk', 'terbakar' => 'Seperti terbakar', 'tertimpa' => 'Seperti tertimpa benda berat']) !!}
+        {!! $checkboxes('fisik_kardiovaskuler', 'bunyi_jantung', 'Bunyi Jantung', ['normal' => 'Normal (S1/S2 tunggal)', 'murmur' => 'Murmur', 'gallop' => 'Gallop']) !!}
+        {!! $radio('fisik_kardiovaskuler', 'nyeri_dada', 'Nyeri Dada', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_kardiovaskuler', 'nyeri_timbul', 'Timbulnya Nyeri', ['tidak_ada' => 'Tidak ada nyeri', 'saat_aktivitas' => 'Saat Aktivitas', 'tanpa_aktivitas' => 'Tanpa Aktivitas']) !!}
+        {!! $checkboxes('fisik_kardiovaskuler', 'nyeri_karakter', 'Karakter Nyeri', ['tidak_ada' => 'Tidak ada nyeri', 'ditusuk' => 'Seperti ditusuk-tusuk', 'terbakar' => 'Seperti terbakar', 'tertimpa' => 'Seperti tertimpa benda berat']) !!}
     </div>
 
     @elseif ($key === 'fisik_hematologi')
@@ -193,8 +192,9 @@
         {!! $radio('fisik_saraf', 'pupil', 'Pupil', ['isokor' => 'Isokor', 'anisokor' => 'Anisokor']) !!}
         {!! $radio('fisik_saraf', 'reaksi_cahaya_kanan', 'Reaksi terhadap Cahaya — Kanan', ['positif' => 'Positif', 'negatif' => 'Negatif']) !!}
         {!! $radio('fisik_saraf', 'reaksi_cahaya_kiri', 'Reaksi terhadap Cahaya — Kiri', ['positif' => 'Positif', 'negatif' => 'Negatif']) !!}
-        {!! $radio('fisik_saraf', 'peningkatan_tik', 'Peningkatan Tekanan Intra Kranial', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_saraf', 'peningkatan_tik', 'Peningkatan Tekanan Intra Kranial', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
         {!! $checkboxes('fisik_saraf', 'kelainan', 'Kelainan', [
+            'tidak_ada' => 'Tidak ada kelainan',
             'kejang' => 'Kejang',
             'lumpuh_kanan' => 'Kelumpuhan kanan',
             'lumpuh_kiri' => 'Kelumpuhan kiri',
@@ -227,30 +227,31 @@
 
     @elseif ($key === 'fisik_pencernaan')
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {!! $radio('fisik_pencernaan', 'gigi_caries', 'Gigi Caries', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_pencernaan', 'gigi_palsu', 'Gigi Palsu', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_pencernaan', 'stomatitis', 'Stomatitis', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_pencernaan', 'lidah_kotor', 'Lidah Kotor', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_pencernaan', 'gigi_caries', 'Gigi Caries', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_pencernaan', 'gigi_palsu', 'Gigi Palsu', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_pencernaan', 'stomatitis', 'Stomatitis', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_pencernaan', 'lidah_kotor', 'Lidah Kotor', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
         {!! $radio('fisik_pencernaan', 'saliva', 'Saliva', ['normal' => 'Normal', 'abnormal' => 'Abnormal']) !!}
-        {!! $radio('fisik_pencernaan', 'muntah', 'Muntah', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $checkboxes('fisik_pencernaan', 'isi_muntah', 'Isi Muntah', ['makanan' => 'Makanan', 'cairan' => 'Cairan', 'darah' => 'Darah']) !!}
-        {!! $checkboxes('fisik_pencernaan', 'warna_muntah', 'Warna Muntah', ['kehijauan' => 'Kehijauan', 'coklat' => 'Coklat', 'kuning' => 'Kuning', 'sesuai_makanan' => 'Sesuai warna makanan', 'hitam' => 'Hitam']) !!}
-        {!! $radio('fisik_pencernaan', 'mual', 'Mual', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_pencernaan', 'muntah', 'Muntah', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $checkboxes('fisik_pencernaan', 'isi_muntah', 'Isi Muntah', ['tidak_ada' => 'Tidak ada', 'makanan' => 'Makanan', 'cairan' => 'Cairan', 'darah' => 'Darah']) !!}
+        {!! $checkboxes('fisik_pencernaan', 'warna_muntah', 'Warna Muntah', ['tidak_ada' => 'Tidak ada', 'kehijauan' => 'Kehijauan', 'coklat' => 'Coklat', 'kuning' => 'Kuning', 'sesuai_makanan' => 'Sesuai warna makanan', 'hitam' => 'Hitam']) !!}
+        {!! $radio('fisik_pencernaan', 'mual', 'Mual', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
         {!! $radio('fisik_pencernaan', 'nafsu_makan', 'Nafsu Makan', ['baik' => 'Baik', 'kurang' => 'Kurang', 'naik' => 'Naik']) !!}
-        {!! $radio('fisik_pencernaan', 'nyeri_perut', 'Nyeri Daerah Perut', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $checkboxes('fisik_pencernaan', 'nyeri_karakter', 'Karakter Nyeri Perut', ['melilit' => 'Melilit-lilit', 'kram' => 'Kram', 'menyebar' => 'Menyebar', 'setempat' => 'Setempat', 'kanan_atas' => 'Kanan atas', 'kanan_bawah' => 'Kanan bawah', 'kiri_atas' => 'Kiri atas', 'kiri_bawah' => 'Kiri bawah', 'berpindah' => 'Berpindah-pindah', 'terbakar' => 'Seperti terbakar', 'ditusuk' => 'Seperti ditusuk']) !!}
+        {!! $radio('fisik_pencernaan', 'nyeri_perut', 'Nyeri Daerah Perut', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $checkboxes('fisik_pencernaan', 'nyeri_karakter', 'Karakter Nyeri Perut', ['tidak_ada' => 'Tidak ada', 'melilit' => 'Melilit-lilit', 'kram' => 'Kram', 'menyebar' => 'Menyebar', 'setempat' => 'Setempat', 'kanan_atas' => 'Kanan atas', 'kanan_bawah' => 'Kanan bawah', 'kiri_atas' => 'Kiri atas', 'kiri_bawah' => 'Kiri bawah', 'berpindah' => 'Berpindah-pindah', 'terbakar' => 'Seperti terbakar', 'ditusuk' => 'Seperti ditusuk']) !!}
         {!! $textInput('fisik_pencernaan', 'bab_kebiasaan', 'Kebiasaan BAB', 'x/hari') !!}
         {!! $textInput('fisik_pencernaan', 'bising_usus', 'Bising Usus', 'x/mnt') !!}
         {!! $checkboxes('fisik_pencernaan', 'warna_feces', 'Warna Feces', ['kuning' => 'Kuning', 'coklat' => 'Coklat', 'hitam' => 'Hitam', 'berdarah' => 'Berdarah']) !!}
-        {!! $checkboxes('fisik_pencernaan', 'konsistensi_feces', 'Konsistensi Feces', ['normal' => 'Normal', 'lembek' => 'Lembek', 'ada_lendir' => 'Ada lendir']) !!}
-        {!! $radio('fisik_pencernaan', 'hepar', 'Hepar', ['teraba' => 'Teraba', 'tidak_teraba' => 'Tidak Teraba']) !!}
-        {!! $checkboxes('fisik_pencernaan', 'abdomen', 'Abdomen', ['normal' => 'Normal', 'kembung' => 'Kembung', 'asites' => 'Asites']) !!}
+        {!! $checkboxes('fisik_pencernaan', 'konsistensi_feces', 'Konsistensi Feces', ['normal' => 'Normal / Lunak', 'keras' => 'Keras', 'cair' => 'Cair', 'ada_lendir' => 'Ada lendir']) !!}
+        {!! $radio('fisik_pencernaan', 'hepar', 'Hepar', ['tidak_teraba' => 'Tidak Teraba', 'teraba' => 'Teraba']) !!}
+        {!! $checkboxes('fisik_pencernaan', 'abdomen', 'Abdomen', ['normal' => 'Normal / Datar', 'kembung' => 'Kembung', 'asites' => 'Asites']) !!}
     </div>
 
     @elseif ($key === 'fisik_endokrin')
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {!! $radio('fisik_endokrin', 'nafas_bau_keton', 'Nafas Berbau Keton', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_endokrin', 'nafas_bau_keton', 'Nafas Berbau Keton', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
         {!! $checkboxes('fisik_endokrin', 'kelainan', 'Kelainan Endokrin', [
+            'tidak_ada' => 'Tidak ada kelainan',
             'keringat_banyak' => 'Keringat banyak',
             'urine_banyak' => 'Urine banyak',
             'urine_sedikit' => 'Urine sedikit',
@@ -260,17 +261,18 @@
             'poliuri' => 'Poliuri',
             'polidipsi' => 'Polidipsi',
         ]) !!}
-        {!! $radio('fisik_endokrin', 'gangren', 'Gangren', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_endokrin', 'gangren_warna', 'Warna Gangren', ['kehijauan' => 'Kehijauan', 'hitam' => 'Hitam']) !!}
-        {!! $radio('fisik_endokrin', 'gangren_bau', 'Bau Khas Gangren', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_endokrin', 'exopthalmus', 'Exopthalmus', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_endokrin', 'tremor', 'Tremor', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_endokrin', 'kelenjar_tiroid', 'Kelenjar Tiroid', ['membesar' => 'Membesar', 'tidak' => 'Tidak Membesar']) !!}
+        {!! $radio('fisik_endokrin', 'gangren', 'Gangren', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_endokrin', 'gangren_warna', 'Warna Gangren', ['tidak_ada' => 'Tidak ada', 'kehijauan' => 'Kehijauan', 'hitam' => 'Hitam']) !!}
+        {!! $radio('fisik_endokrin', 'gangren_bau', 'Bau Khas Gangren', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_endokrin', 'exopthalmus', 'Exopthalmus', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_endokrin', 'tremor', 'Tremor', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_endokrin', 'kelenjar_tiroid', 'Kelenjar Tiroid', ['tidak' => 'Tidak Membesar', 'membesar' => 'Membesar']) !!}
     </div>
 
     @elseif ($key === 'fisik_urogenital')
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {!! $checkboxes('fisik_urogenital', 'perubahan_pola', 'Perubahan Pola Berkemih', [
+            'tidak_ada' => 'Tidak ada keluhan',
             'retensi' => 'Retensi',
             'urgency' => 'Urgency',
             'resistensi' => 'Resistensi',
@@ -281,19 +283,19 @@
         {!! $textInput('fisik_urogenital', 'bak_frekuensi', 'Frekuensi BAK', 'x/hari') !!}
         {!! $radio('fisik_urogenital', 'bak_kontrol', 'Kontrol BAK', ['terkontrol' => 'Terkontrol', 'tidak_terkontrol' => 'Tidak Terkontrol']) !!}
         {!! $textInput('fisik_urogenital', 'bak_jumlah', 'Jumlah BAK', 'cc/24 jam') !!}
-        {!! $radio('fisik_urogenital', 'bak_warna', 'Warna BAK', ['kuning_jernih' => 'Kuning jernih', 'merah' => 'Merah', 'kuning_kental' => 'Kuning kental/cokelat', 'putih_bening' => 'Putih/bening']) !!}
-        {!! $radio('fisik_urogenital', 'distensi_kandung_kemih', 'Distensi Kandung Kemih', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_urogenital', 'nyeri_pinggang', 'Keluhan Sakit Pinggang', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_urogenital', 'pembesaran_prostat', 'Pembesaran Kelenjar Prostat', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $textareaInput('fisik_urogenital', 'keadaan_genitalia', 'Keadaan Genitalia', 'Deskripsi keadaan genitalia...') !!}
+        {!! $radio('fisik_urogenital', 'bak_warna', 'Warna BAK', ['kuning_jernih' => 'Kuning jernih (Normal)', 'merah' => 'Merah', 'kuning_kental' => 'Kuning kental/cokelat', 'putih_bening' => 'Putih/bening']) !!}
+        {!! $radio('fisik_urogenital', 'distensi_kandung_kemih', 'Distensi Kandung Kemih', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_urogenital', 'nyeri_pinggang', 'Keluhan Sakit Pinggang', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_urogenital', 'pembesaran_prostat', 'Pembesaran Kelenjar Prostat', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $textareaInput('fisik_urogenital', 'keadaan_genitalia', 'Keadaan Genitalia', 'Normal / Bersih') !!}
     </div>
 
     @elseif ($key === 'fisik_integumen')
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {!! $radio('fisik_integumen', 'turgor', 'Turgor Kulit', ['baik' => 'Baik / Elastis', 'sedang' => 'Sedang', 'buruk' => 'Buruk']) !!}
-        {!! $checkboxes('fisik_integumen', 'warna_kulit', 'Warna Kulit', ['pucat' => 'Pucat', 'kemerahan' => 'Kemerahan', 'sianosis' => 'Sianosis']) !!}
+        {!! $checkboxes('fisik_integumen', 'warna_kulit', 'Warna Kulit', ['normal' => 'Normal', 'pucat' => 'Pucat', 'kemerahan' => 'Kemerahan', 'sianosis' => 'Sianosis']) !!}
         {!! $checkboxes('fisik_integumen', 'keadaan_kulit', 'Keadaan Kulit', [
-            'baik' => 'Baik',
+            'baik' => 'Baik (Normal)',
             'lesi' => 'Terdapat lesi',
             'ulkus' => 'Ulkus',
             'bercak_merah' => 'Bercak merah',
@@ -312,18 +314,19 @@
 
     @elseif ($key === 'fisik_muskuloskeletal')
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {!! $radio('fisik_muskuloskeletal', 'kesulitan_pergerakan', 'Kesulitan dalam Pergerakan', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_muskuloskeletal', 'nyeri_tulang', 'Nyeri Tulang / Sendi / Kulit', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
-        {!! $radio('fisik_muskuloskeletal', 'fraktur', 'Fraktur', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_muskuloskeletal', 'kesulitan_pergerakan', 'Kesulitan dalam Pergerakan', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_muskuloskeletal', 'nyeri_tulang', 'Nyeri Tulang / Sendi / Kulit', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
+        {!! $radio('fisik_muskuloskeletal', 'fraktur', 'Fraktur', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
         {!! $textInput('fisik_muskuloskeletal', 'lokasi_fraktur', 'Lokasi Fraktur', '', 'Misal: femur kiri') !!}
         {!! $textInput('fisik_muskuloskeletal', 'jenis_fraktur', 'Jenis Fraktur', '', 'Misal: closed, open') !!}
         {!! $checkboxes('fisik_muskuloskeletal', 'kelainan_bentuk', 'Kelainan Bentuk', [
+            'tidak_ada' => 'Tidak ada kelainan',
             'kontraktur' => 'Kontraktur',
             'skoliosis' => 'Skoliosis',
             'lordosis' => 'Lordosis',
             'kyphosis' => 'Kyphosis',
         ]) !!}
-        {!! $radio('fisik_muskuloskeletal', 'tonus_otot', 'Keadaan Tonus Otot', ['hipotonia' => 'Hipotonia', 'hipertonia' => 'Hipertonia', 'atonia' => 'Atonia', 'normal' => 'Normal']) !!}
+        {!! $radio('fisik_muskuloskeletal', 'tonus_otot', 'Keadaan Tonus Otot', ['normal' => 'Normal', 'hipotonia' => 'Hipotonia', 'hipertonia' => 'Hipertonia', 'atonia' => 'Atonia']) !!}
     </div>
 
     @elseif ($key === 'fisik_imun')
@@ -331,7 +334,7 @@
         {!! $textInput('fisik_imun', 'suhu', 'Suhu Tubuh', '°C') !!}
         {!! $textInput('fisik_imun', 'bb_sebelum', 'BB Sebelum Sakit', 'kg') !!}
         {!! $textInput('fisik_imun', 'bb_sesudah', 'BB Sesudah Sakit', 'kg') !!}
-        {!! $radio('fisik_imun', 'pembesaran_kelenjar', 'Pembesaran Kel. Getah Bening', ['ya' => 'Ya', 'tidak' => 'Tidak']) !!}
+        {!! $radio('fisik_imun', 'pembesaran_kelenjar', 'Pembesaran Kel. Getah Bening', ['tidak' => 'Tidak', 'ya' => 'Ya']) !!}
     </div>
     @endif
 

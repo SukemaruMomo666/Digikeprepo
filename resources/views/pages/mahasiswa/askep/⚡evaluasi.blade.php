@@ -21,7 +21,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
      *   kode: string,
      *   label: string,
      *   prioritas: int,
-     *   luaran: list<array{kode: string, label: string, target_waktu: string, kriteria: string}>,
+     *   luaran: list<array{
+     *      kode: string, 
+     *      label: string, 
+     *      target_waktu: string, 
+     *      kriteria: list<array{id: int, deskripsi: string, arah: string, opsi_skor: array<int, string>, awal: string, target: string}>
+     *   }>,
      *   evaluasi: array{
      *     id: int|null,
      *     tanggal: string,
@@ -50,11 +55,23 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
         $this->askep = $askep->load([
             'pasien',
             'diagnosa.sdki',
-            'diagnosa.luaran.slki',
+            'diagnosa.luaran.slki.kriteriaHasil',
             'diagnosa.evaluasi',
         ]);
 
         $this->inisialisasi();
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function opsiSkorIndikator(string $arah): array
+    {
+        return match ($arah) {
+            'Meningkat' => [1 => 'Menurun', 2 => 'Cukup menurun', 3 => 'Sedang', 4 => 'Cukup meningkat', 5 => 'Meningkat'],
+            'Menurun' => [1 => 'Meningkat', 2 => 'Cukup meningkat', 3 => 'Sedang', 4 => 'Cukup menurun', 5 => 'Menurun'],
+            default => [1 => 'Memburuk', 2 => 'Cukup memburuk', 3 => 'Sedang', 4 => 'Cukup membaik', 5 => 'Membaik'],
+        };
     }
 
     private function inisialisasi(): void
@@ -64,22 +81,42 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
         foreach ($this->askep->diagnosa as $diagnosa) {
             $eval = $diagnosa->evaluasi->first();
 
-            // Bangun array luaran dari step 3 (SLKI terpilih)
-            $luaranList = $diagnosa->luaran->map(fn ($l) => [
-                'kode'        => $l->slki?->kode_luaran ?? '',
-                'label'       => $l->slki?->label_luaran ?? '',
-                'target_waktu' => $l->target_waktu ?? '',
-                'kriteria'    => $l->slki?->kriteria_hasil ?? '',
-            ])->values()->toArray();
+            // Bangun array luaran dari step 3 (SLKI terpilih beserta skor awal & target)
+            $luaranList = [];
+            $skorAwalEval = $eval?->skor_indikator ?? []; // Format DB: ['kriteria_id' => 'skor_akhir']
 
-            // Bangun skor_indikator awal berdasarkan kriteria SLKI
-            $skorAwal = $eval?->skor_indikator ?? [];
-            if (empty($skorAwal)) {
-                foreach ($luaranList as $l) {
-                    if ($l['kriteria']) {
-                        $skorAwal[$l['label']] = '3'; // default: cukup
+            foreach ($diagnosa->luaran as $l) {
+                $kriteriaList = [];
+                $skorPerencanaan = is_array($l->skor_indikator) ? $l->skor_indikator : json_decode($l->skor_indikator ?? '{}', true);
+
+                if ($l->slki) {
+                    foreach ($l->slki->kriteriaHasil as $k) {
+                        $kId = (string) $k->id;
+                        // Hanya masukkan kriteria yang diisi di Langkah 3 (punya target)
+                        if (isset($skorPerencanaan[$kId]['target']) && $skorPerencanaan[$kId]['target'] !== '') {
+                            $kriteriaList[] = [
+                                'id' => $k->id,
+                                'deskripsi' => $k->deskripsi,
+                                'arah' => $k->arah,
+                                'opsi_skor' => $this->opsiSkorIndikator($k->arah),
+                                'awal' => $skorPerencanaan[$kId]['awal'] ?? '-',
+                                'target' => $skorPerencanaan[$kId]['target'],
+                            ];
+                            
+                            // Initialize skor evaluasi if not set
+                            if (!isset($skorAwalEval[$kId])) {
+                                $skorAwalEval[$kId] = '';
+                            }
+                        }
                     }
                 }
+
+                $luaranList[] = [
+                    'kode'        => $l->slki?->kode_luaran ?? '',
+                    'label'       => $l->slki?->label_luaran ?? '',
+                    'target_waktu' => $l->target_waktu ?? '',
+                    'kriteria'    => $kriteriaList,
+                ];
             }
 
             $this->rencana[] = [
@@ -99,10 +136,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
                     'tv_rr'            => (string) ($eval?->tv_rr ?? ''),
                     'tv_suhu'          => (string) ($eval?->tv_suhu ?? ''),
                     'tv_spo2'          => (string) ($eval?->tv_spo2 ?? ''),
-                    'skor_indikator'   => $skorAwal,
-                    'analisis'         => $eval?->analisis ?? 'teratasi_sebagian',
+                    'skor_indikator'   => $skorAwalEval,
+                    'analisis'         => $eval?->analisis ?? 'Belum Tercapai',
                     'analisis_narasi'  => $eval?->analisis_narasi ?? '',
-                    'tindak_lanjut'    => $eval?->tindak_lanjut ?? '',
+                    'tindak_lanjut'    => $eval?->tindak_lanjut ?? 'Lanjutkan',
                     'penanggung_jawab' => $eval?->penanggung_jawab ?? '',
                 ],
             ];
@@ -119,10 +156,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
         $rules = [];
         foreach ($this->rencana as $dIdx => $d) {
             $rules["rencana.{$dIdx}.evaluasi.tanggal"]         = ['required', 'date'];
-            $rules["rencana.{$dIdx}.evaluasi.analisis"]        = ['required', 'in:teratasi,teratasi_sebagian,belum_teratasi'];
+            $rules["rencana.{$dIdx}.evaluasi.analisis"]        = ['required', 'in:Tercapai,Membaik,Belum Tercapai'];
+            $rules["rencana.{$dIdx}.evaluasi.tindak_lanjut"]   = ['required', 'in:Lanjutkan,Hentikan,Modifikasi,Rujuk'];
             $rules["rencana.{$dIdx}.evaluasi.catatan_soap"]    = ['nullable', 'string', 'max:3000'];
             $rules["rencana.{$dIdx}.evaluasi.analisis_narasi"] = ['nullable', 'string', 'max:2000'];
-            $rules["rencana.{$dIdx}.evaluasi.tindak_lanjut"]   = ['nullable', 'string', 'max:2000'];
         }
 
         $this->validate($rules);
@@ -141,7 +178,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
                     'tv_rr'            => $ev['tv_rr'] !== '' ? (int) $ev['tv_rr'] : null,
                     'tv_suhu'          => $ev['tv_suhu'] !== '' ? (float) $ev['tv_suhu'] : null,
                     'tv_spo2'          => $ev['tv_spo2'] !== '' ? (int) $ev['tv_spo2'] : null,
-                    'skor_indikator'   => $ev['skor_indikator'],
+                    'skor_indikator'   => $ev['skor_indikator'], // format: ['kriteria_id' => 'skor_akhir']
                     'analisis'         => $ev['analisis'],
                     'analisis_narasi'  => $ev['analisis_narasi'],
                     'tindak_lanjut'    => $ev['tindak_lanjut'],
@@ -345,25 +382,53 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
                             </div>
 
                             {{-- Skor Indikator SLKI --}}
-                            @if (! empty($d['evaluasi']['skor_indikator']))
+                            @if (! empty($d['luaran']))
                                 <div>
-                                    <p class="mb-2 text-xs font-medium text-[#7A8FA6]">Skor Indikator Luaran (1 = Sangat Buruk → 5 = Sangat Baik)</p>
-                                    <div class="space-y-2">
-                                        @foreach ($d['evaluasi']['skor_indikator'] as $namaIndikator => $skor)
-                                            <div class="flex items-center gap-3 rounded-lg border border-[#E0EBF5] bg-[#F4F8FB] px-3 py-2">
-                                                <span class="flex-1 text-xs text-[#1B4F72]">{{ $namaIndikator }}</span>
-                                                <div class="flex gap-1">
-                                                    @for ($s = 1; $s <= 5; $s++)
-                                                        <button
-                                                            wire:click="$set('rencana.{{ $dIdx }}.evaluasi.skor_indikator.{{ $namaIndikator }}', '{{ $s }}')"
-                                                            class="flex size-7 items-center justify-center rounded-lg border text-xs font-bold transition
-                                                                {{ (string) $skor === (string) $s
-                                                                    ? 'border-[#2E86C1] bg-[#2E86C1] text-white'
-                                                                    : 'border-[#D0DCE8] text-[#7A8FA6] hover:border-[#85B7EB]' }}"
-                                                        >
-                                                            {{ $s }}
-                                                        </button>
-                                                    @endfor
+                                    <p class="mb-3 text-sm font-bold text-[#1B4F72]">Evaluasi Kriteria Hasil (SLKI)</p>
+                                    <div class="space-y-4">
+                                        @foreach ($d['luaran'] as $l)
+                                            <div class="rounded-xl border border-[#CDEFE4] bg-white overflow-hidden">
+                                                <div class="bg-[#F0FBF7] px-4 py-2 border-b border-[#CDEFE4]">
+                                                    <span class="text-xs font-bold text-[#0F6E56]">{{ $l['kode'] }} - {{ $l['label'] }}</span>
+                                                </div>
+                                                <div class="p-3">
+                                                    @if(empty($l['kriteria']))
+                                                        <p class="text-xs text-[#7A8FA6] italic">Tidak ada target kriteria hasil yang ditetapkan di Langkah Perencanaan.</p>
+                                                    @else
+                                                        <div class="space-y-3">
+                                                            @foreach ($l['kriteria'] as $k)
+                                                                @php $kId = $k['id']; @endphp
+                                                                <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 items-center p-2 rounded bg-[#F4F8FB] border border-[#E0EBF5]">
+                                                                    <div>
+                                                                        <div class="flex items-center gap-2 mb-1">
+                                                                            <p class="text-sm font-medium text-[#1B4F72] leading-tight">{{ $k['deskripsi'] }}</p>
+                                                                            <span class="rounded-full bg-white px-2 py-0.5 text-[9px] font-semibold text-[#7A8FA6] border border-[#D0DCE8]">{{ $k['arah'] }}</span>
+                                                                        </div>
+                                                                        <div class="flex gap-4 text-[10px] font-semibold text-[#7A8FA6]">
+                                                                            <span>Skor Awal: <span class="text-[#1B4F72]">{{ $k['awal'] }}</span></span>
+                                                                            <span>Target: <span class="text-[#1A9B72]">{{ $k['target'] }}</span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="flex flex-col items-center">
+                                                                        <p class="text-[9px] font-bold uppercase tracking-wider text-[#2E86C1] mb-1">Skor Akhir Evaluasi</p>
+                                                                        <div class="flex gap-1 bg-white p-1 rounded border border-[#D0DCE8]">
+                                                                            <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight flex items-center justify-center">{{ $k['opsi_skor'][1] }}</span>
+                                                                            @for ($s = 1; $s <= 5; $s++)
+                                                                                <label class="cursor-pointer">
+                                                                                    <input type="radio" wire:model="rencana.{{ $dIdx }}.evaluasi.skor_indikator.{{ $kId }}" value="{{ $s }}" class="peer sr-only" />
+                                                                                    <span class="flex size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB]" title="{{ $s }}. {{ $k['opsi_skor'][$s] }}">
+                                                                                        {{ $s }}
+                                                                                    </span>
+                                                                                </label>
+                                                                            @endfor
+                                                                            <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight flex items-center justify-center">{{ $k['opsi_skor'][5] }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         @endforeach
@@ -373,9 +438,9 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
 
                             {{-- Analisis --}}
                             <div>
-                                <p class="mb-2 text-xs font-medium text-[#7A8FA6]">Analisis Diagnosa <span class="text-[#D95C3A]">*</span></p>
+                                <p class="mb-2 text-xs font-medium text-[#7A8FA6]">A: Analisis Diagnosa <span class="text-[#D95C3A]">*</span></p>
                                 <div class="grid grid-cols-3 gap-2">
-                                    @foreach (['teratasi' => ['label' => 'Teratasi', 'color' => 'text-[#0F6E56] border-[#5DCAA5] bg-[#E1F5EE]', 'default' => 'border-[#D0DCE8] hover:border-[#5DCAA5]'], 'teratasi_sebagian' => ['label' => 'Teratasi Sebagian', 'color' => 'text-amber-700 border-amber-400 bg-amber-50', 'default' => 'border-[#D0DCE8] hover:border-amber-300'], 'belum_teratasi' => ['label' => 'Belum Teratasi', 'color' => 'text-[#D95C3A] border-[#F4A58C] bg-[#FDE8E8]', 'default' => 'border-[#D0DCE8] hover:border-[#F4A58C]']] as $val => $opt)
+                                    @foreach (['Tercapai' => ['label' => 'Tercapai', 'color' => 'text-[#0F6E56] border-[#5DCAA5] bg-[#E1F5EE]', 'default' => 'border-[#D0DCE8] hover:border-[#5DCAA5]'], 'Membaik' => ['label' => 'Membaik', 'color' => 'text-[#2E86C1] border-[#85B7EB] bg-[#EBF5FB]', 'default' => 'border-[#D0DCE8] hover:border-[#85B7EB]'], 'Belum Tercapai' => ['label' => 'Belum Tercapai', 'color' => 'text-[#D95C3A] border-[#F4A58C] bg-[#FDE8E8]', 'default' => 'border-[#D0DCE8] hover:border-[#F4A58C]']] as $val => $opt)
                                         <button
                                             wire:click="$set('rencana.{{ $dIdx }}.evaluasi.analisis', '{{ $val }}')"
                                             class="rounded-xl border-2 px-3 py-2.5 text-sm font-semibold transition
@@ -385,28 +450,35 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
                                         </button>
                                     @endforeach
                                 </div>
+                                @error('rencana.'.$dIdx.'.evaluasi.analisis') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                             </div>
 
-                            {{-- Narasi & Tindak Lanjut --}}
-                            <div class="grid gap-4 sm:grid-cols-2">
-                                <div>
-                                    <label class="text-xs font-medium text-[#7A8FA6]">Narasi Analisis</label>
-                                    <textarea
-                                        wire:model="rencana.{{ $dIdx }}.evaluasi.analisis_narasi"
-                                        rows="3"
-                                        placeholder="Uraikan perkembangan kondisi pasien..."
-                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                    ></textarea>
+                            {{-- Narasi Analisis --}}
+                            <div>
+                                <label class="text-xs font-medium text-[#7A8FA6]">Catatan Tambahan Analisis</label>
+                                <textarea
+                                    wire:model="rencana.{{ $dIdx }}.evaluasi.analisis_narasi"
+                                    rows="2"
+                                    placeholder="Uraikan perkembangan kondisi pasien secara singkat..."
+                                    class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                ></textarea>
+                            </div>
+
+                            {{-- Tindak Lanjut --}}
+                            <div>
+                                <p class="mb-2 text-xs font-medium text-[#7A8FA6]">P: Tindak Lanjut (Planning) <span class="text-[#D95C3A]">*</span></p>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                    @foreach (['Lanjutkan', 'Hentikan', 'Modifikasi', 'Rujuk'] as $val)
+                                        <button
+                                            wire:click="$set('rencana.{{ $dIdx }}.evaluasi.tindak_lanjut', '{{ $val }}')"
+                                            class="rounded-xl border-2 px-3 py-2 text-sm font-semibold transition
+                                                {{ $d['evaluasi']['tindak_lanjut'] === $val ? 'text-[#2E86C1] border-[#2E86C1] bg-[#EBF5FB]' : 'border-[#D0DCE8] text-[#7A8FA6] hover:border-[#85B7EB]' }}"
+                                        >
+                                            {{ $val }}
+                                        </button>
+                                    @endforeach
                                 </div>
-                                <div>
-                                    <label class="text-xs font-medium text-[#7A8FA6]">Tindak Lanjut</label>
-                                    <textarea
-                                        wire:model="rencana.{{ $dIdx }}.evaluasi.tindak_lanjut"
-                                        rows="3"
-                                        placeholder="Intervensi dilanjutkan / dimodifikasi / dihentikan..."
-                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                    ></textarea>
-                                </div>
+                                @error('rencana.'.$dIdx.'.evaluasi.tindak_lanjut') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
