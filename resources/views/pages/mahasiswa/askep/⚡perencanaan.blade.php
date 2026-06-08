@@ -5,6 +5,7 @@ use App\Models\AskepDiagnosaLuaran;
 use App\Models\AskepIntervensi;
 use App\Models\IntervensiSiki;
 use App\Models\LuaranSlki;
+use Illuminate\Support\Arr;
 use Flux\Flux;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
@@ -26,7 +27,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
      *   kode: string,
      *   label: string,
      *   prioritas: int,
-     *   luaran: array<int, array{id: int|null, slki_id: int, kode: string, label: string, target_waktu: string, dipilih: bool}>,
+     *   luaran: array<int, array{id: int|null, slki_id: int, kode: string, label: string, target_waktu: string, skor_indikator: array<int, string>, dipilih: bool, kriteria: array<int, array{id: int, urutan: int, deskripsi: string, arah: string, opsi_skor: array<int, string>}>}>,
      *   intervensi: array<int, array{id: int|null, siki_id: int|null, nama_manual: string, kode: string, label: string, tindakan_tersedia: list<string>, tindakan_dipilih: list<string>, dipilih: bool}>
      * }>
      */
@@ -39,7 +40,8 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
         $this->askep = $askep->load([
             'pasien',
             'diagnosa.sdki.luaranSlki.intervensiSiki',
-            'diagnosa.luaran.slki',
+            'diagnosa.sdki.luaranSlki.kriteriaHasil',
+            'diagnosa.luaran.slki.kriteriaHasil',
             'diagnosa.intervensi.siki',
         ]);
 
@@ -61,12 +63,30 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
             $luaranOptions = [];
             foreach ($diagnosa->sdki?->luaranSlki ?? collect() as $slki) {
                 $saved = $luaranTersimpan->get($slki->id);
+                $skorIndikator = $saved?->skor_indikator ?? [];
+                $kriteria = $slki->kriteriaHasil
+                    ->map(fn ($item): array => [
+                        'id' => $item->id,
+                        'urutan' => $item->urutan,
+                        'deskripsi' => $item->deskripsi,
+                        'arah' => $item->arah,
+                        'opsi_skor' => $this->opsiSkorIndikator($item->arah),
+                    ])
+                    ->values()
+                    ->all();
+
                 $luaranOptions[] = [
                     'id'          => $saved?->id,
                     'slki_id'     => $slki->id,
                     'kode'        => $slki->kode_luaran,
                     'label'       => $slki->label_luaran,
                     'target_waktu' => $saved?->target_waktu ?? '',
+                    'skor_indikator' => collect($kriteria)
+                        ->mapWithKeys(fn ($item): array => [
+                            $item['id'] => (string) Arr::get($skorIndikator, (string) $item['id'], Arr::get($skorIndikator, $item['id'], '')),
+                        ])
+                        ->all(),
+                    'kriteria'    => $kriteria,
                     'dipilih'     => $saved !== null,
                 ];
             }
@@ -131,6 +151,46 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
             = ! $this->rencana[$dIdx]['luaran'][$lIdx]['dipilih'];
     }
 
+    public function pilihSkorIndikator(int $dIdx, int $lIdx, int $kriteriaId, int $skor): void
+    {
+        if (! in_array($skor, [1, 2, 3, 4, 5], true)) {
+            return;
+        }
+
+        $this->rencana[$dIdx]['luaran'][$lIdx]['dipilih'] = true;
+        $this->rencana[$dIdx]['luaran'][$lIdx]['skor_indikator'][$kriteriaId] = (string) $skor;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function opsiSkorIndikator(string $arah): array
+    {
+        return match ($arah) {
+            'Meningkat' => [
+                1 => 'Menurun',
+                2 => 'Cukup menurun',
+                3 => 'Sedang',
+                4 => 'Cukup meningkat',
+                5 => 'Meningkat',
+            ],
+            'Menurun' => [
+                1 => 'Meningkat',
+                2 => 'Cukup meningkat',
+                3 => 'Sedang',
+                4 => 'Cukup menurun',
+                5 => 'Menurun',
+            ],
+            default => [
+                1 => 'Memburuk',
+                2 => 'Cukup memburuk',
+                3 => 'Sedang',
+                4 => 'Cukup membaik',
+                5 => 'Membaik',
+            ],
+        };
+    }
+
     public function toggleTindakan(int $dIdx, int $iIdx, string $tindakan): void
     {
         $dipilih = $this->rencana[$dIdx]['intervensi'][$iIdx]['tindakan_dipilih'];
@@ -163,7 +223,13 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
 
                 AskepDiagnosaLuaran::updateOrCreate(
                     ['askep_diagnosa_id' => $diagnosaId, 'slki_id' => $l['slki_id']],
-                    ['target_waktu' => $l['target_waktu']],
+                    [
+                        'target_waktu' => $l['target_waktu'],
+                        'skor_indikator' => collect($l['skor_indikator'] ?? [])
+                            ->filter(fn ($skor): bool => in_array((int) $skor, [1, 2, 3, 4, 5], true))
+                            ->map(fn ($skor): int => (int) $skor)
+                            ->all(),
+                    ],
                 );
             }
 
@@ -286,7 +352,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                                 @else
                                     <div class="space-y-2">
                                         @foreach ($d['luaran'] as $lIdx => $l)
-                                            <div class="rounded-xl border {{ $l['dipilih'] ? 'border-[#5DCAA5] bg-[#F0FBF7]' : 'border-[#E0EBF5] bg-white' }} p-4">
+                                            <div wire:key="luaran-{{ $d['diagnosa_id'] }}-{{ $l['slki_id'] }}" class="rounded-xl border {{ $l['dipilih'] ? 'border-[#5DCAA5] bg-[#F0FBF7]' : 'border-[#E0EBF5] bg-white' }} p-4">
                                                 <div class="flex items-start gap-3">
                                                     <button
                                                         wire:click="toggleLuaran({{ $dIdx }}, {{ $lIdx }})"
@@ -302,8 +368,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                                                             <span class="font-mono text-xs font-bold text-[#1A9B72]">{{ $l['kode'] }}</span>
                                                             <span class="text-sm font-medium text-[#1B4F72]">{{ $l['label'] }}</span>
                                                         </div>
-                                                        @if ($l['dipilih'])
-                                                            <div class="mt-2">
+                                                        <div class="mt-2">
                                                                 <label class="text-xs font-medium text-[#7A8FA6]">Target Waktu Pencapaian</label>
                                                                 <input
                                                                     wire:model="rencana.{{ $dIdx }}.luaran.{{ $lIdx }}.target_waktu"
@@ -311,8 +376,54 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                                                                     placeholder="Contoh: 3 × 24 jam, 5 hari..."
                                                                     class="mt-1 w-full rounded-lg border border-[#D0DCE8] bg-white px-3 py-1.5 text-sm text-[#1B4F72] placeholder:text-[#C4D3DF] focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
                                                                 />
-                                                            </div>
-                                                        @endif
+                                                        </div>
+
+                                                            @if (! empty($l['kriteria']))
+                                                                <div class="mt-4 space-y-3">
+                                                                    <div class="flex items-center justify-between gap-3">
+                                                                        <p class="text-xs font-semibold uppercase tracking-wide text-[#0F6E56]">Indikator Kriteria Hasil</p>
+                                                                        <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold text-[#7A8FA6]">{{ count($l['kriteria']) }} indikator</span>
+                                                                    </div>
+
+                                                                    <div class="overflow-hidden rounded-lg border border-[#CDEFE4] bg-white">
+                                                                        @foreach ($l['kriteria'] as $kIdx => $kriteria)
+                                                                            <div wire:key="kriteria-{{ $d['diagnosa_id'] }}-{{ $l['slki_id'] }}-{{ $kriteria['id'] }}" class="border-b border-[#E6F5F0] p-3 last:border-b-0">
+                                                                                <div class="flex items-start gap-3">
+                                                                                    <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#E1F5EE] text-[11px] font-bold text-[#0F6E56]">
+                                                                                        {{ $kriteria['urutan'] }}
+                                                                                    </span>
+                                                                                    <div class="min-w-0 flex-1">
+                                                                                        <div class="flex flex-wrap items-center gap-2">
+                                                                                            <p class="text-sm font-medium text-[#1B4F72]">{{ $kriteria['deskripsi'] }}</p>
+                                                                                            <span class="rounded-full bg-[#F4F8FB] px-2 py-0.5 text-[10px] font-semibold text-[#7A8FA6]">{{ $kriteria['arah'] }}</span>
+                                                                                        </div>
+
+                                                                                        <div class="mt-2 grid grid-cols-1 gap-1.5 sm:grid-cols-5">
+                                                                                            @foreach ($kriteria['opsi_skor'] as $skor => $labelSkor)
+                                                                                                <label class="cursor-pointer">
+                                                                                                    <input
+                                                                                                        type="radio"
+                                                                                                        wire:model="rencana.{{ $dIdx }}.luaran.{{ $lIdx }}.skor_indikator.{{ $kriteria['id'] }}"
+                                                                                                        value="{{ $skor }}"
+                                                                                                        class="peer sr-only"
+                                                                                                    />
+                                                                                                    <span class="flex min-h-12 items-center justify-center rounded-lg border border-[#D0DCE8] bg-white px-2 py-1.5 text-center text-[11px] font-semibold text-[#7A8FA6] transition peer-checked:border-[#1A9B72] peer-checked:bg-[#1A9B72] peer-checked:text-white">
+                                                                                                        {{ $skor }}. {{ $labelSkor }}
+                                                                                                    </span>
+                                                                                                </label>
+                                                                                            @endforeach
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <p class="mt-3 rounded-lg border border-dashed border-[#CDEFE4] bg-white px-3 py-2 text-xs text-[#7A8FA6]">
+                                                                    Kriteria hasil detail belum tersedia untuk luaran ini.
+                                                                </p>
+                                                            @endif
                                                     </div>
                                                 </div>
                                             </div>

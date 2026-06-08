@@ -7,12 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['askep_diagnosa_id', 'slki_id', 'target_waktu'])]
+#[Fillable(['askep_diagnosa_id', 'slki_id', 'target_waktu', 'skor_indikator'])]
 class AskepDiagnosaLuaran extends Model
 {
     use HasFactory;
 
     protected $table = 'askep_diagnosa_luaran';
+
+    protected function casts(): array
+    {
+        return [
+            'skor_indikator' => 'array',
+        ];
+    }
 
     // ── Relationships ─────────────────────────────────────────────────────────
 

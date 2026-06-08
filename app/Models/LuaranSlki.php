@@ -35,4 +35,10 @@ class LuaranSlki extends Model
     {
         return $this->hasMany(AskepDiagnosaLuaran::class, 'slki_id');
     }
+
+    /** Kriteria hasil terukur untuk luaran ini. */
+    public function kriteriaHasil(): HasMany
+    {
+        return $this->hasMany(SlkiKriteriaHasil::class, 'luaran_id')->orderBy('urutan');
+    }
 }
