@@ -54,6 +54,16 @@ class Askep extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function feedbacks(): HasMany
+    {
+        return $this->hasMany(AskepFeedback::class);
+    }
+
     public function pengkajian(): HasOne
     {
         return $this->hasOne(AskepPengkajian::class);

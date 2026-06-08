@@ -55,6 +55,42 @@ class User extends Authenticatable
     }
 
     /**
+     * Check whether this user is a dosen.
+     */
+    public function isDosen(): bool
+    {
+        return $this->role === 'dosen';
+    }
+
+    /**
+     * Relationships for Dosen & Mahasiswa.
+     */
+    public function penugasanSebagaiMahasiswa(): HasMany
+    {
+        return $this->hasMany(Penugasan::class, 'mahasiswa_id');
+    }
+
+    public function penugasanSebagaiDosen(): HasMany
+    {
+        return $this->hasMany(Penugasan::class, 'dosen_id');
+    }
+
+    public function feedback(): HasMany
+    {
+        return $this->hasMany(AskepFeedback::class, 'dosen_id');
+    }
+
+    public function logPembelajaran(): HasMany
+    {
+        return $this->hasMany(LogPembelajaran::class);
+    }
+
+    public function askep(): HasMany
+    {
+        return $this->hasMany(Askep::class);
+    }
+
+    /**
      * Get the user's initials.
      */
     public function initials(): string

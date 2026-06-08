@@ -12,6 +12,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->validateCsrfTokens(except: [
+            'login',
+            'logout',
+            'register',
+            'password/*',
+            'user/*',
+            'email/*',
+            'two-factor/*',
+            'passkeys/*',
+        ]);
+
         $middleware->alias([
             'role' => EnsureRole::class,
         ]);

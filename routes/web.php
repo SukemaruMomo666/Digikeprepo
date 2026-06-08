@@ -86,4 +86,27 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     });
 });
 
+// ── Dosen ──────────────────────────────────────────────────────────────────
+Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
+    Route::livewire('dashboard', 'pages::dosen.dashboard')->name('dashboard');
+
+    Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+        Route::livewire('/', 'pages::dosen.mahasiswa.index')->name('index');
+        Route::livewire('/{mahasiswa}', 'pages::dosen.mahasiswa.show')->name('show');
+    });
+
+    Route::prefix('askep')->name('askep.')->group(function () {
+        Route::livewire('/', 'pages::dosen.askep.index')->name('index');
+        Route::livewire('/{askep}', 'pages::dosen.askep.review')->name('review');
+    });
+
+    Route::prefix('monitoring')->name('monitoring.')->group(function () {
+        Route::livewire('/', 'pages::dosen.monitoring.index')->name('index');
+    });
+
+    Route::prefix('log')->name('log.')->group(function () {
+        Route::livewire('/', 'pages::dosen.log.index')->name('index');
+    });
+});
+
 require __DIR__.'/settings.php';
