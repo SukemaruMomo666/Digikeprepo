@@ -171,5 +171,5 @@ test('mahasiswa bisa membuka halaman implementasi askep', function () {
     $this->actingAs($mahasiswa)
         ->get(route('askep.implementasi', $askep))
         ->assertOk()
-        ->assertSee('Langkah 4: Implementasi');
+        ->assertSee('Tahap 4: Implementasi Keperawatan');
 });

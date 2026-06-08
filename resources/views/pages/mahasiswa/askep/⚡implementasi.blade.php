@@ -11,11 +11,9 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
 {
     public Askep $askep;
 
-    /** Index diagnosa yang sedang terbuka. */
-    public ?int $terbuka = 0;
+    public ?int $aktivitasAktif = null;
 
     /**
-     * Data implementasi (log tindakan per intervensi).
      * @var array<int, array{
      *   diagnosa_id: int,
      *   kode: string,
@@ -25,6 +23,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
      *     intervensi_id: int,
      *     siki_kode: string,
      *     siki_label: string,
+     *     tindakan_tersedia: list<string>,
      *     logs: array<int, array{
      *       id: int|null,
      *       tanggal: string,
@@ -42,7 +41,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
      */
     public array $implementasi = [];
 
-    /** Untuk form tambah log baru per intervensi: key = intervensi_id. */
+    /** @var array<int, array<string, mixed>> */
     public array $formTambah = [];
 
     public function mount(Askep $askep): void
@@ -62,90 +61,98 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
     private function inisialisasi(): void
     {
         $this->implementasi = [];
-        $this->formTambah   = [];
+        $this->formTambah = [];
+        $aktivitasPertama = null;
 
         foreach ($this->askep->diagnosa as $diagnosa) {
             $intervensiList = [];
 
             foreach ($diagnosa->intervensi->where('is_included', true) as $intervensi) {
                 $logs = $intervensi->implementasi->map(fn ($impl) => [
-                    'id'                => $impl->id,
-                    'tanggal'           => $impl->tanggal?->format('Y-m-d') ?? '',
-                    'waktu'             => $impl->waktu ?? '',
-                    'shift'             => $impl->shift ?? 'Pagi',
-                    'durasi_menit'      => $impl->durasi_menit,
+                    'id' => $impl->id,
+                    'tanggal' => $impl->tanggal?->format('Y-m-d') ?? '',
+                    'waktu' => $impl->waktu ?? '',
+                    'shift' => $impl->shift ?? 'Pagi',
+                    'durasi_menit' => $impl->durasi_menit,
                     'tindakan_dilakukan' => $impl->tindakan_dilakukan ?? [],
-                    'spo2_sebelum'      => $impl->spo2_sebelum,
-                    'spo2_setelah'      => $impl->spo2_setelah,
-                    'catatan'           => $impl->catatan ?? '',
-                    'respons_pasien'    => $impl->respons_pasien ?? '',
+                    'spo2_sebelum' => $impl->spo2_sebelum,
+                    'spo2_setelah' => $impl->spo2_setelah,
+                    'catatan' => $impl->catatan ?? '',
+                    'respons_pasien' => $impl->respons_pasien ?? '',
                 ])->values()->toArray();
 
                 $intervensiList[] = [
                     'intervensi_id' => $intervensi->id,
-                    'siki_kode'     => $intervensi->siki?->kode_intervensi ?? 'MANUAL',
-                    'siki_label'    => $intervensi->siki?->label_intervensi ?? ($intervensi->nama_manual ?? 'Intervensi'),
+                    'siki_kode' => $intervensi->siki?->kode_intervensi ?? 'MANUAL',
+                    'siki_label' => $intervensi->siki?->label_intervensi ?? ($intervensi->nama_manual ?? 'Intervensi'),
                     'tindakan_tersedia' => $intervensi->tindakan_dipilih ?? [],
-                    'logs'          => $logs,
+                    'logs' => $logs,
                 ];
 
-                // Siapkan form tambah kosong untuk intervensi ini
                 $this->formTambah[$intervensi->id] = [
-                    'tampil'            => false,
-                    'tanggal'           => now()->format('Y-m-d'),
-                    'waktu'             => now()->format('H:i'),
-                    'shift'             => 'Pagi',
-                    'durasi_menit'      => null,
+                    'tanggal' => now()->format('Y-m-d'),
+                    'waktu' => now()->format('H:i'),
+                    'shift' => 'Pagi',
+                    'durasi_menit' => null,
                     'tindakan_dilakukan' => [],
-                    'spo2_sebelum'      => null,
-                    'spo2_setelah'      => null,
-                    'catatan'           => '',
-                    'respons_pasien'    => '',
+                    'spo2_sebelum' => null,
+                    'spo2_setelah' => null,
+                    'catatan' => '',
+                    'respons_pasien' => '',
                 ];
+
+                $aktivitasPertama ??= $intervensi->id;
             }
 
-            if (! empty($intervensiList)) {
+            if ($intervensiList !== []) {
                 $this->implementasi[] = [
                     'diagnosa_id' => $diagnosa->id,
-                    'kode'        => $diagnosa->sdki?->kode_diagnosa ?? '',
-                    'label'       => $diagnosa->sdki?->label_diagnosa ?? '',
-                    'prioritas'   => $diagnosa->prioritas,
-                    'intervensi'  => $intervensiList,
+                    'kode' => $diagnosa->sdki?->kode_diagnosa ?? '',
+                    'label' => $diagnosa->sdki?->label_diagnosa ?? '',
+                    'prioritas' => $diagnosa->prioritas,
+                    'intervensi' => $intervensiList,
                 ];
             }
         }
-    }
 
-    public function toggleDiagnosa(int $index): void
-    {
-        $this->terbuka = $this->terbuka === $index ? null : $index;
+        if ($this->aktivitasAktif === null || ! array_key_exists($this->aktivitasAktif, $this->formTambah)) {
+            $this->aktivitasAktif = $aktivitasPertama;
+        }
     }
 
     public function tampilkanForm(int $intervensiId): void
     {
-        $this->formTambah[$intervensiId]['tampil'] = true;
-    }
-
-    public function sembunyikanForm(int $intervensiId): void
-    {
-        $this->formTambah[$intervensiId]['tampil']             = false;
-        $this->formTambah[$intervensiId]['durasi_menit']       = null;
-        $this->formTambah[$intervensiId]['catatan']            = '';
-        $this->formTambah[$intervensiId]['respons_pasien']     = '';
-        $this->formTambah[$intervensiId]['spo2_sebelum']       = null;
-        $this->formTambah[$intervensiId]['spo2_setelah']       = null;
-        $this->formTambah[$intervensiId]['tindakan_dilakukan'] = [];
+        $this->aktivitasAktif = $intervensiId;
     }
 
     public function toggleTindakanForm(int $intervensiId, string $tindakan): void
     {
         $dipilih = $this->formTambah[$intervensiId]['tindakan_dilakukan'];
+
         if (in_array($tindakan, $dipilih, true)) {
-            $this->formTambah[$intervensiId]['tindakan_dilakukan']
-                = array_values(array_filter($dipilih, fn ($t) => $t !== $tindakan));
-        } else {
-            $this->formTambah[$intervensiId]['tindakan_dilakukan'][] = $tindakan;
+            $this->formTambah[$intervensiId]['tindakan_dilakukan'] = array_values(
+                array_filter($dipilih, fn ($item) => $item !== $tindakan)
+            );
+
+            return;
         }
+
+        $this->formTambah[$intervensiId]['tindakan_dilakukan'][] = $tindakan;
+    }
+
+    public function resetForm(int $intervensiId): void
+    {
+        $this->formTambah[$intervensiId] = [
+            'tanggal' => now()->format('Y-m-d'),
+            'waktu' => now()->format('H:i'),
+            'shift' => 'Pagi',
+            'durasi_menit' => null,
+            'tindakan_dilakukan' => [],
+            'spo2_sebelum' => null,
+            'spo2_setelah' => null,
+            'catatan' => '',
+            'respons_pasien' => '',
+        ];
     }
 
     public function simpanLog(int $intervensiId): void
@@ -153,49 +160,49 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
         $form = $this->formTambah[$intervensiId];
 
         $this->validate([
-            "formTambah.{$intervensiId}.tanggal"        => ['required', 'date'],
-            "formTambah.{$intervensiId}.waktu"           => ['required'],
-            "formTambah.{$intervensiId}.shift"           => ['required', 'in:Pagi,Siang,Malam'],
-            "formTambah.{$intervensiId}.durasi_menit"    => ['nullable', 'integer', 'min:1', 'max:1440'],
-            "formTambah.{$intervensiId}.spo2_sebelum"    => ['nullable', 'integer', 'min:1', 'max:100'],
-            "formTambah.{$intervensiId}.spo2_setelah"    => ['nullable', 'integer', 'min:1', 'max:100'],
-            "formTambah.{$intervensiId}.respons_pasien"  => ['required', 'string', 'max:2000'],
+            "formTambah.{$intervensiId}.tanggal" => ['required', 'date'],
+            "formTambah.{$intervensiId}.waktu" => ['required'],
+            "formTambah.{$intervensiId}.shift" => ['required', 'in:Pagi,Siang,Malam'],
+            "formTambah.{$intervensiId}.durasi_menit" => ['nullable', 'integer', 'min:1', 'max:1440'],
+            "formTambah.{$intervensiId}.spo2_sebelum" => ['nullable', 'integer', 'min:1', 'max:100'],
+            "formTambah.{$intervensiId}.spo2_setelah" => ['nullable', 'integer', 'min:1', 'max:100'],
+            "formTambah.{$intervensiId}.respons_pasien" => ['required', 'in:Positif,Netral,Negatif'],
         ]);
 
         AskepImplementasi::create([
             'askep_intervensi_id' => $intervensiId,
-            'tanggal'             => $form['tanggal'],
-            'waktu'               => $form['waktu'],
-            'shift'               => $form['shift'],
-            'durasi_menit'        => $form['durasi_menit'] ?: null,
-            'tindakan_dilakukan'  => $form['tindakan_dilakukan'],
-            'spo2_sebelum'        => $form['spo2_sebelum'] ?: null,
-            'spo2_setelah'        => $form['spo2_setelah'] ?: null,
-            'catatan'             => $form['catatan'],
-            'respons_pasien'      => $form['respons_pasien'],
+            'tanggal' => $form['tanggal'],
+            'waktu' => $form['waktu'],
+            'shift' => $form['shift'],
+            'durasi_menit' => $form['durasi_menit'] ?: null,
+            'tindakan_dilakukan' => $form['tindakan_dilakukan'],
+            'spo2_sebelum' => $form['spo2_sebelum'] ?: null,
+            'spo2_setelah' => $form['spo2_setelah'] ?: null,
+            'catatan' => $form['catatan'],
+            'respons_pasien' => $form['respons_pasien'],
         ]);
 
-        Flux::toast(variant: 'success', text: 'Log implementasi ditambahkan.');
-        $this->sembunyikanForm($intervensiId);
+        Flux::toast(variant: 'success', text: 'Sesi implementasi tersimpan.');
+
+        $this->resetForm($intervensiId);
         $this->inisialisasi();
     }
 
     public function hapusLog(int $logId): void
     {
         AskepImplementasi::findOrFail($logId)->delete();
-        Flux::toast(variant: 'success', text: 'Log dihapus.');
+        Flux::toast(variant: 'success', text: 'Sesi implementasi dihapus.');
         $this->inisialisasi();
     }
 
     public function simpanLanjut(): void
     {
-        // Cek minimal ada 1 log di keseluruhan
         $totalLog = collect($this->implementasi)
-            ->flatMap(fn ($d) => $d['intervensi'])
-            ->sum(fn ($i) => count($i['logs']));
+            ->flatMap(fn ($diagnosa) => $diagnosa['intervensi'])
+            ->sum(fn ($intervensi) => count($intervensi['logs']));
 
         if ($totalLog === 0) {
-            Flux::toast(variant: 'error', text: 'Tambahkan minimal 1 log implementasi.');
+            Flux::toast(variant: 'error', text: 'Tambahkan minimal 1 sesi implementasi.');
 
             return;
         }
@@ -204,7 +211,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
             $this->askep->update(['step_terakhir' => 4]);
         }
 
-        $this->askep->pasien->catatRiwayat('Implementasi dicatat (' . $totalLog . ' log).');
+        $this->askep->pasien->catatRiwayat('Implementasi dicatat (' . $totalLog . ' sesi).');
 
         Flux::toast(variant: 'success', text: 'Implementasi tersimpan.');
         $this->redirectRoute('askep.evaluasi', $this->askep, navigate: true);
@@ -215,274 +222,263 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
 <div class="p-4 md:p-6">
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 4])
 
-    <div class="mb-4">
-        <h2 class="text-xl font-bold text-[#1B4F72]">Langkah 4: Implementasi</h2>
-        <p class="text-sm text-[#7A8FA6]">Catat tindakan keperawatan yang sudah dilakukan per intervensi.</p>
+    <div class="mb-5 flex items-start justify-between gap-4">
+        <div>
+            <div class="mb-2 flex items-center gap-2">
+                <span class="flex size-8 items-center justify-center rounded-lg bg-[#E1F5EE] text-[#0F6E56]">
+                    <flux:icon.clipboard-document-check class="size-4" />
+                </span>
+                <h2 class="text-xl font-bold text-[#1B4F72]">Tahap 4: Implementasi Keperawatan</h2>
+            </div>
+            <p class="text-sm text-[#7A8FA6]">Dokumentasikan tindakan yang dilakukan berdasarkan rencana SIKI.</p>
+        </div>
+        <span class="shrink-0 rounded-full bg-[#E1F5EE] px-3 py-1 text-xs font-bold text-[#0F6E56]">Rencana disetujui</span>
     </div>
 
     @if (empty($implementasi))
-        <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#D0DCE8] bg-[#F4F8FB] py-16 text-center">
+        <div class="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#D0DCE8] bg-[#F4F8FB] py-16 text-center">
             <flux:icon.clipboard-document-list class="mb-3 size-12 text-[#85B7EB]" />
             <p class="font-medium text-[#1B4F72]">Belum ada intervensi</p>
-            <p class="mt-1 text-sm text-[#7A8FA6]">Kembali ke langkah 3 dan pilih intervensi terlebih dahulu.</p>
-            <div class="mt-4">
-                <flux:button :href="route('askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
-                    Kembali ke Perencanaan
-                </flux:button>
-            </div>
+            <p class="mt-1 text-sm text-[#7A8FA6]">Kembali ke tahap perencanaan dan pilih intervensi terlebih dahulu.</p>
+            <flux:button :href="route('askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate class="mt-4">
+                Kembali ke Perencanaan
+            </flux:button>
         </div>
     @else
-        <div class="space-y-3">
-            @foreach ($implementasi as $dIdx => $d)
-                <div class="overflow-hidden rounded-2xl border border-[#E0EBF5] bg-white">
-                    {{-- Accordion Header --}}
-                    <button
-                        wire:click="toggleDiagnosa({{ $dIdx }})"
-                        class="flex w-full items-center justify-between px-5 py-4 text-left hover:bg-[#F4F8FB] transition"
-                    >
-                        <div class="flex items-center gap-3">
-                            <div class="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#2E86C1] text-xs font-bold text-white">
-                                {{ $d['prioritas'] }}
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <span class="font-mono text-xs font-bold text-[#2E86C1]">{{ $d['kode'] }}</span>
-                                    @php $totalLog = collect($d['intervensi'])->sum(fn ($i) => count($i['logs'])); @endphp
-                                    @if ($totalLog > 0)
-                                        <span class="rounded-full bg-[#E1F5EE] px-2 py-0.5 text-[10px] font-semibold text-[#0F6E56]">{{ $totalLog }} log</span>
-                                    @endif
-                                </div>
-                                <p class="mt-0.5 text-sm font-medium text-[#1B4F72]">{{ $d['label'] }}</p>
-                            </div>
-                        </div>
-                        <flux:icon.chevron-down
-                            class="size-5 shrink-0 text-[#7A8FA6] transition-transform {{ $terbuka === $dIdx ? 'rotate-180' : '' }}"
-                        />
-                    </button>
+        @php
+            $semuaIntervensi = collect($implementasi)->flatMap(fn ($diagnosa) => collect($diagnosa['intervensi'])->map(fn ($intervensi) => $intervensi + [
+                'diagnosa_kode' => $diagnosa['kode'],
+                'diagnosa_label' => $diagnosa['label'],
+            ]));
+            $totalIntervensi = $semuaIntervensi->count();
+            $totalLog = $semuaIntervensi->sum(fn ($intervensi) => count($intervensi['logs']));
+            $durasiTotal = $semuaIntervensi->flatMap(fn ($intervensi) => $intervensi['logs'])->sum(fn ($log) => (int) ($log['durasi_menit'] ?? 0));
+            $intervensiSelesai = $semuaIntervensi->filter(fn ($intervensi) => count($intervensi['logs']) > 0)->count();
+            $kepatuhan = $totalIntervensi > 0 ? (int) round(($intervensiSelesai / $totalIntervensi) * 100) : 0;
+            $aktivitas = $semuaIntervensi->firstWhere('intervensi_id', $aktivitasAktif) ?? $semuaIntervensi->first();
+            $fid = $aktivitas['intervensi_id'] ?? null;
+        @endphp
 
-                    @if ($terbuka === $dIdx)
-                        <div class="border-t border-[#E0EBF5] px-5 py-4 space-y-5">
-                            @foreach ($d['intervensi'] as $intervensi)
-                                @php $fid = $intervensi['intervensi_id']; @endphp
-                                <div class="rounded-xl border border-[#E0EBF5] bg-[#F8FBFE] p-4">
-                                    {{-- Judul Intervensi --}}
-                                    <div class="mb-3 flex items-start justify-between gap-3">
-                                        <div>
-                                            @if ($intervensi['siki_kode'] !== 'MANUAL')
-                                                <span class="font-mono text-xs font-bold text-[#2E86C1]">{{ $intervensi['siki_kode'] }}</span>
-                                                <span class="mx-1 text-[#C4D3DF]">·</span>
-                                            @endif
-                                            <span class="text-sm font-semibold text-[#1B4F72]">{{ $intervensi['siki_label'] }}</span>
-                                        </div>
-                                        <button
-                                            wire:click="tampilkanForm({{ $fid }})"
-                                            class="flex shrink-0 items-center gap-1 rounded-lg border border-[#85B7EB] px-2.5 py-1.5 text-xs font-semibold text-[#2E86C1] hover:bg-[#EBF5FB] transition"
-                                        >
-                                            <flux:icon.plus class="size-3.5" />
-                                            Tambah Log
-                                        </button>
-                                    </div>
-
-                                    {{-- Form Tambah Log --}}
-                                    @if (! empty($formTambah[$fid]['tampil']))
-                                        <div class="mb-3 rounded-xl border border-[#85B7EB] bg-white p-4 space-y-3">
-                                            <p class="text-xs font-semibold text-[#2E86C1] uppercase tracking-wide">Log Baru</p>
-
-                                            <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                                                <div>
-                                                    <label class="text-xs font-medium text-[#7A8FA6]">Tanggal</label>
-                                                    <input
-                                                        type="date"
-                                                        wire:model="formTambah.{{ $fid }}.tanggal"
-                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label class="text-xs font-medium text-[#7A8FA6]">Waktu</label>
-                                                    <input
-                                                        type="time"
-                                                        wire:model="formTambah.{{ $fid }}.waktu"
-                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label class="text-xs font-medium text-[#7A8FA6]">Shift</label>
-                                                    <select
-                                                        wire:model="formTambah.{{ $fid }}.shift"
-                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none"
-                                                    >
-                                                        <option value="Pagi">Pagi (07.00–14.00)</option>
-                                                        <option value="Siang">Siang (14.00–21.00)</option>
-                                                        <option value="Malam">Malam (21.00–07.00)</option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <label class="text-xs font-medium text-[#7A8FA6]">Durasi (menit)</label>
-                                                    <input
-                                                        type="number"
-                                                        min="1"
-                                                        max="1440"
-                                                        wire:model="formTambah.{{ $fid }}.durasi_menit"
-                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                                    />
-                                                    @error("formTambah.{$fid}.durasi_menit") <p class="mt-1 text-xs text-[#D95C3A]">{{ $message }}</p> @enderror
-                                                </div>
-                                                <div>
-                                                    <label class="text-xs font-medium text-[#7A8FA6]">SpO2 sebelum (%)</label>
-                                                    <input
-                                                        type="number"
-                                                        min="1"
-                                                        max="100"
-                                                        wire:model="formTambah.{{ $fid }}.spo2_sebelum"
-                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                                    />
-                                                    @error("formTambah.{$fid}.spo2_sebelum") <p class="mt-1 text-xs text-[#D95C3A]">{{ $message }}</p> @enderror
-                                                </div>
-                                                <div>
-                                                    <label class="text-xs font-medium text-[#7A8FA6]">SpO2 setelah (%)</label>
-                                                    <input
-                                                        type="number"
-                                                        min="1"
-                                                        max="100"
-                                                        wire:model="formTambah.{{ $fid }}.spo2_setelah"
-                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                                    />
-                                                    @error("formTambah.{$fid}.spo2_setelah") <p class="mt-1 text-xs text-[#D95C3A]">{{ $message }}</p> @enderror
-                                                </div>
-                                            </div>
-
-                                            {{-- Tindakan pilihan dari SIKI --}}
-                                            @if (! empty($intervensi['tindakan_tersedia']))
-                                                <div>
-                                                    <label class="text-xs font-medium text-[#7A8FA6]">Tindakan yang Dilakukan</label>
-                                                    <div class="mt-1.5 space-y-1">
-                                                        @foreach ($intervensi['tindakan_tersedia'] as $tindakan)
-                                                            <label class="flex items-start gap-2 cursor-pointer">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    wire:click="toggleTindakanForm({{ $fid }}, @js($tindakan))"
-                                                                    @checked(in_array($tindakan, $formTambah[$fid]['tindakan_dilakukan'] ?? [], true))
-                                                                    class="mt-0.5 size-3.5 accent-[#2E86C1]"
-                                                                />
-                                                                <span class="text-xs text-[#1B4F72]">{{ $tindakan }}</span>
-                                                            </label>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            @endif
-
-                                            <div>
-                                                <label class="text-xs font-medium text-[#7A8FA6]">Catatan Tambahan</label>
-                                                <textarea
-                                                    wire:model="formTambah.{{ $fid }}.catatan"
-                                                    rows="2"
-                                                    placeholder="Catatan pelaksanaan tindakan..."
-                                                    class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                                ></textarea>
-                                            </div>
-
-                                            <div>
-                                                <label class="text-xs font-medium text-[#7A8FA6]">Respons Pasien <span class="text-[#D95C3A]">*</span></label>
-                                                <textarea
-                                                    wire:model="formTambah.{{ $fid }}.respons_pasien"
-                                                    rows="2"
-                                                    placeholder="Bagaimana respons/reaksi pasien setelah dilakukan tindakan..."
-                                                    class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
-                                                ></textarea>
-                                                @error("formTambah.{$fid}.respons_pasien") <p class="mt-1 text-xs text-[#D95C3A]">{{ $message }}</p> @enderror
-                                            </div>
-
-                                            <div class="flex items-center gap-2">
-                                                <button
-                                                    wire:click="simpanLog({{ $fid }})"
-                                                    wire:loading.attr="disabled"
-                                                    class="rounded-lg px-4 py-2 text-xs font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                                                    style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
-                                                >
-                                                    Simpan Log
-                                                </button>
-                                                <button
-                                                    wire:click="sembunyikanForm({{ $fid }})"
-                                                    class="rounded-lg border border-[#D0DCE8] px-4 py-2 text-xs font-semibold text-[#7A8FA6] hover:bg-[#F4F8FB] transition"
-                                                >
-                                                    Batal
-                                                </button>
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    {{-- Daftar Log --}}
-                                    @if (empty($intervensi['logs']))
-                                        <p class="text-center text-xs text-[#C4D3DF] py-3">Belum ada log untuk intervensi ini.</p>
-                                    @else
-                                        <div class="space-y-2">
-                                            @foreach ($intervensi['logs'] as $log)
-                                                <div class="rounded-xl border border-[#E0EBF5] bg-white p-3">
-                                                    <div class="flex items-start justify-between gap-2">
-                                                        <div class="flex-1 min-w-0">
-                                                            <div class="flex flex-wrap items-center gap-1.5 text-xs">
-                                                                <span class="font-semibold text-[#1B4F72]">{{ \Carbon\Carbon::parse($log['tanggal'])->translatedFormat('d M Y') }}</span>
-                                                                <span class="text-[#7A8FA6]">{{ $log['waktu'] }}</span>
-                                                                <span class="rounded-full bg-[#EBF5FB] px-2 py-0.5 font-medium capitalize text-[#2E86C1]">{{ $log['shift'] }}</span>
-                                                                @if ($log['durasi_menit'])
-                                                                    <span class="rounded-full bg-[#F4F8FB] px-2 py-0.5 font-medium text-[#7A8FA6]">{{ $log['durasi_menit'] }} menit</span>
-                                                                @endif
-                                                                @if ($log['spo2_sebelum'] || $log['spo2_setelah'])
-                                                                    <span class="rounded-full bg-[#E1F5EE] px-2 py-0.5 font-medium text-[#0F6E56]">
-                                                                        SpO2 {{ $log['spo2_sebelum'] ?? '-' }} -> {{ $log['spo2_setelah'] ?? '-' }}%
-                                                                    </span>
-                                                                @endif
-                                                            </div>
-                                                            @if (! empty($log['tindakan_dilakukan']))
-                                                                <ul class="mt-1.5 space-y-0.5">
-                                                                    @foreach ($log['tindakan_dilakukan'] as $t)
-                                                                        <li class="flex items-start gap-1 text-xs text-[#1B4F72]">
-                                                                            <flux:icon.check class="mt-0.5 size-3 shrink-0 text-[#1A9B72]" />
-                                                                            {{ $t }}
-                                                                        </li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            @endif
-                                                            @if ($log['respons_pasien'])
-                                                                <p class="mt-1.5 text-xs text-[#7A8FA6]"><span class="font-medium text-[#1B4F72]">Respons:</span> {{ $log['respons_pasien'] }}</p>
-                                                            @endif
-                                                        </div>
-                                                        <button
-                                                            wire:click="hapusLog({{ $log['id'] }})"
-                                                            wire:confirm="Hapus log ini?"
-                                                            class="shrink-0 rounded p-1 text-[#C4D3DF] hover:text-[#D95C3A] hover:bg-[#FDE8E8] transition"
-                                                        >
-                                                            <flux:icon.trash class="size-3.5" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
+        <div class="mb-5 rounded-xl border border-[#E0EBF5] bg-white p-4">
+            <div class="grid gap-3 text-sm sm:grid-cols-3">
+                <div>
+                    <p class="text-xs font-semibold text-[#7A8FA6]">Pasien</p>
+                    <p class="mt-1 font-semibold text-[#1B4F72]">
+                        {{ $askep->pasien->nama_pasien }}
+                        <span class="font-normal text-[#7A8FA6]">| No. RM: {{ $askep->pasien->no_rm }}</span>
+                    </p>
                 </div>
-            @endforeach
+                <div>
+                    <p class="text-xs font-semibold text-[#7A8FA6]">Tanggal</p>
+                    <p class="mt-1 font-semibold text-[#1B4F72]">{{ now()->translatedFormat('l, d F Y H:i') }} WIB</p>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-[#7A8FA6]">Shift Aktif</p>
+                    <p class="mt-1 font-semibold text-[#1B4F72]">{{ $fid ? ($formTambah[$fid]['shift'] ?? 'Pagi') : 'Pagi' }}</p>
+                </div>
+            </div>
         </div>
 
-        {{-- Navigation --}}
-        <div class="mt-6 flex items-center justify-between border-t border-[#E0EBF5] pt-4">
-            <flux:button :href="route('askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
-                Kembali
-            </flux:button>
+        <div class="space-y-5">
+            <section class="rounded-xl border border-[#E0EBF5] bg-white p-4">
+                <h3 class="mb-3 font-semibold text-[#1B4F72]">Aktivitas yang akan dilakukan hari ini</h3>
+                <div class="space-y-2">
+                    @foreach ($semuaIntervensi as $index => $intervensi)
+                        @php
+                            $sudahAdaLog = count($intervensi['logs']) > 0;
+                            $aktif = $aktivitasAktif === $intervensi['intervensi_id'];
+                        @endphp
+                        <button
+                            wire:click="tampilkanForm({{ $intervensi['intervensi_id'] }})"
+                            class="w-full rounded-lg border p-3 text-left transition {{ $aktif ? 'border-[#5DCAA5] bg-[#F0FBF7]' : 'border-[#E0EBF5] bg-white hover:border-[#85B7EB] hover:bg-[#F8FBFE]' }}"
+                        >
+                            <div class="flex items-start justify-between gap-3">
+                                <div>
+                                    <p class="text-sm font-semibold text-[#1B4F72]">{{ $index + 1 }}. {{ $intervensi['siki_label'] }}</p>
+                                    <p class="mt-1 text-xs text-[#7A8FA6]">{{ $intervensi['diagnosa_kode'] }} {{ $intervensi['diagnosa_label'] }} | {{ $intervensi['siki_kode'] }}</p>
+                                </div>
+                                <span class="rounded-full px-2 py-0.5 text-[10px] font-bold {{ $sudahAdaLog ? 'bg-[#E1F5EE] text-[#0F6E56]' : 'bg-[#F4F8FB] text-[#7A8FA6]' }}">
+                                    {{ $sudahAdaLog ? 'selesai' : 'belum selesai' }}
+                                </span>
+                            </div>
+                        </button>
+                    @endforeach
+                </div>
+            </section>
 
-            <button
-                wire:click="simpanLanjut"
-                wire:loading.attr="disabled"
-                class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
-                style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
-            >
-                <span wire:loading.remove wire:target="simpanLanjut">Simpan & Lanjut ke Evaluasi</span>
-                <span wire:loading wire:target="simpanLanjut">Menyimpan...</span>
-                <flux:icon.arrow-right class="size-4" wire:loading.remove wire:target="simpanLanjut" />
-            </button>
+            <section class="rounded-xl border border-[#E0EBF5] bg-white p-4">
+                <h3 class="mb-3 font-semibold text-[#1B4F72]">Metrik Otomatis</h3>
+                <div class="grid gap-3 sm:grid-cols-3">
+                    <div class="rounded-lg bg-[#F8FBFE] p-3">
+                        <p class="text-xs text-[#7A8FA6]">Total Aktivitas Hari Ini</p>
+                        <p class="mt-1 text-lg font-bold text-[#1B4F72]">{{ $totalLog }} dari {{ $totalIntervensi }}</p>
+                    </div>
+                    <div class="rounded-lg bg-[#F8FBFE] p-3">
+                        <p class="text-xs text-[#7A8FA6]">Total Durasi Implementasi</p>
+                        <p class="mt-1 text-lg font-bold text-[#1B4F72]">{{ $durasiTotal }} menit</p>
+                    </div>
+                    <div class="rounded-lg bg-[#F8FBFE] p-3">
+                        <p class="text-xs text-[#7A8FA6]">Kepatuhan</p>
+                        <p class="mt-1 text-lg font-bold text-[#1B4F72]">{{ $kepatuhan }}%</p>
+                    </div>
+                </div>
+                <div class="mt-3 h-2 overflow-hidden rounded-full bg-[#E8EEF4]">
+                    <div class="h-full rounded-full bg-[#1A9B72]" style="width: {{ $kepatuhan }}%"></div>
+                </div>
+            </section>
+
+            @if ($fid)
+                <section class="rounded-xl border border-[#E0EBF5] bg-white p-4">
+                    <div class="mb-4 flex items-start justify-between gap-4">
+                        <div>
+                            <h3 class="font-semibold text-[#1B4F72]">Form Dokumentasi Implementasi</h3>
+                            <p class="mt-1 text-sm font-semibold text-[#1B4F72]">{{ $aktivitas['siki_label'] }}</p>
+                        </div>
+                        <span class="rounded-full bg-[#EBF5FB] px-3 py-1 text-xs font-bold text-[#2E86C1]">{{ $aktivitas['siki_kode'] }}</span>
+                    </div>
+
+                    @if (! empty($aktivitas['logs']))
+                        <div class="mb-4 rounded-lg border border-[#5DCAA5] bg-[#F0FBF7] p-3">
+                            <p class="mb-2 text-xs font-bold uppercase text-[#0F6E56]">Sesi Tersimpan ({{ count($aktivitas['logs']) }})</p>
+                            <div class="space-y-2">
+                                @foreach ($aktivitas['logs'] as $log)
+                                    <div class="rounded-lg border border-[#BFECDD] bg-white p-3">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div class="text-xs text-[#1B4F72]">
+                                                <p class="font-semibold">Sesi {{ $loop->iteration }} | {{ \Carbon\Carbon::parse($log['tanggal'])->translatedFormat('d M Y') }} {{ $log['waktu'] }} | Shift {{ $log['shift'] }} | {{ $log['durasi_menit'] ?? 0 }} menit</p>
+                                                @if (! empty($log['tindakan_dilakukan']))
+                                                    <p class="mt-1"><span class="font-semibold">Tindakan:</span> {{ \Illuminate\Support\Str::limit(implode('; ', $log['tindakan_dilakukan']), 220) }}</p>
+                                                @endif
+                                                <p class="mt-1"><span class="font-semibold">Respons:</span> {{ $log['respons_pasien'] ?? '-' }}</p>
+                                                @if ($log['catatan'])
+                                                    <p class="mt-1"><span class="font-semibold">Catatan:</span> {{ $log['catatan'] }}</p>
+                                                @endif
+                                            </div>
+                                            <button
+                                                wire:click="hapusLog({{ $log['id'] }})"
+                                                wire:confirm="Hapus sesi ini?"
+                                                class="rounded-md bg-[#FDE8E8] p-1.5 text-[#D95C3A] hover:bg-[#F8D1D1]"
+                                                title="Hapus sesi"
+                                            >
+                                                <flux:icon.trash class="size-3.5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="grid gap-3 md:grid-cols-3">
+                        <flux:input type="date" wire:model="formTambah.{{ $fid }}.tanggal" label="Tanggal Implementasi" />
+                        <flux:input type="time" wire:model="formTambah.{{ $fid }}.waktu" label="Waktu Implementasi" />
+                        <flux:input type="number" min="1" max="1440" wire:model="formTambah.{{ $fid }}.durasi_menit" label="Durasi (menit)" />
+                    </div>
+
+                    <div class="mt-3">
+                        <label class="text-sm font-semibold text-[#1B4F72]">Shift</label>
+                        <select wire:model="formTambah.{{ $fid }}.shift" class="mt-1 w-full rounded-lg border border-[#D0DCE8] bg-white px-3 py-2 text-sm text-[#1B4F72] focus:border-[#2E86C1] focus:outline-none">
+                            <option value="Pagi">Pagi</option>
+                            <option value="Siang">Siang</option>
+                            <option value="Malam">Malam</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="mb-2 text-sm font-semibold text-[#1B4F72]">Tindakan Dilakukan</p>
+                        @if (empty($aktivitas['tindakan_tersedia']))
+                            <p class="rounded-lg border border-dashed border-[#D0DCE8] bg-[#F4F8FB] px-3 py-3 text-sm text-[#7A8FA6]">Belum ada daftar tindakan pada intervensi ini.</p>
+                        @else
+                            <div class="space-y-3">
+                                @foreach ($aktivitas['tindakan_tersedia'] as $tindakan)
+                                    <label class="flex items-start gap-2 text-sm text-[#1B4F72]">
+                                        <input
+                                            type="checkbox"
+                                            wire:click="toggleTindakanForm({{ $fid }}, @js($tindakan))"
+                                            @checked(in_array($tindakan, $formTambah[$fid]['tindakan_dilakukan'] ?? [], true))
+                                            class="mt-1 size-4 rounded border-[#D0DCE8] accent-[#1A9B72]"
+                                        />
+                                        <span>{{ $tindakan }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mt-4 grid gap-3 md:grid-cols-2">
+                        <flux:input type="number" min="1" max="100" wire:model="formTambah.{{ $fid }}.spo2_sebelum" label="SpO2 sebelum" />
+                        <flux:input type="number" min="1" max="100" wire:model="formTambah.{{ $fid }}.spo2_setelah" label="SpO2 setelah" />
+                    </div>
+
+                    <div class="mt-4">
+                        <flux:textarea wire:model="formTambah.{{ $fid }}.catatan" label="Catatan" rows="4" placeholder="Catatan pelaksanaan tindakan..." />
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="mb-2 text-sm font-semibold text-[#1B4F72]">Respons Pasien</p>
+                        <div class="grid gap-2 sm:grid-cols-3">
+                            @foreach (['Positif', 'Netral', 'Negatif'] as $respons)
+                                <label class="flex items-center gap-2 rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm text-[#1B4F72]">
+                                    <input type="radio" wire:model="formTambah.{{ $fid }}.respons_pasien" value="{{ $respons }}" class="accent-[#1A9B72]" />
+                                    {{ $respons }}
+                                </label>
+                            @endforeach
+                        </div>
+                        @error("formTambah.{$fid}.respons_pasien") <p class="mt-1 text-xs text-[#D95C3A]">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div class="mt-5 grid gap-2 sm:grid-cols-2">
+                        <button wire:click="simpanLog({{ $fid }})" wire:loading.attr="disabled" class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1A9B72] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#0F6E56] disabled:opacity-50">
+                            <flux:icon.check class="size-4" />
+                            Simpan Sesi
+                        </button>
+                        <button wire:click="resetForm({{ $fid }})" type="button" class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#F4F8FB] px-4 py-2.5 text-sm font-semibold text-[#7A8FA6] hover:bg-[#E8EEF4]">
+                            Reset
+                        </button>
+                    </div>
+                </section>
+            @endif
+
+            <section class="rounded-xl border border-[#E0EBF5] bg-white p-4">
+                <h3 class="mb-4 font-semibold text-[#1B4F72]">Ringkasan Implementasi</h3>
+                <div class="space-y-4">
+                    @foreach ($implementasi as $diagnosa)
+                        @php $jumlahLogDiagnosa = collect($diagnosa['intervensi'])->sum(fn ($intervensi) => count($intervensi['logs'])); @endphp
+                        <div class="rounded-lg bg-[#F8FBFE] p-4">
+                            <div class="mb-3 flex items-center justify-between gap-3">
+                                <div>
+                                    <p class="font-mono text-xs font-bold text-[#2E86C1]">{{ $diagnosa['kode'] }}</p>
+                                    <p class="text-sm font-semibold text-[#1B4F72]">{{ $diagnosa['label'] }}</p>
+                                </div>
+                                <span class="rounded-full bg-[#E1F5EE] px-2 py-0.5 text-xs font-bold text-[#0F6E56]">{{ $jumlahLogDiagnosa }} sesi</span>
+                            </div>
+                            <div class="space-y-2">
+                                @foreach ($diagnosa['intervensi'] as $intervensi)
+                                    <div class="flex items-center justify-between rounded-lg border border-[#E0EBF5] bg-white px-3 py-2 text-sm">
+                                        <span class="text-[#1B4F72]">{{ $intervensi['siki_label'] }}</span>
+                                        <span class="text-xs font-semibold {{ count($intervensi['logs']) > 0 ? 'text-[#0F6E56]' : 'text-[#7A8FA6]' }}">{{ count($intervensi['logs']) }} sesi</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+
+            <div class="grid gap-3 border-t border-[#E0EBF5] pt-4 sm:grid-cols-2">
+                <flux:button :href="route('askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
+                    Tinjau Rencana
+                </flux:button>
+                <button
+                    wire:click="simpanLanjut"
+                    wire:loading.attr="disabled"
+                    class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1A9B72] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0F6E56] disabled:opacity-50"
+                >
+                    <span wire:loading.remove wire:target="simpanLanjut">Setujui & Simpan, Lanjut ke Evaluasi</span>
+                    <span wire:loading wire:target="simpanLanjut">Menyimpan...</span>
+                    <flux:icon.arrow-right class="size-4" wire:loading.remove wire:target="simpanLanjut" />
+                </button>
+            </div>
         </div>
     @endif
 </div>
