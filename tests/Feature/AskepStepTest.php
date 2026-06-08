@@ -4,6 +4,7 @@ use App\Models\Askep;
 use App\Models\AskepDiagnosa;
 use App\Models\DiagnosaSdki;
 use App\Models\Pasien;
+use App\Models\User;
 
 // ── Pasien.nextAskepStep ──────────────────────────────────────────────────────
 
@@ -141,4 +142,34 @@ test('Askep memiliki relasi diagnosa yang menampilkan urutan prioritas', functio
 
     $prioritas = $askep->diagnosa()->pluck('prioritas')->toArray();
     expect($prioritas)->toBe([1, 2]);
+});
+
+test('mahasiswa bisa membuka daftar semua askep', function () {
+    $mahasiswa = User::factory()->mahasiswa()->create(['is_first_login' => false]);
+    $pasien = Pasien::factory()->create(['user_id' => $mahasiswa->id]);
+
+    Askep::factory()->create([
+        'pasien_id' => $pasien->id,
+        'user_id' => $mahasiswa->id,
+    ]);
+
+    $this->actingAs($mahasiswa)
+        ->get(route('askep.index'))
+        ->assertOk()
+        ->assertSee($pasien->nama_pasien);
+});
+
+test('mahasiswa bisa membuka halaman implementasi askep', function () {
+    $mahasiswa = User::factory()->mahasiswa()->create(['is_first_login' => false]);
+    $pasien = Pasien::factory()->create(['user_id' => $mahasiswa->id]);
+    $askep = Askep::factory()->create([
+        'pasien_id' => $pasien->id,
+        'user_id' => $mahasiswa->id,
+        'step_terakhir' => 3,
+    ]);
+
+    $this->actingAs($mahasiswa)
+        ->get(route('askep.implementasi', $askep))
+        ->assertOk()
+        ->assertSee('Langkah 4: Implementasi');
 });

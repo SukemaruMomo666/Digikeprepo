@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Pasien;
+use App\Models\Askep;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -19,13 +19,16 @@ new #[Layout('layouts.mahasiswa')] #[Title('Semua Askep')] class extends Compone
     public function with(): array
     {
         return [
-            'pasienList' => Pasien::where('user_id', auth()->id())
+            'askepList' => Askep::query()
+                ->where('user_id', auth()->id())
                 ->when($this->search, fn ($q) => $q->where(function ($q) {
-                    $q->where('nama_pasien', 'like', "%{$this->search}%")
-                        ->orWhere('no_rm', 'like', "%{$this->search}%");
+                    $q->whereHas('pasien', fn ($q) => $q
+                        ->where('nama_pasien', 'like', "%{$this->search}%")
+                        ->orWhere('no_rm', 'like', "%{$this->search}%"));
                 }))
-                ->when($this->status, fn ($q) => $q->where('status_askep', $this->status))
-                ->withCount(['pengkajian', 'diagnosaPasien'])
+                ->when($this->status, fn ($q) => $q->where('status', $this->status))
+                ->with('pasien')
+                ->withCount(['pengkajian', 'diagnosa'])
                 ->latest()
                 ->paginate(10),
         ];
@@ -52,11 +55,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Semua Askep')] class extends Compone
             <flux:select wire:model.live="status" class="sm:w-44">
                 <flux:select.option value="">Semua Status</flux:select.option>
                 <flux:select.option value="draft">Draft</flux:select.option>
+                <flux:select.option value="menunggu_review">Menunggu Review</flux:select.option>
+                <flux:select.option value="perlu_revisi">Perlu Revisi</flux:select.option>
+                <flux:select.option value="disetujui">Disetujui</flux:select.option>
                 <flux:select.option value="selesai">Selesai</flux:select.option>
             </flux:select>
         </div>
 
-        @if ($pasienList->isEmpty())
+        @if ($askepList->isEmpty())
             <div class="py-12 text-center">
                 <flux:icon.clipboard-document-list class="mx-auto mb-3 size-10 text-zinc-400" />
                 <flux:text>Belum ada data askep.</flux:text>
@@ -72,39 +78,38 @@ new #[Layout('layouts.mahasiswa')] #[Title('Semua Askep')] class extends Compone
                     <flux:table.column></flux:table.column>
                 </flux:table.columns>
                 <flux:table.rows>
-                    @foreach ($pasienList as $pasien)
-                        <flux:table.row :key="$pasien->id">
+                    @foreach ($askepList as $askep)
+                        <flux:table.row :key="$askep->id">
                             <flux:table.cell>
-                                <div class="font-medium">{{ $pasien->nama_pasien }}</div>
-                                <div class="text-xs font-mono text-zinc-500">{{ $pasien->no_rm }}</div>
+                                <div class="font-medium">{{ $askep->pasien->nama_pasien }}</div>
+                                <div class="text-xs font-mono text-zinc-500">{{ $askep->pasien->no_rm }}</div>
                             </flux:table.cell>
-                            <flux:table.cell>{{ $pasien->tanggal_masuk->format('d/m/Y') }}</flux:table.cell>
+                            <flux:table.cell>{{ $askep->pasien->tanggal_masuk->format('d/m/Y') }}</flux:table.cell>
                             <flux:table.cell class="text-center">
-                                <flux:badge color="{{ $pasien->pengkajian_count > 0 ? 'green' : 'zinc' }}" size="sm">
-                                    {{ $pasien->pengkajian_count }}/11
+                                <flux:badge color="{{ $askep->pengkajian_count > 0 ? 'green' : 'zinc' }}" size="sm">
+                                    {{ $askep->pengkajian_count }}/1
                                 </flux:badge>
                             </flux:table.cell>
                             <flux:table.cell class="text-center">
-                                <flux:badge color="{{ $pasien->diagnosa_pasien_count > 0 ? 'blue' : 'zinc' }}" size="sm">
-                                    {{ $pasien->diagnosa_pasien_count }}
+                                <flux:badge color="{{ $askep->diagnosa_count > 0 ? 'blue' : 'zinc' }}" size="sm">
+                                    {{ $askep->diagnosa_count }}
                                 </flux:badge>
                             </flux:table.cell>
                             <flux:table.cell>
-                                @if ($pasien->isSelesai())
-                                    <flux:badge color="green" size="sm">Selesai</flux:badge>
-                                @else
-                                    <flux:badge color="yellow" size="sm">Draft</flux:badge>
-                                @endif
+                                <flux:badge color="{{ $askep->isSelesai() ? 'green' : 'yellow' }}" size="sm">
+                                    {{ $askep->statusLabel() }}
+                                </flux:badge>
                             </flux:table.cell>
                             <flux:table.cell>
+                                @php $bisaDilanjutkan = in_array($askep->status, [Askep::STATUS_DRAFT, Askep::STATUS_PERLU_REVISI], true); @endphp
                                 <flux:button
-                                    :href="$pasien->isSelesai() ? route('pasien.askep', $pasien) : $pasien->nextAskepStep()"
+                                    :href="$bisaDilanjutkan ? $askep->nextStepUrl() : route('askep.show', $askep)"
                                     size="sm"
                                     variant="ghost"
-                                    :icon-trailing="$pasien->isSelesai() ? 'eye' : 'arrow-right'"
+                                    :icon-trailing="$bisaDilanjutkan ? 'arrow-right' : 'eye'"
                                     wire:navigate
                                 >
-                                    {{ $pasien->isSelesai() ? 'Lihat' : 'Lanjutkan' }}
+                                    {{ $bisaDilanjutkan ? 'Lanjutkan' : 'Lihat' }}
                                 </flux:button>
                             </flux:table.cell>
                         </flux:table.row>
@@ -113,7 +118,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Semua Askep')] class extends Compone
             </flux:table>
 
             <div class="mt-4">
-                {{ $pasienList->links() }}
+                {{ $askepList->links() }}
             </div>
         @endif
     </flux:card>

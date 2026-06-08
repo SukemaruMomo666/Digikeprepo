@@ -1,9 +1,7 @@
 <?php
 
-<<<<<<< HEAD
 use App\Models\Askep;
 use App\Models\AskepImplementasi;
-use App\Models\AskepIntervensi;
 use Flux\Flux;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -32,7 +30,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
      *       tanggal: string,
      *       waktu: string,
      *       shift: string,
+     *       durasi_menit: int|null,
      *       tindakan_dilakukan: list<string>,
+     *       spo2_sebelum: int|null,
+     *       spo2_setelah: int|null,
      *       catatan: string,
      *       respons_pasien: string
      *     }>
@@ -71,8 +72,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
                     'id'                => $impl->id,
                     'tanggal'           => $impl->tanggal?->format('Y-m-d') ?? '',
                     'waktu'             => $impl->waktu ?? '',
-                    'shift'             => $impl->shift ?? 'pagi',
+                    'shift'             => $impl->shift ?? 'Pagi',
+                    'durasi_menit'      => $impl->durasi_menit,
                     'tindakan_dilakukan' => $impl->tindakan_dilakukan ?? [],
+                    'spo2_sebelum'      => $impl->spo2_sebelum,
+                    'spo2_setelah'      => $impl->spo2_setelah,
                     'catatan'           => $impl->catatan ?? '',
                     'respons_pasien'    => $impl->respons_pasien ?? '',
                 ])->values()->toArray();
@@ -90,8 +94,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
                     'tampil'            => false,
                     'tanggal'           => now()->format('Y-m-d'),
                     'waktu'             => now()->format('H:i'),
-                    'shift'             => 'pagi',
+                    'shift'             => 'Pagi',
+                    'durasi_menit'      => null,
                     'tindakan_dilakukan' => [],
+                    'spo2_sebelum'      => null,
+                    'spo2_setelah'      => null,
                     'catatan'           => '',
                     'respons_pasien'    => '',
                 ];
@@ -122,8 +129,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
     public function sembunyikanForm(int $intervensiId): void
     {
         $this->formTambah[$intervensiId]['tampil']             = false;
+        $this->formTambah[$intervensiId]['durasi_menit']       = null;
         $this->formTambah[$intervensiId]['catatan']            = '';
         $this->formTambah[$intervensiId]['respons_pasien']     = '';
+        $this->formTambah[$intervensiId]['spo2_sebelum']       = null;
+        $this->formTambah[$intervensiId]['spo2_setelah']       = null;
         $this->formTambah[$intervensiId]['tindakan_dilakukan'] = [];
     }
 
@@ -142,9 +152,13 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
     {
         $form = $this->formTambah[$intervensiId];
 
-        $this->validateOnly("formTambah.{$intervensiId}.tanggal", [
+        $this->validate([
             "formTambah.{$intervensiId}.tanggal"        => ['required', 'date'],
             "formTambah.{$intervensiId}.waktu"           => ['required'],
+            "formTambah.{$intervensiId}.shift"           => ['required', 'in:Pagi,Siang,Malam'],
+            "formTambah.{$intervensiId}.durasi_menit"    => ['nullable', 'integer', 'min:1', 'max:1440'],
+            "formTambah.{$intervensiId}.spo2_sebelum"    => ['nullable', 'integer', 'min:1', 'max:100'],
+            "formTambah.{$intervensiId}.spo2_setelah"    => ['nullable', 'integer', 'min:1', 'max:100'],
             "formTambah.{$intervensiId}.respons_pasien"  => ['required', 'string', 'max:2000'],
         ]);
 
@@ -153,7 +167,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
             'tanggal'             => $form['tanggal'],
             'waktu'               => $form['waktu'],
             'shift'               => $form['shift'],
+            'durasi_menit'        => $form['durasi_menit'] ?: null,
             'tindakan_dilakukan'  => $form['tindakan_dilakukan'],
+            'spo2_sebelum'        => $form['spo2_sebelum'] ?: null,
+            'spo2_setelah'        => $form['spo2_setelah'] ?: null,
             'catatan'             => $form['catatan'],
             'respons_pasien'      => $form['respons_pasien'],
         ]);
@@ -271,7 +288,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
                                         <div class="mb-3 rounded-xl border border-[#85B7EB] bg-white p-4 space-y-3">
                                             <p class="text-xs font-semibold text-[#2E86C1] uppercase tracking-wide">Log Baru</p>
 
-                                            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                                            <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
                                                 <div>
                                                     <label class="text-xs font-medium text-[#7A8FA6]">Tanggal</label>
                                                     <input
@@ -294,10 +311,43 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
                                                         wire:model="formTambah.{{ $fid }}.shift"
                                                         class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none"
                                                     >
-                                                        <option value="pagi">Pagi (07.00–14.00)</option>
-                                                        <option value="siang">Siang (14.00–21.00)</option>
-                                                        <option value="malam">Malam (21.00–07.00)</option>
+                                                        <option value="Pagi">Pagi (07.00–14.00)</option>
+                                                        <option value="Siang">Siang (14.00–21.00)</option>
+                                                        <option value="Malam">Malam (21.00–07.00)</option>
                                                     </select>
+                                                </div>
+                                                <div>
+                                                    <label class="text-xs font-medium text-[#7A8FA6]">Durasi (menit)</label>
+                                                    <input
+                                                        type="number"
+                                                        min="1"
+                                                        max="1440"
+                                                        wire:model="formTambah.{{ $fid }}.durasi_menit"
+                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                                    />
+                                                    @error("formTambah.{$fid}.durasi_menit") <p class="mt-1 text-xs text-[#D95C3A]">{{ $message }}</p> @enderror
+                                                </div>
+                                                <div>
+                                                    <label class="text-xs font-medium text-[#7A8FA6]">SpO2 sebelum (%)</label>
+                                                    <input
+                                                        type="number"
+                                                        min="1"
+                                                        max="100"
+                                                        wire:model="formTambah.{{ $fid }}.spo2_sebelum"
+                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                                    />
+                                                    @error("formTambah.{$fid}.spo2_sebelum") <p class="mt-1 text-xs text-[#D95C3A]">{{ $message }}</p> @enderror
+                                                </div>
+                                                <div>
+                                                    <label class="text-xs font-medium text-[#7A8FA6]">SpO2 setelah (%)</label>
+                                                    <input
+                                                        type="number"
+                                                        min="1"
+                                                        max="100"
+                                                        wire:model="formTambah.{{ $fid }}.spo2_setelah"
+                                                        class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-1.5 text-sm focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
+                                                    />
+                                                    @error("formTambah.{$fid}.spo2_setelah") <p class="mt-1 text-xs text-[#D95C3A]">{{ $message }}</p> @enderror
                                                 </div>
                                             </div>
 
@@ -374,6 +424,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
                                                                 <span class="font-semibold text-[#1B4F72]">{{ \Carbon\Carbon::parse($log['tanggal'])->translatedFormat('d M Y') }}</span>
                                                                 <span class="text-[#7A8FA6]">{{ $log['waktu'] }}</span>
                                                                 <span class="rounded-full bg-[#EBF5FB] px-2 py-0.5 font-medium capitalize text-[#2E86C1]">{{ $log['shift'] }}</span>
+                                                                @if ($log['durasi_menit'])
+                                                                    <span class="rounded-full bg-[#F4F8FB] px-2 py-0.5 font-medium text-[#7A8FA6]">{{ $log['durasi_menit'] }} menit</span>
+                                                                @endif
+                                                                @if ($log['spo2_sebelum'] || $log['spo2_setelah'])
+                                                                    <span class="rounded-full bg-[#E1F5EE] px-2 py-0.5 font-medium text-[#0F6E56]">
+                                                                        SpO2 {{ $log['spo2_sebelum'] ?? '-' }} -> {{ $log['spo2_setelah'] ?? '-' }}%
+                                                                    </span>
+                                                                @endif
                                                             </div>
                                                             @if (! empty($log['tindakan_dilakukan']))
                                                                 <ul class="mt-1.5 space-y-0.5">
@@ -428,16 +486,3 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
         </div>
     @endif
 </div>
-=======
-use Livewire\Component;
-
-new class extends Component
-{
-    //
-};
-?>
-
-<div>
-    {{-- Well begun is half done. - Aristotle --}}
-</div>
->>>>>>> 117d1dc8c208298b4203bd2cfc96d174a7009b1d
