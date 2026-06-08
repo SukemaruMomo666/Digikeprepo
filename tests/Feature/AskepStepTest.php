@@ -173,3 +173,18 @@ test('mahasiswa bisa membuka halaman implementasi askep', function () {
         ->assertOk()
         ->assertSee('Tahap 4: Implementasi Keperawatan');
 });
+
+test('mahasiswa bisa membuka halaman pengkajian askep', function () {
+    $mahasiswa = User::factory()->mahasiswa()->create(['is_first_login' => false]);
+    $pasien = Pasien::factory()->create(['user_id' => $mahasiswa->id]);
+    $askep = Askep::factory()->create([
+        'pasien_id' => $pasien->id,
+        'user_id' => $mahasiswa->id,
+        'step_terakhir' => 0,
+    ]);
+
+    $this->actingAs($mahasiswa)
+        ->get(route('askep.pengkajian', $askep))
+        ->assertOk()
+        ->assertSee('Tahap 1: Pengkajian Dasar');
+});

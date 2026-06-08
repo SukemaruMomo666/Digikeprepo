@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Askep;
 use App\Models\DiagnosaSdki;
 use App\Models\Pasien;
 use App\Models\User;
@@ -15,7 +16,7 @@ new #[Layout('layouts.admin')] #[Title('Dashboard Admin')] class extends Compone
             'totalMahasiswa'      => User::where('role', 'mahasiswa')->count(),
             'totalPasien'         => Pasien::count(),
             'totalDiagnosaMaster' => DiagnosaSdki::count(),
-            'askepSelesai'        => Pasien::where('status_askep', 'selesai')->count(),
+            'askepSelesai'        => Askep::where('status', Askep::STATUS_SELESAI)->count(),
             'pasienTerakhir'      => Pasien::with('mahasiswa')->latest()->limit(8)->get(),
         ];
     }

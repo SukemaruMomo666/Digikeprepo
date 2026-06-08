@@ -200,22 +200,46 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     {{-- Stepper --}}
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 1])
 
-    <div class="mb-4 flex items-center justify-between">
-        <div>
-            <h2 class="text-xl font-bold text-[#1B4F72]">Langkah 1: Pengkajian</h2>
-            <p class="text-sm text-[#7A8FA6]">Isi data pengkajian keperawatan secara lengkap.</p>
+    <div class="mb-5 overflow-hidden rounded-2xl border border-[#E0EBF5] bg-white">
+        <div class="flex flex-col gap-4 border-b border-[#E0EBF5] p-5 md:flex-row md:items-center md:justify-between">
+            <div>
+                <div class="mb-2 flex items-center gap-2">
+                    <span class="flex size-8 items-center justify-center rounded-lg bg-[#E1F5EE] text-[#0F6E56]">
+                        <flux:icon.clipboard-document-list class="size-4" />
+                    </span>
+                    <h2 class="text-xl font-bold text-[#1B4F72]">Tahap 1: Pengkajian Dasar</h2>
+                </div>
+                <p class="text-sm text-[#7A8FA6]">Pengkajian disusun bertahap mengikuti format identitas, riwayat, biologis, psikososial, dan pemeriksaan fisik.</p>
+            </div>
+            <button
+                wire:click="presetNormal"
+                class="inline-flex items-center gap-2 rounded-lg border border-[#85B7EB] bg-[#EBF5FB] px-3 py-2 text-xs font-semibold text-[#2E86C1] hover:bg-[#D7EAFB] transition"
+            >
+                <flux:icon.check-circle class="size-3.5" />
+                Preset Normal
+            </button>
         </div>
-        <button
-            wire:click="presetNormal"
-            class="flex items-center gap-1.5 rounded-lg border border-[#85B7EB] bg-[#EBF5FB] px-3 py-1.5 text-xs font-semibold text-[#2E86C1] hover:bg-[#D7EAFB] transition"
-        >
-            <flux:icon.check-circle class="size-3.5" />
-            Preset Normal
-        </button>
+        <div class="grid gap-3 p-5 sm:grid-cols-3">
+            <div class="rounded-xl bg-[#F8FBFE] p-4">
+                <p class="text-xs font-semibold uppercase tracking-wide text-[#7A8FA6]">Pasien</p>
+                <p class="mt-2 text-sm font-bold text-[#1B4F72]">{{ $askep->pasien->nama_pasien }}</p>
+                <p class="mt-1 text-xs text-[#7A8FA6]">No. RM {{ $askep->pasien->no_rm }}</p>
+            </div>
+            <div class="rounded-xl bg-[#F8FBFE] p-4">
+                <p class="text-xs font-semibold uppercase tracking-wide text-[#7A8FA6]">Status Pengkajian</p>
+                <p class="mt-2 text-sm font-bold text-[#1B4F72]">{{ $askep->pengkajian ? 'Tersimpan' : 'Belum diisi' }}</p>
+                <p class="mt-1 text-xs text-[#7A8FA6]">Lengkapi sebelum lanjut ke diagnosa.</p>
+            </div>
+            <div class="rounded-xl bg-[#F8FBFE] p-4">
+                <p class="text-xs font-semibold uppercase tracking-wide text-[#7A8FA6]">Fokus Data</p>
+                <p class="mt-2 text-sm font-bold text-[#1B4F72]">Riwayat, TTV, biologis, fisik</p>
+                <p class="mt-1 text-xs text-[#7A8FA6]">Biar cepat, tapi tetap klinis.</p>
+            </div>
+        </div>
     </div>
 
     {{-- Tab Navigation --}}
-    <div class="mb-4 flex gap-1 overflow-x-auto rounded-xl bg-[#F4F8FB] p-1">
+    <div class="mb-5 flex gap-1 overflow-x-auto rounded-xl bg-[#F4F8FB] p-1">
         @foreach ([
             'identitas' => 'Identitas',
             'ttv'       => 'TTV & EWS',
@@ -234,15 +258,35 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
 
     {{-- ── Tab: Identitas Penanggung Jawab ── --}}
     @if ($tab === 'identitas')
-        <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
-            <h3 class="mb-4 font-semibold text-[#1B4F72]">Identitas Penanggung Jawab</h3>
-            <div class="grid gap-4 sm:grid-cols-2">
-                <flux:input wire:model="pj_nama" label="Nama Penanggung Jawab" placeholder="Nama lengkap" />
-                <flux:input wire:model="pj_umur" label="Umur" type="number" placeholder="Tahun" min="0" max="150" />
-                <flux:input wire:model="pj_pendidikan" label="Pendidikan Terakhir" placeholder="Contoh: S1, SMA" />
-                <flux:input wire:model="pj_pekerjaan" label="Pekerjaan" placeholder="Pekerjaan penanggung jawab" />
-                <div class="sm:col-span-2">
-                    <flux:textarea wire:model="pj_alamat" label="Alamat" placeholder="Alamat lengkap penanggung jawab" rows="2" />
+        <div class="space-y-4">
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+                <h3 class="mb-4 font-semibold text-[#1B4F72]">Identitas Pasien</h3>
+                <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <flux:input :value="$askep->pasien->nama_pasien" label="Nama" disabled />
+                    <flux:input :value="$askep->pasien->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'" label="Jenis Kelamin" disabled />
+                    <flux:input :value="$askep->pasien->tanggal_lahir?->format('d/m/Y') . ' / ' . ($askep->pasien->umur ?? '-') . ' th'" label="Tanggal Lahir / Umur" disabled />
+                    <flux:input :value="$askep->pasien->agama ?? '-'" label="Agama" disabled />
+                    <flux:input :value="$askep->pasien->status_perkawinan ?? '-'" label="Status Perkawinan" disabled />
+                    <flux:input :value="$askep->pasien->pendidikan ?? '-'" label="Pendidikan" disabled />
+                    <div class="sm:col-span-2 lg:col-span-3">
+                        <flux:textarea :value="$askep->pasien->alamat ?? '-'" label="Alamat" rows="2" disabled />
+                    </div>
+                    <div class="sm:col-span-2 lg:col-span-3">
+                        <flux:textarea :value="$askep->pasien->diagnosa_medis ?? '-'" label="Diagnosa Medis" rows="2" disabled />
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+                <h3 class="mb-4 font-semibold text-[#1B4F72]">Identitas Penanggung Jawab</h3>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <flux:input wire:model="pj_nama" label="Nama Penanggung Jawab" placeholder="Nama lengkap" />
+                    <flux:input wire:model="pj_umur" label="Umur" type="number" placeholder="Tahun" min="0" max="150" />
+                    <flux:input wire:model="pj_pendidikan" label="Pendidikan Terakhir" placeholder="Contoh: S1, SMA" />
+                    <flux:input wire:model="pj_pekerjaan" label="Pekerjaan" placeholder="Pekerjaan penanggung jawab" />
+                    <div class="sm:col-span-2">
+                        <flux:textarea wire:model="pj_alamat" label="Alamat" placeholder="Alamat lengkap penanggung jawab" rows="2" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -325,14 +369,17 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     @if ($tab === 'riwayat')
         <div class="space-y-4">
             <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
-                <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Penyakit</h3>
+                <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Penyakit Sekarang</h3>
+                <flux:textarea wire:model="riwayat_sekarang" label="Keluhan utama / kronologi / harapan pasien" rows="5"
+                    placeholder="Keluhan utama, perjalanan penyakit saat ini, dan harapan dari pelayanan kesehatan..." />
+            </div>
+            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+                <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Penyakit Dahulu dan Keluarga</h3>
                 <div class="space-y-4">
-                    <flux:textarea wire:model="riwayat_sekarang" label="Riwayat Penyakit Sekarang" rows="4"
-                        placeholder="Keluhan utama dan perjalanan penyakit yang sedang dialami..." />
-                    <flux:textarea wire:model="riwayat_lalu" label="Riwayat Penyakit Dahulu" rows="3"
-                        placeholder="Riwayat penyakit yang pernah diderita sebelumnya..." />
-                    <flux:textarea wire:model="riwayat_keluarga" label="Riwayat Penyakit Keluarga" rows="3"
-                        placeholder="Riwayat penyakit yang diderita anggota keluarga..." />
+                    <flux:textarea wire:model="riwayat_lalu" label="Riwayat penyakit masa lalu" rows="4"
+                        placeholder="Riwayat penyakit masa anak, alergi, pengalaman dirawat, pengobatan terakhir..." />
+                    <flux:textarea wire:model="riwayat_keluarga" label="Riwayat kesehatan keluarga / genogram" rows="4"
+                        placeholder="Komposisi keluarga, penyakit serupa, penyakit menular/menurun, respons keluarga..." />
                 </div>
             </div>
         </div>
@@ -345,7 +392,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                 ['field' => 'biologis_nyeri', 'label' => 'Nyeri', 'icon' => 'bolt'],
                 ['field' => 'biologis_aktivitas', 'label' => 'Aktivitas & Latihan', 'icon' => 'arrow-trending-up'],
                 ['field' => 'biologis_nutrisi', 'label' => 'Nutrisi & Metabolisme', 'icon' => 'beaker'],
-                ['field' => 'biologis_cairan', 'label' => 'Kebutuhan Cairan', 'icon' => 'drop'],
+                ['field' => 'biologis_cairan', 'label' => 'Kebutuhan Cairan', 'icon' => 'beaker'],
                 ['field' => 'biologis_eliminasi_feses', 'label' => 'Eliminasi Feses (BAB)', 'icon' => 'arrow-path'],
                 ['field' => 'biologis_eliminasi_urine', 'label' => 'Eliminasi Urine (BAK)', 'icon' => 'arrow-path'],
                 ['field' => 'biologis_istirahat', 'label' => 'Istirahat & Tidur', 'icon' => 'moon'],
