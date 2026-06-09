@@ -13,12 +13,6 @@ class PasienObserver
 
     public function updated(Pasien $pasien): void
     {
-        if ($pasien->wasChanged('status_askep') && $pasien->isSelesai()) {
-            $pasien->catatRiwayat('Asuhan keperawatan dinyatakan selesai.');
-
-            return;
-        }
-
         $trackedFields = ['no_rm', 'nama_pasien', 'umur', 'jenis_kelamin', 'ruang_rawat', 'tanggal_masuk'];
 
         if ($pasien->wasChanged($trackedFields)) {

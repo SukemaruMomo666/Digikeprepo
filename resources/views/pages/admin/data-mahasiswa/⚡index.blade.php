@@ -31,8 +31,8 @@ new #[Layout('layouts.admin')] #[Title('Data Mahasiswa')] class extends Componen
             ->with('penugasanSebagaiMahasiswa')
             ->withCount([
                 'pasien',
-                'pasien as pasien_draft_count'   => fn ($q) => $q->where('status_askep', 'draft'),
-                'pasien as pasien_selesai_count' => fn ($q) => $q->where('status_askep', 'selesai'),
+                'askep as pasien_draft_count'   => fn ($q) => $q->where('status', 'draft'),
+                'askep as pasien_selesai_count' => fn ($q) => $q->where('status', 'selesai'),
             ])
             ->orderBy('name')
             ->paginate(20);

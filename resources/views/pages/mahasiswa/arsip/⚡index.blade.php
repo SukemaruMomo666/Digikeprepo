@@ -18,7 +18,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Arsip Pengkajian')] class extends Co
     {
         return [
             'arsipList' => Pasien::where('user_id', auth()->id())
-                ->where('status_askep', 'selesai')
+                ->whereHas('askep', fn ($q) => $q->where('status', 'selesai'))
                 ->when($this->search, fn ($q) => $q->where(function ($q) {
                     $q->where('nama_pasien', 'like', "%{$this->search}%")
                         ->orWhere('no_rm', 'like', "%{$this->search}%");
