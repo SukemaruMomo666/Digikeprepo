@@ -83,12 +83,12 @@ class Askep extends Model
     public function nextStepUrl(): string
     {
         return match (true) {
-            $this->step_terakhir < 1 => route('askep.pengkajian', $this),
-            $this->step_terakhir < 2 => route('askep.diagnosa', $this),
-            $this->step_terakhir < 3 => route('askep.perencanaan', $this),
-            $this->step_terakhir < 4 => route('askep.implementasi', $this),
-            $this->step_terakhir < 5 => route('askep.evaluasi', $this),
-            default => route('askep.show', $this),
+            $this->step_terakhir < 1 => route('mahasiswa.askep.pengkajian', $this),
+            $this->step_terakhir < 2 => route('mahasiswa.askep.diagnosa', $this),
+            $this->step_terakhir < 3 => route('mahasiswa.askep.perencanaan', $this),
+            $this->step_terakhir < 4 => route('mahasiswa.askep.implementasi', $this),
+            $this->step_terakhir < 5 => route('mahasiswa.askep.evaluasi', $this),
+            default => route('mahasiswa.askep.show', $this),
         };
     }
 
