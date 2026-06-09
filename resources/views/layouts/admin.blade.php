@@ -41,6 +41,22 @@
                     >
                         Mahasiswa
                     </flux:sidebar.item>
+                    <flux:sidebar.item
+                        icon="identification"
+                        :href="route('admin.dosen.index')"
+                        :current="request()->routeIs('admin.dosen.*')"
+                        wire:navigate
+                    >
+                        Dosen
+                    </flux:sidebar.item>
+                    <flux:sidebar.item
+                        icon="briefcase"
+                        :href="route('admin.penugasan.index')"
+                        :current="request()->routeIs('admin.penugasan.*')"
+                        wire:navigate
+                    >
+                        Penugasan
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
 
                 <flux:sidebar.group heading="Data Master" class="grid">
@@ -94,6 +110,12 @@
                         wire:navigate
                     >
                         Data Mahasiswa
+                        @php
+                            $countAllPending = \App\Models\Askep::where('status', \App\Models\Askep::STATUS_MENUNGGU_REVIEW)->count();
+                        @endphp
+                        @if ($countAllPending > 0)
+                            <flux:badge size="sm" color="amber" inset="top bottom">{{ $countAllPending }}</flux:badge>
+                        @endif
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>

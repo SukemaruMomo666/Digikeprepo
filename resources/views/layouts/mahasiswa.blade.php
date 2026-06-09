@@ -31,8 +31,8 @@
                 {{-- ── Menu Utama ── --}}
                 <flux:sidebar.item
                     icon="home"
-                    :href="route('dashboard')"
-                    :current="request()->routeIs('dashboard')"
+                    :href="route('mahasiswa.dashboard')"
+                    :current="request()->routeIs('mahasiswa.dashboard')"
                     wire:navigate
                 >
                     Beranda
@@ -54,6 +54,14 @@
                     wire:navigate
                 >
                     Asuhan Keperawatan
+                    @php
+                        $countRevisi = \App\Models\Askep::where('user_id', auth()->id())
+                            ->where('status', \App\Models\Askep::STATUS_PERLU_REVISI)
+                            ->count();
+                    @endphp
+                    @if ($countRevisi > 0)
+                        <flux:badge size="sm" color="red" inset="top bottom">{{ $countRevisi }}</flux:badge>
+                    @endif
                 </flux:sidebar.item>
 
                 <flux:sidebar.item
@@ -63,6 +71,15 @@
                     wire:navigate
                 >
                     Riwayat
+                </flux:sidebar.item>
+
+                <flux:sidebar.item
+                    icon="book-open"
+                    :href="route('mahasiswa.log.index')"
+                    :current="request()->routeIs('mahasiswa.log.*')"
+                    wire:navigate
+                >
+                    Log Pembelajaran
                 </flux:sidebar.item>
 
                 {{-- ── Separator ── --}}

@@ -233,6 +233,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
         Flux::toast(variant: 'success', text: "Preset " . ($section === 'all' ? 'lengkap' : $section) . " diterapkan.");
     }
 
+    public function lanjutkanTab(string $next): void
+    {
+        $this->tab = $next;
+        $this->dispatch('scroll-to-top');
+    }
+
     public function simpan(): void
     {
         $this->validate([
@@ -406,6 +412,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     </div>
                 </div>
             </div>
+
+            <div class="mt-4 flex justify-end">
+                <flux:button wire:click="lanjutkanTab('ttv')" variant="ghost" icon-trailing="arrow-right">Lanjut ke TTV & EWS</flux:button>
+            </div>
         </div>
     @endif
 
@@ -479,6 +489,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:input wire:model="tb" label="Tinggi Badan (cm)" type="number" placeholder="165" />
                 </div>
             </div>
+
+            <div class="mt-4 flex justify-end">
+                <flux:button wire:click="lanjutkanTab('riwayat')" variant="ghost" icon-trailing="arrow-right">Lanjut ke Riwayat Penyakit</flux:button>
+            </div>
         </div>
     @endif
 
@@ -511,6 +525,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:textarea wire:model="riwayat_keluarga.efek_sakit" label="Efek Sakit terhadap Keluarga" rows="2" />
                 </div>
             </div>
+
+            <div class="mt-4 flex justify-end">
+                <flux:button wire:click="lanjutkanTab('biologis')" variant="ghost" icon-trailing="arrow-right">Lanjut ke Pengkajian Biologis</flux:button>
+            </div>
         </div>
     @endif
 
@@ -531,12 +549,39 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:button wire:click="$set('biologis_nyeri', {{ json_encode(['lokasi' => 'Tidak ada', 'p' => '-', 'q' => '-', 'r' => '-', 's' => '0', 't' => '-', 'ganggu_aktivitas' => 'Tidak', 'cara_atasi' => '-', 'efektif' => '-', 'riwayat_bedah' => 'Tidak ada']) }})" size="xs" variant="ghost">Set Normal</flux:button>
                 </div>
                 <div class="grid gap-4 sm:grid-cols-2">
-                    <flux:input wire:model="biologis_nyeri.lokasi" label="Lokasi Nyeri" />
+                    <flux:input wire:model="biologis_nyeri.lokasi" label="Lokasi Nyeri" class="sm:col-span-2" />
                     <flux:input wire:model="biologis_nyeri.p" label="P (Pemicu/Provocative)" />
                     <flux:input wire:model="biologis_nyeri.q" label="Q (Kualitas/Quality)" />
                     <flux:input wire:model="biologis_nyeri.r" label="R (Radiasi/Region)" />
-                    <flux:input wire:model="biologis_nyeri.s" label="S (Skala 0-10)" type="number" min="0" max="10" />
                     <flux:input wire:model="biologis_nyeri.t" label="T (Waktu/Time)" />
+                    
+                    <div class="sm:col-span-2">
+                        <label class="mb-2 block text-sm font-bold text-[#1B4F72]">S (Skala Nyeri 0-10)</label>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex items-center justify-between px-1">
+                                <span class="text-[10px] font-bold text-green-600">Tidak Nyeri</span>
+                                <span class="text-[10px] font-bold text-amber-500">Nyeri Sedang</span>
+                                <span class="text-[10px] font-bold text-red-600">Nyeri Hebat</span>
+                            </div>
+                            <div class="flex gap-1 overflow-x-auto pb-2 no-scrollbar">
+                                @foreach (range(0, 10) as $skala)
+                                    <label class="flex-1 cursor-pointer min-w-[2.5rem]">
+                                        <input type="radio" wire:model="biologis_nyeri.s" value="{{ $skala }}" class="peer sr-only" />
+                                        <div @class([
+                                            'flex h-10 items-center justify-center rounded-lg border-2 text-sm font-black transition',
+                                            'border-green-100 text-green-700 bg-green-50/30 peer-checked:bg-green-500 peer-checked:border-green-500 peer-checked:text-white' => $skala == 0,
+                                            'border-green-100 text-green-700 bg-green-50/30 peer-checked:bg-green-500 peer-checked:border-green-500 peer-checked:text-white' => $skala >= 1 && $skala <= 3,
+                                            'border-amber-100 text-amber-700 bg-amber-50/30 peer-checked:bg-amber-500 peer-checked:border-amber-500 peer-checked:text-white' => $skala >= 4 && $skala <= 6,
+                                            'border-red-100 text-red-700 bg-red-50/30 peer-checked:bg-red-500 peer-checked:border-red-500 peer-checked:text-white' => $skala >= 7,
+                                        ])>
+                                            {{ $skala }}
+                                        </div>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
                     <flux:input wire:model="biologis_nyeri.ganggu_aktivitas" label="Mengganggu Aktivitas?" />
                     <flux:input wire:model="biologis_nyeri.cara_atasi" label="Cara Mengatasi" />
                 </div>
@@ -647,6 +692,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:input wire:model="biologis_seksualitas.pengaruh_sakit" label="Pengaruh Penyakit" />
                 </div>
             </div>
+
+            <div class="mt-4 flex justify-end">
+                <flux:button wire:click="lanjutkanTab('psikososial')" variant="ghost" icon-trailing="arrow-right">Lanjut ke Psikososial</flux:button>
+            </div>
         </div>
     @endif
 
@@ -672,6 +721,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:input wire:model="psiko_spiritual.hambatan_ibadah" label="Hambatan Ibadah saat Sakit" />
                     <flux:input wire:model="psiko_spiritual.hubungan_tuhan" label="Hubungan dengan Tuhan" />
                 </div>
+            </div>
+
+            <div class="mt-4 flex justify-end">
+                <flux:button wire:click="lanjutkanTab('fisik')" variant="ghost" icon-trailing="arrow-right">Lanjut ke Pemeriksaan Fisik</flux:button>
             </div>
         </div>
     @endif

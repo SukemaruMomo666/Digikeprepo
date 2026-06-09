@@ -44,6 +44,26 @@ new #[Layout('layouts.dosen')] #[Title('Dashboard Dosen')] class extends Compone
         <flux:text class="mt-1 text-zinc-500">Berikut adalah ringkasan bimbingan asuhan keperawatan mahasiswa Anda.</flux:text>
     </div>
 
+    {{-- Alert Pending Review --}}
+    @if ($stats['pending_review'] > 0)
+        <div class="mb-8 flex items-center justify-between gap-4 rounded-2xl border-2 border-[#1A9B72] bg-emerald-50 p-5 shadow-sm dark:bg-emerald-950/20 dark:border-emerald-900">
+            <div class="flex items-center gap-4">
+                <div class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-800 dark:text-emerald-100">
+                    <flux:icon.envelope-open class="size-7" />
+                </div>
+                <div>
+                    <h4 class="text-lg font-black text-emerald-900 dark:text-emerald-50">Ada Askep Menunggu Review!</h4>
+                    <p class="text-sm text-emerald-700 dark:text-emerald-300">
+                        Saat ini terdapat <span class="font-bold underline">{{ $stats['pending_review'] }} dokumen</span> asuhan keperawatan yang butuh masukan Anda.
+                    </p>
+                </div>
+            </div>
+            <flux:button :href="route('dosen.askep.index')" variant="primary" class="bg-[#0F6E56] hover:bg-[#0A2D25] border-none" wire:navigate>
+                Review Sekarang
+            </flux:button>
+        </div>
+    @endif
+
     {{-- Stats Grid --}}
     <div class="grid grid-cols-1 gap-4 mb-8 sm:grid-cols-2 lg:grid-cols-4">
         <flux:card class="flex items-center gap-4">

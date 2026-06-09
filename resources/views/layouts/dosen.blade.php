@@ -54,6 +54,15 @@
                     wire:navigate
                 >
                     Review Askep
+                    @php
+                        $mhsIds = \App\Models\Penugasan::where('dosen_id', auth()->id())->pluck('mahasiswa_id')->all();
+                        $countPending = \App\Models\Askep::whereIn('user_id', $mhsIds)
+                            ->where('status', \App\Models\Askep::STATUS_MENUNGGU_REVIEW)
+                            ->count();
+                    @endphp
+                    @if ($countPending > 0)
+                        <flux:badge size="sm" color="amber" inset="top bottom">{{ $countPending }}</flux:badge>
+                    @endif
                 </flux:sidebar.item>
 
                 <flux:sidebar.item

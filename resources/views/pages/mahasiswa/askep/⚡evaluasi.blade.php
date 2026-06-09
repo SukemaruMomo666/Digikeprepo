@@ -201,10 +201,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
         ]);
 
         $this->askep->pasien->catatRiwayat('Askep dikirim untuk review dosen.');
+Flux::toast(variant: 'success', text: 'Askep berhasil dikirim untuk review.');
 
-        Flux::toast(variant: 'success', text: 'Askep berhasil dikirim untuk review!');
-        $this->redirectRoute('askep.show', $this->askep, navigate: true);
-    }
+$this->redirectRoute('askep.show', $this->askep, navigate: true);
+}
+
 };
 ?>
 

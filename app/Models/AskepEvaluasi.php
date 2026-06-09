@@ -39,4 +39,17 @@ class AskepEvaluasi extends Model
     {
         return $this->belongsTo(AskepDiagnosa::class);
     }
+
+    /**
+     * Get the label for the analysis attribute.
+     */
+    public function analisisLabel(): string
+    {
+        return match ($this->analisis) {
+            'Tercapai' => 'Tercapai',
+            'Membaik' => 'Membaik / Teratasi Sebagian',
+            'Belum Tercapai' => 'Belum Tercapai',
+            default => $this->analisis ?? '-',
+        };
+    }
 }

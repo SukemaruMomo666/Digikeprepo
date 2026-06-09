@@ -29,6 +29,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
             'askepSelesai'   => Askep::where('user_id', $userId)
                 ->where('status', Askep::STATUS_SELESAI)
                 ->count(),
+            'revisiAskep'    => Askep::where('user_id', $userId)
+                ->where('status', Askep::STATUS_PERLU_REVISI)
+                ->with('pasien')
+                ->get(),
             'pasienTerakhir' => Pasien::where('user_id', $userId)->with(['askep' => fn ($q) => $q->latest()->limit(1)])->latest()->limit(5)->get(),
         ];
     }
@@ -43,6 +47,30 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
         </h1>
         <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">Berikut adalah ringkasan asuhan keperawatan Anda hari ini.</p>
     </div>
+
+    {{-- Notifikasi Revisi --}}
+    @if ($revisiAskep->isNotEmpty())
+        <div class="mb-6 space-y-3">
+            @foreach ($revisiAskep as $rev)
+                <div class="flex items-center justify-between gap-4 rounded-2xl border-2 border-amber-200 bg-amber-50 p-4 shadow-sm dark:border-amber-900/50 dark:bg-amber-900/20">
+                    <div class="flex items-start gap-3">
+                        <div class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-800 dark:text-amber-200">
+                            <flux:icon.exclamation-triangle class="size-6" />
+                        </div>
+                        <div>
+                            <p class="font-bold text-amber-900 dark:text-amber-100">Perlu Revisi!</p>
+                            <p class="text-sm text-amber-700 dark:text-amber-300">
+                                Askep pasien <span class="font-bold">{{ $rev->pasien->nama_pasien }}</span> dikembalikan oleh dosen untuk direvisi.
+                            </p>
+                        </div>
+                    </div>
+                    <flux:button :href="route('askep.show', $rev)" variant="primary" size="sm" class="bg-amber-600 hover:bg-amber-700 border-none" wire:navigate>
+                        Lihat Catatan
+                    </flux:button>
+                </div>
+            @endforeach
+        </div>
+    @endif
 
     {{-- Stat Cards --}}
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6 mb-6">

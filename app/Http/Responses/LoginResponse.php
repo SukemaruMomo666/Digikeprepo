@@ -18,10 +18,10 @@ class LoginResponse implements LoginResponseContract
             return redirect()->route('password.change');
         }
 
-        return redirect()->intended(
-            $user->isAdmin()
-                ? route('admin.dashboard')
-                : route('dashboard')
-        );
+        return redirect()->intended(match (true) {
+            $user->isAdmin() => route('admin.dashboard'),
+            $user->isDosen() => route('dosen.dashboard'),
+            default => route('dashboard'),
+        });
     }
 }

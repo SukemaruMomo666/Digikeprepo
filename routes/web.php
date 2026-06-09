@@ -10,9 +10,17 @@ Route::middleware(['auth'])->group(function () {
         ->name('password.change');
 });
 
+// ── Redirect Dashboard Berdasarkan Role ──────────────────────────────────
+Route::get('/dashboard', function () {
+    $user = auth()->user();
+    if ($user->isAdmin()) return redirect()->route('admin.dashboard');
+    if ($user->isDosen()) return redirect()->route('dosen.dashboard');
+    return redirect()->route('mahasiswa.dashboard');
+})->middleware(['auth'])->name('dashboard');
+
 // ── Mahasiswa ──────────────────────────────────────────────────────────────
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
-    Route::livewire('dashboard', 'pages::mahasiswa.dashboard')->name('dashboard');
+    Route::livewire('mahasiswa/dashboard', 'pages::mahasiswa.dashboard')->name('mahasiswa.dashboard');
 
     Route::prefix('pasien')->name('pasien.')->group(function () {
         Route::livewire('/', 'pages::mahasiswa.pasien.index')->name('index');
@@ -47,7 +55,11 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::livewire('/riwayat', 'pages::mahasiswa.riwayat.index')->name('riwayat.index');
     Route::livewire('/arsip', 'pages::mahasiswa.arsip.index')->name('arsip.index');
 
-    // ── Panduan & Referensi ───────────────────────────────────────────────────
+    // ── Export PDF ──
+    Route::get('/askep/{askep}/download', [\App\Http\Controllers\AskepPdfController::class, 'download'])
+        ->name('askep.download');
+
+    // ── Panduan & Referensi ──
     Route::livewire('/panduan', 'pages::mahasiswa.panduan.index')->name('panduan.index');
     Route::livewire('/video', 'pages::mahasiswa.video.index')->name('video.index');
     Route::livewire('/faq', 'pages::mahasiswa.faq.index')->name('faq.index');
@@ -59,6 +71,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::prefix('users')->name('users.')->group(function () {
         Route::livewire('/', 'pages::admin.users.index')->name('index');
+    });
+
+    Route::prefix('dosen')->name('dosen.')->group(function () {
+        Route::livewire('/', 'pages::admin.dosen.index')->name('index');
+    });
+
+    Route::prefix('penugasan')->name('penugasan.')->group(function () {
+        Route::livewire('/', 'pages::admin.penugasan.index')->name('index');
     });
 
     Route::prefix('sdki')->name('sdki.')->group(function () {
@@ -101,6 +121,17 @@ Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->grou
     });
 
     Route::prefix('monitoring')->name('monitoring.')->group(function () {
+        Route::livewire('/', 'pages::dosen.monitoring.index')->name('index');
+    });
+
+    Route::prefix('log')->name('log.')->group(function () {
+        Route::livewire('/', 'pages::dosen.log.index')->name('index');
+        Route::livewire('/{log}', 'pages::dosen.log.show')->name('show');
+    });
+});
+
+require __DIR__.'/settings.php';
+itoring')->name('monitoring.')->group(function () {
         Route::livewire('/', 'pages::dosen.monitoring.index')->name('index');
     });
 

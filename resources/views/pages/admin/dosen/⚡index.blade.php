@@ -9,7 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 
-new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Component
+new #[Layout('layouts.admin')] #[Title('Kelola Dosen')] class extends Component
 {
     use WithPagination, WithFileUploads;
 
@@ -60,20 +60,20 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
         ];
 
         $data = $this->validate($rules, [
-            'nim_nip.regex' => 'NIM/NIP hanya boleh berisi angka.',
+            'nim_nip.regex' => 'NIP hanya boleh berisi angka.',
         ]);
 
         if ($this->editId) {
             User::findOrFail($this->editId)->update($data);
-            $this->dispatch('toast', variant: 'success', message: 'Data mahasiswa diperbarui.');
+            $this->dispatch('toast', variant: 'success', message: 'Data dosen diperbarui.');
         } else {
             User::create([
                 ...$data,
                 'password'       => Hash::make($data['nim_nip']),
-                'role'           => 'mahasiswa',
+                'role'           => 'dosen',
                 'is_first_login' => true,
             ]);
-            $this->dispatch('toast', variant: 'success', message: 'Mahasiswa ditambahkan. Password default: NIM.');
+            $this->dispatch('toast', variant: 'success', message: 'Dosen ditambahkan. Password default: NIP.');
         }
 
         $this->showForm = false;
@@ -128,7 +128,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
                     'nim_nip'        => $nim_nip,
                     'email'          => $email ?: null,
                     'password'       => Hash::make($nim_nip),
-                    'role'           => 'mahasiswa',
+                    'role'           => 'dosen',
                     'is_first_login' => true,
                 ]);
                 $successCount++;
@@ -171,18 +171,17 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
         $user = User::findOrFail($id);
         abort_if($user->isAdmin(), 403);
         $user->delete();
-        $this->dispatch('toast', variant: 'success', message: 'Mahasiswa dihapus.');
+        $this->dispatch('toast', variant: 'success', message: 'Dosen dihapus.');
     }
 
     public function with(): array
     {
         return [
-            'users' => User::where('role', 'mahasiswa')
+            'users' => User::where('role', 'dosen')
                 ->when($this->search, fn ($q) => $q->where(function ($q) {
                     $q->where('name', 'like', "%{$this->search}%")
                         ->orWhere('nim_nip', 'like', "%{$this->search}%");
                 }))
-                ->withCount('pasien')
                 ->latest()
                 ->paginate(15),
         ];
@@ -193,12 +192,12 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
 <div>
     <div class="mb-6 flex items-center justify-between">
         <div>
-            <flux:heading size="xl" level="1">Kelola Mahasiswa</flux:heading>
-            <flux:text class="mt-1">Daftar akun mahasiswa yang terdaftar di sistem.</flux:text>
+            <flux:heading size="xl" level="1">Kelola Dosen</flux:heading>
+            <flux:text class="mt-1">Daftar akun dosen yang terdaftar di sistem.</flux:text>
         </div>
         <div class="flex gap-2">
             <flux:button variant="ghost" icon="document-arrow-up" wire:click="$set('showImport', true)">Import Massal</flux:button>
-            <flux:button variant="primary" icon="plus" wire:click="openCreate">Tambah Mahasiswa</flux:button>
+            <flux:button variant="primary" icon="plus" wire:click="openCreate">Tambah Dosen</flux:button>
         </div>
     </div>
 
@@ -206,7 +205,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
         <div class="mb-4">
             <flux:input
                 wire:model.live.debounce.300ms="search"
-                placeholder="Cari nama atau NIM..."
+                placeholder="Cari nama atau NIP..."
                 icon="magnifying-glass"
                 clearable
             />
@@ -215,9 +214,8 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
         <flux:table>
             <flux:table.columns>
                 <flux:table.column>Nama</flux:table.column>
-                <flux:table.column>NIM/NIP</flux:table.column>
+                <flux:table.column>NIP</flux:table.column>
                 <flux:table.column>Email</flux:table.column>
-                <flux:table.column>Pasien</flux:table.column>
                 <flux:table.column>Status</flux:table.column>
                 <flux:table.column></flux:table.column>
             </flux:table.columns>
@@ -227,7 +225,6 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
                         <flux:table.cell class="font-medium">{{ $user->name }}</flux:table.cell>
                         <flux:table.cell class="font-mono text-sm">{{ $user->nim_nip }}</flux:table.cell>
                         <flux:table.cell class="text-sm text-zinc-500">{{ $user->email ?? '—' }}</flux:table.cell>
-                        <flux:table.cell>{{ $user->pasien_count }}</flux:table.cell>
                         <flux:table.cell>
                             @if ($user->is_first_login)
                                 <flux:badge color="yellow" size="sm">Belum Login</flux:badge>
@@ -246,7 +243,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
                                         icon="trash"
                                         variant="danger"
                                         wire:click="hapus({{ $user->id }})"
-                                        wire:confirm="Hapus mahasiswa ini? Semua data pasien miliknya akan ikut terhapus."
+                                        wire:confirm="Hapus dosen ini? Semua data penugasan miliknya akan ikut terhapus."
                                     >Hapus</flux:menu.item>
                                 </flux:menu>
                             </flux:dropdown>
@@ -254,8 +251,8 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
                     </flux:table.row>
                 @empty
                     <flux:table.row>
-                        <flux:table.cell colspan="6" class="py-10 text-center text-zinc-500">
-                            Belum ada mahasiswa terdaftar.
+                        <flux:table.cell colspan="5" class="py-10 text-center text-zinc-500">
+                            Belum ada dosen terdaftar.
                         </flux:table.cell>
                     </flux:table.row>
                 @endforelse
@@ -267,20 +264,20 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
 
     {{-- Modal Tambah / Edit --}}
     <flux:modal wire:model="showForm" class="max-w-md">
-        <flux:heading size="lg">{{ $editId ? 'Edit Mahasiswa' : 'Tambah Mahasiswa' }}</flux:heading>
-        <flux:text class="mb-4 text-sm">{{ $editId ? 'Perbarui data akun mahasiswa.' : 'Buat akun baru. Password default adalah NIM mahasiswa.' }}</flux:text>
+        <flux:heading size="lg">{{ $editId ? 'Edit Dosen' : 'Tambah Dosen' }}</flux:heading>
+        <flux:text class="mb-4 text-sm">{{ $editId ? 'Perbarui data akun dosen.' : 'Buat akun baru. Password default adalah NIP dosen.' }}</flux:text>
 
         <div class="space-y-4">
             <flux:input wire:model="name" label="Nama Lengkap" placeholder="Nama sesuai KTP" required />
             <flux:input
                 wire:model="nim_nip"
-                label="NIM / NIP"
-                placeholder="Contoh: 10602001"
+                label="NIP"
+                placeholder="Contoh: 198001012010011001"
                 inputmode="numeric"
-                description="Hanya angka. Password default = NIM yang dimasukkan."
+                description="Hanya angka. Password default = NIP yang dimasukkan."
                 required
             />
-            <flux:input wire:model="email" label="Email (opsional)" type="email" placeholder="mahasiswa@example.com" />
+            <flux:input wire:model="email" label="Email (opsional)" type="email" placeholder="dosen@example.com" />
         </div>
 
         <div class="mt-6 flex justify-end gap-2">
@@ -291,7 +288,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
 
     {{-- Modal Import Massal --}}
     <flux:modal wire:model="showImport" class="max-w-md">
-        <flux:heading size="lg">Import Massal Mahasiswa</flux:heading>
+        <flux:heading size="lg">Import Massal Dosen</flux:heading>
         <flux:text class="mb-4 text-sm">Upload file CSV dengan format: <code>name, nim_nip, email</code>. Baris pertama dianggap sebagai header.</flux:text>
 
         <div class="space-y-4">
@@ -301,9 +298,9 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
                 <p class="font-semibold mb-1">Ketentuan:</p>
                 <ul class="list-disc list-inside space-y-1">
                     <li>Kolom 1: Nama Lengkap</li>
-                    <li>Kolom 2: NIM (Hanya angka, unik)</li>
+                    <li>Kolom 2: NIP (Hanya angka, unik)</li>
                     <li>Kolom 3: Email (Opsional, unik)</li>
-                    <li>Password default otomatis diset sama dengan NIM.</li>
+                    <li>Password default otomatis diset sama dengan NIP.</li>
                 </ul>
             </flux:card>
         </div>
@@ -320,7 +317,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
     {{-- Modal Reset Password --}}
     <flux:modal wire:model.live="resetId" class="max-w-sm">
         <flux:heading size="lg">Reset Password</flux:heading>
-        <flux:text class="mb-4 text-sm">Masukkan password baru. Mahasiswa akan diwajibkan ganti password saat login berikutnya.</flux:text>
+        <flux:text class="mb-4 text-sm">Masukkan password baru. Dosen akan diwajibkan ganti password saat login berikutnya.</flux:text>
 
         <flux:input
             wire:model="resetPassword"
