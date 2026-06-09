@@ -230,21 +230,23 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
             </div>
         </div>
 
-        {{-- Kanan/Atas: Daftar Terpilih --}}
-        <div>
-            <h3 class="mb-3 font-semibold text-[#1B4F72]">
+        {{-- Bawah: Daftar Terpilih (Dimasukkan ke dalam Card) --}}
+        <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 sm:p-5 shadow-sm flex flex-col">
+            <h3 class="mb-4 font-semibold text-[#1B4F72] dark:text-white flex items-center gap-2">
+                <flux:icon.clipboard-document-check class="size-5 text-[#2E86C1]" />
                 Diagnosa Terpilih
-                <span class="ml-1 rounded-full bg-[#2E86C1] px-2 py-0.5 text-xs font-bold text-white">{{ count($terpilih) }}</span>
+                <span class="ml-auto rounded-full bg-[#2E86C1] px-2.5 py-0.5 text-xs font-bold text-white">{{ count($terpilih) }}</span>
             </h3>
 
             @if (empty($terpilih))
-                <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#D0DCE8] bg-[#F4F8FB] py-12 text-center">
+                <div class="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#D0DCE8] dark:border-zinc-600 bg-[#F4F8FB] dark:bg-zinc-800/50 py-12 text-center">
                     <flux:icon.clipboard-document-list class="mb-2 size-10 text-[#85B7EB]" />
-                    <p class="text-sm text-[#7A8FA6]">Belum ada diagnosa dipilih.</p>
-                    <p class="text-xs text-[#C4D3DF]">Pilih dari daftar SDKI di bawah.</p>
+                    <p class="text-sm text-[#7A8FA6] dark:text-zinc-400">Belum ada diagnosa dipilih.</p>
+                    <p class="text-xs text-[#C4D3DF] dark:text-zinc-500">Pilih dari daftar SDKI di atas.</p>
                 </div>
             @else
-                <div class="space-y-3 max-h-[50vh] lg:max-h-[62vh] overflow-y-auto pr-1 pb-4">
+                {{-- max-h-96 setara dengan 24rem, cukup untuk scroll tanpa menghabiskan tinggi layar --}}
+                <div class="space-y-3 max-h-96 overflow-y-auto pr-2 pb-2">
                     @foreach ($terpilih as $i => $d)
                         <div class="rounded-xl border border-[#E0EBF5] bg-white overflow-hidden transition-all {{ $d['is_expanded'] ? 'ring-2 ring-[#85B7EB] shadow-md' : '' }}">
                             {{-- Header (Selalu Tampil) --}}
