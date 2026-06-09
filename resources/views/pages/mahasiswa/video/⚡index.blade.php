@@ -21,7 +21,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Video Tutorial')] class extends Comp
     $videos = [
         [
             'title' => '1. Pengenalan & Menambah Pasien', 
-            'youtube_id' => 'https://youtu.be/AWwwqWpnd0E?si=QXgmInf8TV0cRXTA', 
+            'youtube_id' => 'AWwwqWpnd0E', 
             'desc' => 'Cara login, navigasi menu, pengaturan profil, dan mendaftarkan pasien baru ke dalam sistem dengan No. RM yang benar.'
         ],
         [
