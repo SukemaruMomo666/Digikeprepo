@@ -6,11 +6,11 @@
 --}}
 @php
     $steps = [
-        1 => ['label' => 'Pengkajian',     'short' => 'P1', 'route' => 'askep.pengkajian'],
-        2 => ['label' => 'Diagnosa',       'short' => 'P2', 'route' => 'askep.diagnosa'],
-        3 => ['label' => 'Perencanaan',    'short' => 'P3', 'route' => 'askep.perencanaan'],
-        4 => ['label' => 'Implementasi',   'short' => 'P4', 'route' => 'askep.implementasi'],
-        5 => ['label' => 'Evaluasi',       'short' => 'P5', 'route' => 'askep.evaluasi'],
+        1 => ['label' => 'Pengkajian',     'short' => 'P1', 'route' => 'mahasiswa.askep.pengkajian'],
+        2 => ['label' => 'Diagnosa',       'short' => 'P2', 'route' => 'mahasiswa.askep.diagnosa'],
+        3 => ['label' => 'Perencanaan',    'short' => 'P3', 'route' => 'mahasiswa.askep.perencanaan'],
+        4 => ['label' => 'Implementasi',   'short' => 'P4', 'route' => 'mahasiswa.askep.implementasi'],
+        5 => ['label' => 'Evaluasi',       'short' => 'P5', 'route' => 'mahasiswa.askep.evaluasi'],
     ];
     $stepTerakhir = $askep->step_terakhir ?? 0;
 @endphp
@@ -19,7 +19,7 @@
     {{-- Pasien info header --}}
     <div class="mb-3 flex items-center justify-between">
         <div class="flex items-center gap-2 text-sm text-[#7A8FA6]">
-            <a href="/pasien/{{ $askep->pasien_id }}" wire:navigate class="hover:text-[#2E86C1]">
+            <a href="{{ route('mahasiswa.pasien.show', $askep->pasien_id) }}" wire:navigate class="hover:text-[#2E86C1]">
                 {{ $askep->pasien->nama_pasien ?? 'Pasien' }}
             </a>
             <flux:icon.chevron-right class="size-3.5" />
