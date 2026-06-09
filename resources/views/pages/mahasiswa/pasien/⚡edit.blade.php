@@ -76,14 +76,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Edit Pasien')] class extends Compone
 
         Flux::toast(variant: 'success', text: 'Data pasien berhasil diperbarui.');
 
-        $this->redirectRoute('pasien.show', $this->pasien, navigate: true);
+        $this->redirectRoute('mahasiswa.pasien.show', $this->pasien, navigate: true);
     }
 };
 ?>
 
 <div>
     <div class="mb-6">
-        <flux:button :href="route('pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
+        <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Detail
         </flux:button>
         <flux:heading size="xl" level="1">Edit Data Pasien</flux:heading>
@@ -199,7 +199,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Edit Pasien')] class extends Compone
                 <flux:button type="submit" variant="primary">
                     Simpan Perubahan
                 </flux:button>
-                <flux:button :href="route('pasien.show', $pasien)" variant="ghost" wire:navigate>
+                <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" wire:navigate>
                     Batal
                 </flux:button>
             </div>

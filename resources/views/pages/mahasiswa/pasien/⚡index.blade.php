@@ -50,7 +50,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Data Pasien')] class extends Compone
             <flux:heading size="xl" level="1">Data Pasien</flux:heading>
             <flux:text class="mt-1">Kelola semua data pasien Anda.</flux:text>
         </div>
-        <flux:button :href="route('pasien.create')" icon="plus" variant="primary" wire:navigate>
+        <flux:button :href="route('mahasiswa.pasien.create')" icon="plus" variant="primary" wire:navigate>
             Tambah Pasien
         </flux:button>
     </div>
@@ -74,7 +74,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Data Pasien')] class extends Compone
                 @else
                     <flux:text>Belum ada data pasien.</flux:text>
                     <div class="mt-4">
-                        <flux:button :href="route('pasien.create')" icon="plus" wire:navigate>
+                        <flux:button :href="route('mahasiswa.pasien.create')" icon="plus" wire:navigate>
                             Tambah Pasien Pertama
                         </flux:button>
                     </div>
@@ -113,7 +113,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Data Pasien')] class extends Compone
                                     <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" inset="top bottom" />
                                     <flux:menu>
                                         <flux:menu.item
-                                            :href="route('pasien.show', $pasien)"
+                                            :href="route('mahasiswa.pasien.show', $pasien)"
                                             icon="eye"
                                             wire:navigate
                                         >
@@ -129,7 +129,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Data Pasien')] class extends Compone
                                             </flux:menu.item>
                                         @endif
                                         <flux:menu.item
-                                            :href="route('pasien.edit', $pasien)"
+                                            :href="route('mahasiswa.pasien.edit', $pasien)"
                                             icon="pencil"
                                             wire:navigate
                                         >

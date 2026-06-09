@@ -203,7 +203,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
         $this->askep->pasien->catatRiwayat('Askep dikirim untuk review dosen.');
 Flux::toast(variant: 'success', text: 'Askep berhasil dikirim untuk review.');
 
-$this->redirectRoute('askep.show', $this->askep, navigate: true);
+$this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
 }
 
 };
@@ -221,7 +221,7 @@ $this->redirectRoute('askep.show', $this->askep, navigate: true);
         <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#D0DCE8] bg-[#F4F8FB] py-16 text-center">
             <flux:icon.clipboard-document-list class="mb-3 size-12 text-[#85B7EB]" />
             <p class="font-medium text-[#1B4F72]">Belum ada diagnosa</p>
-            <flux:button :href="route('askep.implementasi', $askep)" variant="ghost" icon="arrow-left" wire:navigate class="mt-4">
+            <flux:button :href="route('mahasiswa.askep.implementasi', $askep)" variant="ghost" icon="arrow-left" wire:navigate class="mt-4">
                 Kembali ke Implementasi
             </flux:button>
         </div>
@@ -499,7 +499,7 @@ $this->redirectRoute('askep.show', $this->askep, navigate: true);
 
         {{-- Navigation --}}
         <div class="mt-6 flex flex-col items-stretch gap-3 border-t border-[#E0EBF5] pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <flux:button :href="route('askep.implementasi', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
+            <flux:button :href="route('mahasiswa.askep.implementasi', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
                 Kembali
             </flux:button>
 

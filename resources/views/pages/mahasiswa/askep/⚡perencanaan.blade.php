@@ -272,7 +272,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
         $this->askep->pasien->catatRiwayat('Perencanaan (SLKI & SIKI) disimpan.');
 
         Flux::toast(variant: 'success', text: 'Perencanaan tersimpan.');
-        $this->redirectRoute('askep.implementasi', $this->askep, navigate: true);
+        $this->redirectRoute('mahasiswa.askep.implementasi', $this->askep, navigate: true);
     }
 };
 ?>
@@ -291,7 +291,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
             <p class="font-medium text-[#1B4F72]">Belum ada diagnosa</p>
             <p class="mt-1 text-sm text-[#7A8FA6]">Kembali ke langkah 2 dan tambahkan diagnosa terlebih dahulu.</p>
             <div class="mt-4">
-                <flux:button :href="route('askep.diagnosa', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
+                <flux:button :href="route('mahasiswa.askep.diagnosa', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
                     Kembali ke Diagnosa
                 </flux:button>
             </div>
@@ -525,7 +525,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
 
         {{-- Navigation --}}
         <div class="mt-6 flex items-center justify-between border-t border-[#E0EBF5] pt-4">
-            <flux:button :href="route('askep.diagnosa', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
+            <flux:button :href="route('mahasiswa.askep.diagnosa', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
                 Kembali
             </flux:button>
 

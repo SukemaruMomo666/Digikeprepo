@@ -28,6 +28,7 @@ new #[Layout('layouts.admin')] #[Title('Data Mahasiswa')] class extends Componen
                 $q->where('name', 'like', "%{$this->search}%")
                     ->orWhere('nim_nip', 'like', "%{$this->search}%");
             }))
+            ->with('penugasanSebagaiMahasiswa')
             ->withCount([
                 'pasien',
                 'pasien as pasien_draft_count'   => fn ($q) => $q->where('status_askep', 'draft'),
@@ -89,7 +90,12 @@ new #[Layout('layouts.admin')] #[Title('Data Mahasiswa')] class extends Componen
                             >
                                 <flux:table.cell>
                                     <p class="font-medium text-sm">{{ $user->name }}</p>
-                                    <p class="font-mono text-xs text-zinc-500">{{ $user->nim_nip }}</p>
+                                    <p class="font-mono text-xs text-zinc-500">
+                                        NIM: {{ $user->nim_nip }} 
+                                        @if($user->penugasanSebagaiMahasiswa->isNotEmpty())
+                                            | Kelas: {{ $user->penugasanSebagaiMahasiswa->first()->kelas }}
+                                        @endif
+                                    </p>
                                 </flux:table.cell>
                                 <flux:table.cell>
                                     @if ($user->pasien_draft_count > 0)
@@ -139,7 +145,12 @@ new #[Layout('layouts.admin')] #[Title('Data Mahasiswa')] class extends Componen
                     <div class="mb-4 flex items-start justify-between">
                         <div>
                             <flux:heading size="lg">{{ $detailUser->name }}</flux:heading>
-                            <flux:text class="font-mono text-sm text-zinc-500">{{ $detailUser->nim_nip }}</flux:text>
+                            <flux:text class="font-mono text-sm text-zinc-500">
+                                NIM: {{ $detailUser->nim_nip }}
+                                @if($detailUser->penugasanSebagaiMahasiswa->isNotEmpty())
+                                    | Kelas: {{ $detailUser->penugasanSebagaiMahasiswa->first()->kelas }}
+                                @endif
+                            </flux:text>
                         </div>
                         <flux:button size="sm" variant="ghost" icon="x-mark" wire:click="$set('detailId', null)" />
                     </div>

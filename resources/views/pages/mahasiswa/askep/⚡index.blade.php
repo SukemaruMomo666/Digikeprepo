@@ -103,7 +103,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Semua Askep')] class extends Compone
                             <flux:table.cell>
                                 @php $bisaDilanjutkan = in_array($askep->status, [Askep::STATUS_DRAFT, Askep::STATUS_PERLU_REVISI], true); @endphp
                                 <flux:button
-                                    :href="$bisaDilanjutkan ? $askep->nextStepUrl() : route('askep.show', $askep)"
+                                    :href="$bisaDilanjutkan ? $askep->nextStepUrl() : route('mahasiswa.askep.show', $askep)"
                                     size="sm"
                                     variant="ghost"
                                     :icon-trailing="$bisaDilanjutkan ? 'arrow-right' : 'eye'"

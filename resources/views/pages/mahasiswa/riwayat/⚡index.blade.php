@@ -66,7 +66,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Riwayat Aktivitas')] class extends C
                             <div>
                                 <p class="text-sm font-medium">{{ $log->aktivitas }}</p>
                                 <flux:link
-                                    :href="route('pasien.show', $log->pasien)"
+                                    :href="route('mahasiswa.pasien.show', $log->pasien)"
                                     class="text-xs text-zinc-500 hover:text-blue-600"
                                     wire:navigate
                                 >

@@ -25,7 +25,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
 
 <div>
     <div class="mb-6">
-        <flux:button :href="route('pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
+        <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Detail Pasien
         </flux:button>
         <div class="flex items-start justify-between">
@@ -54,7 +54,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
     <flux:card class="mb-6">
         <div class="flex items-center justify-between mb-4">
             <flux:heading size="lg" level="2">1. Pengkajian</flux:heading>
-            <flux:button :href="route('pasien.pengkajian', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
+            <flux:button :href="route('mahasiswa.pasien.pengkajian', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
                 Edit
             </flux:button>
         </div>
@@ -132,7 +132,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
                             </div>
                         @endif
                     </div>
-                    <flux:button :href="route('pasien.diagnosa', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
+                    <flux:button :href="route('mahasiswa.pasien.diagnosa', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
                         Edit
                     </flux:button>
                 </div>
@@ -171,7 +171,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
                 Lanjutkan Askep
             </flux:button>
         @endif
-        <flux:button :href="route('pasien.index')" variant="ghost" wire:navigate>
+        <flux:button :href="route('mahasiswa.pasien.index')" variant="ghost" wire:navigate>
             Kembali ke Daftar Pasien
         </flux:button>
     </div>

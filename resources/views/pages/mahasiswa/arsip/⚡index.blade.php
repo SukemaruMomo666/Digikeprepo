@@ -94,7 +94,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Arsip Pengkajian')] class extends Co
 
                         <div class="flex gap-2">
                             <flux:button
-                                :href="route('pasien.askep', $pasien)"
+                                :href="route('mahasiswa.pasien.askep', $pasien)"
                                 size="sm"
                                 variant="primary"
                                 icon="document-text"
@@ -104,7 +104,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Arsip Pengkajian')] class extends Co
                                 Lihat Dokumen
                             </flux:button>
                             <flux:button
-                                :href="route('pasien.show', $pasien)"
+                                :href="route('mahasiswa.pasien.show', $pasien)"
                                 size="sm"
                                 variant="ghost"
                                 icon="eye"

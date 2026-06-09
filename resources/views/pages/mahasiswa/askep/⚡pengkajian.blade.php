@@ -312,7 +312,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     public function simpanLanjut(): void
     {
         $this->simpan();
-        $this->redirectRoute('askep.diagnosa', $this->askep, navigate: true);
+        $this->redirectRoute('mahasiswa.askep.diagnosa', $this->askep, navigate: true);
     }
 };
 ?>
@@ -748,7 +748,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     {{-- ── Navigation Buttons ── --}}
     <div class="mt-6 flex items-center justify-between border-t border-[#E0EBF5] pt-4">
         <flux:button
-            :href="route('pasien.show', $askep->pasien_id)"
+            :href="route('mahasiswa.pasien.show', $askep->pasien_id)"
             variant="ghost"
             icon="arrow-left"
             wire:navigate

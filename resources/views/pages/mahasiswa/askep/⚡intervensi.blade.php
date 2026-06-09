@@ -75,14 +75,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Intervensi SIKI')] class extends Com
             }
         }
 
-        $this->redirectRoute('pasien.evaluasi', $this->pasien, navigate: true);
+        $this->redirectRoute('mahasiswa.pasien.evaluasi', $this->pasien, navigate: true);
     }
 };
 ?>
 
 <div>
     <div class="mb-6">
-        <flux:button :href="route('pasien.luaran', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
+        <flux:button :href="route('mahasiswa.pasien.luaran', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Luaran
         </flux:button>
         <flux:heading size="xl" level="1">Intervensi SIKI — {{ $pasien->nama_pasien }}</flux:heading>
@@ -143,7 +143,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Intervensi SIKI')] class extends Com
             <flux:button type="submit" variant="primary" icon="check-badge">
                 Selesaikan Askep
             </flux:button>
-            <flux:button :href="route('pasien.show', $pasien)" variant="ghost" wire:navigate>
+            <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" wire:navigate>
                 Simpan Nanti
             </flux:button>
         </div>

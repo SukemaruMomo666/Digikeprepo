@@ -216,7 +216,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
 
         $this->askep->pasien->catatRiwayat('Implementasi dicatat (' . $totalLog . ' sesi).');
 
-        $this->redirectRoute('askep.evaluasi', $this->askep, navigate: true);
+        $this->redirectRoute('mahasiswa.askep.evaluasi', $this->askep, navigate: true);
     }
 };
 ?>
@@ -242,7 +242,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
             <flux:icon.clipboard-document-list class="mb-3 size-12 text-[#85B7EB]" />
             <p class="font-medium text-[#1B4F72]">Belum ada intervensi</p>
             <p class="mt-1 text-sm text-[#7A8FA6]">Kembali ke tahap perencanaan dan pilih intervensi terlebih dahulu.</p>
-            <flux:button :href="route('askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate class="mt-4">
+            <flux:button :href="route('mahasiswa.askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate class="mt-4">
                 Kembali ke Perencanaan
             </flux:button>
         </div>
@@ -472,7 +472,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
 
         {{-- Navigasi Bawah --}}
         <div class="mt-8 flex items-center justify-between border-t border-[#E0EBF5] pt-5">
-            <flux:button :href="route('askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
+            <flux:button :href="route('mahasiswa.askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
                 Kembali ke Perencanaan
             </flux:button>
             <button

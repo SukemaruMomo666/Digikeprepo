@@ -20,7 +20,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
 
 <div class="p-4 md:p-6">
     <div class="mb-6">
-        <flux:button :href="route('pasien.index')" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
+        <flux:button :href="route('mahasiswa.pasien.index')" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Daftar Pasien
         </flux:button>
         <div class="flex items-start justify-between">
@@ -48,7 +48,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
             <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
                 <div class="mb-4 flex items-center justify-between">
                     <h2 class="font-semibold text-[#1B4F72]">Informasi Pasien</h2>
-                    <flux:button :href="route('pasien.edit', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
+                    <flux:button :href="route('mahasiswa.pasien.edit', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
                         Edit
                     </flux:button>
                 </div>
@@ -120,7 +120,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
                         <span class="ml-1 rounded-full bg-[#EBF5FB] px-2 py-0.5 text-xs text-[#2E86C1]">{{ $pasien->askep->count() }}</span>
                     </h2>
                     <a
-                        href="{{ route('pasien.askep.create', $pasien) }}"
+                        href="{{ route('mahasiswa.pasien.askep.create', $pasien) }}"
                         wire:navigate
                         class="flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold text-white"
                         style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
@@ -136,7 +136,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
                         <p class="text-sm text-[#7A8FA6]">Belum ada askep untuk pasien ini.</p>
                         <div class="mt-4">
                             <a
-                                href="{{ route('pasien.askep.create', $pasien) }}"
+                                href="{{ route('mahasiswa.pasien.askep.create', $pasien) }}"
                                 wire:navigate
                                 class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white"
                                 style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"

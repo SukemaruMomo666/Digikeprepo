@@ -67,14 +67,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Tambah Pasien')] class extends Compo
 
         Flux::toast(variant: 'success', text: 'Pasien berhasil ditambahkan. Silakan mulai pengkajian.');
 
-        $this->redirectRoute('pasien.askep.create', $pasien, navigate: true);
+        $this->redirectRoute('mahasiswa.pasien.askep.create', $pasien, navigate: true);
     }
 };
 ?>
 
 <div>
     <div class="mb-6">
-        <flux:button :href="route('pasien.index')" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
+        <flux:button :href="route('mahasiswa.pasien.index')" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali
         </flux:button>
         <flux:heading size="xl" level="1">Tambah Pasien Baru</flux:heading>
@@ -191,7 +191,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Tambah Pasien')] class extends Compo
                 <flux:button type="submit" variant="primary" icon-trailing="arrow-right">
                     Simpan & Mulai Pengkajian
                 </flux:button>
-                <flux:button :href="route('pasien.index')" variant="ghost" wire:navigate>
+                <flux:button :href="route('mahasiswa.pasien.index')" variant="ghost" wire:navigate>
                     Batal
                 </flux:button>
             </div>

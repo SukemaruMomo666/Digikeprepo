@@ -165,7 +165,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
         $this->askep->pasien->catatRiwayat('Diagnosa SDKI disimpan (' . count($this->terpilih) . ' diagnosa).');
 
         Flux::toast(variant: 'success', text: 'Diagnosa tersimpan.');
-        $this->redirectRoute('askep.perencanaan', $this->askep, navigate: true);
+        $this->redirectRoute('mahasiswa.askep.perencanaan', $this->askep, navigate: true);
     }
 };
 ?>
@@ -391,7 +391,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
 
     {{-- Navigation --}}
     <div class="mt-6 flex items-center justify-between border-t border-[#E0EBF5] pt-4">
-        <flux:button :href="route('askep.pengkajian', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
+        <flux:button :href="route('mahasiswa.askep.pengkajian', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
             Kembali
         </flux:button>
 

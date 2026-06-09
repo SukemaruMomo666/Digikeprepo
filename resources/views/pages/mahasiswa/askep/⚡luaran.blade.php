@@ -76,14 +76,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Luaran SLKI')] class extends Compone
 
         Flux::toast(variant: 'success', text: 'Luaran berhasil disimpan.');
 
-        $this->redirectRoute('pasien.intervensi', $this->pasien, navigate: true);
+        $this->redirectRoute('mahasiswa.pasien.intervensi', $this->pasien, navigate: true);
     }
 };
 ?>
 
 <div>
     <div class="mb-6">
-        <flux:button :href="route('pasien.diagnosa', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
+        <flux:button :href="route('mahasiswa.pasien.diagnosa', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Diagnosa
         </flux:button>
         <flux:heading size="xl" level="1">Luaran SLKI — {{ $pasien->nama_pasien }}</flux:heading>
@@ -139,7 +139,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Luaran SLKI')] class extends Compone
             <flux:button type="submit" variant="primary" icon-trailing="arrow-right">
                 Simpan & Lanjut ke Intervensi
             </flux:button>
-            <flux:button :href="route('pasien.show', $pasien)" variant="ghost" wire:navigate>
+            <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" wire:navigate>
                 Simpan Nanti
             </flux:button>
         </div>

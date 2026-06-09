@@ -24,7 +24,7 @@ new #[Layout('layouts.dosen')] #[Title('Daftar Mahasiswa Bimbingan')] class exte
             ->when($this->cari, function($query) {
                 $query->whereHas('mahasiswa', function($q) {
                     $q->where('name', 'like', '%' . $this->cari . '%')
-                      ->orWhere('nim', 'like', '%' . $this->cari . '%');
+                      ->orWhere('nim_nip', 'like', '%' . $this->cari . '%');
                 });
             })
             ->paginate(12);
@@ -64,7 +64,9 @@ new #[Layout('layouts.dosen')] #[Title('Daftar Mahasiswa Bimbingan')] class exte
                         </div>
                         <div class="min-w-0 flex-1">
                             <h4 class="truncate font-bold text-[#1B4F72]">{{ $mhs->name }}</h4>
-                            <p class="text-xs font-semibold text-[#7A8FA6] uppercase tracking-wider">{{ $mhs->nim }}</p>
+                            <p class="text-xs font-semibold text-[#7A8FA6] uppercase tracking-wider">
+                                {{ $mhs->nim_nip }} | KELAS {{ $tugas->kelas ?? '-' }}
+                            </p>
                         </div>
                     </div>
 

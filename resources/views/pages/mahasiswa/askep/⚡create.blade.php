@@ -27,14 +27,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
 
         $this->pasien->catatRiwayat('Askep baru dibuat.');
 
-        $this->redirectRoute('askep.pengkajian', $askep, navigate: true);
+        $this->redirectRoute('mahasiswa.askep.pengkajian', $askep, navigate: true);
     }
 };
 ?>
 
 <div class="p-4 md:p-6">
     <div class="mb-6">
-        <flux:button :href="route('pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
+        <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Detail Pasien
         </flux:button>
         <h1 class="text-2xl font-bold text-[#1B4F72]">Buat Askep Baru</h1>
@@ -113,7 +113,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
             </span>
             Mulai Pengkajian
         </button>
-        <flux:button :href="route('pasien.show', $pasien)" variant="ghost" wire:navigate>
+        <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" wire:navigate>
             Batal
         </flux:button>
     </div>

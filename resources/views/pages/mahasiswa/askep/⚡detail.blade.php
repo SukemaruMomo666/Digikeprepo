@@ -30,7 +30,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
     {{-- Header --}}
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <flux:button :href="route('pasien.show', $askep->pasien_id)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-2">
+            <flux:button :href="route('mahasiswa.pasien.show', $askep->pasien_id)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-2">
                 Kembali ke Pasien
             </flux:button>
             <h1 class="text-2xl font-bold text-[#1B4F72]">Laporan Asuhan Keperawatan</h1>
@@ -57,7 +57,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                 </flux:button>
             @endif
 
-            <flux:button :href="route('askep.download', $askep)" icon="printer" variant="ghost" size="sm">Cetak PDF</flux:button>
+            <flux:button :href="route('mahasiswa.askep.download', $askep)" icon="printer" variant="ghost" size="sm">Cetak PDF</flux:button>
         </div>
     </div>
 
