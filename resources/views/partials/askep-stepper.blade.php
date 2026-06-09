@@ -20,7 +20,8 @@
     <div class="mb-3 flex items-center justify-between">
         <div class="flex items-center gap-2 text-sm text-[#7A8FA6]">
             <a href="{{ route('pasien.show', $askep->pasien_id) }}" wire:navigate class="hover:text-[#2E86C1]">
-                {{ $askep->pasien->nama_pasien ?? 'Pasien' }}
+                <!-- {{ $askep->pasien->nama_pasien ?? 'Pasien' }} -->
+                  {{ route('pasien.show', $askep->pasien_id) }}
             </a>
             <flux:icon.chevron-right class="size-3.5" />
             <span class="font-medium text-[#1B4F72]">
