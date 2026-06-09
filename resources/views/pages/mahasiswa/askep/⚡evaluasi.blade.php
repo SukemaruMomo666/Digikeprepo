@@ -332,7 +332,7 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                             {{-- TTV --}}
                             <div>
                                 <p class="mb-2 text-xs font-medium text-[#7A8FA6]">Tanda-Tanda Vital Saat Evaluasi</p>
-                                <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
+                                <div class="grid grid-cols-2 gap-3 sm:grid-cols-5 flex-wrap">
                                     <div>
                                         <label class="text-xs text-[#7A8FA6]">TD (mmHg)</label>
                                         <input
@@ -388,8 +388,8 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                                     <p class="mb-3 text-sm font-bold text-[#1B4F72]">Evaluasi Kriteria Hasil (SLKI)</p>
                                     <div class="space-y-4">
                                         @foreach ($d['luaran'] as $l)
-                                            <div class="rounded-xl border border-[#CDEFE4] bg-white overflow-hidden">
-                                                <div class="bg-[#F0FBF7] px-4 py-2 border-b border-[#CDEFE4]">
+                                            <div class="rounded-xl border border-[#CDEFE4] dark:border-emerald-900/30 bg-white overflow-hidden">
+                                                <div class="bg-[#F0FBF7] px-4 py-2 border-b border-[#CDEFE4] dark:border-emerald-900/30">
                                                     <span class="text-xs font-bold text-[#0F6E56]">{{ $l['kode'] }} - {{ $l['label'] }}</span>
                                                 </div>
                                                 <div class="p-3">
@@ -527,4 +527,32 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
             </div>
         </div>
     @endif
+</div>
+ndif
+</div>
+iv>
+    @endif
+</div>
+ire:target="simpan">Simpan Draft</span>
+                    <span wire:loading wire:target="simpan">Menyimpan...</span>
+                </button>
+
+                <button
+                    wire:click="selesaikanDanKirim"
+                    wire:loading.attr="disabled"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
+                    style="background: linear-gradient(135deg, #1A9B72, #0F6E56)"
+                >
+                    <span wire:loading.remove wire:target="selesaikanDanKirim">Selesai & Kirim untuk Review</span>
+                    <span wire:loading wire:target="selesaikanDanKirim">Mengirim...</span>
+                    <flux:icon.paper-airplane class="size-4" wire:loading.remove wire:target="selesaikanDanKirim" />
+                </button>
+            </div>
+        </div>
+    @endif
+</div>
+   </div>
+    @endif
+</div>
+
 </div>
