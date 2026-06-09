@@ -178,9 +178,9 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
         <p class="text-sm text-[#7A8FA6]">Pilih diagnosa yang sesuai, urutkan berdasarkan prioritas.</p>
     </div>
 
-    <div class="flex flex-col-reverse lg:grid lg:grid-cols-2 lg:gap-6">
-        {{-- Kiri/Bawah: Cari SDKI --}}
-        <div class="mt-8 lg:mt-0">
+    <div class="flex flex-col gap-8">
+        {{-- Atas: Cari SDKI --}}
+        <div>
             <div class="mb-3">
                 <flux:input
                     wire:model.live.debounce.300ms="cari"
@@ -189,7 +189,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                 />
             </div>
 
-            <div class="max-h-[40vh] lg:max-h-[62vh] space-y-2 overflow-y-auto pr-1">
+            <div class="max-h-[40vh] md:max-h-[50vh] space-y-2 overflow-y-auto pr-1">
                 @forelse ($daftarSdki as $sdki)
                     @php $sudahDipilih = collect($terpilih)->contains('sdki_id', $sdki->id); @endphp
                     <button
