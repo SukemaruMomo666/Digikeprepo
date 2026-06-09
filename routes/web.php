@@ -64,7 +64,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::livewire('/video', 'pages::mahasiswa.video.index')->name('video.index');
     Route::livewire('/faq', 'pages::mahasiswa.faq.index')->name('faq.index');
 
-    Route::prefix('log')->name('log.')->group(function () {
+    Route::prefix('log')->name('mahasiswa.log.')->group(function () {
         Route::livewire('', 'pages::mahasiswa.log.index')->name('index');
         Route::livewire('/create', 'pages::mahasiswa.log.create')->name('create');
         Route::livewire('/{log}', 'pages::mahasiswa.log.show')->name('show');
