@@ -51,8 +51,8 @@
                     wire:navigate
                     class="flex flex-1 min-w-0 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-sm font-medium transition-colors
                         @if ($isCurrent) bg-white shadow-sm text-[#2E86C1] ring-1 ring-[#85B7EB]/50
-                        @elseif ($isDone) text-[#1A9B72] hover:bg-white/60
-                        @else text-[#7A8FA6] hover:bg-white/60
+                        @elseif ($isDone) text-[#1A9B72] hover:bg-white/60 dark:hover:bg-zinc-700/60
+                        @else text-[#7A8FA6] hover:bg-white/60 dark:hover:bg-zinc-700/60
                         @endif"
                 >
             @else
@@ -82,4 +82,6 @@
             @endif
         @endforeach
     </div>
+</nav>
+
 </nav>

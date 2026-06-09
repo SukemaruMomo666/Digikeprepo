@@ -178,9 +178,9 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
         <p class="text-sm text-[#7A8FA6]">Pilih diagnosa yang sesuai, urutkan berdasarkan prioritas.</p>
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-2">
-        {{-- Kiri: Cari SDKI --}}
-        <div>
+    <div class="flex flex-col-reverse lg:grid lg:grid-cols-2 lg:gap-6">
+        {{-- Kiri/Bawah: Cari SDKI --}}
+        <div class="mt-8 lg:mt-0">
             <div class="mb-3">
                 <flux:input
                     wire:model.live.debounce.300ms="cari"
@@ -189,7 +189,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                 />
             </div>
 
-            <div class="max-h-[62vh] space-y-2 overflow-y-auto pr-1">
+            <div class="max-h-[40vh] lg:max-h-[62vh] space-y-2 overflow-y-auto pr-1">
                 @forelse ($daftarSdki as $sdki)
                     @php $sudahDipilih = collect($terpilih)->contains('sdki_id', $sdki->id); @endphp
                     <button
@@ -226,7 +226,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
             </div>
         </div>
 
-        {{-- Kanan: Daftar Terpilih --}}
+        {{-- Kanan/Atas: Daftar Terpilih --}}
         <div>
             <h3 class="mb-3 font-semibold text-[#1B4F72]">
                 Diagnosa Terpilih
@@ -237,14 +237,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                 <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#D0DCE8] bg-[#F4F8FB] py-12 text-center">
                     <flux:icon.clipboard-document-list class="mb-2 size-10 text-[#85B7EB]" />
                     <p class="text-sm text-[#7A8FA6]">Belum ada diagnosa dipilih.</p>
-                    <p class="text-xs text-[#C4D3DF]">Pilih dari daftar SDKI di kiri.</p>
+                    <p class="text-xs text-[#C4D3DF]">Pilih dari daftar SDKI di bawah.</p>
                 </div>
             @else
-                <div class="space-y-3 max-h-[62vh] overflow-y-auto pr-1 pb-4">
+                <div class="space-y-3 max-h-[50vh] lg:max-h-[62vh] overflow-y-auto pr-1 pb-4">
                     @foreach ($terpilih as $i => $d)
                         <div class="rounded-xl border border-[#E0EBF5] bg-white overflow-hidden transition-all {{ $d['is_expanded'] ? 'ring-2 ring-[#85B7EB] shadow-md' : '' }}">
                             {{-- Header (Selalu Tampil) --}}
-                            <div class="flex items-start gap-3 p-4 bg-[#F8FBFE] cursor-pointer" wire:click="toggleExpand({{ $i }})">
+                            <div class="flex items-start gap-3 p-4 bg-[#F8FBFE] dark:bg-zinc-800 cursor-pointer" wire:click="toggleExpand({{ $i }})">
                                 <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#2E86C1] text-xs font-bold text-white shadow-sm mt-0.5">
                                     {{ $d['prioritas'] }}
                                 </div>
@@ -288,7 +288,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                                                     <p class="text-xs font-bold uppercase tracking-wide text-[#7A8FA6]">Penyebab / Etiologi</p>
                                                     <p class="text-[11px] text-[#7A8FA6]">Pilih penyebab yang sesuai dengan kondisi pasien.</p>
                                                 </div>
-                                                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 bg-[#F8FBFE] p-3 rounded-lg border border-[#E0EBF5]">
+                                                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 bg-[#F8FBFE] dark:bg-zinc-800 p-3 rounded-lg border border-[#E0EBF5]">
                                                     @foreach ($d['detail']['penyebab'] as $penyebab)
                                                         <label class="flex items-start gap-2 cursor-pointer group">
                                                             <input type="checkbox" wire:model="terpilih.{{ $i }}.etiologi_dipilih" value="{{ $penyebab }}" class="mt-0.5 size-4 rounded border-gray-300 text-[#2E86C1] focus:ring-[#2E86C1]">
@@ -310,7 +310,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                                                     <p class="text-xs font-bold uppercase tracking-wide text-[#7A8FA6]">Faktor Risiko</p>
                                                     <p class="text-[11px] text-[#7A8FA6]">Pilih faktor risiko yang ada pada pasien.</p>
                                                 </div>
-                                                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 bg-[#F8FBFE] p-3 rounded-lg border border-[#E0EBF5]">
+                                                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 bg-[#F8FBFE] dark:bg-zinc-800 p-3 rounded-lg border border-[#E0EBF5]">
                                                     @foreach ($d['detail']['faktor_risiko'] as $risiko)
                                                         <label class="flex items-start gap-2 cursor-pointer group">
                                                             <input type="checkbox" wire:model="terpilih.{{ $i }}.etiologi_dipilih" value="{{ $risiko }}" class="mt-0.5 size-4 rounded border-gray-300 text-[#2E86C1] focus:ring-[#2E86C1]">
@@ -404,6 +404,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
             <span wire:loading.remove wire:target="simpanLanjut">Simpan & Lanjut ke Perencanaan</span>
             <span wire:loading wire:target="simpanLanjut">Menyimpan...</span>
             <flux:icon.arrow-right class="size-4" wire:loading.remove wire:target="simpanLanjut" />
+        </button>
+    </div>
+</div>
+>
+</div>
+njut" />
         </button>
     </div>
 </div>
