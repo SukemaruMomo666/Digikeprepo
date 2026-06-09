@@ -313,7 +313,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
 
                         <form wire:submit.prevent="simpanLog({{ $aktivitasAktif }})" class="space-y-6">
                             {{-- Waktu & Shift --}}
-                            <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 bg-[#F4F8FB] p-4 rounded-xl border border-[#E0EBF5]">
+                            <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 bg-[#F4F8FB] dark:bg-zinc-800/80 p-4 rounded-xl border border-[#E0EBF5] dark:border-zinc-700">
                                 <div class="col-span-2 sm:col-span-1">
                                     <flux:select wire:model="formTambah.{{ $aktivitasAktif }}.shift" label="Shift">
                                         <flux:select.option value="Pagi">Pagi</flux:select.option>
@@ -484,6 +484,18 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
                 <span wire:loading.remove wire:target="selesaikanLangkah">Lanjut ke Evaluasi</span>
                 <span wire:loading wire:target="selesaikanLangkah">Memproses...</span>
                 <flux:icon.arrow-right class="size-4" wire:loading.remove wire:target="selesaikanLangkah" />
+            </button>
+        </div>
+    @endif
+</div>
+if
+</div>
+lesaikanLangkah" />
+            </button>
+        </div>
+    @endif
+</div>
+loading.remove wire:target="selesaikanLangkah" />
             </button>
         </div>
     @endif
