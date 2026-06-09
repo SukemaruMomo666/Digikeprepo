@@ -63,6 +63,13 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::livewire('/panduan', 'pages::mahasiswa.panduan.index')->name('panduan.index');
     Route::livewire('/video', 'pages::mahasiswa.video.index')->name('video.index');
     Route::livewire('/faq', 'pages::mahasiswa.faq.index')->name('faq.index');
+
+    Route::prefix('log')->name('log.')->group(function () {
+        Route::livewire('/', 'pages::mahasiswa.log.index')->name('index');
+        Route::livewire('/create', 'pages::mahasiswa.log.create')->name('create');
+        Route::livewire('/{log}', 'pages::mahasiswa.log.show')->name('show');
+        Route::livewire('/{log}/edit', 'pages::mahasiswa.log.create')->name('edit');
+    });
 });
 
 // ── Admin ──────────────────────────────────────────────────────────────────
@@ -127,16 +134,6 @@ Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->grou
     Route::prefix('log')->name('log.')->group(function () {
         Route::livewire('/', 'pages::dosen.log.index')->name('index');
         Route::livewire('/{log}', 'pages::dosen.log.show')->name('show');
-    });
-});
-
-require __DIR__.'/settings.php';
-itoring')->name('monitoring.')->group(function () {
-        Route::livewire('/', 'pages::dosen.monitoring.index')->name('index');
-    });
-
-    Route::prefix('log')->name('log.')->group(function () {
-        Route::livewire('/', 'pages::dosen.log.index')->name('index');
     });
 });
 
