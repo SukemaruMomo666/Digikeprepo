@@ -19,8 +19,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 // ── Mahasiswa ──────────────────────────────────────────────────────────────
-Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
-    Route::livewire('mahasiswa/dashboard', 'pages::mahasiswa.dashboard')->name('mahasiswa.dashboard');
+Route::middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.')->group(function () {
+    Route::livewire('mahasiswa/dashboard', 'pages::mahasiswa.dashboard')->name('dashboard');
 
     Route::prefix('pasien')->name('pasien.')->group(function () {
         Route::livewire('/', 'pages::mahasiswa.pasien.index')->name('index');
@@ -37,8 +37,6 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 
     Route::livewire('/askep', 'pages::mahasiswa.askep.index')->name('askep.index');
 
-    // ── Askep baru (berbasis entitas Askep, bukan Pasien) ─────────────────────
-    // Stubs sementara — akan diganti saat Phase 2
     Route::prefix('pasien/{pasien}/askep')->name('pasien.askep.')->group(function () {
         Route::livewire('/baru', 'pages::mahasiswa.askep.create')->name('create');
     });
@@ -65,7 +63,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::livewire('/faq', 'pages::mahasiswa.faq.index')->name('faq.index');
 
     Route::prefix('log')->name('log.')->group(function () {
-        Route::livewire('', 'pages::mahasiswa.log.index')->name('index');
+        Route::livewire('/', 'pages::mahasiswa.log.index')->name('index');
         Route::livewire('/create', 'pages::mahasiswa.log.create')->name('create');
         Route::livewire('/{log}', 'pages::mahasiswa.log.show')->name('show');
         Route::livewire('/{log}/edit', 'pages::mahasiswa.log.create')->name('edit');

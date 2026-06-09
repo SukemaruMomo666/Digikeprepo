@@ -40,8 +40,8 @@
 
                 <flux:sidebar.item
                     icon="users"
-                    :href="route('pasien.index')"
-                    :current="request()->routeIs('pasien.*') && !request()->routeIs('pasien.askep*')"
+                    :href="route('mahasiswa.pasien.index')"
+                    :current="request()->routeIs('mahasiswa.pasien.*') && !request()->routeIs('mahasiswa.pasien.askep*')"
                     wire:navigate
                 >
                     Data Pasien
@@ -49,8 +49,8 @@
 
                 <flux:sidebar.item
                     icon="clipboard-document-list"
-                    :href="route('askep.index')"
-                    :current="request()->routeIs('askep.*')"
+                    :href="route('mahasiswa.askep.index')"
+                    :current="request()->routeIs('mahasiswa.askep.*')"
                     wire:navigate
                 >
                     Asuhan Keperawatan
@@ -66,8 +66,8 @@
 
                 <flux:sidebar.item
                     icon="clock"
-                    :href="route('riwayat.index')"
-                    :current="request()->routeIs('riwayat.index')"
+                    :href="route('mahasiswa.riwayat.index')"
+                    :current="request()->routeIs('mahasiswa.riwayat.index')"
                     wire:navigate
                 >
                     Riwayat
@@ -88,8 +88,8 @@
                 {{-- ── Panduan & Referensi ── --}}
                 <flux:sidebar.item
                     icon="book-open"
-                    :href="route('panduan.index')"
-                    :current="request()->routeIs('panduan.*')"
+                    :href="route('mahasiswa.panduan.index')"
+                    :current="request()->routeIs('mahasiswa.panduan.*')"
                     wire:navigate
                 >
                     Panduan
@@ -97,8 +97,8 @@
 
                 <flux:sidebar.item
                     icon="play-circle"
-                    :href="route('video.index')"
-                    :current="request()->routeIs('video.*')"
+                    :href="route('mahasiswa.video.index')"
+                    :current="request()->routeIs('mahasiswa.video.*')"
                     wire:navigate
                 >
                     Video Tutorial
@@ -106,8 +106,8 @@
 
                 <flux:sidebar.item
                     icon="question-mark-circle"
-                    :href="route('faq.index')"
-                    :current="request()->routeIs('faq.*')"
+                    :href="route('mahasiswa.faq.index')"
+                    :current="request()->routeIs('mahasiswa.faq.*')"
                     wire:navigate
                 >
                     FAQ
@@ -119,7 +119,7 @@
             {{-- New Assessment Button --}}
             <div class="px-3 pb-2">
                 <a
-                    href="{{ route('pasien.create') }}"
+                    href="{{ route('mahasiswa.pasien.create') }}"
                     wire:navigate
                     class="flex w-full items-center justify-center gap-2 rounded-xl bg-white/15 px-4 py-2.5 text-sm font-semibold text-white ring-1 ring-white/20 transition-all hover:bg-white/25 hover:ring-white/40"
                 >

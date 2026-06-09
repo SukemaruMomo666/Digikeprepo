@@ -23,28 +23,26 @@
     <form method="POST" action="{{ route('login.store') }}" class="space-y-5">
         @csrf
 
-        {{-- NIM / NIP --}}
+        {{-- NIM / NIP / Username --}}
         <div class="space-y-1.5">
             <label for="nim_nip" class="block text-sm font-semibold text-[#1B4F72] dark:text-zinc-300">
-                NIM / NIP
+                NIM / NIP / Username
             </label>
             <input
                 id="nim_nip"
                 name="nim_nip"
                 type="text"
-                inputmode="numeric"
-                pattern="[0-9]*"
                 value="{{ old('nim_nip') }}"
                 required
                 autofocus
                 autocomplete="username"
-                placeholder="Masukkan NIM atau NIP"
+                placeholder="Masukkan NIM, NIP, atau Username"
                 class="w-full rounded-xl border border-[#D0DCE8] bg-white px-4 py-3 text-sm text-[#1B4F72] outline-none placeholder:text-[#7A8FA6] transition
                        focus:border-[#2E86C1] focus:ring-2 focus:ring-[#2E86C1]/20
                        dark:border-zinc-700 dark:bg-zinc-800 dark:text-white
                        @error('nim_nip') border-[#D95C3A] focus:border-[#D95C3A] focus:ring-[#D95C3A]/20 @enderror"
             />
-            <p class="text-xs text-[#7A8FA6] dark:text-zinc-500">Gunakan NIM/NIP Anda (angka saja). Password default = NIM Anda.</p>
+            <p class="text-xs text-[#7A8FA6] dark:text-zinc-500">Gunakan NIM (Mhs) atau Username (Dosen) Anda. Password default = NIM Anda.</p>
         </div>
 
         {{-- Password --}}
