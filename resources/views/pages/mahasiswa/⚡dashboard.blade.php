@@ -64,7 +64,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
                             </p>
                         </div>
                     </div>
-                    <flux:button :href="route('askep.show', $rev)" variant="primary" size="sm" class="bg-amber-600 hover:bg-amber-700 border-none" wire:navigate>
+                    <flux:button :href="route('mahasiswa.askep.show', $rev)" variant="primary" size="sm" class="bg-amber-600 hover:bg-amber-700 border-none" wire:navigate>
                         Lihat Catatan
                     </flux:button>
                 </div>
