@@ -120,7 +120,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
                 <h3 class="text-base font-semibold text-[#1B4F72] dark:text-white">Pasien Terakhir</h3>
             </div>
             <a
-                href="{{ route('pasien.index') }}"
+                href="{{ route('mahasiswa.pasien.index') }}"
                 wire:navigate
                 class="text-sm font-medium text-[#2E86C1] hover:text-[#1B4F72] hover:underline"
             >
@@ -134,7 +134,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
                 <p class="text-sm text-[#7A8FA6]">Belum ada data pasien.</p>
                 <div class="mt-4">
                     <a
-                        href="{{ route('pasien.create') }}"
+                        href="{{ route('mahasiswa.pasien.create') }}"
                         wire:navigate
                         class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-primary"
                         style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
@@ -195,7 +195,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
                                 </td>
                                 <td class="px-6 py-3.5">
                                     <a
-                                        href="{{ route('pasien.show', $pasien) }}"
+                                        href="{{ route('mahasiswa.pasien.show', $pasien) }}"
                                         wire:navigate
                                         class="text-[#85B7EB] transition-colors hover:text-[#2E86C1]"
                                         title="Lihat Detail"
@@ -220,7 +220,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
     {{-- FAB Tambah Pasien (mobile only) --}}
     <div class="fixed bottom-6 right-6 z-30 lg:hidden">
         <a
-            href="{{ route('pasien.create') }}"
+            href="{{ route('mahasiswa.pasien.create') }}"
             wire:navigate
             class="flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white shadow-primary-lg"
             style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
