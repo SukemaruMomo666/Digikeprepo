@@ -1,174 +1,82 @@
-<laravel-boost-guidelines>
-=== foundation rules ===
+# CLAUDE.md
 
-# Laravel Boost Guidelines
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-The Laravel Boost guidelines are specifically curated by Laravel maintainers for this application. These guidelines should be followed closely to ensure the best experience when building Laravel applications.
+## Project Overview
 
-## Foundational Context
+**DigiKep** is a digital nursing care documentation (Asuhan Keperawatan) app for nursing students at Politeknik Negeri Subang. It guides students through a structured 5-step workflow using Indonesian nursing standards: **SDKI** (diagnoses), **SLKI** (outcomes), **SIKI** (interventions).
 
-This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
+Three roles: `mahasiswa` (students), `dosen` (instructors), `admin`.
 
-- php - 8.5
-- laravel/fortify (FORTIFY) - v1
-- laravel/framework (LARAVEL) - v13
-- laravel/prompts (PROMPTS) - v0
-- livewire/flux (FLUXUI_FREE) - v2
-- livewire/livewire (LIVEWIRE) - v4
-- laravel/boost (BOOST) - v2
-- laravel/mcp (MCP) - v0
-- laravel/pail (PAIL) - v1
-- laravel/pint (PINT) - v1
-- laravel/sail (SAIL) - v1
-- pestphp/pest (PEST) - v4
-- phpunit/phpunit (PHPUNIT) - v12
-- tailwindcss (TAILWINDCSS) - v4
+## Commands
 
-## Skills Activation
+```bash
+# Start all dev services (server + queue + Vite)
+composer run dev
 
-This project has domain-specific skills available in `**/skills/**`. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
+# Run tests
+php artisan test --compact
+php artisan test --compact --filter=TestName
 
-## Conventions
+# Format PHP after changes (required before finalizing)
+vendor/bin/pint --dirty --format agent
 
-- You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
-- Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
-- Check for existing components to reuse before writing a new one.
+# Reset database with seed data
+php artisan migrate:fresh --seed
 
-## Verification Scripts
+# List routes
+php artisan route:list --except-vendor
+```
 
-- Do not create verification scripts or tinker when tests cover that functionality and prove they work. Unit and feature tests are more important.
+**Default seed accounts**: `admin` / `password`, `231010001` / `231010001` (mahasiswa, forced password change on first login).
 
-## Application Structure & Architecture
+## Architecture
 
-- Stick to existing directory structure; don't create new base folders without approval.
-- Do not change the application's dependencies without approval.
+### Livewire SFC Pattern
 
-## Frontend Bundling
+All Livewire components are **Single File Components** colocated in `resources/views/pages/` — there are no separate PHP component classes in `app/Livewire/` (except `app/Livewire/Actions/Logout.php`). Blade files in `pages/` contain both the `@php` component logic and the template.
 
-- If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
+### 5-Step Askep Workflow
 
-## Documentation Files
+The core feature is a resumable 5-step care plan:
 
-- You must only create documentation files if explicitly requested by the user.
+1. **Pengkajian** (`askep_pengkajian`) — 32-section patient assessment across 4 tabs; most data stored as JSON columns
+2. **Diagnosa** (`askep_diagnosa`) — Select from 149 SDKI master diagnoses with priority ranking
+3. **Perencanaan** (`askep_diagnosa_luaran` + `askep_intervensi`) — Map SLKI outcomes to diagnoses, then SIKI interventions to outcomes
+4. **Implementasi** (`askep_implementasi`) — Log interventions performed (date, shift, notes)
+5. **Evaluasi** (`askep_evaluasi`) — SOAP notes, vitals, outcome assessment (Tercapai/Membaik/Belum Tercapai)
 
-## Replies
+Each step saves independently so students can resume. Status flow: `draft → menunggu_review → perlu_revisi|disetujui → selesai`.
 
-- Be concise in your explanations - focus on what's important rather than explaining obvious details.
+### Key Models
 
-=== boost rules ===
+- `Askep` — owns the whole workflow; has status constants and step-tracking helpers
+- `AskepPengkajian` — assessment data (heavy use of JSON columns for flexibility)
+- `DiagnosaSdki` / `LuaranSlki` / `IntervensiSiki` — master reference data (149/110/73 entries)
+- `User` — has `role`, `nim_nip`, `is_first_login` flag
+- `Penugasan` — links dosen to mahasiswa for supervision
+- `RiwayatPasien` — activity log driven by `PasienObserver`
 
-# Laravel Boost
+### Routing
 
-## Tools
+All routes in `routes/web.php`, grouped by role middleware (`role:mahasiswa`, `role:admin`, `role:dosen`). Named routes use dot notation: `mahasiswa.askep.pengkajian`, `admin.sdki.index`, etc.
 
-- Laravel Boost is an MCP server with tools designed specifically for this application. Prefer Boost tools over manual alternatives like shell commands or file reads.
-- Use `database-query` to run read-only queries against the database instead of writing raw SQL in tinker.
-- Use `database-schema` to inspect table structure before writing migrations or models.
-- Use `get-absolute-url` to resolve the correct scheme, domain, and port for project URLs. Always use this before sharing a URL with the user.
-- Use `browser-logs` to read browser logs, errors, and exceptions. Only recent logs are useful, ignore old entries.
+### Relationships Between Master Data
 
-## Searching Documentation (IMPORTANT)
+`sdki_slki_relations` and `slki_siki_relations` pivot tables control which outcomes are valid for a diagnosis and which interventions are valid for an outcome. Admin manages these mappings via the Relasi page.
 
-- Always use `search-docs` before making code changes. Do not skip this step. It returns version-specific docs based on installed packages automatically.
-- Pass a `packages` array to scope results when you know which packages are relevant.
-- Use multiple broad, topic-based queries: `['rate limiting', 'routing rate limiting', 'routing']`. Expect the most relevant results first.
-- Do not add package names to queries because package info is already shared. Use `test resource table`, not `filament 4 test resource table`.
+### Authentication
 
-### Search Syntax
+Laravel Fortify handles auth. `LoginResponse` redirects by role. `EnsureRole` middleware gates routes. First-login password change is enforced via dedicated middleware redirect to `change-password` route.
 
-1. Use words for auto-stemmed AND logic: `rate limit` matches both "rate" AND "limit".
-2. Use `"quoted phrases"` for exact position matching: `"infinite scroll"` requires adjacent words in order.
-3. Combine words and phrases for mixed queries: `middleware "rate limit"`.
-4. Use multiple queries for OR logic: `queries=["authentication", "middleware"]`.
+### PDF Export
 
-## Artisan
+`AskepPdfController` renders `resources/views/pdf/askep.blade.php` for download.
 
-- Run Artisan commands directly via the command line (e.g., `php artisan route:list`). Use `php artisan list` to discover available commands and `php artisan [command] --help` to check parameters.
-- Inspect routes with `php artisan route:list`. Filter with: `--method=GET`, `--name=users`, `--path=api`, `--except-vendor`, `--only-vendor`.
-- Read configuration values using dot notation: `php artisan config:show app.name`, `php artisan config:show database.default`. Or read config files directly from the `config/` directory.
+## Key Conventions
 
-## Tinker
-
-- Execute PHP in app context for debugging and testing code. Do not create models without user approval, prefer tests with factories instead. Prefer existing Artisan commands over custom tinker code.
-- Always use single quotes to prevent shell expansion: `php artisan tinker --execute 'Your::code();'`
-  - Double quotes for PHP strings inside: `php artisan tinker --execute 'User::where("active", true)->count();'`
-
-=== php rules ===
-
-# PHP
-
-- Always use curly braces for control structures, even for single-line bodies.
-- Use PHP 8 constructor property promotion: `public function __construct(public GitHub $github) { }`. Do not leave empty zero-parameter `__construct()` methods unless the constructor is private.
-- Use explicit return type declarations and type hints for all method parameters: `function isAccessible(User $user, ?string $path = null): bool`
-- Use TitleCase for Enum keys: `FavoritePerson`, `BestLake`, `Monthly`.
-- Prefer PHPDoc blocks over inline comments. Only add inline comments for exceptionally complex logic.
-- Use array shape type definitions in PHPDoc blocks.
-
-=== deployments rules ===
-
-# Deployment
-
-- Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
-
-=== tests rules ===
-
-# Test Enforcement
-
-- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
-- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
-
-=== laravel/core rules ===
-
-# Do Things the Laravel Way
-
-- Use `php artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using `php artisan list` and check their parameters with `php artisan [command] --help`.
-- If you're creating a generic PHP class, use `php artisan make:class`.
-- Pass `--no-interaction` to all Artisan commands to ensure they work without user input. You should also pass the correct `--options` to ensure correct behavior.
-
-### Model Creation
-
-- When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `php artisan make:model --help` to check the available options.
-
-## APIs & Eloquent Resources
-
-- For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
-
-## URL Generation
-
-- When generating links to other pages, prefer named routes and the `route()` function.
-
-## Testing
-
-- When creating models for tests, use the factories for the models. Check if the factory has custom states that can be used before manually setting up the model.
-- Faker: Use methods such as `$this->faker->word()` or `fake()->randomDigit()`. Follow existing conventions whether to use `$this->faker` or `fake()`.
-- When creating tests, make use of `php artisan make:test [options] {name}` to create a feature test, and pass `--unit` to create a unit test. Most tests should be feature tests.
-
-## Vite Error
-
-- If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
-
-=== livewire/core rules ===
-
-# Livewire
-
-- Livewire allow to build dynamic, reactive interfaces in PHP without writing JavaScript.
-- You can use Alpine.js for client-side interactions instead of JavaScript frameworks.
-- Keep state server-side so the UI reflects it. Validate and authorize in actions as you would in HTTP requests.
-
-=== pint/core rules ===
-
-# Laravel Pint Code Formatter
-
-- If you have modified any PHP files, you must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
-- Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
-
-=== pest/core rules ===
-
-## Pest
-
-- This project uses Pest for testing. Create tests: `php artisan make:test --pest {name}`.
-- The `{name}` argument should not include the test suite directory. Use `php artisan make:test --pest SomeFeatureTest` instead of `php artisan make:test --pest Feature/SomeFeatureTest`.
-- Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
-- Do NOT delete tests without approval.
-
-</laravel-boost-guidelines>
+- Views in `resources/views/pages/{role}/` mirror route structure
+- Layouts: `layouts/mahasiswa.blade.php`, `layouts/admin.blade.php`, `layouts/dosen.blade.php`
+- JSON columns used extensively in `askep_pengkajian` for assessment sections
+- Factories and seeders required for any new model
+- Feature tests (Pest) required for every change
