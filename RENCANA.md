@@ -83,6 +83,7 @@
 - [ ] Mengisi konten Bantuan (Panduan/FAQ) dengan teks resmi prodi.
 - [ ] Validasi input yang lebih ketat pada form Pengkajian.
 - [ ] Optimalisasi performa loading pada form Diagnosa/Perencanaan.
+- [ ] **Refine Laporan Askep:** Menyesuaikan ulang tampilan Laporan Akhir (Detail Askep) agar memuat data proses keperawatan sesuai ekspektasi user secara lebih presisi.
 
 ---
 
