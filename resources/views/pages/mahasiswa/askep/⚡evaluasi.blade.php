@@ -528,31 +528,3 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
         </div>
     @endif
 </div>
-ndif
-</div>
-iv>
-    @endif
-</div>
-ire:target="simpan">Simpan Draft</span>
-                    <span wire:loading wire:target="simpan">Menyimpan...</span>
-                </button>
-
-                <button
-                    wire:click="selesaikanDanKirim"
-                    wire:loading.attr="disabled"
-                    class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
-                    style="background: linear-gradient(135deg, #1A9B72, #0F6E56)"
-                >
-                    <span wire:loading.remove wire:target="selesaikanDanKirim">Selesai & Kirim untuk Review</span>
-                    <span wire:loading wire:target="selesaikanDanKirim">Mengirim...</span>
-                    <flux:icon.paper-airplane class="size-4" wire:loading.remove wire:target="selesaikanDanKirim" />
-                </button>
-            </div>
-        </div>
-    @endif
-</div>
-   </div>
-    @endif
-</div>
-
-</div>
