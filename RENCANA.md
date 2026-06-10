@@ -66,10 +66,10 @@
 ## 3. Rencana Kerja Selanjutnya (Prioritas)
 
 ### 3.1 Kelengkapan Data 3S (Prioritas Utama)
-- [ ] Melengkapi detail SDKI (D.0074 s/d D.0149).
-- [ ] Mengisi konten Indikator SLKI dan Tindakan SIKI.
-- [ ] **Mapping Relasi:** Menghubungkan SDKI ↔ SLKI ↔ SIKI secara lengkap (saat ini baru 10 sample).
-- [ ] Update Seeder Master Data.
+- [x] Melengkapi detail SDKI (D.0001 s/d D.0149).
+- [x] Mengisi konten Indikator SLKI dan Tindakan SIKI.
+- [x] **Mapping Relasi:** Menghubungkan SDKI ↔ SLKI ↔ SIKI secara lengkap (14 batch data master telah diimpor).
+- [x] Update Seeder Master Data (`DataMaster3SSeeder`).
 
 ### 3.2 Fase 4 — Fitur Tambahan & Admin
 - [x] **Setup Data Awal:** Import 367 data mahasiswa & 12 dosen dari file CSV `students_extracted.csv` (termasuk plot penugasan otomatis).
