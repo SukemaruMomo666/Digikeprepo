@@ -17,21 +17,21 @@ class DosenSeeder extends Seeder
     {
         // 1. Buat Dosen
         $dosen = User::create([
-            'nim_nip' => '12345678',
-            'name' => 'Dr. Budi Santoso, M.Kep',
-            'email' => 'budi@polsub.ac.id',
+            'nim_nip' => '19700101',
+            'name' => 'Dr. Dosen Penguji, M.Kep',
+            'email' => 'dosen@digikep.test',
             'role' => 'dosen',
             'password' => Hash::make('password'),
             'is_first_login' => false,
         ]);
 
-        // 2. Ambil beberapa mahasiswa yang sudah ada (dari MahasiswaSeeder)
-        $mahasiswas = User::where('role', 'mahasiswa')->take(3)->get();
+        // 2. Ambil mahasiswa
+        $mahasiswa = User::where('role', 'mahasiswa')->first();
 
-        foreach ($mahasiswas as $mhs) {
+        if ($mahasiswa) {
             // 3. Buat Penugasan
             Penugasan::create([
-                'mahasiswa_id' => $mhs->id,
+                'mahasiswa_id' => $mahasiswa->id,
                 'dosen_id' => $dosen->id,
                 'angkatan' => 2024,
                 'kelas' => 'A',
@@ -42,8 +42,8 @@ class DosenSeeder extends Seeder
                 'periode_selesai' => now()->addMonth(),
             ]);
 
-            // 4. Update status Askep mahasiswa agar bisa di-review
-            $askep = Askep::where('user_id', $mhs->id)->first();
+            // 4. Update status Askep mahasiswa agar bisa di-review (opsional)
+            $askep = Askep::where('user_id', $mahasiswa->id)->first();
             if ($askep) {
                 $askep->update([
                     'status' => Askep::STATUS_MENUNGGU_REVIEW,
@@ -51,5 +51,7 @@ class DosenSeeder extends Seeder
                 ]);
             }
         }
+
+        $this->command->info('DosenSeeder: 1 akun dosen berhasil dibuat dan ditugaskan.');
     }
 }

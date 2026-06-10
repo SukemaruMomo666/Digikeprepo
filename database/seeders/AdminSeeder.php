@@ -23,18 +23,6 @@ class AdminSeeder extends Seeder
                 'email' => 'admin@digikep.test',
                 'password' => Hash::make('password'),
             ],
-            [
-                'nim_nip' => '197001012000031001',
-                'name' => 'Dr. Hendra Kusuma, S.Kep., M.Kep.',
-                'email' => 'hendra@polsub.ac.id',
-                'password' => Hash::make('password'),
-            ],
-            [
-                'nim_nip' => '102030405060708090',
-                'name' => 'dosen1',
-                'email' => 'dosen1@polsub.ac.id',
-                'password' => Hash::make('password'),
-            ],
         ];
 
         foreach ($admins as $data) {

@@ -18,16 +18,6 @@ class MahasiswaSeeder extends Seeder
      */
     private array $mahasiswa = [
         ['nim_nip' => '10602001', 'name' => 'Budi Santoso'],
-        ['nim_nip' => '10602002', 'name' => 'Ani Pratiwi'],
-        ['nim_nip' => '10602003', 'name' => 'Andi Gunawan'],
-        ['nim_nip' => '10602004', 'name' => 'Sri Wulandari'],
-        ['nim_nip' => '10602005', 'name' => 'Dedi Supriatna'],
-        ['nim_nip' => '10602006', 'name' => 'Rina Kusumawati'],
-        ['nim_nip' => '10602007', 'name' => 'Agus Setiawan'],
-        ['nim_nip' => '10602008', 'name' => 'Siti Nurhaliza'],
-        ['nim_nip' => '10602009', 'name' => 'Eko Prabowo'],
-        ['nim_nip' => '10602010', 'name' => 'Lina Marlina'],
-
     ];
 
     /**
@@ -39,7 +29,7 @@ class MahasiswaSeeder extends Seeder
             User::factory()->mahasiswa()->create([
                 'nim_nip' => $data['nim_nip'],
                 'name' => $data['name'],
-                'email' => null,
+                'email' => 'mahasiswa@digikep.test',
                 'password' => Hash::make($data['nim_nip']), // password default = NIM
                 'is_first_login' => true,
             ]);
