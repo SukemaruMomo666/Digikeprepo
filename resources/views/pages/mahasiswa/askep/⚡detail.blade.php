@@ -78,71 +78,122 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
         {{-- Konten Utama (Kiri) --}}
         <div class="lg:col-span-2 space-y-8">
 
-            {{-- 1. Pengkajian --}}
+            {{-- 1. Pengkajian LENGKAP --}}
             @if ($askep->pengkajian)
                 @php $p = $askep->pengkajian; @endphp
                 <div class="rounded-2xl border border-[#E0EBF5] bg-white overflow-hidden shadow-sm">
-                    <div class="bg-[#F8FBFE] px-6 py-4 border-b border-[#E0EBF5] flex items-center gap-2">
-                        <div class="flex size-6 items-center justify-center rounded bg-[#1A9B72] text-[10px] font-bold text-white uppercase">1</div>
-                        <h2 class="font-bold text-[#1B4F72]">PENGKAJIAN DASAR</h2>
+                    <div class="bg-[#F8FBFE] px-6 py-4 border-b border-[#E0EBF5] flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <div class="flex size-6 items-center justify-center rounded bg-[#1A9B72] text-[10px] font-bold text-white uppercase">1</div>
+                            <h2 class="font-bold text-[#1B4F72]">PENGKAJIAN DASAR</h2>
+                        </div>
                     </div>
                     <div class="p-6 space-y-6">
-                        {{-- TTV & EWS --}}
-                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
-                            @foreach (['TD' => $p->ews_td, 'Nadi' => $p->ews_nadi, 'RR' => $p->ews_rr, 'Suhu' => $p->ews_suhu, 'SpO₂' => $p->ews_spo2] as $label => $val)
-                                <div class="rounded-xl border border-gray-100 bg-gray-50/50 p-2 text-center">
-                                    <dt class="text-[9px] font-bold uppercase text-[#7A8FA6]">{{ $label }}</dt>
-                                    <dd class="mt-0.5 text-sm font-black text-[#1B4F72]">{{ $val ?: '-' }}</dd>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        {{-- Riwayat --}}
+                        {{-- Identitas PJ & Antropometri --}}
                         <div class="grid gap-4 md:grid-cols-2">
-                            <div class="space-y-1">
-                                <p class="text-[10px] font-bold uppercase text-[#C4D3DF] tracking-widest">Keluhan Utama</p>
-                                <p class="text-sm text-[#1B4F72]">{{ is_array($p->riwayat_sekarang) ? ($p->riwayat_sekarang['keluhan_utama'] ?? '-') : '-' }}</p>
+                            <div>
+                                <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Penanggung Jawab</p>
+                                <div class="rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-xs space-y-1 text-[#1B4F72]">
+                                    <p><span class="font-bold">Nama:</span> {{ $p->pj_nama ?: '-' }}</p>
+                                    <p><span class="font-bold">Umur:</span> {{ $p->pj_umur ?: '-' }}</p>
+                                    <p><span class="font-bold">Hubungan/Pekerjaan:</span> {{ $p->pj_pekerjaan ?: '-' }}</p>
+                                </div>
                             </div>
-                            <div class="space-y-1">
-                                <p class="text-[10px] font-bold uppercase text-[#C4D3DF] tracking-widest">Diagnosa Medis</p>
-                                <p class="text-sm font-bold text-[#D95C3A]">{{ $askep->pasien->diagnosa_medis ?? '-' }}</p>
+                            <div>
+                                <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Antropometri</p>
+                                <div class="rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-xs space-y-1 text-[#1B4F72] flex gap-4">
+                                    <p><span class="font-bold">BB:</span> {{ $p->bb ?: '-' }} kg</p>
+                                    <p><span class="font-bold">TB:</span> {{ $p->tb ?: '-' }} cm</p>
+                                </div>
                             </div>
                         </div>
 
-                        {{-- Section Biologis (Ringkasan) --}}
-                        <div class="rounded-xl bg-[#F4F8FB] p-4 border border-[#E0EBF5]">
-                            <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Pola Biologis (Masalah Terdeteksi)</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
-                                @php
-                                    $bioFields = [
-                                        'biologis_nyeri' => 'Nyeri',
-                                        'biologis_nutrisi' => 'Nutrisi',
-                                        'biologis_eliminasi_feses' => 'Eliminasi Feses',
-                                        'biologis_oksigenasi' => 'Oksigenasi',
-                                    ];
-                                @endphp
-                                @foreach ($bioFields as $field => $label)
-                                    @php $val = $p->$field; @endphp
-                                    <div class="flex items-start gap-2 text-xs">
-                                        <flux:icon.check-circle class="size-3.5 mt-0.5 text-[#2E86C1]" />
-                                        <div>
-                                            <span class="font-bold text-[#1B4F72]">{{ $label }}:</span>
-                                            <span class="text-gray-600">{{ is_array($val) ? ($val['keterangan'] ?? 'Normal') : 'Normal' }}</span>
-                                        </div>
+                        {{-- TTV & EWS --}}
+                        <div>
+                            <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Tanda-Tanda Vital & EWS (Skor: {{ $p->ews_skor }})</p>
+                            <div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
+                                @foreach (['TD (mmHg)' => $p->ews_td, 'Nadi (x/m)' => $p->ews_nadi, 'RR (x/m)' => $p->ews_rr, 'Suhu (°C)' => $p->ews_suhu, 'SpO₂ (%)' => $p->ews_spo2, 'Kesadaran' => $p->ews_kesadaran] as $label => $val)
+                                    <div class="rounded-xl border border-gray-100 bg-white p-2 text-center shadow-sm">
+                                        <dt class="text-[9px] font-bold uppercase text-[#7A8FA6]">{{ $label }}</dt>
+                                        <dd class="mt-0.5 text-xs font-black text-[#1B4F72] capitalize">{{ $val ?: '-' }}</dd>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
+
+                        {{-- Riwayat --}}
+                        <div>
+                            <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Riwayat Penyakit</p>
+                            <div class="grid gap-3 sm:grid-cols-2 text-xs">
+                                <div class="rounded-xl bg-[#F4F8FB] p-3 border border-[#E0EBF5]">
+                                    <p class="font-bold text-[#1B4F72] mb-1">Penyakit Sekarang</p>
+                                    <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                                        <li><span class="font-semibold">Keluhan:</span> {{ is_array($p->riwayat_sekarang) ? ($p->riwayat_sekarang['keluhan_utama'] ?? '-') : '-' }}</li>
+                                        <li><span class="font-semibold">Kronologi:</span> {{ is_array($p->riwayat_sekarang) ? ($p->riwayat_sekarang['kronologi'] ?? '-') : '-' }}</li>
+                                    </ul>
+                                </div>
+                                <div class="rounded-xl bg-[#F4F8FB] p-3 border border-[#E0EBF5]">
+                                    <p class="font-bold text-[#1B4F72] mb-1">Penyakit Lalu & Keluarga</p>
+                                    <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                                        <li><span class="font-semibold">Sakit Lalu:</span> {{ is_array($p->riwayat_lalu) ? ($p->riwayat_lalu['penyakit_anak'] ?? '-') : '-' }}</li>
+                                        <li><span class="font-semibold">Alergi:</span> {{ is_array($p->riwayat_lalu) ? ($p->riwayat_lalu['alergi'] ?? '-') : '-' }}</li>
+                                        <li><span class="font-semibold">Keluarga:</span> {{ is_array($p->riwayat_keluarga) ? ($p->riwayat_keluarga['penyakit_menurun'] ?? '-') : '-' }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Pemeriksaan Fisik Ringkas (Hanya yang Abnormal) --}}
+                        @php
+                            $abnormalFisik = [];
+                            $fisikFields = [
+                                'fisik_penglihatan' => 'Penglihatan', 'fisik_pendengaran' => 'Pendengaran',
+                                'fisik_wicara' => 'Wicara', 'fisik_pernapasan' => 'Pernapasan',
+                                'fisik_kardiovaskuler' => 'Kardiovaskuler', 'fisik_hematologi' => 'Hematologi',
+                                'fisik_saraf' => 'Saraf', 'fisik_pencernaan' => 'Pencernaan',
+                                'fisik_endokrin' => 'Endokrin', 'fisik_urogenital' => 'Urogenital',
+                                'fisik_integumen' => 'Integumen', 'fisik_muskuloskeletal' => 'Muskuloskeletal', 'fisik_imun' => 'Imun'
+                            ];
+                            foreach($fisikFields as $key => $label) {
+                                $data = is_string($p->$key) ? json_decode($p->$key, true) : $p->$key;
+                                if(isset($data['is_abnormal']) && $data['is_abnormal'] == true) {
+                                    $abnormalFisik[$label] = $data['observasi'] ?? 'Terdapat kelainan pada sistem ini';
+                                }
+                            }
+                        @endphp
+                        
+                        <div>
+                            <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Pemeriksaan Fisik (Temuan Abnormal)</p>
+                            @if(count($abnormalFisik) > 0)
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    @foreach($abnormalFisik as $sys => $obs)
+                                        <div class="flex items-start gap-2 text-xs p-2 rounded-lg bg-red-50 border border-red-100">
+                                            <flux:icon.exclamation-circle class="size-4 shrink-0 mt-0.5 text-red-500" />
+                                            <div>
+                                                <span class="font-bold text-red-800">{{ $sys }}:</span>
+                                                <span class="text-red-700 block">{{ $obs }}</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="p-3 rounded-lg bg-green-50 border border-green-100 text-xs text-green-700 flex items-center gap-2">
+                                    <flux:icon.check-circle class="size-4" />
+                                    Semua sistem fisik dalam batas normal (tidak ada tanda abnormal di-check).
+                                </div>
+                            @endif
+                        </div>
+
                     </div>
                 </div>
             @endif
 
-            {{-- 2 & 3. Diagnosa & Perencanaan --}}
+            {{-- 2 & 3. Diagnosa, Luaran, Intervensi --}}
             @if ($askep->diagnosa->isNotEmpty())
                 <div class="rounded-2xl border border-[#E0EBF5] bg-white overflow-hidden shadow-sm">
                     <div class="bg-[#F8FBFE] px-6 py-4 border-b border-[#E0EBF5] flex items-center gap-2">
                         <div class="flex size-6 items-center justify-center rounded bg-[#1A9B72] text-[10px] font-bold text-white uppercase">2 & 3</div>
-                        <h2 class="font-bold text-[#1B4F72]">DIAGNOSA & PERENCANAAN</h2>
+                        <h2 class="font-bold text-[#1B4F72]">DIAGNOSA, LUARAN & INTERVENSI</h2>
                     </div>
                     <div class="divide-y divide-gray-100">
                         @foreach ($askep->diagnosa->sortBy('prioritas') as $d)
@@ -157,23 +208,29 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                         
                                         @if(!empty($d->etiologi_dipilih))
                                             <p class="mt-2 text-[11px] text-[#7A8FA6] leading-relaxed">
-                                                <span class="font-bold uppercase text-[9px]">Berhubungan dengan:</span> 
+                                                <span class="font-bold uppercase text-[9px]">B.d:</span> 
                                                 {{ implode(', ', $d->etiologi_dipilih) }}
+                                            </p>
+                                        @endif
+                                        @if(!empty($d->gejala_dipilih))
+                                            <p class="mt-1 text-[11px] text-[#7A8FA6] leading-relaxed">
+                                                <span class="font-bold uppercase text-[9px]">D.d:</span> 
+                                                {{ implode(', ', $d->gejala_dipilih) }}
                                             </p>
                                         @endif
                                     </div>
                                 </div>
 
-                                {{-- SLKI Table --}}
                                 <div class="ml-9 space-y-4">
+                                    {{-- SLKI Table --}}
                                     @foreach ($d->luaran as $l)
-                                        <div class="rounded-xl border border-teal-100 bg-teal-50/20 p-4">
+                                        <div class="rounded-xl border border-teal-100 bg-teal-50/30 p-4">
                                             <div class="flex justify-between items-start mb-3 border-b border-teal-100 pb-2">
                                                 <div>
                                                     <p class="text-[10px] font-bold text-teal-600 uppercase tracking-widest">Luaran (SLKI)</p>
                                                     <p class="text-sm font-bold text-teal-900">{{ $l->slki?->label_luaran }}</p>
                                                 </div>
-                                                <span class="rounded bg-teal-100 px-2 py-0.5 text-[10px] font-bold text-teal-700">Target: {{ $l->target_waktu }}</span>
+                                                <span class="rounded bg-teal-100 px-2 py-0.5 text-[10px] font-bold text-teal-800">Target: {{ $l->target_waktu }}</span>
                                             </div>
 
                                             {{-- Indikator Scores --}}
@@ -186,13 +243,13 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                                 @foreach ($l->slki?->kriteriaHasil ?? [] as $k)
                                                     @if(isset($skorPlan[$k->id]))
                                                         <div class="flex items-center justify-between text-xs py-1 border-b border-teal-50 last:border-0">
-                                                            <span class="text-[#1B4F72]">{{ $k->deskripsi }}</span>
+                                                            <span class="text-teal-900">{{ $k->deskripsi }}</span>
                                                             <div class="flex items-center gap-3 font-mono font-bold">
-                                                                <span class="text-[#7A8FA6]" title="Skor Awal">{{ $skorPlan[$k->id]['awal'] }}</span>
+                                                                <span class="text-gray-400" title="Skor Awal">{{ $skorPlan[$k->id]['awal'] }}</span>
                                                                 <flux:icon.arrow-right class="size-2.5 text-gray-300" />
-                                                                <span class="text-[#1A9B72]" title="Target">{{ $skorPlan[$k->id]['target'] }}</span>
+                                                                <span class="text-teal-600" title="Target">{{ $skorPlan[$k->id]['target'] }}</span>
                                                                 @if(isset($skorEval[$k->id]))
-                                                                    <div class="h-4 w-px bg-gray-200 mx-1"></div>
+                                                                    <div class="h-4 w-px bg-teal-200 mx-1"></div>
                                                                     <span class="text-[#2E86C1]" title="Hasil Evaluasi">{{ $skorEval[$k->id] }}</span>
                                                                 @endif
                                                             </div>
@@ -202,6 +259,34 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                             </div>
                                         </div>
                                     @endforeach
+
+                                    {{-- SIKI Section --}}
+                                    @if($d->intervensi->isNotEmpty())
+                                        <div class="rounded-xl border border-indigo-100 bg-indigo-50/30 p-4 mt-4">
+                                            <div class="mb-3 border-b border-indigo-100 pb-2">
+                                                <p class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest">Intervensi (SIKI)</p>
+                                            </div>
+                                            <div class="space-y-4">
+                                                @foreach ($d->intervensi as $intv)
+                                                    <div>
+                                                        <p class="text-sm font-bold text-indigo-900 mb-1.5">{{ $intv->siki?->label_intervensi }}</p>
+                                                        @php
+                                                            $tindakanList = is_string($intv->tindakan_dipilih) ? json_decode($intv->tindakan_dipilih, true) : $intv->tindakan_dipilih;
+                                                        @endphp
+                                                        @if(is_array($tindakanList) && count($tindakanList) > 0)
+                                                            <ul class="list-outside list-disc space-y-1 text-xs text-indigo-800 ml-4">
+                                                                @foreach ($tindakanList as $tindakan)
+                                                                    <li>{{ $tindakan }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @else
+                                                            <p class="text-xs text-indigo-400 italic">Tidak ada tindakan spesifik dipilih.</p>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
@@ -231,10 +316,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                     </div>
                                     <div class="flex-1 pb-4">
                                         <div class="flex items-center gap-2 mb-1">
-                                            <span class="text-xs font-bold text-[#1B4F72]">{{ $log->tanggal->translatedFormat('d M Y') }}</span>
+                                            <span class="text-xs font-bold text-[#1B4F72]">{{ \Carbon\Carbon::parse($log->tanggal)->translatedFormat('d M Y') }}</span>
                                             <span class="text-[10px] font-semibold text-[#7A8FA6] bg-gray-50 px-1.5 py-0.5 rounded border">{{ $log->shift }} - {{ $log->waktu }}</span>
                                         </div>
-                                        <p class="text-xs text-gray-600 italic leading-relaxed">{{ $log->catatan }}</p>
+                                        <p class="text-xs text-gray-600 leading-relaxed"><span class="font-semibold text-gray-800">{{ $log->askepIntervensi->siki->label_intervensi ?? 'Tindakan' }}:</span> {{ $log->catatan }}</p>
                                     </div>
                                 </div>
                             @endforeach
@@ -261,7 +346,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                     <h3 class="text-sm font-bold text-[#1B4F72]">{{ $d->sdki?->label_diagnosa }}</h3>
                                     @if($ev)
                                         <div class="mt-1 flex items-center gap-2">
-                                            <span class="text-[10px] font-bold text-[#7A8FA6] uppercase">{{ $ev->tanggal->translatedFormat('d M Y') }}</span>
+                                            <span class="text-[10px] font-bold text-[#7A8FA6] uppercase">{{ \Carbon\Carbon::parse($ev->tanggal)->translatedFormat('d M Y') }}</span>
                                             <span class="text-[10px] text-gray-300">|</span>
                                             <flux:badge size="sm" color="{{ $ev->analisis === 'Tercapai' ? 'green' : ($ev->analisis === 'Membaik' ? 'blue' : 'amber') }}">
                                                 {{ $ev->analisis }}
@@ -276,8 +361,8 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                     <div class="space-y-3">
                                         <div>
                                             <p class="text-[10px] font-bold text-[#7A8FA6] uppercase tracking-wider mb-1">Catatan SOAP</p>
-                                            <div class="rounded-xl bg-gray-50 p-3 text-xs text-gray-700 leading-relaxed whitespace-pre-line border border-gray-100 italic">
-                                                {{ $ev->catatan_soap ?: 'Tidak ada catatan SOAP.' }}
+                                            <div class="rounded-xl bg-gray-50 p-3 text-xs text-gray-700 leading-relaxed whitespace-pre-line border border-gray-100">
+                                                {!! nl2br(e($ev->catatan_soap)) ?: 'Tidak ada catatan SOAP.' !!}
                                             </div>
                                         </div>
                                         <div>
