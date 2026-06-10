@@ -72,11 +72,12 @@
 - [ ] Update Seeder Master Data.
 
 ### 3.2 Fase 4 — Fitur Tambahan & Admin
-- [ ] **Import User Massal:** Upload CSV/Excel untuk pendaftaran mahasiswa.
-- [ ] **Manajemen Penugasan:** UI Admin untuk memetakan Mahasiswa ke Dosen Pembimbing.
-- [ ] **Log Pembelajaran:** UI untuk modul refleksi harian (Gibbs Cycle).
+- [x] **Setup Data Awal:** Import 367 data mahasiswa & 12 dosen dari file CSV `students_extracted.csv` (termasuk plot penugasan otomatis).
+- [ ] **UI Manajemen Penugasan (Prioritas Berikutnya):** Membuat Halaman Admin (Livewire + Flux UI) untuk melihat, menambah, dan mengedit pemetaan/plot bimbingan Mahasiswa ke Dosen Pembimbing (termasuk stase, kelas, RS).
+- [ ] **Import User Massal:** Upload CSV/Excel untuk pendaftaran akun mahasiswa baru lewat Web (UI).
+- [ ] **Log Pembelajaran:** UI untuk modul refleksi harian (Gibbs Cycle) mahasiswa.
 - [ ] **Notifikasi:** Alert/Badge saat ada feedback revisi masuk.
-- [ ] **Statistik:** Grafik perkembangan mahasiswa dan tren diagnosa.
+- [ ] **Statistik:** Grafik perkembangan mahasiswa dan tren diagnosa di Dashboard.
 
 ### 3.3 Pembersihan & Polishing
 - [ ] Mengisi konten Bantuan (Panduan/FAQ) dengan teks resmi prodi.
