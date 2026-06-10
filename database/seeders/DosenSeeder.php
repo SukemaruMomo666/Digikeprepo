@@ -16,31 +16,38 @@ class DosenSeeder extends Seeder
     public function run(): void
     {
         // 1. Buat Dosen
-        $dosen = User::create([
-            'nim_nip' => '19700101',
-            'name' => 'Dr. Dosen Penguji, M.Kep',
-            'email' => 'dosen@digikep.test',
-            'role' => 'dosen',
-            'password' => Hash::make('password'),
-            'is_first_login' => false,
-        ]);
+        $dosen = User::updateOrCreate(
+            ['nim_nip' => '19700101'],
+            [
+                'name' => 'Dr. Dosen Penguji, M.Kep',
+                'email' => 'dosen@digikep.test',
+                'role' => 'dosen',
+                'password' => Hash::make('password'),
+                'is_first_login' => false,
+                'email_verified_at' => now(),
+            ]
+        );
 
         // 2. Ambil mahasiswa
         $mahasiswa = User::where('role', 'mahasiswa')->first();
 
         if ($mahasiswa) {
-            // 3. Buat Penugasan
-            Penugasan::create([
-                'mahasiswa_id' => $mahasiswa->id,
-                'dosen_id' => $dosen->id,
-                'angkatan' => 2024,
-                'kelas' => 'A',
-                'stase' => 'KMB I',
-                'rs' => 'RSUD Subang',
-                'bangsal' => 'Teratai',
-                'periode_mulai' => now()->subMonth(),
-                'periode_selesai' => now()->addMonth(),
-            ]);
+            // 3. Buat Penugasan (hanya jika belum ada)
+            Penugasan::updateOrCreate(
+                [
+                    'mahasiswa_id' => $mahasiswa->id,
+                    'dosen_id' => $dosen->id,
+                    'stase' => 'KMB I',
+                ],
+                [
+                    'angkatan' => 2024,
+                    'kelas' => 'A',
+                    'rs' => 'RSUD Subang',
+                    'bangsal' => 'Teratai',
+                    'periode_mulai' => now()->subMonth(),
+                    'periode_selesai' => now()->addMonth(),
+                ]
+            );
 
             // 4. Update status Askep mahasiswa agar bisa di-review (opsional)
             $askep = Askep::where('user_id', $mahasiswa->id)->first();

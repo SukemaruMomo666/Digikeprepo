@@ -26,13 +26,17 @@ class MahasiswaSeeder extends Seeder
     public function run(): void
     {
         foreach ($this->mahasiswa as $data) {
-            User::factory()->mahasiswa()->create([
-                'nim_nip' => $data['nim_nip'],
-                'name' => $data['name'],
-                'email' => 'mahasiswa@digikep.test',
-                'password' => Hash::make($data['nim_nip']), // password default = NIM
-                'is_first_login' => true,
-            ]);
+            User::updateOrCreate(
+                ['nim_nip' => $data['nim_nip']],
+                [
+                    'name' => $data['name'],
+                    'email' => 'mahasiswa@digikep.test',
+                    'role' => 'mahasiswa',
+                    'password' => Hash::make($data['nim_nip']),
+                    'is_first_login' => true,
+                    'email_verified_at' => now(),
+                ]
+            );
         }
 
         $this->command->info('MahasiswaSeeder: '.count($this->mahasiswa).' akun mahasiswa berhasil dibuat.');

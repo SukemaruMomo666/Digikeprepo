@@ -26,7 +26,13 @@ class AdminSeeder extends Seeder
         ];
 
         foreach ($admins as $data) {
-            User::factory()->admin()->create($data);
+            User::updateOrCreate(
+                ['nim_nip' => $data['nim_nip']],
+                array_merge($data, [
+                    'role' => 'admin',
+                    'email_verified_at' => now(),
+                ])
+            );
         }
 
         $this->command->info('AdminSeeder: '.count($admins).' akun admin berhasil dibuat.');
