@@ -488,15 +488,3 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
         </div>
     @endif
 </div>
-if
-</div>
-lesaikanLangkah" />
-            </button>
-        </div>
-    @endif
-</div>
-loading.remove wire:target="selesaikanLangkah" />
-            </button>
-        </div>
-    @endif
-</div>
