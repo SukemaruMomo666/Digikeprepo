@@ -116,6 +116,20 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
 
         $this->askep = $askep->load('pasien', 'pengkajian');
 
+        $arrayFields = [
+            'fisik_penglihatan' => ['pupil', 'otot_mata', 'fungsi_penglihatan'],
+            'fisik_pendengaran' => ['kondisi_telinga'],
+            'fisik_wicara' => ['gangguan'],
+            'fisik_pernafasan' => ['jalan_nafas', 'sputum_warna', 'suara_nafas'],
+            'fisik_kardiovaskuler' => ['warna_kulit', 'edema_lokasi', 'bunyi_jantung', 'nyeri_karakter'],
+            'fisik_saraf' => ['kelainan'],
+            'fisik_pencernaan' => ['isi_muntah', 'warna_muntah', 'nyeri_karakter', 'warna_feces', 'konsistensi_feces', 'abdomen'],
+            'fisik_endokrin' => ['kelainan'],
+            'fisik_urogenital' => ['perubahan_pola'],
+            'fisik_integumen' => ['warna_kulit', 'keadaan_kulit'],
+            'fisik_muskuloskeletal' => ['kelainan_bentuk'],
+        ];
+
         // Inisialisasi pengkajianData untuk sistem fisik
         foreach ([
             'fisik_penglihatan', 'fisik_pendengaran', 'fisik_wicara', 'fisik_pernafasan',
@@ -123,6 +137,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             'fisik_endokrin', 'fisik_urogenital', 'fisik_integumen', 'fisik_muskuloskeletal', 'fisik_imun'
         ] as $sys) {
             $this->pengkajianData[$sys] = ['is_abnormal' => false, 'data' => []];
+            if (isset($arrayFields[$sys])) {
+                foreach ($arrayFields[$sys] as $field) {
+                    $this->pengkajianData[$sys]['data'][$field] = [];
+                }
+            }
         }
 
         $p = $askep->pengkajian;
@@ -175,7 +194,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
         foreach ($this->pengkajianData as $sys => $val) {
             $dbField = str_replace('pernafasan', 'pernapasan', $sys);
             if (! empty($p->$dbField)) {
-                $this->pengkajianData[$sys] = array_merge($this->pengkajianData[$sys], (array) $p->$dbField);
+                $dbData = (array) $p->$dbField;
+                $this->pengkajianData[$sys]['is_abnormal'] = $dbData['is_abnormal'] ?? false;
+                if (isset($dbData['data']) && is_array($dbData['data'])) {
+                    $this->pengkajianData[$sys]['data'] = array_merge($this->pengkajianData[$sys]['data'], $dbData['data']);
+                }
             }
         }
     }
