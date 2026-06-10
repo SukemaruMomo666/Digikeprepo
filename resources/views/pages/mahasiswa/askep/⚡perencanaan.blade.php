@@ -542,8 +542,3 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
         </div>
     @endif
 </div>
-      </button>
-        </div>
-    @endif
-</div>
-/div>
