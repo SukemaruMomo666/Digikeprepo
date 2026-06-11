@@ -1,16 +1,21 @@
 <?php
 
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.mahasiswa')] #[Title('FAQ')] class extends Component
+new #[Title('FAQ')] class extends Component
 {
     public ?int $terbuka = null;
 
     public function toggle(int $index): void
     {
         $this->terbuka = $this->terbuka === $index ? null : $index;
+    }
+
+    public function rendering($view): void
+    {
+        $layout = auth()->user()->isDosen() ? 'layouts.dosen' : (auth()->user()->isAdmin() ? 'layouts.admin' : 'layouts.mahasiswa');
+        $view->layout($layout);
     }
 };
 ?>

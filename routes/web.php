@@ -18,6 +18,13 @@ Route::get('/dashboard', function () {
     return redirect()->route('mahasiswa.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+// ── Shared (Panduan, FAQ, dll) ─────────────────────────────────────────────
+Route::middleware(['auth'])->group(function () {
+    Route::livewire('/faq', 'pages::mahasiswa.faq.index')->name('faq.index');
+    Route::livewire('/panduan', 'pages::mahasiswa.panduan.index')->name('panduan.index');
+    Route::livewire('/video', 'pages::mahasiswa.video.index')->name('video.index');
+});
+
 // ── Mahasiswa ──────────────────────────────────────────────────────────────
 Route::middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.')->group(function () {
     Route::livewire('mahasiswa/dashboard', 'pages::mahasiswa.dashboard')->name('dashboard');
@@ -56,11 +63,6 @@ Route::middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.')->group(functio
     // ── Export PDF ──
     Route::get('/askep/{askep}/download', [\App\Http\Controllers\AskepPdfController::class, 'download'])
         ->name('askep.download');
-
-    // ── Panduan & Referensi ──
-    Route::livewire('/panduan', 'pages::mahasiswa.panduan.index')->name('panduan.index');
-    Route::livewire('/video', 'pages::mahasiswa.video.index')->name('video.index');
-    Route::livewire('/faq', 'pages::mahasiswa.faq.index')->name('faq.index');
 
     Route::prefix('log')->name('log.')->group(function () {
         Route::livewire('/', 'pages::mahasiswa.log.index')->name('index');

@@ -88,30 +88,30 @@
                 {{-- ── Panduan & Referensi ── --}}
                 <flux:sidebar.item
                     icon="book-open"
-                    :href="route('mahasiswa.panduan.index')"
-                    :current="request()->routeIs('mahasiswa.panduan.*')"
+                    :href="route('panduan.index')"
+                    :current="request()->routeIs('panduan.index')"
                     wire:navigate
-                >
+                    >
                     Panduan
-                </flux:sidebar.item>
+                    </flux:sidebar.item>
 
-                <flux:sidebar.item
-                    icon="play-circle"
-                    :href="route('mahasiswa.video.index')"
-                    :current="request()->routeIs('mahasiswa.video.*')"
+                    <flux:sidebar.item
+                    icon="video-camera"
+                    :href="route('video.index')"
+                    :current="request()->routeIs('video.index')"
                     wire:navigate
-                >
+                    >
                     Video Tutorial
-                </flux:sidebar.item>
+                    </flux:sidebar.item>
 
-                <flux:sidebar.item
+                    <flux:sidebar.item
                     icon="question-mark-circle"
-                    :href="route('mahasiswa.faq.index')"
-                    :current="request()->routeIs('mahasiswa.faq.*')"
+                    :href="route('faq.index')"
+                    :current="request()->routeIs('faq.index')"
                     wire:navigate
-                >
+                    >
                     FAQ
-                </flux:sidebar.item>
+                    </flux:sidebar.item>
             </flux:sidebar.nav>
 
             <flux:spacer />

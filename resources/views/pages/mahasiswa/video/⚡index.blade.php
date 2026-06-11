@@ -1,10 +1,15 @@
 <?php
 
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.mahasiswa')] #[Title('Video Tutorial')] class extends Component {};
+new #[Title('Video Tutorial')] class extends Component {
+    public function rendering($view): void
+    {
+        $layout = auth()->user()->isDosen() ? 'layouts.dosen' : (auth()->user()->isAdmin() ? 'layouts.admin' : 'layouts.mahasiswa');
+        $view->layout($layout);
+    }
+};
 ?>
 
 <div class="p-4 md:p-6">

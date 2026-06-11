@@ -1,10 +1,9 @@
 <?php
 
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.mahasiswa')] #[Title('Panduan')] class extends Component {
+new #[Title('Panduan')] class extends Component {
     public bool $modalOpen = false;
     public array $selectedItem = [];
 
@@ -18,6 +17,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Panduan')] class extends Component {
             'color' => $color,
         ];
         $this->modalOpen = true;
+    }
+
+    public function rendering($view): void
+    {
+        $layout = auth()->user()->isDosen() ? 'layouts.dosen' : (auth()->user()->isAdmin() ? 'layouts.admin' : 'layouts.mahasiswa');
+        $view->layout($layout);
     }
 };
 ?>
