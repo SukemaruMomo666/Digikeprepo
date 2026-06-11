@@ -23,6 +23,10 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/faq', 'pages::mahasiswa.faq.index')->name('faq.index');
     Route::livewire('/panduan', 'pages::mahasiswa.panduan.index')->name('panduan.index');
     Route::livewire('/video', 'pages::mahasiswa.video.index')->name('video.index');
+
+    // ── Export PDF ──
+    Route::get('/askep/{askep}/download', [\App\Http\Controllers\AskepPdfController::class, 'download'])
+        ->name('askep.download');
 });
 
 // ── Mahasiswa ──────────────────────────────────────────────────────────────
@@ -59,10 +63,6 @@ Route::middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.')->group(functio
 
     Route::livewire('/riwayat', 'pages::mahasiswa.riwayat.index')->name('riwayat.index');
     Route::livewire('/arsip', 'pages::mahasiswa.arsip.index')->name('arsip.index');
-
-    // ── Export PDF ──
-    Route::get('/askep/{askep}/download', [\App\Http\Controllers\AskepPdfController::class, 'download'])
-        ->name('askep.download');
 
     Route::prefix('log')->name('log.')->group(function () {
         Route::livewire('/', 'pages::mahasiswa.log.index')->name('index');

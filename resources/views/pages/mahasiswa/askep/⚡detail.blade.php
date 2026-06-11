@@ -57,7 +57,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                 </flux:button>
             @endif
 
-            <flux:button :href="route('mahasiswa.askep.download', $askep)" icon="printer" variant="ghost" size="sm">Cetak PDF</flux:button>
+            <flux:button :href="route('askep.download', $askep)" icon="printer" variant="ghost" size="sm">Cetak PDF</flux:button>
         </div>
     </div>
 

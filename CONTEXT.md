@@ -186,6 +186,7 @@ protected $table = 'askep_pengkajian';
 | `panduan.index` | `/panduan` | `pages::mahasiswa.panduan.index` |
 | `video.index` | `/video` | `pages::mahasiswa.video.index` |
 | `faq.index` | `/faq` | `pages::mahasiswa.faq.index` |
+| `askep.download` | `/askep/{askep}/download` | `AskepPdfController@download` |
 | `riwayat.index` | `/riwayat` | `pages::mahasiswa.riwayat.index` |
 | `askep.index` | `/askep` | `pages::mahasiswa.askep.index` |
 
