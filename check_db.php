@@ -35,7 +35,7 @@ if ($d0001) {
     echo "Gejala: " . DB::table('sdki_gejala')->where('sdki_id', $d0001->id)->count() . "\n";
     echo "Penyebab: " . DB::table('sdki_penyebab')->where('sdki_id', $d0001->id)->count() . "\n";
     
-    $relSlki = DB::table('sdki_slki_relations')->where('sdki_id', $d0001->id)->count();
+    $relSlki = DB::table('sdki_slki_relations')->where('diagnosa_id', $d0001->id)->count();
     echo "Relasi ke SLKI: " . $relSlki . "\n";
 } else {
     echo "D.0001 not found\n";

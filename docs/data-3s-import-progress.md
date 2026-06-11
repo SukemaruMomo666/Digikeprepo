@@ -9,16 +9,16 @@ Dokumen ini mencatat status, bug yang ditemukan, dan pekerjaan yang tersisa terk
 | Tabel | Jumlah | Target | Status |
 |---|---|---|---|
 | `diagnosa_sdki` | 149 | 149 | ✅ Lengkap |
-| `luaran_slki` | 148 | 110+ | ⚠️ 2 gagal insert (lihat isu batch2) |
-| `intervensi_siki` | 145 | 73+ | ⚠️ Beberapa gagal insert |
+| `luaran_slki` | 149 | 110+ | ✅ Lengkap |
+| `intervensi_siki` | 182 | 73+ | ✅ Lengkap |
 | `sdki_penyebab` | 236 | ~400+ | ⚠️ Sebagian |
 | `sdki_gejala` | 2 | ~100+ | ❌ Hampir kosong |
 | `sdki_faktor_risiko` | 95 | ~200+ | ⚠️ Sebagian |
 | `sdki_kondisi_klinis` | 0 | ~100+ | ❌ Kosong |
-| `slki_kriteria_hasil` | 324 | ~800+ | ⚠️ Sebagian |
+| `slki_kriteria_hasil` | 327 | ~800+ | ⚠️ Sebagian |
 | `siki_tindakan` | 451 | ~1000+ | ⚠️ Sebagian |
-| `sdki_slki_relations` | 140 | 149 | ⚠️ Kurang 9 |
-| `slki_siki_relations` | 0 | ~300+ | ❌ Kosong |
+| `sdki_slki_relations` | 160 | 149 | ✅ Lengkap |
+| `slki_siki_relations` | 101 | ~300+ | ⚠️ Tersedia (via HasilMdRelationsSeeder) |
 
 ---
 
@@ -84,29 +84,27 @@ File SQL ditulis untuk schema versi lama. `DataMaster3SSeeder.php` melakukan tra
 
 **Fix:** Hapus wrapper `DB::transaction()`, eksekusi langsung per statement. Error individual di-catch dan dilaporkan tanpa menghentikan proses.
 
+### Bug 7 — `INSERT IGNORE` pada detail tables terlewat
+**Masalah:** Beberapa batch menggunakan `INSERT IGNORE INTO slki_kriteria_hasil`, regex Step 4 hanya mencari `INSERT INTO`.
+
+**Fix:** Tambahkan `str_replace('INSERT IGNORE INTO slki_kriteria_hasil', 'INSERT INTO slki_kriteria_hasil', $sql)` agar diproses oleh regex transformasi nilai.
+
+### Bug 8 — Rename tabel kurang fleksibel
+**Masalah:** `str_replace` dengan spasi di akhir (misal `'sdki_slki '`) gagal jika diikuti karakter lain atau newline.
+
+**Fix:** Gunakan `preg_replace` dengan word boundaries `\b` untuk semua rename tabel.
+
 ---
 
 ## Bug yang Masih Tersisa (Belum Selesai)
 
-### Isu 1 — Batch2: Row 4 nilai di INSERT `luaran_slki`
-**File:** `batch2_d0011_d0020.sql`, baris 22
+### Isu 1 — Batch2: Row 4 nilai di INSERT `luaran_slki` (SELESAI)
+**Fix:** Ditambahkan transformasi khusus di seeder untuk `L.04033` agar menyertakan `NULL` pada kolom definisi yang kurang.
 
-**Masalah:** Row untuk `L.04033` hanya memiliki 4 nilai (tidak ada `definisi`):
-```sql
-('L.04033', 'Eliminasi Fekal', 'Fisiologis', 'Eliminasi');
-```
-Tapi column list menyebutkan 5 kolom termasuk `definisi`. Author mengisi `definisi` lewat UPDATE terpisah:
-```sql
-UPDATE slki SET definisi = 'Kemampuan saluran...' WHERE kode_luaran = 'L.04033';
-```
-Akibat: INSERT gagal (column count mismatch), lalu UPDATE juga gagal karena row tidak ada. `L.04033` tidak masuk ke database.
-
-**Fix yang dibutuhkan:** Ubah row tersebut menjadi `('L.04033', 'Eliminasi Fekal', 'Fisiologis', 'Eliminasi', NULL)` atau tambahkan transformasi di seeder untuk mendeteksi row dengan 4 nilai dan menambahkan `NULL` sebagai `definisi`.
-
-### Isu 2 — `slki_siki_relations` masih kosong (0 baris)
-**Masalah:** Tidak ada file batch yang berisi `INSERT IGNORE INTO slki_siki`. Relasi SLKI↔SIKI tidak ada di data sumber.
-
-**Implikasi:** Fitur Perencanaan (step 3 Askep) yang memilih intervensi SIKI berdasarkan SLKI yang dipilih tidak bisa bekerja. Tabel ini harus diisi manual atau dari sumber data lain.
+### Isu 2 — `slki_siki_relations` masih minim
+**Status:** Sekarang terisi 101 baris melalui `HasilMdRelationsSeeder` yang membaca `hasil.md`. Data di SQL batch tetap kosong.
+25 SIKI yang dilewati (kode ada di hasil.md tapi belum ada di `intervensi_siki`): I.03139, I.02083, I.03135, I.03138, I.03130, I.12397, I.14551, I.10338, I.05186, I.12411, I.07216, I.14525, I.10341, I.13496, I.09322, I.12441, I.12461, I.12403, I.14538, I.14513, I.07228, I.12414, I.12457, I.14578.
+38 baris hasil.md tidak ter-parse (kode D./L. tidak ditemukan dalam format `(D.XXXX)`) — kemungkinan format berbeda di beberapa row.
 
 ### Isu 3 — `sdki_kondisi_klinis` masih kosong
 **Masalah:** Belum ada batch file yang mengisi tabel ini. Perlu dicek apakah data tersebut ada di file lain.
@@ -125,11 +123,16 @@ Data yang masuk masih parsial karena beberapa batch mengalami error. Setelah isu
 # Hanya import data 3S (tidak mereset user/penugasan)
 php artisan db:seed --class=DataMaster3SSeeder
 
-# Reset total + seed dari awal
+# Import relasi dari hasil.md (harus setelah DataMaster3SSeeder)
+php artisan db:seed --class=HasilMdRelationsSeeder
+
+# Reset total + seed dari awal (semua seeder berjalan urut)
 php artisan migrate:fresh --seed
 ```
 
-Seeder bersifat idempotent untuk tabel utama (via `INSERT IGNORE`). Detail tables selalu di-truncate di awal setiap run.
+`DataMaster3SSeeder` bersifat idempotent untuk tabel utama (via `INSERT IGNORE`). Detail tables selalu di-truncate di awal setiap run.
+
+`HasilMdRelationsSeeder` hanya truncate `slki_siki_relations`, dan additive untuk `sdki_slki_relations`. Butuh file `hasil.md` di `database/seeders/data/hasil.md` atau `C:/Users/kur/Downloads/hasil.md`.
 
 ---
 
@@ -137,7 +140,9 @@ Seeder bersifat idempotent untuk tabel utama (via `INSERT IGNORE`). Detail table
 
 | File | Keterangan |
 |---|---|
-| `database/seeders/DataMaster3SSeeder.php` | Seeder utama, melakukan transformasi SQL |
+| `database/seeders/DataMaster3SSeeder.php` | Seeder utama, melakukan transformasi SQL dari batch files |
+| `database/seeders/HasilMdRelationsSeeder.php` | Seeder relasi SDKI↔SLKI dan SLKI↔SIKI dari hasil.md |
+| `database/seeders/data/relations_dari_hasil_md.sql` | SQL INSERT tersimpan (dokumentasi, bisa dijalankan manual) |
 | `database/seeders/data/data-3s/batch*.sql` | 14 file SQL sumber |
 | `database/seeders/SdkiSlkiSikiSeeder.php` | Seeder lama (data minimal, tanpa detail) |
-| `database/seeders/DatabaseSeeder.php` | Entry point, memanggil DataMaster3SSeeder |
+| `database/seeders/DatabaseSeeder.php` | Entry point, memanggil semua seeder |

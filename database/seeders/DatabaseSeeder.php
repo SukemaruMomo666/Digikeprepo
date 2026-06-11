@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             DosenSeeder::class,
             ImportMahasiswaExcelSeeder::class, // Import 367 mahasiswa & 12 dosen dari CSV
             DataMaster3SSeeder::class, // Menggantikan SdkiSlkiSikiSeeder, SdkiDetailSeeder, SlkiSikiDetailSeeder, dan DataMasterSeeder
+            HasilMdRelationsSeeder::class, // Relasi SDKI↔SLKI dan SLKI↔SIKI dari hasil.md
         ]);
     }
 }

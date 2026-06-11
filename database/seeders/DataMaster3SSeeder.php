@@ -52,25 +52,28 @@ class DataMaster3SSeeder extends Seeder
         $sql = str_replace('descripsi', 'deskripsi', $sql);
 
         // ── Step 1: Rename legacy table names → actual schema names ──────────
-        $tableRenames = [
-            'INSERT IGNORE INTO slki '      => 'INSERT IGNORE INTO luaran_slki ',
-            'INSERT IGNORE INTO siki '      => 'INSERT IGNORE INTO intervensi_siki ',
-            'INSERT IGNORE INTO sdki '      => 'INSERT IGNORE INTO diagnosa_sdki ',
-            'FROM slki WHERE'               => 'FROM luaran_slki WHERE',
-            'FROM siki WHERE'               => 'FROM intervensi_siki WHERE',
-            'FROM sdki WHERE'               => 'FROM diagnosa_sdki WHERE',
-            'UPDATE siki '                  => 'UPDATE intervensi_siki ',
-            'UPDATE slki '                  => 'UPDATE luaran_slki ',
-            'UPDATE sdki '                  => 'UPDATE diagnosa_sdki ',
-            'INSERT IGNORE INTO sdki_slki ' => 'INSERT IGNORE INTO sdki_slki_relations ',
-            'INSERT IGNORE INTO slki_siki ' => 'INSERT IGNORE INTO slki_siki_relations ',
-            'nama_luaran'                   => 'label_luaran',
-            'nama_intervensi'               => 'label_intervensi',
-            'nama_diagnosa'                 => 'label_diagnosa',
-        ];
-        foreach ($tableRenames as $old => $new) {
-            $sql = str_replace($old, $new, $sql);
-        }
+        $sql = preg_replace('/\bINSERT IGNORE INTO slki\b/', 'INSERT IGNORE INTO luaran_slki', $sql);
+        $sql = preg_replace('/\bINSERT IGNORE INTO siki\b/', 'INSERT IGNORE INTO intervensi_siki', $sql);
+        $sql = preg_replace('/\bINSERT IGNORE INTO sdki\b/', 'INSERT IGNORE INTO diagnosa_sdki', $sql);
+        $sql = preg_replace('/\bFROM slki\b/', 'FROM luaran_slki', $sql);
+        $sql = preg_replace('/\bFROM siki\b/', 'FROM intervensi_siki', $sql);
+        $sql = preg_replace('/\bFROM sdki\b/', 'FROM diagnosa_sdki', $sql);
+        $sql = preg_replace('/\bUPDATE slki\b/', 'UPDATE luaran_slki', $sql);
+        $sql = preg_replace('/\bUPDATE siki\b/', 'UPDATE intervensi_siki', $sql);
+        $sql = preg_replace('/\bUPDATE sdki\b/', 'UPDATE diagnosa_sdki', $sql);
+        $sql = preg_replace('/\bINSERT IGNORE INTO sdki_slki\b/', 'INSERT IGNORE INTO sdki_slki_relations', $sql);
+        $sql = preg_replace('/\bINSERT IGNORE INTO slki_siki\b/', 'INSERT IGNORE INTO slki_siki_relations', $sql);
+        $sql = str_replace('nama_luaran', 'label_luaran', $sql);
+        $sql = str_replace('nama_intervensi', 'label_intervensi', $sql);
+        $sql = str_replace('nama_diagnosa', 'label_diagnosa', $sql);
+
+        // ── Step 1c: Fix rows with missing columns (e.g. L.04033 in Batch 2) ──
+        // L.04033 only has 4 values in batch2 but the INSERT list has 5 columns.
+        $sql = preg_replace(
+            "/\('L\.04033',\s*'Eliminasi Fekal',\s*'Fisiologis',\s*'Eliminasi'\)/",
+            "('L.04033', 'Eliminasi Fekal', 'Fisiologis', 'Eliminasi', NULL)",
+            $sql
+        );
 
         // ── Step 1b: Strip tipe_intervensi — column not in intervensi_siki schema ─
         $sql = str_replace(', tipe_intervensi', '', $sql);
@@ -98,6 +101,9 @@ class DataMaster3SSeeder extends Seeder
         // ── Step 4: Fix slki_kriteria_hasil column + value format ─────────────
         // Column header: kode_luaran → luaran_id
         $sql = str_replace('slki_kriteria_hasil (kode_luaran,', 'slki_kriteria_hasil (luaran_id,', $sql);
+        // Also handle INSERT IGNORE if present
+        $sql = str_replace('INSERT IGNORE INTO slki_kriteria_hasil', 'INSERT INTO slki_kriteria_hasil', $sql);
+        
         // Values: ('L.XXXXX', ...) → ((SELECT id FROM luaran_slki WHERE kode_luaran='L.XXXXX'), ...)
         // Scoped to only slki_kriteria_hasil INSERT blocks to avoid touching luaran_slki INSERTs.
         $sql = preg_replace_callback(
