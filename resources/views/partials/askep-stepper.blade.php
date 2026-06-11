@@ -43,7 +43,7 @@
             @php
                 $isCurrent  = $num === $step;
                 $isDone     = $num <= $stepTerakhir;
-                $isAccessible = $num <= $stepTerakhir + 1;
+                $isAccessible = $num <= $stepTerakhir + 1 || $askep->status === \App\Models\Askep::STATUS_PERLU_REVISI;
             @endphp
 
             @if ($isAccessible)

@@ -77,11 +77,16 @@ class Askep extends Model
     // ── Step helpers ──────────────────────────────────────────────────────────
 
     /**
-     * URL langkah Askep berikutnya yang belum selesai.
-     * Digunakan oleh tombol "Lanjutkan Askep".
+     * URL langkah Askep berikutnya yang belum selesai atau revisi.
+     * Digunakan oleh tombol "Lanjutkan Edit / Lanjutkan Askep".
      */
     public function nextStepUrl(): string
     {
+        // Jika status perlu revisi, selalu mulai dari langkah 1 agar mahasiswa bisa meninjau ulang
+        if ($this->status === self::STATUS_PERLU_REVISI) {
+            return route('mahasiswa.askep.pengkajian', $this);
+        }
+
         return match (true) {
             $this->step_terakhir < 1 => route('mahasiswa.askep.pengkajian', $this),
             $this->step_terakhir < 2 => route('mahasiswa.askep.diagnosa', $this),

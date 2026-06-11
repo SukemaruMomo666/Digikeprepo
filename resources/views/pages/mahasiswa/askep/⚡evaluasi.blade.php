@@ -198,6 +198,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Evaluasi Askep')] class extends Comp
             'step_terakhir' => 5,
             'status'        => Askep::STATUS_MENUNGGU_REVIEW,
             'submitted_at'  => now(),
+            'catatan_dosen' => null, // Reset catatan revisi saat dikirim ulang
         ]);
 
         $this->askep->pasien->catatRiwayat('Askep dikirim untuk review dosen.');
