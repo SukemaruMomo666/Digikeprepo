@@ -17,13 +17,13 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
     // Form fields
     public ?int $mahasiswa_id = null;
     public ?int $dosen_id = null;
-    public string $angkatan = '';
-    public string $kelas = '';
-    public string $stase = '';
-    public string $rs = '';
-    public string $bangsal = '';
-    public string $periode_mulai = '';
-    public string $periode_selesai = '';
+    public ?string $angkatan = null;
+    public ?string $kelas = null;
+    public ?string $stase = null;
+    public ?string $rs = null;
+    public ?string $bangsal = null;
+    public ?string $periode_mulai = null;
+    public ?string $periode_selesai = null;
 
     public ?int $editId = null;
     public bool $showForm = false;
@@ -42,13 +42,13 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
         $this->editId = $id;
         $this->mahasiswa_id = $penugasan->mahasiswa_id;
         $this->dosen_id = $penugasan->dosen_id;
-        $this->angkatan = $penugasan->angkatan ?? '';
-        $this->kelas = $penugasan->kelas ?? '';
-        $this->stase = $penugasan->stase ?? '';
-        $this->rs = $penugasan->rs ?? '';
-        $this->bangsal = $penugasan->bangsal ?? '';
-        $this->periode_mulai = $penugasan->periode_mulai ? $penugasan->periode_mulai->format('Y-m-d') : '';
-        $this->periode_selesai = $penugasan->periode_selesai ? $penugasan->periode_selesai->format('Y-m-d') : '';
+        $this->angkatan = $penugasan->angkatan;
+        $this->kelas = $penugasan->kelas;
+        $this->stase = $penugasan->stase;
+        $this->rs = $penugasan->rs;
+        $this->bangsal = $penugasan->bangsal;
+        $this->periode_mulai = $penugasan->periode_mulai ? $penugasan->periode_mulai->format('Y-m-d') : null;
+        $this->periode_selesai = $penugasan->periode_selesai ? $penugasan->periode_selesai->format('Y-m-d') : null;
         $this->showForm = true;
     }
 
@@ -65,6 +65,13 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
             'periode_mulai'   => ['nullable', 'date'],
             'periode_selesai' => ['nullable', 'date', 'after_or_equal:periode_mulai'],
         ]);
+
+        // Ensure empty strings are null
+        foreach ($data as $key => $value) {
+            if ($value === '') {
+                $data[$key] = null;
+            }
+        }
 
         if ($this->editId) {
             Penugasan::findOrFail($this->editId)->update($data);
