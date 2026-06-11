@@ -413,9 +413,3 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
         </button>
     </div>
 </div>
->
-</div>
-njut" />
-        </button>
-    </div>
-</div>
