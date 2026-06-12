@@ -2,7 +2,6 @@
 
 use App\Models\Penugasan;
 use App\Models\User;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -12,23 +11,93 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 {
     use WithPagination;
 
+    public string $tab    = 'massal'; // massal | individual
     public string $search = '';
 
-    // Form fields
-    public ?int $mahasiswa_id = null;
-    public ?int $dosen_id = null;
-    public ?string $angkatan = null;
-    public ?string $kelas = null;
-    public ?string $stase = null;
-    public ?string $rs = null;
-    public ?string $bangsal = null;
-    public ?string $periode_mulai = null;
+    // === MASSAL ===
+    public string $bulkKelas    = '';
+    public string $bulkAngkatan = '';
+    public ?int   $bulkDosenId  = null;
+    public string $bulkStase    = '';
+    public string $bulkRs       = '';
+    public string $bulkBangsal  = '';
+    public string $bulkMulai    = '';
+    public string $bulkSelesai  = '';
+    public bool   $bulkPreview  = false;
+
+    // === INDIVIDUAL ===
+    public ?int    $editId          = null;
+    public bool    $showForm        = false;
+    public ?int    $mahasiswa_id    = null;
+    public ?int    $dosen_id        = null;
+    public ?string $angkatan        = null;
+    public ?string $kelas           = null;
+    public ?string $stase           = null;
+    public ?string $rs              = null;
+    public ?string $bangsal         = null;
+    public ?string $periode_mulai   = null;
     public ?string $periode_selesai = null;
 
-    public ?int $editId = null;
-    public bool $showForm = false;
-
     public function updatingSearch(): void { $this->resetPage(); }
+    public function updatingTab(): void    { $this->resetPage(); }
+
+    // ── Massal ──────────────────────────────────
+
+    public function previewMassal(): void
+    {
+        $this->validate([
+            'bulkDosenId' => 'required|exists:users,id',
+            'bulkMulai'   => 'required|date',
+            'bulkSelesai' => 'required|date|after_or_equal:bulkMulai',
+        ], [], [
+            'bulkDosenId' => 'Dosen Pembimbing',
+            'bulkMulai'   => 'Periode Mulai',
+            'bulkSelesai' => 'Periode Selesai',
+        ]);
+
+        if (!$this->bulkKelas && !$this->bulkAngkatan) {
+            $this->addError('bulkKelas', 'Pilih minimal kelas atau angkatan.');
+            return;
+        }
+
+        $this->bulkPreview = true;
+    }
+
+    public function saveMassal(): void
+    {
+        $mahasiswas = $this->getMahasiswaMassal();
+
+        foreach ($mahasiswas as $mhs) {
+            Penugasan::updateOrCreate(
+                ['mahasiswa_id' => $mhs->id],
+                [
+                    'dosen_id'        => $this->bulkDosenId,
+                    'kelas'           => $mhs->kelas,
+                    'angkatan'        => $mhs->angkatan,
+                    'stase'           => $this->bulkStase   ?: null,
+                    'rs'              => $this->bulkRs      ?: null,
+                    'bangsal'         => $this->bulkBangsal ?: null,
+                    'periode_mulai'   => $this->bulkMulai,
+                    'periode_selesai' => $this->bulkSelesai,
+                ]
+            );
+        }
+
+        $this->bulkPreview = false;
+        $this->reset('bulkKelas', 'bulkAngkatan', 'bulkDosenId', 'bulkStase', 'bulkRs', 'bulkBangsal', 'bulkMulai', 'bulkSelesai');
+        $this->dispatch('toast', variant: 'success', message: count($mahasiswas) . ' penugasan berhasil disimpan.');
+    }
+
+    private function getMahasiswaMassal()
+    {
+        return User::where('role', 'mahasiswa')
+            ->when($this->bulkKelas,    fn ($q) => $q->where('kelas', $this->bulkKelas))
+            ->when($this->bulkAngkatan, fn ($q) => $q->where('angkatan', $this->bulkAngkatan))
+            ->orderBy('name')
+            ->get();
+    }
+
+    // ── Individual ──────────────────────────────
 
     public function openCreate(): void
     {
@@ -38,40 +107,35 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 
     public function openEdit(int $id): void
     {
-        $penugasan = Penugasan::findOrFail($id);
-        $this->editId = $id;
-        $this->mahasiswa_id = $penugasan->mahasiswa_id;
-        $this->dosen_id = $penugasan->dosen_id;
-        $this->angkatan = $penugasan->angkatan;
-        $this->kelas = $penugasan->kelas;
-        $this->stase = $penugasan->stase;
-        $this->rs = $penugasan->rs;
-        $this->bangsal = $penugasan->bangsal;
-        $this->periode_mulai = $penugasan->periode_mulai ? $penugasan->periode_mulai->format('Y-m-d') : null;
-        $this->periode_selesai = $penugasan->periode_selesai ? $penugasan->periode_selesai->format('Y-m-d') : null;
-        $this->showForm = true;
+        $p = Penugasan::findOrFail($id);
+        $this->editId         = $id;
+        $this->mahasiswa_id   = $p->mahasiswa_id;
+        $this->dosen_id       = $p->dosen_id;
+        $this->angkatan       = $p->angkatan;
+        $this->kelas          = $p->kelas;
+        $this->stase          = $p->stase;
+        $this->rs             = $p->rs;
+        $this->bangsal        = $p->bangsal;
+        $this->periode_mulai  = $p->periode_mulai?->format('Y-m-d');
+        $this->periode_selesai= $p->periode_selesai?->format('Y-m-d');
+        $this->showForm       = true;
     }
 
     public function save(): void
     {
         $data = $this->validate([
-            'mahasiswa_id'    => ['required', 'exists:users,id'],
-            'dosen_id'        => ['required', 'exists:users,id'],
-            'angkatan'        => ['nullable', 'numeric', 'digits:4'],
-            'kelas'           => ['nullable', 'string', 'max:10'],
-            'stase'           => ['nullable', 'string', 'max:100'],
-            'rs'              => ['nullable', 'string', 'max:255'],
-            'bangsal'         => ['nullable', 'string', 'max:100'],
-            'periode_mulai'   => ['nullable', 'date'],
-            'periode_selesai' => ['nullable', 'date', 'after_or_equal:periode_mulai'],
+            'mahasiswa_id'    => 'required|exists:users,id',
+            'dosen_id'        => 'required|exists:users,id',
+            'angkatan'        => 'nullable|string|max:10',
+            'kelas'           => 'nullable|string|max:10',
+            'stase'           => 'nullable|string|max:100',
+            'rs'              => 'nullable|string|max:255',
+            'bangsal'         => 'nullable|string|max:100',
+            'periode_mulai'   => 'nullable|date',
+            'periode_selesai' => 'nullable|date|after_or_equal:periode_mulai',
         ]);
 
-        // Ensure empty strings are null
-        foreach ($data as $key => $value) {
-            if ($value === '') {
-                $data[$key] = null;
-            }
-        }
+        foreach ($data as $k => $v) { if ($v === '') $data[$k] = null; }
 
         if ($this->editId) {
             Penugasan::findOrFail($this->editId)->update($data);
@@ -93,142 +157,293 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 
     public function with(): array
     {
-        return [
-            'penugasans' => Penugasan::with(['mahasiswa', 'dosen'])
-                ->when($this->search, function ($q) {
-                    $q->whereHas('mahasiswa', function ($q) {
-                        $q->where('name', 'like', "%{$this->search}%")
-                          ->orWhere('nim_nip', 'like', "%{$this->search}%");
-                    });
-                })
-                ->latest()
-                ->paginate(15),
-            'mahasiswas' => User::where('role', 'mahasiswa')->orderBy('name')->get(),
-            'dosens'     => User::where('role', 'dosen')->orderBy('name')->get(),
-        ];
+        $kelasOptions    = User::where('role', 'mahasiswa')->whereNotNull('kelas')->distinct()->orderBy('kelas')->pluck('kelas');
+        $angkatanOptions = User::where('role', 'mahasiswa')->whereNotNull('angkatan')->distinct()->orderBy('angkatan')->pluck('angkatan');
+        $dosens          = User::where('role', 'dosen')->orderBy('name')->get();
+
+        $penugasans = Penugasan::with(['mahasiswa', 'dosen'])
+            ->when($this->search, fn ($q) => $q->whereHas('mahasiswa', fn ($q) =>
+                $q->where('name', 'like', "%{$this->search}%")
+                  ->orWhere('nim_nip', 'like', "%{$this->search}%")
+            ))
+            ->orderBy(
+                User::select('kelas')->whereColumn('users.id', 'penugasans.mahasiswa_id')->limit(1)
+            )
+            ->latest('penugasans.id')
+            ->paginate(20);
+
+        $mahasiswaMassal = $this->bulkPreview ? $this->getMahasiswaMassal()->load('penugasanSebagaiMahasiswa') : collect();
+        $mahasiswas      = User::where('role', 'mahasiswa')->orderBy('name')->get();
+
+        return compact('penugasans', 'kelasOptions', 'angkatanOptions', 'dosens', 'mahasiswas', 'mahasiswaMassal');
     }
 };
 ?>
 
-<div>
-    <div class="mb-6 flex items-center justify-between">
-        <div>
-            <flux:heading size="xl" level="1">Kelola Penugasan</flux:heading>
-            <flux:text class="mt-1">Daftar penugasan mahasiswa ke dosen pembimbing.</flux:text>
-        </div>
-        <flux:button variant="primary" icon="plus" wire:click="openCreate">Tambah Penugasan</flux:button>
+<div class="p-4 md:p-6">
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Kelola Penugasan</h1>
+        <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">Plot mahasiswa ke dosen pembimbing secara massal atau individual.</p>
     </div>
 
-    <flux:card>
-        <div class="mb-4">
+    {{-- Tab --}}
+    <div class="mb-6 flex gap-1 rounded-xl border border-[#E0EBF5] dark:border-zinc-700 bg-[#F4F8FB] dark:bg-zinc-800/60 p-1 w-fit">
+        <button
+            wire:click="$set('tab','massal')"
+            class="rounded-lg px-5 py-2 text-sm font-semibold transition
+                {{ $tab === 'massal'
+                    ? 'bg-white dark:bg-zinc-700 text-[#1B4F72] dark:text-white shadow-sm'
+                    : 'text-[#7A8FA6] dark:text-zinc-400 hover:text-[#1B4F72] dark:hover:text-white' }}"
+        >
+            Plot Massal
+        </button>
+        <button
+            wire:click="$set('tab','individual')"
+            class="rounded-lg px-5 py-2 text-sm font-semibold transition
+                {{ $tab === 'individual'
+                    ? 'bg-white dark:bg-zinc-700 text-[#1B4F72] dark:text-white shadow-sm'
+                    : 'text-[#7A8FA6] dark:text-zinc-400 hover:text-[#1B4F72] dark:hover:text-white' }}"
+        >
+            Per Mahasiswa
+        </button>
+    </div>
+
+    {{-- ══════════ TAB: MASSAL ══════════ --}}
+    @if($tab === 'massal')
+        <div class="grid gap-6 lg:grid-cols-5">
+
+            {{-- Form kiri --}}
+            <div class="lg:col-span-2 space-y-5">
+                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
+                    <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">1. Pilih Target Mahasiswa</h2>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="mb-1 block text-xs font-semibold text-[#7A8FA6] dark:text-zinc-400 uppercase tracking-wider">Angkatan</label>
+                            <flux:select wire:model.live="bulkAngkatan" placeholder="Semua Angkatan">
+                                <flux:select.option value="">Semua Angkatan</flux:select.option>
+                                @foreach($angkatanOptions as $opt)
+                                    <flux:select.option value="{{ $opt }}">Angkatan {{ $opt }}</flux:select.option>
+                                @endforeach
+                            </flux:select>
+                        </div>
+                        <div>
+                            <label class="mb-1 block text-xs font-semibold text-[#7A8FA6] dark:text-zinc-400 uppercase tracking-wider">Kelas</label>
+                            <flux:select wire:model.live="bulkKelas" placeholder="Semua Kelas">
+                                <flux:select.option value="">Semua Kelas</flux:select.option>
+                                @foreach($kelasOptions as $opt)
+                                    <flux:select.option value="{{ $opt }}">Kelas {{ $opt }}</flux:select.option>
+                                @endforeach
+                            </flux:select>
+                        </div>
+                    </div>
+                    @error('bulkKelas') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                </div>
+
+                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
+                    <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">2. Isi Detail Penugasan</h2>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="mb-1 block text-xs font-semibold text-[#7A8FA6] dark:text-zinc-400 uppercase tracking-wider">Dosen Pembimbing <span class="text-red-500">*</span></label>
+                            <flux:select wire:model="bulkDosenId" placeholder="Pilih Dosen" searchable>
+                                @foreach($dosens as $d)
+                                    <flux:select.option :value="$d->id">{{ $d->name }}</flux:select.option>
+                                @endforeach
+                            </flux:select>
+                            @error('bulkDosenId') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                        </div>
+                        <flux:input wire:model="bulkStase" label="Stase" placeholder="Cth: KMB I" autocomplete="off" />
+                        <flux:input wire:model="bulkRs" label="Rumah Sakit" placeholder="Cth: RSUD Subang" autocomplete="off" />
+                        <flux:input wire:model="bulkBangsal" label="Bangsal / Ruang" placeholder="Cth: Teratai" autocomplete="off" />
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <flux:input type="date" wire:model="bulkMulai" label="Periode Mulai" />
+                                @error('bulkMulai') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <flux:input type="date" wire:model="bulkSelesai" label="Periode Selesai" />
+                                @error('bulkSelesai') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <flux:button variant="primary" wire:click="previewMassal" icon="eye" class="w-full justify-center">
+                    Preview & Konfirmasi
+                </flux:button>
+            </div>
+
+            {{-- Preview kanan --}}
+            <div class="lg:col-span-3">
+                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5 h-full">
+                    <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">Preview Mahasiswa yang Akan Di-plot</h2>
+
+                    @if(!$bulkPreview)
+                        <div class="flex flex-col items-center justify-center py-16 text-center">
+                            <flux:icon.user-group class="mb-3 size-12 text-[#D0DCE8] dark:text-zinc-600" />
+                            <p class="text-sm text-[#7A8FA6] dark:text-zinc-400">Pilih filter dan isi detail penugasan,<br>lalu klik <strong>Preview & Konfirmasi</strong>.</p>
+                        </div>
+                    @elseif($mahasiswaMassal->isEmpty())
+                        <div class="flex flex-col items-center justify-center py-16 text-center">
+                            <flux:icon.exclamation-triangle class="mb-3 size-10 text-amber-400" />
+                            <p class="text-sm text-[#7A8FA6]">Tidak ada mahasiswa yang cocok dengan filter tersebut.</p>
+                        </div>
+                    @else
+                        @php
+                            $dosen = $dosens->firstWhere('id', $bulkDosenId);
+                        @endphp
+                        <div class="mb-4 rounded-xl border border-[#D6EAF8] bg-[#EBF5FB] dark:bg-blue-900/20 dark:border-blue-800 p-4 text-sm">
+                            <p class="font-semibold text-[#1B4F72] dark:text-blue-200">{{ $mahasiswaMassal->count() }} mahasiswa akan di-assign ke:</p>
+                            <p class="mt-1 text-[#1B4F72] dark:text-zinc-300">
+                                <strong>{{ $dosen?->name ?? '-' }}</strong>
+                                @if($bulkStase) &nbsp;•&nbsp; Stase: {{ $bulkStase }} @endif
+                                @if($bulkRs) &nbsp;•&nbsp; {{ $bulkRs }} @endif
+                            </p>
+                            <p class="mt-0.5 text-[#7A8FA6] dark:text-zinc-400 text-xs">
+                                Periode: {{ $bulkMulai }} s/d {{ $bulkSelesai }}
+                            </p>
+                        </div>
+
+                        <div class="max-h-80 overflow-y-auto divide-y divide-[#E0EBF5] dark:divide-zinc-700 rounded-xl border border-[#E0EBF5] dark:border-zinc-700">
+                            @foreach($mahasiswaMassal as $mhs)
+                                <div class="flex items-center justify-between px-4 py-2.5">
+                                    <div>
+                                        <p class="text-sm font-medium text-[#1B4F72] dark:text-zinc-100">{{ $mhs->name }}</p>
+                                        <p class="font-mono text-xs text-[#7A8FA6] dark:text-zinc-400">{{ $mhs->nim_nip }} &nbsp;•&nbsp; Kelas {{ $mhs->kelas ?? '-' }}</p>
+                                    </div>
+                                    @php $existing = $mhs->penugasanSebagaiMahasiswa->first(); @endphp
+                                    @if($existing)
+                                        <span class="text-xs text-amber-600 dark:text-amber-400 font-medium">Timpa existing</span>
+                                    @else
+                                        <span class="text-xs text-[#1A9B72] dark:text-green-400 font-medium">Baru</span>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="mt-5 flex justify-end gap-3">
+                            <flux:button variant="ghost" wire:click="$set('bulkPreview', false)">Ubah</flux:button>
+                            <flux:button variant="primary" wire:click="saveMassal" wire:loading.attr="disabled" icon="check">
+                                <span wire:loading.remove wire:target="saveMassal">Simpan {{ $mahasiswaMassal->count() }} Penugasan</span>
+                                <span wire:loading wire:target="saveMassal">Menyimpan...</span>
+                            </flux:button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- ══════════ TAB: INDIVIDUAL ══════════ --}}
+    @if($tab === 'individual')
+        <div class="mb-4 flex items-center justify-between gap-3">
             <flux:input
                 wire:model.live.debounce.300ms="search"
                 placeholder="Cari mahasiswa (nama/NIM)..." autocomplete="off"
                 icon="magnifying-glass"
                 clearable
+                class="max-w-sm"
             />
+            <flux:button variant="primary" icon="plus" wire:click="openCreate">Tambah Manual</flux:button>
         </div>
 
-        <flux:table>
-            <flux:table.columns>
-                <flux:table.column>Mahasiswa</flux:table.column>
-                <flux:table.column>Dosen Pembimbing</flux:table.column>
-                <flux:table.column>Stase / RS</flux:table.column>
-                <flux:table.column>Periode</flux:table.column>
-                <flux:table.column></flux:table.column>
-            </flux:table.columns>
-            <flux:table.rows>
-                @forelse ($penugasans as $item)
-                    <flux:table.row :key="$item->id">
-                        <flux:table.cell>
-                            <div class="font-medium text-zinc-900 dark:text-white">{{ $item->mahasiswa->name }}</div>
-                            <div class="text-xs text-zinc-500">{{ $item->mahasiswa->nim_nip }} • Angkatan {{ $item->angkatan ?? '-' }} ({{ $item->kelas ?? '-' }})</div>
-                        </flux:table.cell>
-                        <flux:table.cell>
-                            <div class="text-sm">{{ $item->dosen->name }}</div>
-                            <div class="text-xs text-zinc-500">{{ $item->dosen->nim_nip }}</div>
-                        </flux:table.cell>
-                        <flux:table.cell>
-                            <div class="text-sm font-medium">{{ $item->stase ?? '-' }}</div>
-                            <div class="text-xs text-zinc-500">{{ $item->rs ?? '-' }} @if($item->bangsal) ({{ $item->bangsal }}) @endif</div>
-                        </flux:table.cell>
-                        <flux:table.cell>
-                            @if($item->periode_mulai && $item->periode_selesai)
-                                <div class="text-xs">
-                                    {{ $item->periode_mulai->format('d/m/Y') }} - {{ $item->periode_selesai->format('d/m/Y') }}
-                                </div>
-                            @else
-                                <span class="text-zinc-400">-</span>
-                            @endif
-                        </flux:table.cell>
-                        <flux:table.cell>
-                            <flux:dropdown>
-                                <flux:button size="sm" variant="ghost" icon="ellipsis-horizontal" inset="top bottom" />
-                                <flux:menu>
-                                    <flux:menu.item icon="pencil" wire:click="openEdit({{ $item->id }})">Edit</flux:menu.item>
-                                    <flux:menu.separator />
-                                    <flux:menu.item
-                                        icon="trash"
-                                        variant="danger"
-                                        wire:click="hapus({{ $item->id }})"
-                                        wire:confirm="Hapus penugasan ini?"
-                                    >Hapus</flux:menu.item>
-                                </flux:menu>
-                            </flux:dropdown>
-                        </flux:table.cell>
-                    </flux:table.row>
-                @empty
-                    <flux:table.row>
-                        <flux:table.cell colspan="5" class="py-10 text-center text-zinc-500">
-                            Belum ada penugasan yang dibuat.
-                        </flux:table.cell>
-                    </flux:table.row>
-                @endforelse
-            </flux:table.rows>
-        </flux:table>
-
-        <div class="mt-4">{{ $penugasans->links() }}</div>
-    </flux:card>
-
-    {{-- Modal Form --}}
-    <flux:modal wire:model="showForm" class="max-w-lg">
-        <div class="space-y-6">
-            <div>
-                <flux:heading size="lg">{{ $editId ? 'Edit Penugasan' : 'Tambah Penugasan' }}</flux:heading>
-                <flux:text class="mt-1">Lengkapi detail penugasan mahasiswa.</flux:text>
+        <div class="overflow-hidden rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800">
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead>
+                        <tr class="border-b border-[#E0EBF5] dark:border-zinc-700 bg-[#F4F8FB] dark:bg-zinc-900/50">
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Mahasiswa</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Dosen Pembimbing</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Stase / RS</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Periode</th>
+                            <th class="px-4 py-3"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#E0EBF5] dark:divide-zinc-700">
+                        @forelse($penugasans as $item)
+                            <tr wire:key="p-{{ $item->id }}" class="hover:bg-[#F4F8FB] dark:hover:bg-zinc-700/40 transition-colors">
+                                <td class="px-4 py-3">
+                                    <p class="text-sm font-semibold text-[#1B4F72] dark:text-zinc-100">{{ $item->mahasiswa->name }}</p>
+                                    <p class="font-mono text-xs text-[#7A8FA6] dark:text-zinc-400">
+                                        {{ $item->mahasiswa->nim_nip }}
+                                        @if($item->mahasiswa->kelas)
+                                            &nbsp;•&nbsp; Kelas {{ $item->mahasiswa->kelas }}
+                                        @endif
+                                    </p>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="text-sm text-[#1B4F72] dark:text-zinc-200">{{ $item->dosen->name }}</p>
+                                    <p class="font-mono text-xs text-[#7A8FA6] dark:text-zinc-400">{{ $item->dosen->nim_nip }}</p>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="text-sm font-medium text-[#1B4F72] dark:text-zinc-200">{{ $item->stase ?? '-' }}</p>
+                                    <p class="text-xs text-[#7A8FA6] dark:text-zinc-400">{{ $item->rs ?? '-' }}@if($item->bangsal) &nbsp;({{ $item->bangsal }})@endif</p>
+                                </td>
+                                <td class="px-4 py-3 text-xs text-[#7A8FA6] dark:text-zinc-400">
+                                    @if($item->periode_mulai && $item->periode_selesai)
+                                        {{ $item->periode_mulai->format('d/m/Y') }} – {{ $item->periode_selesai->format('d/m/Y') }}
+                                    @else
+                                        —
+                                    @endif
+                                </td>
+                                <td class="px-4 py-3">
+                                    <flux:dropdown>
+                                        <flux:button size="sm" variant="ghost" icon="ellipsis-horizontal" inset="top bottom" />
+                                        <flux:menu>
+                                            <flux:menu.item icon="pencil" wire:click="openEdit({{ $item->id }})">Edit</flux:menu.item>
+                                            <flux:menu.separator />
+                                            <flux:menu.item icon="trash" variant="danger"
+                                                wire:click="hapus({{ $item->id }})"
+                                                wire:confirm="Hapus penugasan ini?">Hapus</flux:menu.item>
+                                        </flux:menu>
+                                    </flux:dropdown>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="px-4 py-12 text-center text-sm text-zinc-400">Belum ada penugasan.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
+            <div class="border-t border-[#E0EBF5] dark:border-zinc-700 px-4 py-3">
+                {{ $penugasans->links() }}
+            </div>
+        </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <flux:select wire:model="mahasiswa_id" label="Mahasiswa" placeholder="Pilih Mahasiswa" searchable>
-                    @foreach($mahasiswas as $m)
-                        <flux:select.option :value="$m->id">{{ $m->name }} ({{ $m->nim_nip }})</flux:select.option>
-                    @endforeach
-                </flux:select>
-
-                <flux:select wire:model="dosen_id" label="Dosen Pembimbing" placeholder="Pilih Dosen" searchable>
-                    @foreach($dosens as $d)
-                        <flux:select.option :value="$d->id">{{ $d->name }}</flux:select.option>
-                    @endforeach
-                </flux:select>
-
-                <flux:input wire:model="angkatan" label="Angkatan" placeholder="Contoh: 2024" />
-                <flux:input wire:model="kelas" label="Kelas" placeholder="Contoh: A" />
-
-                <div class="md:col-span-2">
-                    <flux:input wire:model="stase" label="Stase" placeholder="Contoh: Keperawatan Medikal Bedah" />
+        {{-- Modal Individual --}}
+        <flux:modal wire:model="showForm" class="max-w-lg">
+            <flux:heading size="lg">{{ $editId ? 'Edit Penugasan' : 'Tambah Penugasan' }}</flux:heading>
+            <flux:text class="mb-5">Lengkapi detail penugasan mahasiswa.</flux:text>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2">
+                    <flux:select wire:model="mahasiswa_id" label="Mahasiswa" placeholder="Pilih Mahasiswa" searchable>
+                        @foreach($mahasiswas as $m)
+                            <flux:select.option :value="$m->id">{{ $m->name }} ({{ $m->nim_nip }})</flux:select.option>
+                        @endforeach
+                    </flux:select>
                 </div>
-
-                <flux:input wire:model="rs" label="Rumah Sakit" placeholder="Contoh: RSUD Dr. Soetomo" />
-                <flux:input wire:model="bangsal" label="Bangsal / Ruang" placeholder="Contoh: Melati" />
-
+                <div class="col-span-2">
+                    <flux:select wire:model="dosen_id" label="Dosen Pembimbing" placeholder="Pilih Dosen" searchable>
+                        @foreach($dosens as $d)
+                            <flux:select.option :value="$d->id">{{ $d->name }}</flux:select.option>
+                        @endforeach
+                    </flux:select>
+                </div>
+                <flux:input wire:model="kelas" label="Kelas" placeholder="Cth: 1A" />
+                <flux:input wire:model="angkatan" label="Angkatan" placeholder="Cth: 2024" />
+                <div class="col-span-2">
+                    <flux:input wire:model="stase" label="Stase" placeholder="Cth: KMB I" autocomplete="off" />
+                </div>
+                <flux:input wire:model="rs" label="Rumah Sakit" placeholder="Cth: RSUD Subang" autocomplete="off" />
+                <flux:input wire:model="bangsal" label="Bangsal" placeholder="Cth: Teratai" autocomplete="off" />
                 <flux:input type="date" wire:model="periode_mulai" label="Periode Mulai" />
                 <flux:input type="date" wire:model="periode_selesai" label="Periode Selesai" />
             </div>
-
-            <div class="flex justify-end gap-2">
+            <div class="mt-6 flex justify-end gap-2">
                 <flux:button variant="ghost" wire:click="$set('showForm', false)">Batal</flux:button>
                 <flux:button variant="primary" wire:click="save">{{ $editId ? 'Simpan' : 'Tambah' }}</flux:button>
             </div>
-        </div>
-    </flux:modal>
+        </flux:modal>
+    @endif
 </div>
