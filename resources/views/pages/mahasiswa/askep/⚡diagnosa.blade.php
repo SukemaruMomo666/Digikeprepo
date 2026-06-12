@@ -189,6 +189,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                 <flux:input
                     wire:model.live.debounce.300ms="cari"
                     placeholder="Ketik kode atau nama diagnosa..."
+                    autocomplete="off"
                 />
             </div>
 
