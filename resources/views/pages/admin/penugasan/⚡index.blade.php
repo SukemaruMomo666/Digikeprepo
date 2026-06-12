@@ -11,8 +11,11 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 {
     use WithPagination;
 
-    public string $tab    = 'massal'; // massal | individual
-    public string $search = '';
+    public string $tab          = 'massal'; // massal | individual
+    public string $search       = '';
+    public string $filterKelas  = '';
+    public string $filterAngkatan = '';
+    public string $filterTipe   = '';
 
     // === MASSAL ===
     public string $bulkKelas    = '';
@@ -40,8 +43,11 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
     public ?string $periode_mulai   = null;
     public ?string $periode_selesai = null;
 
-    public function updatingSearch(): void { $this->resetPage(); }
-    public function updatingTab(): void    { $this->resetPage(); }
+    public function updatingSearch(): void        { $this->resetPage(); }
+    public function updatingTab(): void           { $this->resetPage(); }
+    public function updatingFilterKelas(): void   { $this->resetPage(); }
+    public function updatingFilterAngkatan(): void{ $this->resetPage(); }
+    public function updatingFilterTipe(): void    { $this->resetPage(); }
 
     // ── Massal ──────────────────────────────────
 
@@ -171,16 +177,25 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
                 $q->where('name', 'like', "%{$this->search}%")
                   ->orWhere('nim_nip', 'like', "%{$this->search}%")
             ))
+            ->when($this->filterKelas, fn ($q) => $q->whereHas('mahasiswa', fn ($q) =>
+                $q->where('kelas', $this->filterKelas)
+            ))
+            ->when($this->filterAngkatan, fn ($q) => $q->whereHas('mahasiswa', fn ($q) =>
+                $q->where('angkatan', $this->filterAngkatan)
+            ))
+            ->when($this->filterTipe, fn ($q) => $q->where('tipe_dosen', $this->filterTipe))
             ->orderBy(
                 User::select('kelas')->whereColumn('users.id', 'penugasan.mahasiswa_id')->limit(1)
             )
             ->latest('penugasan.id')
             ->paginate(20);
 
+        $totalFiltered = $penugasans->total();
+
         $mahasiswaMassal = $this->bulkPreview ? $this->getMahasiswaMassal()->load('penugasanSebagaiMahasiswa') : collect();
         $mahasiswas      = User::where('role', 'mahasiswa')->orderBy('name')->get();
 
-        return compact('penugasans', 'kelasOptions', 'angkatanOptions', 'dosens', 'mahasiswas', 'mahasiswaMassal');
+        return compact('penugasans', 'totalFiltered', 'kelasOptions', 'angkatanOptions', 'dosens', 'mahasiswas', 'mahasiswaMassal');
     }
 };
 ?>
@@ -348,15 +363,51 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 
     {{-- ══════════ TAB: INDIVIDUAL ══════════ --}}
     @if($tab === 'individual')
-        <div class="mb-4 flex items-center justify-between gap-3">
-            <flux:input
-                wire:model.live.debounce.300ms="search"
-                placeholder="Cari mahasiswa (nama/NIM)..." autocomplete="off"
-                icon="magnifying-glass"
-                clearable
-                class="max-w-sm"
-            />
-            <flux:button variant="primary" icon="plus" wire:click="openCreate">Tambah Manual</flux:button>
+        {{-- Filter bar --}}
+        <div class="mb-4 flex flex-wrap items-center gap-3">
+            <div class="flex-1 min-w-48">
+                <flux:input
+                    wire:model.live.debounce.300ms="search"
+                    placeholder="Cari nama atau NIM..." autocomplete="off"
+                    icon="magnifying-glass"
+                    clearable
+                />
+            </div>
+            <flux:select wire:model.live="filterAngkatan" placeholder="Semua Angkatan" class="w-40">
+                <flux:select.option value="">Semua Angkatan</flux:select.option>
+                @foreach($angkatanOptions as $opt)
+                    <flux:select.option value="{{ $opt }}">{{ $opt }}</flux:select.option>
+                @endforeach
+            </flux:select>
+            <flux:select wire:model.live="filterKelas" placeholder="Semua Kelas" class="w-36">
+                <flux:select.option value="">Semua Kelas</flux:select.option>
+                @foreach($kelasOptions as $opt)
+                    <flux:select.option value="{{ $opt }}">Kelas {{ $opt }}</flux:select.option>
+                @endforeach
+            </flux:select>
+            <flux:select wire:model.live="filterTipe" placeholder="Semua Tipe" class="w-40">
+                <flux:select.option value="">Semua Tipe</flux:select.option>
+                @foreach(\App\Models\Penugasan::TIPE_OPTIONS as $tipe)
+                    <flux:select.option value="{{ $tipe }}">{{ $tipe }}</flux:select.option>
+                @endforeach
+            </flux:select>
+            @if($filterKelas || $filterAngkatan || $filterTipe || $search)
+                <flux:button wire:click="$set('filterKelas',''); $set('filterAngkatan',''); $set('filterTipe',''); $set('search','')" variant="ghost" icon="x-mark" size="sm">Reset</flux:button>
+            @endif
+            <flux:button variant="primary" icon="plus" wire:click="openCreate" class="ml-auto">Tambah Manual</flux:button>
+        </div>
+
+        {{-- Stats --}}
+        <div class="mb-4 flex items-center gap-2 text-sm text-[#7A8FA6] dark:text-zinc-400">
+            <flux:icon.user-group class="size-4" />
+            <span><strong class="text-[#1B4F72] dark:text-zinc-200">{{ $totalFiltered }}</strong> penugasan ditampilkan</span>
+            @if($filterKelas || $filterAngkatan || $filterTipe)
+                <span class="text-xs">
+                    @if($filterAngkatan) &nbsp;• Angkatan {{ $filterAngkatan }} @endif
+                    @if($filterKelas) &nbsp;• Kelas {{ $filterKelas }} @endif
+                    @if($filterTipe) &nbsp;• {{ $filterTipe }} @endif
+                </span>
+            @endif
         </div>
 
         <div class="overflow-hidden rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800">
