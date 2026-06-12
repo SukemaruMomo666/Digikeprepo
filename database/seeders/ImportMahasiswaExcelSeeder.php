@@ -56,14 +56,23 @@ class ImportMahasiswaExcelSeeder extends Seeder
             }
 
             // 2. Tangani Mahasiswa
+            $tingkat = substr($kelas, 0, 1);
+            $akademikMap = [
+                '1' => ['angkatan' => '2025', 'semester' => '2'],
+                '2' => ['angkatan' => '2024', 'semester' => '4'],
+                '3' => ['angkatan' => '2023', 'semester' => '6'],
+            ];
             $mhs = User::updateOrCreate(
                 ['nim_nip' => $nimMhs],
                 [
-                    'name' => $namaMhs,
-                    'email' => null,
+                    'name'     => $namaMhs,
+                    'email'    => null,
                     'password' => Hash::make($nimMhs),
-                    'role' => 'mahasiswa',
-                    'kelas' => $kelas,
+                    'role'     => 'mahasiswa',
+                    'kelas'    => $kelas,
+                    'angkatan' => $akademikMap[$tingkat]['angkatan'] ?? null,
+                    'semester' => $akademikMap[$tingkat]['semester'] ?? null,
+                    'prodi'    => 'D3 Keperawatan',
                     'is_first_login' => true,
                 ]
             );
