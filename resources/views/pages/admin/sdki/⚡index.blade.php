@@ -92,7 +92,7 @@ new #[Layout('layouts.admin')] #[Title('Diagnosa SDKI')] class extends Component
         <div class="mb-4">
             <flux:input
                 wire:model.live.debounce.300ms="search"
-                placeholder="Cari kode atau label diagnosa..."
+                placeholder="Cari kode atau label diagnosa..." autocomplete="off"
                 icon="magnifying-glass"
                 clearable
             />

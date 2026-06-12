@@ -205,7 +205,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Dosen')] class extends Component
         <div class="mb-4">
             <flux:input
                 wire:model.live.debounce.300ms="search"
-                placeholder="Cari nama atau NIP..."
+                placeholder="Cari nama atau NIP..." autocomplete="off"
                 icon="magnifying-glass"
                 clearable
             />

@@ -109,7 +109,7 @@ new #[Layout('layouts.admin')] #[Title('Data Mahasiswa')] class extends Componen
         <div class="flex-1 min-w-48">
             <flux:input
                 wire:model.live.debounce.300ms="search"
-                placeholder="Cari nama atau NIM..."
+                placeholder="Cari nama atau NIM..." autocomplete="off"
                 icon="magnifying-glass"
                 clearable
             />

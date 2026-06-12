@@ -130,7 +130,7 @@ new #[Layout('layouts.admin')] #[Title('Mapping Relasi')] class extends Componen
                 <flux:heading size="sm" class="mb-3">Pilih Diagnosa SDKI</flux:heading>
                 <flux:input
                     wire:model.live.debounce.300ms="searchSdki"
-                    placeholder="Cari diagnosa..."
+                    placeholder="Cari diagnosa..." autocomplete="off"
                     icon="magnifying-glass"
                     clearable
                     class="mb-3"
@@ -168,7 +168,7 @@ new #[Layout('layouts.admin')] #[Title('Mapping Relasi')] class extends Componen
                     </div>
                     <flux:input
                         wire:model.live.debounce.300ms="searchSlki"
-                        placeholder="Cari luaran..."
+                        placeholder="Cari luaran..." autocomplete="off"
                         icon="magnifying-glass"
                         clearable
                         class="mb-3"
@@ -210,7 +210,7 @@ new #[Layout('layouts.admin')] #[Title('Mapping Relasi')] class extends Componen
                 <flux:heading size="sm" class="mb-3">Pilih Luaran SLKI</flux:heading>
                 <flux:input
                     wire:model.live.debounce.300ms="searchSlkiSrc"
-                    placeholder="Cari luaran..."
+                    placeholder="Cari luaran..." autocomplete="off"
                     icon="magnifying-glass"
                     clearable
                     class="mb-3"
@@ -248,7 +248,7 @@ new #[Layout('layouts.admin')] #[Title('Mapping Relasi')] class extends Componen
                     </div>
                     <flux:input
                         wire:model.live.debounce.300ms="searchSiki"
-                        placeholder="Cari intervensi..."
+                        placeholder="Cari intervensi..." autocomplete="off"
                         icon="magnifying-glass"
                         clearable
                         class="mb-3"

@@ -95,7 +95,7 @@ new #[Layout('layouts.admin')] #[Title('Intervensi SIKI')] class extends Compone
         <div class="mb-4">
             <flux:input
                 wire:model.live.debounce.300ms="search"
-                placeholder="Cari kode atau label intervensi..."
+                placeholder="Cari kode atau label intervensi..." autocomplete="off"
                 icon="magnifying-glass"
                 clearable
             />

@@ -206,7 +206,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
         <div class="mb-4">
             <flux:input
                 wire:model.live.debounce.300ms="search"
-                placeholder="Cari nama atau NIM..."
+                placeholder="Cari nama atau NIM..." autocomplete="off"
                 icon="magnifying-glass"
                 clearable
             />
