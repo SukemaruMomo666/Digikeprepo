@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Models\Askep;
 use App\Models\Penugasan;
@@ -87,7 +87,7 @@ new #[Layout('layouts.dosen')] #[Title('Monitoring Progress Askep')] class exten
         </div>
 
         <div class="w-full sm:w-64">
-            <flux:input wire:model.live.debounce.300ms="cari" icon="magnifying-glass" placeholder="Cari mhs/pasien..." />
+            <flux:input wire:model.live.debounce.300ms="cari" icon="magnifying-glass" placeholder="Cari mhs/pasien..." autocomplete="off" />
         </div>
     </div>
 

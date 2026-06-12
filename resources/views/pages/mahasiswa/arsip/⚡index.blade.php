@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Models\Pasien;
 use Livewire\Attributes\Layout;
@@ -43,6 +43,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Arsip Pengkajian')] class extends Co
             <flux:input
                 wire:model.live.debounce.300ms="search"
                 placeholder="Cari nama pasien atau No. RM..."
+                    autocomplete="off"
                 icon="magnifying-glass"
                 clearable
             />

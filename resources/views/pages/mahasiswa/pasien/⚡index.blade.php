@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Models\Pasien;
 use Flux\Flux;
@@ -61,6 +61,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Data Pasien')] class extends Compone
             <flux:input
                 wire:model.live.debounce.300ms="search"
                 placeholder="Cari nama pasien atau No. RM..."
+                    autocomplete="off"
                 icon="magnifying-glass"
                 clearable
             />

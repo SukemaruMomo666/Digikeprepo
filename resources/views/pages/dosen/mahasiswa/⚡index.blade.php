@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Models\Penugasan;
 use App\Models\User;
@@ -43,7 +43,7 @@ new #[Layout('layouts.dosen')] #[Title('Daftar Mahasiswa Bimbingan')] class exte
         </div>
 
         <div class="w-full sm:w-64">
-            <flux:input wire:model.live.debounce.300ms="cari" icon="magnifying-glass" placeholder="Cari nama atau NIM..." />
+            <flux:input wire:model.live.debounce.300ms="cari" icon="magnifying-glass" placeholder="Cari nama atau NIM..." autocomplete="off" />
         </div>
     </div>
 

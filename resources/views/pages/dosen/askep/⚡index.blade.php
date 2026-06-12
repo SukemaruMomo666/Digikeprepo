@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Models\Askep;
 use App\Models\Penugasan;
@@ -55,6 +55,7 @@ new #[Layout('layouts.dosen')] #[Title('Semua Askep Bimbingan')] class extends C
                 <flux:input
                     wire:model.live.debounce.300ms="search"
                     placeholder="Cari mahasiswa, pasien, atau No. RM..."
+                    autocomplete="off"
                     icon="magnifying-glass"
                     clearable
                 />
