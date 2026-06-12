@@ -11,8 +11,8 @@
         >
             <flux:sidebar.header>
                 <div class="flex items-center gap-2.5 px-1 py-1">
-                    <div class="flex size-9 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-                        <flux:icon.shield-check class="size-5 text-white" />
+                    <div class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white backdrop-blur-sm overflow-hidden p-1.5">
+                        <img src="{{ asset('images/logo-polsub.png') }}" alt="Logo Polsub" class="size-full object-contain">
                     </div>
                     <div>
                         <p class="text-sm font-bold leading-tight text-white">DIGIKEP</p>
@@ -141,8 +141,8 @@
         <flux:header class="lg:hidden border-b-0 bg-[#0A2D45] shadow-primary">
             <flux:sidebar.toggle class="lg:hidden text-white hover:bg-white/20" icon="bars-2" inset="left" />
             <div class="flex items-center gap-2 ms-2">
-                <div class="flex size-7 items-center justify-center rounded-lg bg-white/20">
-                    <flux:icon.shield-check class="size-4 text-white" />
+                <div class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-white overflow-hidden p-1">
+                    <img src="{{ asset('images/logo-polsub.png') }}" alt="Logo Polsub" class="size-full object-contain">
                 </div>
                 <span class="text-sm font-bold text-white">DIGIKEP Admin</span>
             </div>

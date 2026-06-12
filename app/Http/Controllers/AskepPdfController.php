@@ -26,9 +26,11 @@ class AskepPdfController extends Controller
             'pasien',
             'user',
             'pengkajian',
-            'diagnosa.sdki',
+            'diagnosa.sdki.penyebab',
+            'diagnosa.sdki.gejala',
+            'diagnosa.sdki.kondisiKlinis',
             'diagnosa.luaran.slki.kriteriaHasil',
-            'diagnosa.intervensi.siki',
+            'diagnosa.intervensi.siki.sikiTindakan',
             'diagnosa.intervensi.implementasi',
             'diagnosa.evaluasi',
         ]);

@@ -24,6 +24,12 @@ class IntervensiSiki extends Model
         return $this->belongsToMany(LuaranSlki::class, 'slki_siki_relations', 'intervensi_id', 'luaran_id');
     }
 
+    /** Tindakan keperawatan per jenis (Observasi, Terapeutik, Edukasi, Kolaborasi). */
+    public function sikiTindakan(): HasMany
+    {
+        return $this->hasMany(SikiTindakan::class, 'intervensi_id')->orderBy('urutan');
+    }
+
     /** Intervensi askep mahasiswa yang menggunakan SIKI ini. */
     public function askepIntervensi(): HasMany
     {

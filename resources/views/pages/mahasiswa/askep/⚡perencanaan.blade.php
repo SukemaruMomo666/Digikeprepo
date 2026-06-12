@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Flux\Flux;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -28,7 +29,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
      *   label: string,
      *   prioritas: int,
      *   luaran: array<int, array{id: int|null, slki_id: int, kode: string, label: string, target_waktu: string, skor_indikator: array<int, array{awal: string, target: string}>, dipilih: bool, kriteria: array<int, array{id: int, urutan: int, deskripsi: string, arah: string, opsi_skor: array<int, string>}>}>,
-     *   intervensi: array<int, array{id: int|null, siki_id: int|null, nama_manual: string, kode: string, label: string, tindakan_tersedia: list<string>, tindakan_dipilih: list<string>, dipilih: bool}>
+     *   intervensi: array<int, array{id: int|null, siki_id: int|null, nama_manual: string, kode: string, label: string, definisi: string, tindakan_per_jenis: array<string, list<string>>, tindakan_dipilih: list<string>, dipilih: bool}>
      * }>
      */
     public array $rencana = [];
@@ -39,7 +40,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
 
         $this->askep = $askep->load([
             'pasien',
-            'diagnosa.sdki.luaranSlki.intervensiSiki',
+            'diagnosa.sdki.luaranSlki.intervensiSiki.sikiTindakan',
             'diagnosa.sdki.luaranSlki.kriteriaHasil',
             'diagnosa.luaran.slki.kriteriaHasil',
             'diagnosa.intervensi.siki',
@@ -104,15 +105,20 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
 
             $intervensiOptions = [];
             foreach ($semuaSiki as $siki) {
-                $saved             = $intervensiTersimpan->get($siki->id);
-                $tindakanTersedia  = is_array($siki->tindakan) ? $siki->tindakan : [];
+                $saved = $intervensiTersimpan->get($siki->id);
+                // Grup tindakan per jenis (unique agar tidak duplikat antar batch SDKI)
+                $tindakanPerJenis = $siki->sikiTindakan
+                    ->groupBy('jenis')
+                    ->map(fn ($group) => $group->pluck('deskripsi')->unique()->values()->all())
+                    ->all();
                 $intervensiOptions[] = [
                     'id'                => $saved?->id,
                     'siki_id'           => $siki->id,
                     'nama_manual'       => '',
                     'kode'              => $siki->kode_intervensi,
                     'label'             => $siki->label_intervensi,
-                    'tindakan_tersedia' => $tindakanTersedia,
+                    'definisi'          => $siki->definisi ?? '',
+                    'tindakan_per_jenis'=> $tindakanPerJenis,
                     'tindakan_dipilih'  => $saved?->tindakan_dipilih ?? [],
                     'dipilih'           => $saved !== null,
                 ];
@@ -126,7 +132,8 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                     'nama_manual'       => $manual->nama_manual ?? '',
                     'kode'              => 'MANUAL',
                     'label'             => $manual->nama_manual ?? 'Intervensi Manual',
-                    'tindakan_tersedia' => [],
+                    'definisi'          => '',
+                    'tindakan_per_jenis'=> [],
                     'tindakan_dipilih'  => $manual->tindakan_dipilih ?? [],
                     'dipilih'           => true,
                 ];
@@ -193,6 +200,27 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                 = array_values(array_filter($dipilih, fn ($t) => $t !== $tindakan));
         } else {
             $this->rencana[$dIdx]['intervensi'][$iIdx]['tindakan_dipilih'][] = $tindakan;
+        }
+    }
+
+    /** Pilih atau hapus semua tindakan dalam satu jenis/kategori. */
+    #[On('toggle-all-jenis')]
+    public function toggleAllJenis(int $dIdx, int $iIdx, array $tindakans): void
+    {
+        $dipilih = $this->rencana[$dIdx]['intervensi'][$iIdx]['tindakan_dipilih'];
+        $semuaDipilih = collect($tindakans)->every(fn ($t) => in_array($t, $dipilih, true));
+
+        if ($semuaDipilih) {
+            // Hapus semua dari jenis ini
+            $this->rencana[$dIdx]['intervensi'][$iIdx]['tindakan_dipilih']
+                = array_values(array_filter($dipilih, fn ($t) => ! in_array($t, $tindakans, true)));
+        } else {
+            // Tambahkan yang belum ada
+            foreach ($tindakans as $t) {
+                if (! in_array($t, $dipilih, true)) {
+                    $this->rencana[$dIdx]['intervensi'][$iIdx]['tindakan_dipilih'][] = $t;
+                }
+            }
         }
     }
 
@@ -461,57 +489,120 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                             <div>
                                 <div class="mb-3 flex items-center gap-2">
                                     <div class="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#2E86C1] text-[10px] font-bold text-white">I</div>
-                                    <h4 class="font-semibold text-[#1B4F72]">Intervensi Keperawatan (SIKI)</h4>
-                                    <span class="text-xs text-[#7A8FA6]">— pilih tindakan yang akan dilakukan</span>
+                                    <h4 class="font-semibold text-[#1B4F72] dark:text-white">Intervensi Keperawatan (SIKI)</h4>
+                                    <span class="text-xs text-[#7A8FA6] dark:text-zinc-400">— pilih intervensi &amp; centang tindakannya</span>
                                 </div>
 
                                 @if (empty($d['intervensi']))
-                                    <p class="rounded-xl border border-dashed border-[#D0DCE8] bg-[#F4F8FB] px-4 py-3 text-sm text-[#7A8FA6]">
+                                    <p class="rounded-xl border border-dashed border-[#D0DCE8] dark:border-zinc-700 bg-[#F4F8FB] dark:bg-zinc-800 px-4 py-3 text-sm text-[#7A8FA6] dark:text-zinc-400">
                                         Belum ada rekomendasi SIKI untuk diagnosa ini.
                                     </p>
                                 @else
-                                    <div class="space-y-2">
+                                    @php
+                                        $jenisMeta = [
+                                            'Observasi'   => ['color' => 'blue',   'bg' => 'bg-blue-50 dark:bg-blue-900/20',   'border' => 'border-blue-200 dark:border-blue-800',   'badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',   'dot' => 'bg-blue-500'],
+                                            'Terapeutik'  => ['color' => 'teal',   'bg' => 'bg-teal-50 dark:bg-teal-900/20',   'border' => 'border-teal-200 dark:border-teal-800',   'badge' => 'bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-300',   'dot' => 'bg-teal-500'],
+                                            'Edukasi'     => ['color' => 'amber',  'bg' => 'bg-amber-50 dark:bg-amber-900/20', 'border' => 'border-amber-200 dark:border-amber-800', 'badge' => 'bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300', 'dot' => 'bg-amber-500'],
+                                            'Kolaborasi'  => ['color' => 'purple', 'bg' => 'bg-purple-50 dark:bg-purple-900/20','border' => 'border-purple-200 dark:border-purple-800','badge' => 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300','dot' => 'bg-purple-500'],
+                                        ];
+                                    @endphp
+                                    <div class="space-y-3">
                                         @foreach ($d['intervensi'] as $iIdx => $i)
-                                            <div class="rounded-xl border {{ $i['dipilih'] ? 'border-[#85B7EB] bg-[#F0F7FE]' : 'border-[#E0EBF5] bg-white' }} p-4">
-                                                <div class="flex items-start gap-3">
-                                                    <button
-                                                        wire:click="toggleIntervensi({{ $dIdx }}, {{ $iIdx }})"
-                                                        class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded border-2 transition
-                                                            {{ $i['dipilih'] ? 'border-[#2E86C1] bg-[#2E86C1] text-white' : 'border-[#D0DCE8] hover:border-[#85B7EB]' }}"
-                                                    >
+                                            @php
+                                                $totalTindakan = collect($i['tindakan_per_jenis'])->flatten()->count();
+                                                $dipilihCount  = count($i['tindakan_dipilih']);
+                                            @endphp
+                                            <div wire:key="siki-{{ $d['diagnosa_id'] }}-{{ $iIdx }}"
+                                                class="overflow-hidden rounded-xl border-2 transition-all
+                                                    {{ $i['dipilih'] ? 'border-[#2E86C1] dark:border-blue-600' : 'border-[#E0EBF5] dark:border-zinc-700' }}">
+
+                                                {{-- Header intervensi (klik untuk pilih) --}}
+                                                <button
+                                                    wire:click="toggleIntervensi({{ $dIdx }}, {{ $iIdx }})"
+                                                    type="button"
+                                                    class="flex w-full items-start gap-3 px-4 py-3 text-left transition
+                                                        {{ $i['dipilih'] ? 'bg-[#EBF5FB] dark:bg-blue-900/20' : 'bg-white dark:bg-zinc-800 hover:bg-[#F4F8FB] dark:hover:bg-zinc-700/50' }}"
+                                                >
+                                                    {{-- Checkbox visual --}}
+                                                    <span class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded border-2 transition
+                                                        {{ $i['dipilih'] ? 'border-[#2E86C1] bg-[#2E86C1] text-white' : 'border-[#D0DCE8] dark:border-zinc-600' }}">
                                                         @if ($i['dipilih'])
                                                             <flux:icon.check class="size-3" />
                                                         @endif
-                                                    </button>
+                                                    </span>
                                                     <div class="flex-1 min-w-0">
-                                                        <div class="flex items-center gap-1.5 flex-wrap">
+                                                        <div class="flex flex-wrap items-center gap-1.5">
                                                             @if ($i['kode'] !== 'MANUAL')
-                                                                <span class="font-mono text-xs font-bold text-[#2E86C1]">{{ $i['kode'] }}</span>
+                                                                <span class="font-mono text-xs font-bold text-[#2E86C1] dark:text-[#85B7EB]">{{ $i['kode'] }}</span>
+                                                            @else
+                                                                <span class="rounded bg-zinc-100 dark:bg-zinc-700 px-1.5 py-0.5 text-[10px] font-bold text-zinc-500">MANUAL</span>
                                                             @endif
-                                                            <span class="text-sm font-medium text-[#1B4F72]">{{ $i['label'] }}</span>
+                                                            <span class="text-sm font-semibold text-[#1B4F72] dark:text-white">{{ $i['label'] }}</span>
+                                                            @if ($i['dipilih'] && $totalTindakan > 0)
+                                                                <span class="rounded-full bg-[#EBF5FB] dark:bg-blue-900/30 px-2 py-0.5 text-[10px] font-bold text-[#2E86C1] dark:text-[#85B7EB]">
+                                                                    {{ $dipilihCount }}/{{ $totalTindakan }} dipilih
+                                                                </span>
+                                                            @endif
                                                         </div>
-
-                                                        {{-- Tindakan per SIKI --}}
-                                                        @if ($i['dipilih'] && ! empty($i['tindakan_tersedia']))
-                                                            <div class="mt-3">
-                                                                <p class="mb-1.5 text-xs font-medium text-[#7A8FA6]">Pilih tindakan yang akan dilakukan:</p>
-                                                                <div class="space-y-1">
-                                                                    @foreach ($i['tindakan_tersedia'] as $tindakan)
-                                                                        <label class="flex items-start gap-2 cursor-pointer">
-                                                                            <input
-                                                                                type="checkbox"
-                                                                                wire:click="toggleTindakan({{ $dIdx }}, {{ $iIdx }}, @js($tindakan))"
-                                                                                @checked(in_array($tindakan, $i['tindakan_dipilih'], true))
-                                                                                class="mt-0.5 size-3.5 accent-[#2E86C1]"
-                                                                            />
-                                                                            <span class="text-xs text-[#1B4F72]">{{ $tindakan }}</span>
-                                                                        </label>
-                                                                    @endforeach
-                                                                </div>
-                                                            </div>
+                                                        @if ($i['definisi'])
+                                                            <p class="mt-0.5 text-xs text-[#7A8FA6] dark:text-zinc-400 line-clamp-2">{{ $i['definisi'] }}</p>
                                                         @endif
                                                     </div>
-                                                </div>
+                                                    <flux:icon.chevron-down class="size-4 shrink-0 text-[#7A8FA6] dark:text-zinc-400 transition-transform mt-0.5 {{ $i['dipilih'] ? 'rotate-180' : '' }}" />
+                                                </button>
+
+                                                {{-- Tindakan per kategori (hanya tampil jika dipilih) --}}
+                                                @if ($i['dipilih'] && !empty($i['tindakan_per_jenis']))
+                                                    <div class="border-t border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-3 space-y-4">
+                                                        <p class="text-xs font-semibold uppercase tracking-wider text-[#7A8FA6] dark:text-zinc-400">
+                                                            Centang tindakan yang akan dilakukan:
+                                                        </p>
+                                                        <div class="grid gap-3 sm:grid-cols-2">
+                                                            @foreach ($i['tindakan_per_jenis'] as $jenis => $tindakanList)
+                                                                @php $meta = $jenisMeta[$jenis] ?? ['bg' => 'bg-gray-50 dark:bg-zinc-700', 'border' => 'border-gray-200 dark:border-zinc-600', 'badge' => 'bg-gray-100 text-gray-600', 'dot' => 'bg-gray-400']; @endphp
+                                                                <div class="rounded-lg border {{ $meta['border'] }} {{ $meta['bg'] }} overflow-hidden">
+                                                                    {{-- Header kategori --}}
+                                                                    <div class="flex items-center justify-between px-3 py-1.5 border-b {{ $meta['border'] }}">
+                                                                        <div class="flex items-center gap-1.5">
+                                                                            <span class="size-2 rounded-full {{ $meta['dot'] }}"></span>
+                                                                            <span class="text-[11px] font-bold uppercase tracking-wider {{ $meta['badge'] }} px-1.5 py-0.5 rounded">{{ $jenis }}</span>
+                                                                        </div>
+                                                                        {{-- Pilih semua di kategori ini --}}
+                                                                        @php
+                                                                            $semuaDipilih = collect($tindakanList)->every(fn($t) => in_array($t, $i['tindakan_dipilih'], true));
+                                                                        @endphp
+                                                                        <button
+                                                                            wire:click="$dispatch('toggle-all-jenis', {dIdx: {{ $dIdx }}, iIdx: {{ $iIdx }}, tindakans: @js($tindakanList)})"
+                                                                            type="button"
+                                                                            class="text-[10px] font-medium text-[#2E86C1] dark:text-[#85B7EB] hover:underline"
+                                                                        >
+                                                                            {{ $semuaDipilih ? 'Hapus semua' : 'Pilih semua' }}
+                                                                        </button>
+                                                                    </div>
+                                                                    {{-- Daftar tindakan --}}
+                                                                    <div class="p-2 space-y-1">
+                                                                        @foreach ($tindakanList as $tIdx => $tindakan)
+                                                                            @php $checked = in_array($tindakan, $i['tindakan_dipilih'], true); @endphp
+                                                                            <label wire:key="tindakan-{{ $d['diagnosa_id'] }}-{{ $iIdx }}-{{ $tIdx }}"
+                                                                                class="flex items-start gap-2 cursor-pointer rounded p-1 transition
+                                                                                    {{ $checked ? 'bg-white/80 dark:bg-zinc-700/80' : 'hover:bg-white/60 dark:hover:bg-zinc-700/40' }}">
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    wire:click="toggleTindakan({{ $dIdx }}, {{ $iIdx }}, @js($tindakan))"
+                                                                                    @checked($checked)
+                                                                                    class="mt-0.5 size-3.5 shrink-0 rounded accent-[#2E86C1]"
+                                                                                />
+                                                                                <span class="text-xs leading-snug {{ $checked ? 'font-medium text-[#1B4F72] dark:text-zinc-100' : 'text-[#555] dark:text-zinc-300' }}">
+                                                                                    {{ $tindakan }}
+                                                                                </span>
+                                                                            </label>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </div>
                                         @endforeach
                                     </div>

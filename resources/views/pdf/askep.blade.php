@@ -528,24 +528,131 @@
     <div class="section-title">2 &amp; 3. Diagnosa, Luaran &amp; Perencanaan Intervensi</div>
 
     @foreach($askep->diagnosa->sortBy('prioritas') as $d)
+        @php
+            $sdki = $d->sdki;
+            $penyebabMaster = $sdki?->penyebab ?? collect();
+            $gejalaMaster   = $sdki?->gejala ?? collect();
+            $kondisiMaster  = $sdki?->kondisiKlinis ?? collect();
+            $gejalaMayorSubj = $gejalaMaster->where('tipe','Mayor')->where('jenis','Subjektif');
+            $gejalaMayorObj  = $gejalaMaster->where('tipe','Mayor')->where('jenis','Objektif');
+            $gejalaMinorSubj = $gejalaMaster->where('tipe','Minor')->where('jenis','Subjektif');
+            $gejalaMinorObj  = $gejalaMaster->where('tipe','Minor')->where('jenis','Objektif');
+        @endphp
         <div class="diagnosa-card">
             <div class="diagnosa-header">
-                Prioritas {{ $d->prioritas }}: {{ $d->sdki?->kode_diagnosa }} &mdash; {{ $d->sdki?->label_diagnosa }}
+                Prioritas {{ $d->prioritas }}: {{ $sdki?->kode_diagnosa }} &mdash; {{ $sdki?->label_diagnosa }}
             </div>
             <div class="diagnosa-body">
 
-                {{-- Etiologi --}}
-                <p style="margin:0 0 4px;font-size:9pt;">
-                    <strong>Berhubungan dengan (Etiologi):</strong>
-                    {{ !empty($d->etiologi_dipilih) ? implode(', ', $d->etiologi_dipilih) : '-' }}
-                </p>
+                @if($sdki?->definisi)
+                    <p style="margin:0 0 5px;font-size:9pt;color:#555;font-style:italic;">{{ $sdki->definisi }}</p>
+                @endif
 
-                {{-- Gejala / Tanda Mayor & Minor --}}
-                @if(!empty($d->gejala_dipilih))
-                    <p style="margin:0 0 6px;font-size:9pt;">
-                        <strong>Ditandai dengan (Gejala):</strong>
-                        {{ implode(', ', $d->gejala_dipilih) }}
+                {{-- Penyebab / Etiologi --}}
+                <p style="margin:0 0 2px;font-size:9pt;"><strong>Penyebab / Etiologi:</strong></p>
+                @if($penyebabMaster->isNotEmpty())
+                    <ul style="margin:0 0 5px 18px;padding:0;font-size:9pt;">
+                        @foreach($penyebabMaster as $pb)
+                            <li style="{{ in_array($pb->deskripsi, $d->etiologi_dipilih ?? []) ? 'font-weight:bold;color:#1A5276' : 'color:#555' }}">
+                                {{ $pb->deskripsi }}
+                                @if(in_array($pb->deskripsi, $d->etiologi_dipilih ?? []))
+                                    <span style="font-size:7.5pt;color:#2E86C1"> &#x2713; dipilih</span>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p style="margin:0 0 5px;font-size:9pt;color:#555;">
+                        {{ !empty($d->etiologi_dipilih) ? implode(', ', $d->etiologi_dipilih) : '-' }}
                     </p>
+                @endif
+
+                {{-- Gejala Mayor --}}
+                @if($gejalaMayorSubj->isNotEmpty() || $gejalaMayorObj->isNotEmpty())
+                <div style="margin-bottom:5px">
+                    <p style="margin:0 0 2px;font-size:9pt;"><strong>Gejala dan Tanda Mayor:</strong></p>
+                    <div class="two-col">
+                        <div class="col-half">
+                            @if($gejalaMayorSubj->isNotEmpty())
+                                <p style="margin:0 0 1px;font-size:8.5pt;font-style:italic;color:#555">Subjektif</p>
+                                <ul style="margin:0 0 4px 16px;padding:0;font-size:8.5pt;">
+                                    @foreach($gejalaMayorSubj as $g)
+                                        <li style="{{ in_array($g->deskripsi, $d->gejala_dipilih ?? []) ? 'font-weight:bold;color:#1A5276' : '' }}">
+                                            {{ $g->deskripsi }}
+                                            @if(in_array($g->deskripsi, $d->gejala_dipilih ?? []))
+                                                <span style="font-size:7.5pt;color:#2E86C1"> &#x2713;</span>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                        <div class="col-half">
+                            @if($gejalaMayorObj->isNotEmpty())
+                                <p style="margin:0 0 1px;font-size:8.5pt;font-style:italic;color:#555">Objektif</p>
+                                <ul style="margin:0 0 4px 16px;padding:0;font-size:8.5pt;">
+                                    @foreach($gejalaMayorObj as $g)
+                                        <li style="{{ in_array($g->deskripsi, $d->gejala_dipilih ?? []) ? 'font-weight:bold;color:#1A5276' : '' }}">
+                                            {{ $g->deskripsi }}
+                                            @if(in_array($g->deskripsi, $d->gejala_dipilih ?? []))
+                                                <span style="font-size:7.5pt;color:#2E86C1"> &#x2713;</span>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                {{-- Gejala Minor --}}
+                @if($gejalaMinorSubj->isNotEmpty() || $gejalaMinorObj->isNotEmpty())
+                <div style="margin-bottom:5px">
+                    <p style="margin:0 0 2px;font-size:9pt;"><strong>Gejala dan Tanda Minor:</strong></p>
+                    <div class="two-col">
+                        <div class="col-half">
+                            @if($gejalaMinorSubj->isNotEmpty())
+                                <p style="margin:0 0 1px;font-size:8.5pt;font-style:italic;color:#555">Subjektif</p>
+                                <ul style="margin:0 0 4px 16px;padding:0;font-size:8.5pt;">
+                                    @foreach($gejalaMinorSubj as $g)
+                                        <li style="{{ in_array($g->deskripsi, $d->gejala_dipilih ?? []) ? 'font-weight:bold;color:#1A5276' : '' }}">
+                                            {{ $g->deskripsi }}
+                                            @if(in_array($g->deskripsi, $d->gejala_dipilih ?? []))
+                                                <span style="font-size:7.5pt;color:#2E86C1"> &#x2713;</span>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                        <div class="col-half">
+                            @if($gejalaMinorObj->isNotEmpty())
+                                <p style="margin:0 0 1px;font-size:8.5pt;font-style:italic;color:#555">Objektif</p>
+                                <ul style="margin:0 0 4px 16px;padding:0;font-size:8.5pt;">
+                                    @foreach($gejalaMinorObj as $g)
+                                        <li style="{{ in_array($g->deskripsi, $d->gejala_dipilih ?? []) ? 'font-weight:bold;color:#1A5276' : '' }}">
+                                            {{ $g->deskripsi }}
+                                            @if(in_array($g->deskripsi, $d->gejala_dipilih ?? []))
+                                                <span style="font-size:7.5pt;color:#2E86C1"> &#x2713;</span>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                {{-- Kondisi Klinis Terkait --}}
+                @if($kondisiMaster->isNotEmpty())
+                <div style="margin-bottom:6px">
+                    <p style="margin:0 0 2px;font-size:9pt;"><strong>Kondisi Klinis Terkait:</strong></p>
+                    <p style="margin:0;font-size:8.5pt;color:#555;">
+                        {{ $kondisiMaster->pluck('deskripsi')->implode(', ') }}
+                    </p>
+                </div>
                 @endif
 
                 {{-- SLKI: Luaran & Kriteria Hasil --}}
@@ -591,15 +698,51 @@
                     <p style="font-size:9pt;color:#999"><em>Intervensi belum direncanakan.</em></p>
                 @else
                     @foreach($d->intervensi as $int)
-                        <p style="margin:4px 0 2px;font-size:9pt;font-weight:bold;color:#1A5276;">
+                        @php
+                            $dipilih = $int->tindakan_dipilih ?? [];
+                            $tindakanMaster = $int->siki?->sikiTindakan ?? collect();
+                            $tindakanPerJenis = $tindakanMaster->groupBy('jenis');
+                            $jenisMeta = [
+                                'Observasi'  => '#2E86C1',
+                                'Terapeutik' => '#1A9B72',
+                                'Edukasi'    => '#d68910',
+                                'Kolaborasi' => '#7D3C98',
+                            ];
+                        @endphp
+                        <p style="margin:4px 0 3px;font-size:9pt;font-weight:bold;color:#1A5276;">
                             {{ $int->siki?->label_intervensi ?: ($int->nama_manual ?? 'Intervensi Manual') }}
+                            @if($int->siki?->kode_intervensi)
+                                <span style="font-weight:normal;font-size:8pt;color:#888;">({{ $int->siki->kode_intervensi }})</span>
+                            @endif
                             @if($int->frekuensi)
                                 <span style="font-weight:normal;color:#555;">&mdash; {{ $int->frekuensi }}</span>
                             @endif
                         </p>
-                        @if(!empty($int->tindakan_dipilih) && is_array($int->tindakan_dipilih))
+
+                        @if($tindakanMaster->isNotEmpty())
+                            @foreach($jenisMeta as $jenis => $warna)
+                                @php $grup = $tindakanPerJenis->get($jenis, collect()); @endphp
+                                @if($grup->isNotEmpty())
+                                    <p style="margin:2px 0 1px;font-size:8pt;font-weight:bold;color:{{ $warna }};text-transform:uppercase;letter-spacing:0.3px;">
+                                        {{ $jenis }}
+                                    </p>
+                                    <ul style="margin:0 0 4px 16px;padding:0;font-size:8.5pt;">
+                                        @foreach($grup as $t)
+                                            @php $dipilihItem = in_array($t->deskripsi, $dipilih, true); @endphp
+                                            <li style="{{ $dipilihItem ? 'font-weight:bold;color:#1A5276' : 'color:#777' }}">
+                                                {{ $t->deskripsi }}
+                                                @if($dipilihItem)
+                                                    <span style="font-size:7.5pt;color:{{ $warna }}"> &#x2713;</span>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            @endforeach
+                        @elseif(!empty($dipilih))
+                            {{-- Fallback: tidak ada master data, tampilkan yang dipilih saja --}}
                             <ul style="margin:2px 0 4px 18px;padding:0;font-size:9pt;">
-                                @foreach($int->tindakan_dipilih as $tindakan)
+                                @foreach($dipilih as $tindakan)
                                     <li>{{ $tindakan }}</li>
                                 @endforeach
                             </ul>
