@@ -199,8 +199,6 @@ protected $table = 'askep_pengkajian';
 | `admin.slki.index` | `/admin/slki` |
 | `admin.siki.index` | `/admin/siki` |
 | `admin.relasi.index` | `/admin/relasi` |
-| `admin.users.index` | `/admin/users` |
-| `admin.log.index` | `/admin/log` |
 | `admin.data-mahasiswa.index` | `/admin/data-mahasiswa` |
 
 ---

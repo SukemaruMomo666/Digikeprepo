@@ -63,13 +63,6 @@ Route::middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.')->group(functio
 
     Route::livewire('/riwayat', 'pages::mahasiswa.riwayat.index')->name('riwayat.index');
     Route::livewire('/arsip', 'pages::mahasiswa.arsip.index')->name('arsip.index');
-
-    Route::prefix('log')->name('log.')->group(function () {
-        Route::livewire('/', 'pages::mahasiswa.log.index')->name('index');
-        Route::livewire('/create', 'pages::mahasiswa.log.create')->name('create');
-        Route::livewire('/{log}', 'pages::mahasiswa.log.show')->name('show');
-        Route::livewire('/{log}/edit', 'pages::mahasiswa.log.create')->name('edit');
-    });
 });
 
 // ── Admin ──────────────────────────────────────────────────────────────────
@@ -104,10 +97,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::livewire('/', 'pages::admin.relasi.index')->name('index');
     });
 
-    Route::prefix('log')->name('log.')->group(function () {
-        Route::livewire('/', 'pages::admin.log.index')->name('index');
-    });
-
     Route::prefix('data-mahasiswa')->name('data-mahasiswa.')->group(function () {
         Route::livewire('/', 'pages::admin.data-mahasiswa.index')->name('index');
     });
@@ -131,10 +120,6 @@ Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->grou
         Route::livewire('/', 'pages::dosen.monitoring.index')->name('index');
     });
 
-    Route::prefix('log')->name('log.')->group(function () {
-        Route::livewire('/', 'pages::dosen.log.index')->name('index');
-        Route::livewire('/{log}', 'pages::dosen.log.show')->name('show');
-    });
 });
 
 require __DIR__.'/settings.php';

@@ -74,15 +74,6 @@
                     Monitoring
                 </flux:sidebar.item>
 
-                <flux:sidebar.item
-                    icon="book-open"
-                    :href="route('dosen.log.index')"
-                    :current="request()->routeIs('dosen.log.*')"
-                    wire:navigate
-                >
-                    Log Pembelajaran
-                </flux:sidebar.item>
-
                 {{-- ── Separator ── --}}
                 <div class="mx-3 my-1 border-t border-white/10"></div>
 

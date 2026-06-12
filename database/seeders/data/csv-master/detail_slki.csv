@@ -1,0 +1,323 @@
+Kode SLKI,Nama SLKI,Kriteria Hasil,Kode SDKI
+L.01001,,"1. Batuk efektif dari skala 1 menurun menjadi skala 5 meningkat
+2. Produksi sputum dari skala 1 meningkat menjadi skala 5 menurun
+3. Mengi dari skala 1 meningkat menjadi skala 5 menurun
+4. Wheezing dari skala 1 meningkat menjadi skala 5 menurun.
+5. Mekonium (pada neonatus) dari skala 1 meningkat menjadi skala 5 menurun Penyapihan ventilator",D.0001
+L.01002,,"1. Kesinkronan bantuan ventilator dari skala 1 menurun menjadi skala 5 meningkat
+2. Penggunaan otot bantu napas dari skala 5 menurun menjadi skala 1 meningkat
+3. Napas megap megap (gasping) dari skala 5 menurun menjadi skala 1 meningkat
+4. Napas dangkal dari skala 5 menurun menjadi skala 1 meningkat
+5. Agitasi dari skala 5 menurun menjadi skala 1 meningkat.
+6. Frekuensi napas nilai gas darah arteri dari skala 1 memburuk menjadi skala 5 membaik Pertukaran Gas (L.01003)",D.0002
+L.01003,Pertukaran Gas,"1. Dispnea dari skala 1 meningkat menjadi skala 5 menurun
+2. Bunyi napas tambahan dari skala 1 meningkat menjadi skala 5 menurun
+3. Takikardi dari skala 1 meningkat menjadi skala 5 menurun
+4. PCO₂ dari skala 1 memburuk menjadi skala 5 membaik
+5. PO₂ dari skala 1 memburuk menjadi skala 5 membaik
+6. pH arteri dari skala 1 memburuk menjadi skala 5 membaik Sirkulasi Spontan (L.02015)",
+L.02015,Sirkulasi Spontan,"1. Tingkat kesadaran dari skala 1 menurun menjadi skala 5 meningkat
+2. Frekuensi nadi dari skala 1 memburuk menjadi skala 5 membaik
+3. Tekanan darah dari skala 1 memburuk menjadi skala 5 membaik
+4. Frekuensi napas dari skala 1 memburuk menjadi skala 5 membaik",
+L.01004,Pola Napas,"6. Dispnea dari skala 1 meningkat menjadi skala 5 menurun
+7. Penggunaan otot bantu napas dari skala 1 meningkat menjadi skala 3 sedang
+8. Frekuensi napas dari 1 memburuk menjadi skala 5 membaik",
+L.01006,Tingkat Aspirasi,"1. Tingkat kesadaran (5)
+2. Kemampuan menelan (5)
+3. Kebersihan mulut (5)
+4. Dispnea (4)
+5. Kelemahan otot (4)
+6. Akumulasi secret (4)
+7. Wheezing (4)
+8. Batuk (4)
+9. Penggunaan otot aksesoris -4
+10. Sianosis (4)
+11. Gelisah (4)
+12. Frekuensi napas (4) Sirkulasi Spontan (L.02015)",D.0006
+L.02015,Sirkulasi Spontan,"1. Tingkat kesadaran (5)
+2. Frekuensi nadi (4)
+3. Tekanan darah (3)
+4. Frekuensi napas (3)
+5. Suhu tubuh (3)
+6. Saturasi oksigen (3)
+7. Gambaran EKG aritmia -3
+8. ETCO2 (3)
+9. Produksi urine (3) Curah Jantung (L.02008)",
+L.02008,Curah Jantung,"1. Kekuatan nadi perifer (4)
+2. Palpitasi (3)
+3. Tekanan darah (5)
+1. Perfusi perifer setelah dilakukan tindakan keperawatan selama 3 X 24 jam masalah perfusi perifer teratasi dengan krirteria hasil",
+L.02008,Curah Jantung,"1. penyembuhan luka meningkat
+2. Edema perifer menurun
+3. Nyeri ekstermitas menurun Sirkulasi Spontan (L.02015)",
+L.02015,Sirkulasi Spontan,"1. Tingkat kesadaran (5)
+2. Frekuensi nadi (4)
+3. Tekanan darah (3)
+4. Frekuensi napas (3)
+5. Suhu tubuh (3)
+6. Saturasi oksigen (3)
+7. Gambaran EKG aritmia -3
+8. ETCO2 (3)
+9. Produksi urine (3) Curah Jantung (L.02008)",D.0010
+L.02008,Curah Jantung,"1. Kekuatan nadi perifer dar skala 5 meningkat menjadi skala 1 menurun
+2. Bradikardi dari skala 1 meningkat menjadi skala 5 menurun
+3. Takikardi dari skala 1 meningkat menjadi skala 5 menurun
+4. Ortopnea dari skala 2 cukup meningkat menjadi skala 4 cukup menurun
+5. Suara jantung S3 dan S4 dari skala 1 meningkat menjadi skala 3 sedang",D.0011
+L.02017,Tingkat Perdarahan,,D.0012
+L.02010,Tingkat Perdarahan,"1. Mual dari skala 1 meningkat menjadi skala 5 menurun
+2. Muntah dari skala 1 meningkat menjadi skala 5 menurun
+3. Nyeri dari abdomen skala 1 meningkat menjadi skala 5 menurun
+4. Asites dari skala 1 meningkat menjadi skala 5 menurun
+5. Konstipasi dari skala 1 meningkat menjadi skala 5 menurun
+6. Bising usus dari skala 1 memburuk menjadi skala 5 membaik
+7. Nafsu makan dari skala 1 memburuk menjadi skala 5 membaik
+8. Frekuensi BAB dari skala 1 memburuk menjadi skala 5 membaik Perfusi Miokard (L.02011)",D.0013
+L.02011,Perfusi Miokard,1. Tekanan darah membaik Perfusi Perifer (L.02011),D.0014
+L.02011,Perfusi Perifer,"1. kekuatan nadi prefier dari skala 1 menurun menjadi skala 5 meningkat
+2. warna kulit pucat dari skala 1 meningkat menjadi skala 5 menurun
+3. pengisian kapiler dari skala 1 memburuk menjadi skala 5 membaik
+4. akral skala 1 memburuk menjadi skala 5 membaik
+5. turgor kulit dari skala 1 memburuk menjadi skala 5 membaik Perfusi Renal (L.02013)",D.0015
+L.02013,Perfusi Renal,"1. Jumlah urine dari skala 1 meningkat, menjadi skala 5 membaik
+2. Tekanan arteri rata-rata dari skala 1 meningkat,menjadi skala 5 membaik
+3. Kadar urine nitrogen darah dari skala 1 meningkat menjadi skala 5 membaik
+4. Kadar kreatinin plasma dari skala 1 meningkat menjadi skala 5 membaik. Perfusi Serebral (L.02014)",D.0016
+L.02014,Perfusi Serebral,,D.0017
+L.03018,Berat badan,"1. Indeks massa tubuh membaik dari skala 1 (memburuk) menjadi skala 5 (membaik) Status nutrisi (L.03030)
+1. Pengetahuan tentang pilihan makanan yang sehat membaik dari skala 1 (menurun) menjadi skala 5 (meningkat)
+2. Pengetahuan tentang pilihan minuman yang sehat membaik dari skala 1 (menurun) menjadi skala 5 (meningkat)
+3. Pengetahuan tentang standar asupan nutrisi yang tepat membaik dari skala 1 (menurun) menjadi skala 5 (meningkat)
+4. Perasaan cepat kenyang menurun dari skala 1 (meningkat) menjadi skala 5 (menurun) Perilaku menurunkan berat badan (L.03027)
+1. Menentukan target berat badan dalam rentang normal meningkat dari skala 1(menurun) menjadi skala 5 (meningkat)
+2. Menghindari makanan dan minuan tinggi kalori meningkat dari skala 1(menurun) menjadi skala 5 (meningkat)
+3. Mengontrol porsi makan meningkat dari skala 1(menurun) menjadi skala 5 (meningkat)",D.0018
+L.03018,Berat badan,"1. porsi makanan yang di habiskan meningkat
+2. kekuatan otot pengunyah meningkat
+3. verbalisasi keinginan untuk meningkatkan nutrisi meningkat
+4. pengetahuan tentang pilihan makana yang sehat meningkat
+5. pengetahuan tentang pilihan minuman yang sehat meningkat
+6. pengetahuan tentang standar asupan nutrisi yang tepat meningkat 7.
+8. sikap terhadap makanan/minumam sesuai dengan tujuan kesehatan meningkat
+9. sariawan menurun
+16. Berat badan membaik
+17. indeks masa tubuh membaik
+18. frekuensi makanan membaik
+19. nafsu makan membaik",D.0019
+L.04033,Eliminasi Fekal,"1. Kontrol pengeluaran feses dari skala 1 menurun menjadi skala 5 meningkat
+2. Keluhan defekasi lama dan sulit dari skala 1 meningkat menjadi skala 5 menurun
+3. Mengejan saat defekasi dari skala 1 meningkat menjadi skala 5 menurun
+4. Konsistensi feses dari skala 1 memburuk menjadi skala 5 membaik
+5. Frekuensi BAB dari skala 1 memburuk menjadi skala 5 membaik
+6. Peristaltik usus dari skala 1 memburuk menjadi skala 5 membaik",D.0020
+L.03033,Tingkat Nyeri,"1. Nyeri menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+2. Kram abdomen menurun dari skala 5 (meningkat) menjadi skala 1 (menurun).
+3. Mual menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+4. Muntah menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+5. Regurgitasi menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+6. Distensi abdomen menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+7. Diare menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+8. Suara peristaltic menurun dari skala 2 (cukup meningkat ) menjadi skala 5 (menurun)
+9. Pengosongan lambung dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+10. Flatus dari skala 2 (cukup meningkat) menjadi skala 5 (menurun) Keseimbangan Ciran (l.03020)",D.0021
+L.03020,Keseimbangan Ciran,"1. Asupan cairan menurun dari skala 5 (meningkat) menjadi skala 1 (menurun).
+2. Output urine menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+3. Membrane mukosa lembab menurun dari skala 5 (meningkat) menjadi skala 1 (menurun).
+4. Asupan makanan menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+5. Edema menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+6. Dehidrasi menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+7. Asites menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+8. Konfusi menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+9. TTV (Tekanan darah, frekuensi nadi, kekuatan nadi, tekanan arteri rata-rata) membaik dari skala 2 (cukup memburuk) menjadi skala 5 (membaik)
+10. Mata cekung membaik dari skala 2 (cukup memburuk) menjadi skala 5 (membaik)
+11. Turgor kulit membaik dari skala 2 (cukup memburuk) menjadi skala 5 (membaik)
+12. Berat badan membaik dari skala 2 (cukup memburuk) menjadi skala 5 (membaik)",D.0022
+L.03020,Keseimbangan Ciran,"1. Kekuatan nadi meningkat
+2. Berat badan cukup meningkat
+3. Perasaan lemah menurun
+4. Frekuensi nadi normal
+5. Tekanan darah normal Integritas Kulit dan Jaringan",D.0023
+L.14125,Keseimbangan Ciran,"1. Elastisitas menurun dariskala 5 (meningkat) menjadi skala 1 (menurun).
+2. Hidrasi menurun dari skala 5 (meningkat) menjadi skala 1 (menurun)
+3. Perfusi jaringan menurun dari skala 5 (meningkat) menjadi skala 1 (menurun).
+4. Kerusakan jaringan menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+5. Kerusakan lapisan kulit menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+6. Nyeri menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+7. Pendarahan menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+8. Kemerahan menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+9. Hematoma menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+10. Pigmentasi abnormal menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+11. Jaringan parut menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+12. Nekrosis menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+13. Abrasi kornea menurun dari skala 2 (cukup meningkat) menjadi skala 5 (menurun)
+14. Suhu kulit membaik dari skala 2 (cukup memburuk) menjadi skala 5 (membaik)
+15. Sensasi membaik dari skala 2 (cukup memburuk) menjadi skala 5 (membaik)
+16. Tekstur membaik dari skala 2 (cukup memburuk) menjadi skala 5 (membaik)
+17. Pertumbuhan rambut membaik dari skala 2 (cukup memburuk) menjadi skala 5 (membaik) Keseimbangan Cairan (L.03020) Setelah dilakukan tindakan keperawatan selama 3x24 jam masalah gangguan kesiapan",D.0024
+L.03020,Keseimbangan Cairan,"1. Membran mukosa lembap dari skala 1 menurun menjadi skala 5 meningkat
+2. Dehidrasi dari skala 1 menurun menjadi skala 5 meningkat
+3. Intake cairan dari skala 1 memburuk menjadi skala 5 membaik
+4. Output urin dari skala 1 memburuk menjadi skala 5 membaik
+5. Tekanan darah dari skala 1 memburuk menjadi skala 5 membaik
+6. Frekuensi nadi dari skala 1 memburuk menjadi skala 5 membaik Tekanan arteri rata-rata dari skala 1 memburuk menjadi skala 5 membaik",D.0025
+L.03030,Status Nutrisi,"1. Porsi makan yang dihabiskan dari skala 1 menurun menjadi skala 4 cukup meningkat
+2. Sikap terhadap makanan/minuman sesuai dengan tujuan kesehatan dari skala 1 menurun menjadi skala 5 meningkat
+3. Perasaan cepat kenyang dari skala 1 meningkat menjasi skala 3 sedang
+4. Berat badan dari skala 1 memburuk menjadi skala 4 cukup memebaik Indeks Massa Tubuh (IMT) dari skala 1 memburuk menjadi skala 4 cukup membaik Ketidakstabilan glukosa kadar darah (L.03022)",D.0026
+L.03022,Ketidakstabilan glukosa kadar darah,"1. Mengantuk cukup menurun
+2. Pusing menurun
+3. Lelah/ lesu cukup menurun
+4. Rasa lapar sedang
+5. Gemetar cukup menurun
+6. Berkeringat cukup menurun
+7. Rasa haus menurun
+8. Perilaku aneh menurun
+9. Kesulitan bicara menurun
+10. Kadar glukosa dalam darah sedang
+11. Kadar glukosa urine dalam sedang. Palpitasi sedang",D.0027
+L.03029,Status Menyusui,"7. Bayi rewel menurun
+8. Frekuensi miksi bayi membaik Status Menyusui (L.03029)",D.0028
+L.03029,Status Menyusui,"1. Perlekatan bayi pada payudara ibu meningkat
+2. Kemampuan ibu memposisikan bayi dengan benar meningkat
+3. Tetesan/pancaran ASI meningkat
+4. Supai ASI adekuat meningkat
+5. Kepercayaan diri ibu meningkat
+6. Intake bayi meningkat
+7. Hisapan bayi meningkat",
+L.03018,Berat Badan,"1. Berat badan dari skala 1 memburuk menjadi skala 5 membaik
+2. Tebal lipatan kulit dari skala 1 memburuk menjadi skala 5 membaik",D.0030
+L.03018,Berat Badan,"1. Berat badan dari skala 1 memburuk menjadi skala 5 membaik
+2. Tebal lipatan kulit dari skala 1 memburuk menjadi skala 5 membaik
+3. Indeks massa tubuh dari skala 1 memburuk menjadi skala 5 membaik",D.0031
+L.03030,Status Nutrisi,"1. Porsi makan yang dihabiskan dari skala 1 menurun menjadi skala 3 sedang
+2. Berat badan dari skala 2 cukup memburuk menjadi skala 4 cukup membaik 1 2",D.0032
+L.03023,Status Nutrisi,"1. Nyeri dari skala 1 meningkat menjadi skala 5 menurun
+2. Penggunaan otot bantu napas dari skala 1 meningkat menjadi skala 5 menurun
+3. Suara Peristaltik dari 1 memburuk menjadi skala 5 membaik",D.0033
+L.03028,Status Nutrisi,"1. Kekuatan nadi meningkat
+2. Output urin meningkat
+3. Membran mukosa lembab meningkat
+4. Ortopnea menurun
+5. Dispnea menurun
+6. Paroxysmal nocturnal dyspnea (PND) menurun
+7. Edema anasarka menurun
+8. Edema perifer menurun
+9. Frekuensi nadi membaik
+10. Tekanan darah membaik
+11. Turgor kulit membaik
+12. Jugular venous pressure (JVP) membaik
+13. Hemoglobin membaik
+14. Hematokrit membaik",D.0034
+L.14125,Status Nutrisi,"1. Kerusakan jaringan dari skala 1 meningkat menjadi skala 5 menurun
+2. Kerusakan kulit dari skala 1 meningkat menjadi skala 5 menurun",D.0035
+L.03020,Status Nutrisi,"1. Membran mukosa lembap skala 1 meningkat menjadi skala 5.
+2. Asupan makanan skala 1 meningkat menjadi skala
+3. Tekanan darah dari skala 1 memburuk menjadi skala 5 membaik. Keseimbangan Elektrolit",
+L.03021,Status Nutrisi,"1. Serum natrium dari skala 1 memburuk menjadi skala 5 membaik
+2. Serum kalium dari skala 1 memburuk menjadi skala 5 membaik
+3. Serum klorida dari skala 1 memburuk menjadi skala 5 membaik 3 Kestabilan glukosa darah",D.0037
+L.03022,Status Nutrisi,"1. Kadar glukosa dalam darah dari skala 1 (memburuk) menjadi skala 5 (membaik)
+1. Tingkat Syok
+1. Kekuatan nadi menurun dimana yang awalnya skala 4 (meningkat) menjadi skala 2 (cukup menurun).
+2. Tingkat kesadaran Meningkat yang awalnya skala 1 (menurun) menjadi skala 3 (sedang).
+3. Saturasi oksigen Meningkat dengan skala awal 1 (menurun) menjadi skala 4 (cukup meningkat) Akral dingin menurun dari skala 1 (meningkat) menjadi skala 4 (cukup menurun)
+5. Pucat menurun dengan skala awal 1 (meningkat) menjadi skala 4 (cukup menurun). Eliminasi Urine (L. 04034) Setelah dilakukan intervensi keperawatan 3x 24 jam masalah terhadap eliminasi urin dapat diatasi dengan indicator :
+1. Desakan berkemih (3)",D.0038
+L.04034,Eliminasi Urine,"2. Urin menetes (dribbling) -4
+3. Nokturia (3)
+4. Mengompol (4)
+5. Enuresis (3) Keterangan:
+1. Sedang
+2. Cukup menurun
+3. Sedang
+4. Cukup menurun
+5. sedang
+2. Kontinensia Fekal",
+L.04034,Eliminasi Urine,,D.0041
+L.04036,Eliminasi Urine,"1. Kemampuan mengontrol pengeluaran urine dari skala 1 menurun menjadi skala 5 meningkat
+2. Nokturia dari skala 1 meningkat menjadi skala 5 menurun
+3. Residu Volume urine setelah berkemih dari skala 1 meningkat menjadi skala 5 menurun
+4. Distensi kandung kemih dari skala 1 meningkat menjadi skala 5 menurun
+5. Dribbling dari skala 1 meningkat menjadi skala 5 menurun
+6. Hesitancy dari skala 1 meningkat menjadi skala 5 menurun
+7. Enuresis dari skala 1 meningkat menjadi skala 5 menurun
+8. Kemampuan menunda pengeluaran urine dari skala 1 memburuk menjadi skala 5 membaik
+9. Frekuensi berkemih dari skala 1 memburuk menjadi skala 5 membaik
+10. Sensasi berkemih dari skala 1 memburuk menjadi skala 5 membaik Kontinensia urin",
+L.04036,Eliminasi Urine,"1. Kemampuan mengontrol pengeluaran urin dari skala 1 menurun menjadi skala 5 meningkat
+2. Kemampuan menunda pengeluaran urin dari skala 1 memburuk menjadi skala 5 membaik
+3. Frekuensi BAK dari skala 1 memburuk menjadi skala 5 membaik
+4. Sensasi BAK dari skala 1 memburuk menjadi skala 5 membaik
+5. Nokturia dari skala 1 meningkat menjadi skala 5 menurun
+6. Hesistancy Enuresis dari skala 1 meningkat menjadi skala 5 menurun
+7. Residu volume urin setelah BAK dari skala 1 meningkat menjadi skala 5 menurun
+8. Dribbling dari skala 1 meningkat menjadi skala 5 menurun
+9. Verbalisasi pengeluaran urin tidak tuntas Kontinensia Urine",
+L.04036,Eliminasi Urine,"1. Kemampuan mengontrol pengeluaran urine meningkat
+2. Nokturia menurun
+3. Residu volume urine setelah BAK menurun
+4. Distensi kandung kemih menurun
+5. Dribbling menurun
+6. Hesitancy menurun
+7. Enuresis menurun
+8. Verbalisasi pengeluaran urine tidak tuntas menurun
+9. Kemampuan menunda pengeluaran urine membaik
+10. Frekuensi BAK membaik
+11. Sensasi BAK membaik Kontinensia Urine",
+L.04036,Eliminasi Urine,"1. Sensasi Berkemih dari skala 1 memburuk menjadi skala 5 membaik
+2. Dribbling dari skala 1 meningkat menjadi skala 5 menurun
+3. Frekuensi Berkemih dari 1 memburuk menjadi skala 5 membaik
+4. Hesitancy dari skala 1 meningkat menjadi skala 5 menurun
+5. Nokturia dari skala 1 meningkat menjadi skala 5 menurun
+6. Enuresis Verbalisasi pengeluaran urin tidak tuntas dari skala 1 meningkat menjadi skala 5 menurun",
+L.04036,Eliminasi Urine,"1. Kemampuan mengontrol pengeluaran urine dari skala 1 menurun menjadi skala 5 meningkat
+2. Nokturia dari skala 1 meningkat menjadi skala 3 sedang
+3. Residu volume urine setelah berkemih dari 1 meningkat menjadi skala 3 sedang
+4. Distensi kandung kemih dari skala 1 meningkat menjadi skala 3 sedang
+5. Dribbling dari skala 1 meningkat menjadi skala 3 sedang
+6. Hesitancy dari skala 1 meningkat menjadi skala 3 sedang
+7. Enuresis dari skala 1 meningkat menjadi skala 3 sedang
+8. Kemampuan menunda pengeluaran urine dari skala 1 memburuk menjadi skala 5 membaik
+9. Frekuensi berkemih dari skala 1 memburuk menjadi skala 5 membaik",D.0046
+L.04036,Kontinensia urine,"1. Nokturia dari skala 1 meningkat menjadi skala 5 menurun
+2. Residu volume urine setelah berkemih dari skala 1 meningkat menjadi skala 5 menurun.
+3. Distensi kandung kemih dari skala 1 meningkat menjadi skala 5 menurun.
+4. Dribbling dari skala 1 meningkat menjadi skala 5 menurun.
+5. Hesitancy dari skala 1 mmeningkat menjadi skala 5 menurun
+6. Frekuensi berkemih dari skala 1 memburuk menjadi skala 5 membaik. Eliminasi urine (04034)",
+L.04036,Kontinensia urine,"1. Sensasi berkemih skala 1 menurun menjadi skala 5 meningkat
+2. Desakan berkemih (urgensi) skala 1 meningkat menjadi skala 5 menurun
+3. Distensi kandung kemih (hesitancy) skala 1 meningkat menjadi skala 5 menurun
+4. Volume residu urine skala 1 meningkat menjadi skala 5 menurun
+5. Urin menetes (dribbling) skala 1 meningkat menjadi skala 5 menurun
+6. Nokturia skala 1 meningkat menjadi skala 5 menurun
+7. Mengompol skala 1 meningkat menjadi skala 5 menurun
+8. Enuresis skala 1 meningkat menjadi skala 5 menurun
+9. Disuria skala 1 meningkat menjadi skala 5 menurun
+10. Anuria skala 1 meningkat menjadi skala 5 menurun
+11. Frekuensi BAK skala 1 memburuk menjadi skala 5 membaik
+12. Karakteristik urine skala 1 memburuk menjadi skala 5 membaik",D.0048
+L.04033,Eliminasi fekal,"5. Frekuensi BAB dari skala 1 memburuk menjadi skala 5 membaik
+6. Peristaltik usus dari skala 1 memburuk menjadi skala 5 membaik",D.0049
+L.04034,Eliminasi Urine,"1. Sensasi berkemih dari skala 1 menurun menjadi skala 5 meningkat
+2. Desakan berkemih (urgensi) dari skala 1 meningkat menjadi skala 5 menurun
+3. Distensi kandung kemih dari skala 1 meningkat menjadi skala 5 menurun
+4. Berkemih tidak tuntas (hesitancy) dari skala 1 meningkat menjadi skala 5 menurun
+5. Volume residu urine dari skala 1 meningkat menjadi skala 5 menurun
+6. Urine menetes (dribbling) dari skala 1 meningkat menjadi skala 5 menurun
+7. Nokturia dari skala 1 meningkat menjadi skala 5 menurun
+8. Mengompol dari skala 1 meningkat menjadi skala 5 menurun
+9. Enuresis dari skala 1 meningkat menjadi skala 5 menurun Kontinensia Urine",D.0050
+L.04036,Eliminasi Urine,"1. Kemampuan mengontrol pengeluaran urine dari skala 1 menurun menjadi skala 5 meningkat
+2. Nokturia dari skala 1 meningkat menjadi skala 5 menurun
+3. Residu volume urine setelah BAK dari skala 1 meningkat menjadi skala 5 menurun
+4. Distensi kandung kemih dari skala 1 meningkat menjadi skala 5 menurun
+5. Dribbling dari skala 1 meningkat menjadi skala 5 menurun
+6. Hesitancy dari skala 1 meningkat menjadi skala 5 menurun
+7. Enuresis dari skala 1 meningkat menjadi skala 5 menurun
+8. Kemampuan menunda pengeluaran urine dari skala 1 memburuk menjadi skala 5 membaik
+9. Frekuensi BAK dari skala 1 memburuk menjadi skala 5 membaik
+10. Sensasi BAK dari skala 1 memburuk menjadi skala 5 membaik
+1. Eliminsi Fekal Definisi :",D.0051
+L.04036,Eliminasi Urine,,D.0052

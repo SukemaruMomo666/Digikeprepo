@@ -47,52 +47,52 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
     <div class="mb-6 flex items-center gap-3">
         <flux:button :href="route('dosen.mahasiswa.index')" variant="ghost" icon="arrow-left" wire:navigate />
         <div>
-            <h2 class="text-2xl font-bold text-[#1B4F72]">Profil Mahasiswa</h2>
-            <p class="text-sm text-[#7A8FA6]">Detail informasi dan riwayat pengerjaan askep.</p>
+            <h2 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Profil Mahasiswa</h2>
+            <p class="text-sm text-[#7A8FA6] dark:text-zinc-400">Detail informasi dan riwayat pengerjaan askep.</p>
         </div>
     </div>
 
     <div class="grid gap-6 lg:grid-cols-[350px_1fr]">
         {{-- Sidebar Profil --}}
         <div class="space-y-6">
-            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6 shadow-sm text-center">
-                <div class="mx-auto flex size-20 items-center justify-center rounded-2xl bg-[#F4F8FB] text-3xl font-bold text-[#2E86C1]">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-6 shadow-sm text-center">
+                <div class="mx-auto flex size-20 items-center justify-center rounded-2xl bg-[#F4F8FB] dark:bg-zinc-700 text-3xl font-bold text-[#2E86C1] dark:text-[#85B7EB]">
                     {{ $mahasiswa->initials() }}
                 </div>
-                <h3 class="mt-4 text-lg font-bold text-[#1B4F72]">{{ $mahasiswa->name }}</h3>
-                <p class="text-sm font-semibold text-[#7A8FA6] uppercase tracking-widest">{{ $mahasiswa->nim }}</p>
-                
-                <div class="mt-6 grid grid-cols-2 gap-3 border-t border-gray-50 pt-6">
-                    <div class="rounded-xl bg-[#F8FBFE] p-3">
-                        <p class="text-[10px] font-bold uppercase text-[#7A8FA6]">Total Askep</p>
-                        <p class="text-xl font-black text-[#1B4F72]">{{ $mahasiswa->askep_count }}</p>
+                <h3 class="mt-4 text-lg font-bold text-[#1B4F72] dark:text-white">{{ $mahasiswa->name }}</h3>
+                <p class="text-sm font-semibold text-[#7A8FA6] dark:text-zinc-400 uppercase tracking-widest">{{ $mahasiswa->nim }}</p>
+
+                <div class="mt-6 grid grid-cols-2 gap-3 border-t border-gray-50 dark:border-zinc-700 pt-6">
+                    <div class="rounded-xl bg-[#F8FBFE] dark:bg-zinc-700/50 p-3">
+                        <p class="text-[10px] font-bold uppercase text-[#7A8FA6] dark:text-zinc-400">Total Askep</p>
+                        <p class="text-xl font-black text-[#1B4F72] dark:text-zinc-100">{{ $mahasiswa->askep_count }}</p>
                     </div>
-                    <div class="rounded-xl bg-[#F8FBFE] p-3">
-                        <p class="text-[10px] font-bold uppercase text-[#7A8FA6]">Rata-rata Skor</p>
-                        <p class="text-xl font-black text-[#2E86C1]">-</p>
+                    <div class="rounded-xl bg-[#F8FBFE] dark:bg-zinc-700/50 p-3">
+                        <p class="text-[10px] font-bold uppercase text-[#7A8FA6] dark:text-zinc-400">Rata-rata Skor</p>
+                        <p class="text-xl font-black text-[#2E86C1] dark:text-[#85B7EB]">-</p>
                     </div>
                 </div>
             </div>
 
-            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6 shadow-sm">
-                <h4 class="mb-4 text-xs font-bold uppercase tracking-wider text-[#7A8FA6]">Informasi Penugasan</h4>
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-6 shadow-sm">
+                <h4 class="mb-4 text-xs font-bold uppercase tracking-wider text-[#7A8FA6] dark:text-zinc-400">Informasi Penugasan</h4>
                 <dl class="space-y-4">
                     <div>
-                        <dt class="text-[10px] font-bold uppercase text-[#C4D3DF]">Stase</dt>
-                        <dd class="text-sm font-semibold text-[#1B4F72]">{{ $tugas->stase ?? '-' }}</dd>
+                        <dt class="text-[10px] font-bold uppercase text-[#C4D3DF] dark:text-zinc-500">Stase</dt>
+                        <dd class="text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $tugas->stase ?? '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] font-bold uppercase text-[#C4D3DF]">Rumah Sakit</dt>
-                        <dd class="text-sm font-semibold text-[#1B4F72]">{{ $tugas->rs ?? '-' }}</dd>
+                        <dt class="text-[10px] font-bold uppercase text-[#C4D3DF] dark:text-zinc-500">Rumah Sakit</dt>
+                        <dd class="text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $tugas->rs ?? '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] font-bold uppercase text-[#C4D3DF]">Bangsal / Ruang</dt>
-                        <dd class="text-sm font-semibold text-[#1B4F72]">{{ $tugas->bangsal ?? '-' }}</dd>
+                        <dt class="text-[10px] font-bold uppercase text-[#C4D3DF] dark:text-zinc-500">Bangsal / Ruang</dt>
+                        <dd class="text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $tugas->bangsal ?? '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] font-bold uppercase text-[#C4D3DF]">Periode</dt>
-                        <dd class="text-sm font-semibold text-[#1B4F72]">
-                            {{ $tugas->periode_mulai?->translatedFormat('d M Y') ?? '?' }} - 
+                        <dt class="text-[10px] font-bold uppercase text-[#C4D3DF] dark:text-zinc-500">Periode</dt>
+                        <dd class="text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">
+                            {{ $tugas->periode_mulai?->translatedFormat('d M Y') ?? '?' }} -
                             {{ $tugas->periode_selesai?->translatedFormat('d M Y') ?? '?' }}
                         </dd>
                     </div>
@@ -102,19 +102,19 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
 
         {{-- Riwayat Askep --}}
         <div class="space-y-4">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-[#7A8FA6] px-1">Riwayat Dokumentasi Askep</h3>
-            
+            <h3 class="text-sm font-bold uppercase tracking-wider text-[#7A8FA6] dark:text-zinc-400 px-1">Riwayat Dokumentasi Askep</h3>
+
             <div class="grid gap-4 sm:grid-cols-1">
                 @forelse ($askepList as $askep)
-                    <div class="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#E0EBF5] bg-white p-5 shadow-sm transition hover:border-[#2E86C1]">
+                    <div class="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5 shadow-sm transition hover:border-[#2E86C1]">
                         <div class="flex items-center gap-4">
-                            <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#EBF5FB] text-[#2E86C1]">
+                            <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#EBF5FB] dark:bg-blue-900/30 text-[#2E86C1] dark:text-[#85B7EB]">
                                 <flux:icon.clipboard-document-list class="size-5" />
                             </div>
                             <div>
-                                <h4 class="font-bold text-[#1B4F72]">{{ $askep->pasien->nama_pasien }}</h4>
-                                <div class="flex items-center gap-2 mt-0.5 text-xs text-[#7A8FA6]">
-                                    <span class="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[10px] font-bold">RM: {{ $askep->pasien->no_rm }}</span>
+                                <h4 class="font-bold text-[#1B4F72] dark:text-white">{{ $askep->pasien->nama_pasien }}</h4>
+                                <div class="flex items-center gap-2 mt-0.5 text-xs text-[#7A8FA6] dark:text-zinc-400">
+                                    <span class="rounded bg-gray-100 dark:bg-zinc-700 px-1.5 py-0.5 font-mono text-[10px] font-bold dark:text-zinc-300">RM: {{ $askep->pasien->no_rm }}</span>
                                     <span>·</span>
                                     <span>{{ $askep->created_at->translatedFormat('d M Y') }}</span>
                                 </div>
@@ -135,7 +135,7 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
                                 <span class="rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide {{ $statusClasses }}">
                                     {{ str_replace('_', ' ', $askep->status) }}
                                 </span>
-                                <p class="mt-1 text-[10px] font-medium text-[#C4D3DF]">Progress: {{ $askep->step_terakhir }}/5 tahap</p>
+                                <p class="mt-1 text-[10px] font-medium text-[#C4D3DF] dark:text-zinc-500">Progress: {{ $askep->step_terakhir }}/5 tahap</p>
                             </div>
                             
                             <flux:button :href="route('dosen.askep.review', $askep->id)" variant="ghost" size="sm" wire:navigate>
@@ -144,7 +144,7 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
                         </div>
                     </div>
                 @empty
-                    <div class="rounded-2xl border-2 border-dashed border-[#D0DCE8] bg-[#F4F8FB] py-12 text-center text-[#7A8FA6]">
+                    <div class="rounded-2xl border-2 border-dashed border-[#D0DCE8] dark:border-zinc-700 bg-[#F4F8FB] dark:bg-zinc-800 py-12 text-center text-[#7A8FA6] dark:text-zinc-400">
                         <p class="text-sm">Mahasiswa ini belum membuat dokumentasi Askep.</p>
                     </div>
                 @endforelse

@@ -1,0 +1,679 @@
+Kode SDKI,Nama SDKI,Kategori,Subkategori,Definisi,Penyebab,Gejala Mayor - Subjektif,Gejala Mayor - Objektif,Gejala Minor - Subjektif,Gejala Minor - Objektif,Kondisi Klinis Terkait
+D.0001,Bersihan Jalan Napas Tidak Efektif,Fisiologis,Respirasi,Ketidakmampuan membersihkan sekret atau obstruksi jalan napas untuk mempertahankan jalan napas tetap paten,"1. Spasme jalan napas
+2. Hipersekresi jalan napas
+3. Disfungsi neuromuskuler
+4. Benda asing dalam jalan napas
+5. Adanya jalan napas buatan
+6. Sekresi yang tertahan
+7. Hiperplasia dinding jalan napas
+8. Proses infeksi
+9. Respon alergi
+10. Efek agen farmakologis (mis. Anastesi)
+1. Merokok aktif
+2. Merokok pasif
+3. Terpajan polutan",-,"11. Batuk tidak efektif atau tidak mampu batuk
+12. Sputum berlebih / obstruksi di jalan napas / mekonium di jalan napas (pada neonatus)
+4. Mengi, wheezing dan/atau ronkhi kering",,"1. Gelisah
+2. Sionosis
+3. Bunyi napas menurun
+4. Frekuensi napas berubah
+5. Pola napas berubah","1. Gullian barre syndrome
+2. Sklerosis multipel
+3. Myasthenia gravis
+4. Prosedur diagnostik (mis. Bronkoskopi, transesophageal echocardiograhphy
+5. Sklerosis multipel
+6. Myasthenia gravis
+7. Stroke
+8. Kuadrifplegia
+9. Sindrom aspirasi meconium
+10. Infeksi saluran napas
+11. Asma Gangguan Penyapihan"
+D.0002,Gangguan Penyapihan Ventilator,Fisiologis,Respirasi,Ketidakmampuan beradaptasi dengan pengurangan bantuan ventilator mekanik yang dapat menghambat dan memperlama proses penyapihan.,"1. Hipersekresi jalan napas
+2. Ketidakcukupan Energi
+3. Hambatan upaya napas (mis. Nyeri saat bernapas,kelemahan otot pernapasan,efek sedasi)
+1. Kecemasan
+2. Perasaan tidak berdaya
+3. Kurang informasi tentang proses penyapihan
+4. Penurunan motivasi
+1. Ketidakadekuatan dukungan sosial
+2. Ketidaktepatan kecepatan proses penyapihan
+3. Riwayat kegagalan berulang dalam upaya penyapihan
+4. Riwayat ketergantungan ventilator >4 hari",,"1. Frekuensi napas meningkat
+2. Penggunaan otot bantu napas
+3. Napas megap megap (gasping)
+4. Upaya napas dan bantuan ventilator tidak sinkron
+5. Napas dangkal
+6. Agitasi
+7. Nilai gas darah arteri abnormal",,,"1. Cedera kepala
+2. Coronary artery bypass graft (CABG)
+3. Gagal Napas
+4. Cardiac Arrest
+5. Transplantasi Jantung
+6. Displasia Bronkupulmonal Gangguan Pertukaran Gas"
+D.0002,Gangguan Pertukaran Gas,Fisiologi,Respirasi,Kelebihan atau kekurangan oksigenasi dan/atau eliminasi karbon dioksida pada membran alveolus-kapiler.,"1. Ketidakseimbangan ventilasi-perfusi
+2. Perubahan membran alveolus-kapiler",1. Dispnea,"1. PCO₂ meningkat/menurun
+2. PO₂ menurun
+3. Takikardi
+4. pH arteri menurun/meningkat
+5. Bunyi napas tambahan","1. Pusing
+2. Penglihatan kabur","1. Sianosis
+2. Diaforesis
+3. Gelisah
+4. Napas cuping hidup
+5. Pola napas abnormal (cepat /lambat, regular /iregular, dala /dangkal)
+6. Warna kulit abnormal (mis. Pucat, kebiruan)
+7. Kesadaran menurun","1. Penyakit paru obstruktif kronis (PPOK)
+2. Gagal jantung kongestif
+3. Asma
+4. Pneumonia
+5. Tuberkulosis paru
+6. Penyakit membran hialin
+7. Asfiksia
+8. Persistent pulmonary hypertension of newborn (PPHN)
+9. Prematuritas
+10. Infeksi saluran napas Gangguan Ventilasi Spontan"
+D.0002,Gangguan Ventilasi Spontan,Fisiologis,Respirasi,Penurunan cadangan energi yang mengakibatkan individu tidak mampu bernafas secara adekuat.,"1. Gangguan metabolisme
+2. Kelemahan otot pernapasan","1. Dispnea Objektif
+1. Penggunaan otot bantu nafas meningkat
+2. Volume tidak menurun
+3. PCO2 meningkat
+4. PO2 menurun
+5. SaO2 menurun",,(Tidak Tersedia),"1. Gelisah
+2. Takikardia","1. Penyakit paru obstruktif kronis (PPOK)
+2. Asma
+3. Cedera kepala
+4. Gagal napas
+5. Bedah jantung
+6. Adult respiratory distress syindrome (ARDS)
+7. Persistent pulmonary hypertension of newborn (PPHN)
+8. Prematuritas
+9. Infeksi saluran nafas Pola Napas Tidak Efektif"
+D.0002,Pola Napas Tidak Efektif,Fisiologis,Respirasi,Inspirasi dan/atau ekspirasi yang tidak memberikan ventilasi adekuat,"1. Depresi pusat pernapasan 2. Hambatan upaya napas (mis. nyeri saat bernapas, kelemahan otot pernapasan)
+3. Deformitas dinding dada
+4. Deformitas tulang dada
+5. Gangguan neuromuskular
+6. Gangguan neurologis
+7. Imaturitas neurologis
+8. Penurunan energi
+9. Obesitas
+10. Posisi tubuh yang menghambat ekspansi paru
+11. Sindrom hipoventilasi
+12. Kerusakan inervasi diafragma (kerusakan saraf C5 ke atas)
+13. Cedera pada medula spinalis
+14. Efek agen farmakologis
+15. Kecemsan",,,,,"1. Depresi sistem saraf pusat
+2. Cedera kepala
+3. Trauma thoraks
+4. Gullian barre syndrome
+5. Sklerosis multipel
+6. Myasthenia gravis
+7. Stroke
+8. Kuadrifplegia
+9. Intoksikasi alcohol"
+D.0006,Rsiko Aspirasi,Fisiologis,Respirasi,"Beresiko mengalami masuknya sekresi gastrointestinal, sekresi orofaring, benda cair atau padat ke dalam saluran trakeobronkhial akibat disfungsi mekanisme protektif saluran napas Faktor Risiko 1. Penurunan tingkat kesadaran 2. Penurunan refleks muntah dan/atau batuk 3. Gangguan menelan 4. Disfagia 5. Kerusakan mobilitas fisik 6. Peningkatan residu lambung 7. Peningkatan tekanan intragastric 8. Penurunan motilitas gastrointestinal 9. Sfingter esofagus bawah inkompeten 10. Perlambatan pengosongan lambung 11. Terpasang selang nasogastric 12. Terpasang trakeostomi atau endotracheal tube 13. Trauma/pembedahan leher, mulut, dan/atau wajah 14. Efek agen farmakologis 15. Ketidakmatangan koordinasi menghisap, menelan, bernapas",,,,,,"1. Cedera kepala
+2. Stroke
+3. Cedera medulla spinalis
+4. Guillain barre syndrome
+5. Penyakit Parkinson
+6. Keracunan obat dan alcohol
+7. Pembesaran uterus
+8. Miestenia gravis
+9. Fistula trakeoesofagus
+10. Striktura esofagus
+11. Sclerosis multiple
+12. Labiopalatoskizis
+13. Atresia esofagus
+14. Laringomalasia
+15. Prematuritas Gangguan Sirkulasi Spontan"
+D.0006,Gangguan Sirkulasi Spontan,Fisiologis,Sirkulasi,Ketidakmampuan untuk mempertahankan sirkulasi yang adekuat untuk menunjang keidupan,"1. Abnormalitas jantung
+2. Abnormalitas struktur jantung
+3. Penurunan fungsi ventrikel",1. Tidak berespon,"1. Frekuensi nadi >50 kali/enit atau >150 kali/menit
+2. Tekanan darah sistolik <60 mm Hg atau >200 mmHg
+3. Frekuensi napas >6 kali/menit atau >30 kali/menit
+4. Kesadaran menurun atau tidak sadar",(tidak tersedia),"1. Suhu tubuh <34,5oC
+2. Tidak ada produksi urin dalam 6 jam
+3. Saturasi oksigen <85%
+4. Gambaran EKG menunjukkan aritmia letal (mis. Ventriculer tachycardia [VT], Ventricular fibrillation [VF], Asistol, Pulseless Electrical Activity [PEA]
+5. Gambaran EKG menunjukkan aritmia mayor (mis. AV block derajat 2 tipe 2, AV block total, takiaritmia/bradiaritmia, supraventricular tachycardia [SVT], ventricular extrasystole [VES] simptomatik
+6. ETCO2>35 mmHg","1. Henti jantung
+2. Bradikardia
+3. Takikardia
+4. Sindrom coroner akut
+5. Gagal jantung
+6. Kardiomiopati
+7. Miokarditis
+8. Disrritmia
+9. Trauma
+10. Perdarahan (mis. Perdarahan gastrointestinal, rupture aorta, perdarahan intracranial)
+11. Keracunan
+12. Overdosis
+13. Tenggelam
+14. Emboli paru Penurunan Curah Jantung"
+D.0006,Penurunan Curah Jantung,Fisiologis,Sirkulasi,Ketidakmampuan jantung memompa darah untuk memenuhi kebutuhan metabolisme tubuh,"1. Perubahan irama jantung
+2. Perubahan frekuensi jantung
+3. Perubahan kontraktilitas
+4. Perubahan preload
+5. Perubahan afterload",,"1. Perubahan irama jantung
+1) Bradikardia/takikardia
+2) Gambaran EKG aritmia atau gangguan konduksi
+2. Perubahan preload
+1) Edema
+2) Distensi vena jugularis
+3) Central venous pressure (CVP) meningkat/menurun
+4) Hepatomegaly
+3. Perubahan afterload
+1) Tekanan darah meningkat/menurun
+2) Nadi perifer teraba lemah
+3) Capillary refill time >3 detik
+4) Oliguria
+5) Warna kulit pucat dan/atau sianosis
+4. Perubahan kontraktilitas
+1) Terdengar suara jantung S3 dan/atau S4
+2) Ejection fraction (EF) menurun","1. Perubahan preload (tidak tersedia)
+2. Perubahan afterload (tidak tersedia)
+3. Perubahan kontraktilitas (tidak tersedia)
+4. Perilaku/emosional
+1) Cemas
+2) Gelisah","1. Perubahan preload
+1) Murmur jantung
+2) Berat badan bertambah
+3) Pulmonary artery wedge pressure (PAWP) menurun
+2. Perubahan afterload
+1) Pulmonary vascular resistance (PVR) meningkat/menurun
+2) Systemic vascular resistance (SVR) meningkat/menurun
+3. Oerubahan kontraktilitas
+1) Cardiac index (CI) menurun
+2) Left ventricular stroke work index (LVSWI) menurun
+3) Stroke volume index (SVI) menurun
+4. Perilaku/emosional (tidak tersedia)","1. Gagal jantung kongestif
+2. Sindtom coroner akut
+3. Stenosis mitral
+4. Regurgitasi mitral
+5. Stenosis aorta
+6. Regurgitasi aorta
+7. Stenosis trikuspidal
+8. Regurgitasi trikuspidal
+9. Stenosis pulmonal
+10. Regurgitasi pulmonal
+11. Aritmia
+12. Penyakit jantung bawaan Perfusi perifer tidak efektif"
+D.0006,Perfusi perifer tidak efektif,Fisiologi,,Penurunan sirkulasi darah pada level kapiler yang dapat men gganggu metabolisme tubuh.,"1. Hiperglikemia
+2. Penurunan konsentrasi hemoglobin
+3. Peningkatan tekanan darah
+4. Kekurangan volume cairan
+5. Penurunan aliran arteri dan/atau vena
+6. Kurang terpapar informasi tentang faktor pemberat (mis. merokok, gaya hidup monoton, trauma, obesitas, asupan garam, imobilitas)
+7. Kurang terpapar informasi tentang proses penyakit (mis. diabetes melitus, hiperlipidemia)
+8. Kurang aktivitas fisik",,,"1. Parastesia
+2. Nyeri ekstremitas (klaudikasi intermiten)","1. Edema
+2. Penyembuhan luka lambat
+3. Indeks ankle-brachial kurang dari 0.90 4. Bruit femoralis","1. Tromboflebitis
+2. Diabetes melitus
+3. Anemia
+4. Gagal jantung kongestif
+5. Kelainan jantung kongenital
+6. Trombosis arteri
+7. Varises
+8. Trombosis vena dalam
+9. Sindrom kompartemen Risiko Gangguan Sirkulasi"
+D.0010,Risiko Gangguan Sirkulasi Spontan,Fisiologis,Sirkulasi,"Beresiko mengalami ketidakmampuan untuk mempertahankan sirkulasi yang adekuat untuk menunjang kehidupan Faktor Risiko 1. Kekurangan volume cairan 2. Hipoksia 3. Hipotermia 4. Hipokalemia/hiperkalemia 5. Hipoglikemia/hiperglikem ia 6. Asidosis 7. Toksin (mis. Keracunan, overdosis obat) 8. Tamponade jantung 9. Tension pneumothorax 10. Thrombosis jantung 11. Thrombosis paru (emboli paru)",,,,,,"1. Bradikardia
+2. Takikardia
+3. Sindrom jantung coroner akut
+4. Gagal jantung
+5. Kardiomiopati
+6. Miokarditis
+7. Disritmia 8. Trauma
+9. Perdarahan (mis. Perdarahan gastrointestinal, rupture aorta, perdarahan intracranial)
+10. Keracunan
+11. Overdosis
+12. Tenggelam
+13. Emboli paru Resiko Penurunan Curah"
+D.0011,Resiko Penurunan Curah Jantung,Fisiologis,Sirkulasi,Beresiko mengalami pemompaan jantung yang tiak adekuat untuk memenuhi kebutuhan metabolisme tubuh. Faktor Resiko 1. Perubahan afterload 2. Perubahan frekuensi jantung 3. Perubahan irama jantung 4. Perubahan kontraktilitas 5. Perubahan preload,,,,,,"1. Gagal jantung kongestif
+2. Sindrom koroner akut
+3. Gangguan katub jantung (stenosis/regurgitasi aorta, pulmonalis, trikuspidalis, atau mitralis)
+4. Atrial/venticular septal defect
+5. Aritmia
+6. Penyakit Paru Obstruktif Kronis (PPOK)
+7. Gangguan metabolik
+8. Gangguan muskuloskeletal"
+D.0012,Resiko Perdarahan,Fisiologis,Sirkulasi,"Beresiko mengalami kehilangan darah baik internal (terjadi dalam tubuh) maaupun eksternal (terjadi diluar tubuh). Faktor Resiko: - Aneurisma - Gangguan gastrointestinal (mis. Ulkus lambung, polip, varises) - Gangguan fungsi hati (mis. Sirosis hepatitis) - Komplikasi kehamilan (mis. Ketuban pecah sebelum waktunya, plasenta previa/abrubsio, kehamilan kembar) - Komplikasi pasca partum (mis. Atoni uterus, retensi plasenta) - Gangguan koagulasi (mis. Trombositopenia) - Efek agen farmakologis - Tindakan pembedahan - Trauma - Kurang terpapar informasi tentang pencegahan perdarahan - Proses keganasan",,,,,,"- Aneurisma
+- Koagulopati intravaskuler diseminata
+- Sirosis hepatis
+- Ulkus lambung
+- Varises
+- Trombositopenia
+- Ketuban pecah sebelum waktunya
+- Plasenta previa/abrubsio
+- Atonia uterus
+- Retensi plasenta
+- Tindakan pembedahan Kanker Trauma Resiko Perfusi Gastrointestinal"
+D.0013,Resiko Perfusi Gastrointestinal Tidak Efektif,Fisologi,Sirkulasi,"Beresiko mengalami penurunan sirkulasi gastrointestinal Faktor Risiko 1. Perdarahan gastrointestinal akut 2. Trauma abdomen 3. Sindroma kompartemen abdomen 4. Aneurisma aorta abdomen 5. Varises gastroesofagus 6. Penurunan kinerja ventrikel kiri 7. Kagulatipati (mis. anemia sel sabit, koagulopati intravaskuler diseminata 8. Penurunan konsentrasi hemoglobin 9. Keabnormalan masa protrombin dan/atau masa tromboplastin parsial 10. Disfungsi hati (mis. sirosis, hepatitis) 11. Disfungsi ginjal (mis. ginjal polikstik, stenosis arteri ginjal, gagal ginjal) 12. Disfungsi grastrointestinal (mis . ulkus duodenum atau ulkus lambung,kolitis iskemik, pankreatitis iskemik 13. Hiperglikemia 14. Ketidakstabilan hemodinamik 15. Efek agen farmakologis 16. Usia > 60 tahun 17. Efek samping tindakan (cardiopulmonary bypass, anestesi, pembedahan lambung)",,,,,,"1. Varises gastroesofagus
+2. Aneurisma aorta abdomen
+3. Diabetes melitus
+4. Sirosis hepatis
+5. Pendarahan graointestinal akut
+6. Gagal jantung kongestif
+7. koagulasi intravaskuler diseminata
+8. Ulkus duodenum atau ulkus lambung
+9. Kolitis iskemik
+10. Pankreatitis iskemik
+11. Ginjal polikistik
+12. Stenosis arteri ginjal
+13. Gagal ginjal
+14. Sindroma kompartemen abdomen
+15. Trauma abdomen
+16. Anemia
+17. Pembedahan jantung Resiko Perfusi Miokard Tidak"
+D.0014,Resiko Perfusi Miokard Tidak Efektif,Fisiologis Sub Kategori : Sirkulasi Definisi :,,,,,,,,
+D.0015,Risiko Perfusi Perifer Tidak Efektif,Fisiologis,Sirkulasi,,,,,,,"1. Arterosklerosis
+2. Raynauud’s disease
+3. Trombosis arteri
+4. Atritis reumatoid
+5. Leriche’s syndrome
+6. Aneurisma
+7. Buerger’s disease
+8. Varises
+9. Diabetes melitus
+10. Hipotensi
+11. Kanker Risiko Perfusi Renal Tidak"
+D.0016,Risiko Perfusi Renal Tidak Efektif,Fisiologis,Sirkulasi,Beresiko mengalami penurunan sirkulasi darah ke ginjal. Faktor Risiko 1. Kekurangan volume cairan 2. Embolisme vaskuler 3. Vaskulitis 4. Hipertenai 5. Disfungsi ginjal 6. Hiperglikemia 7. Keganasan 8. Pembedahan jantung 9. Bypass kardiopulmonal 10. Hipoksemia 11. Hipoksia 12. Asidosis metabolik 13. Trauma 14. Sindrom kompartemen abdomen 15. Luka bakar 16. Sepsis 17. Sindrom respon inflamasi sistemik 18. Lanjut usia 19. Merokok 20. Penyalahgunaan zat,,,,,,"1. Diabetes melitus
+2. Hipertensi
+3. Aterosklorosis
+4. Syok
+5. Keganasan
+6. Luka bakar
+7. Pembedahan jantung
+8. Penyakit ginjal (mis. Ginjal polikistik, stenosis artesi ginjal, gagal ginjal, glumerulonefritis, nefritis intersisial, nekrosis kortokal bilateral, polinefritis)
+9. Trauma Risiko Perfusi Serebral Tidak"
+D.0017,Risiko Perfusi Serebral Tidak Efektif,Fisiologis,Sirkulasi,Beresiko mengalami penurunan sirkulasi darah ke otak. Faktor Risiko 1. Keabnormalan masa protrombin dan/atau masa tromboplastin parsial 2. Penurunan kinerja ventrikel kiri 3. Aterosklerosis aorta 4. Diseksi arteri 5. Fibrilasi atrium 6. Tumor otak 7. Stenosis karotis 8. Miksoma atrium 9. Aneurisma serebri 10. Koagulopati (mis. anemia sel sabit) 11. Dilatasi kardiomiopati 12. Koagulasi intravaskuler diseminata 13. Embolisme 14. Cedera kepala 15. Hiperkolesteronemia 16. Hipertensi 17. Endokarditis infektif 18. Katup prostetik mekanis 19. Stenosis mitral 20. Neoplasma otak 21. Infark miokard akut 22. Sindrom sick sinus 23. Penyalahgunaan zat 24. Terapi tombolotik 25. Efek samping tindakan (mis. tindakan operasi bypass),,,,,,"1. Stroke
+2. Cedera kepala
+3. Aterosklerotik aortik
+4. Infark miokard akut
+5. Diseksi arteri
+6. Embolisme
+7. Endokarditis infektif
+8. Fibrilasi atrium
+9. Hiperkolesterolemia
+10. Hipertensi
+11. Dilatasi kardiomiopati
+12. Koagulasi intravaskular diseminata
+13. Miksoma atrium
+14. Neoplasma otak
+15. Segmen ventrikel kiri akinetik
+16. Sindrom sick sinus
+17. Stenosis karotid
+18. Stenosis mitral
+19. Hidrosefalus
+20. Infeksi otak (mis. meningtis, ensefalitis, abses serebri)"
+D.0018,Berat Badan Lebih,Fisiologis,Nutrisi dan Cairan Definisi : Akumulasi lemak berlebih atau abnormal yang tidak sesuai dengan usia dan jenis kelamin Penyebab :,,,,1. IMT >25 kg/m2 (pada dewasa) atau berat dan Panjang badan lebih dari presentil 95 (pada anak >2tahun) atau IMT pada presentil ke 85-95 (pada anak 2-18 tahun),,1. Tebal lipatan kulit trisep >25mm,"1. Gangguan Genetik
+2. Faktor keturunan
+3. Hipotiroid
+4. Diabetes melitus maternal"
+D.0019,Defisit Nutrisi,Fisiologis,Nutrisi dan Cairan Definisi : Asupan nutrisi tidak cukup untuk memenuhi kebutuhan metabolisme.,,"1. kurangnya asupan makanan
+2. Ketidakmampuan menelan makanan
+3. Ketidakmampuan mencerna makanan
+4. Ketidakmampuan mengabsorbsi nutrient
+5. Peningkatan kebutuhan metabolisme
+6. faktor ekonomi (mis, financial tidak mencukupi)
+7. Factor psikologis (mis. Stress, keengganan untuk makan)",,,,,
+D.0020,Diare,Fisiologis,Nutrisi,"Pengeluaran feses yang sering, lunak dan tidak berbentuk Penyebab 21. Inflamasi gastrointestinal 22. Iritasi gastrointestinal 23. Proses infeksi 24. Malabsorpsi 25. Kecemasan 26. Tingkat stress tinggi 27. Terpapar kontaminan 28. Terpapar toksin 29. Penyalahgunaan laksatif 30. Penyalahgunaan zat 31. Program pengobatan (mis. Agen tiroid, analgesic, pelunak feses, frosulfat, antasida, cimetidine dan antibiotik) 32. Perubahan air dan makanan 33. Bakteri pada air",,,"1. Defekasi lebih dari tiga kali dalam 24 jam
+2. Feses lembek atau cair",,"6. Frekuensi peristaltik meningkat
+7. Bising usus hiperaktif","1. Kanker kolon
+2. Diverticulitis
+3. Iritasi usus
+4. Crohn’s disease
+5. Ulkus peptikum
+6. Gastritis
+7. Spasme kolon
+8. Kolitis ulseratif
+9. Hipertiroidisme
+10. Demam typoid
+11. Malaria
+12. Sigelosis
+13. Kolera
+14. Disentri
+15. Hepatitis"
+D.0021,Disfungsi Motilitas Gastrointestinal,Fisiologis Subkategori : Nutrisi dan Definisi:,,,,,,,,"1. Pembedahan abdomen atau usus
+2. Malnutrisi
+3. Kecemasan
+4. Kanker empedu
+5. Kolesistektomi
+6. Infeksi pencernaan
+7. Gastroesophageal reflux disease (GERD)
+8. Dialisis Paritoneal
+9. Terapi Radiasi
+10. Multiple organ disfunction syndrome"
+D.0022,Hipervolemia,Fisiologis,Nutrisi dan,,,,,,,"1. Penyakit ginjal : gagal ginjak akut/kronis, sindrom nefrotik
+2. Hipoalbuminemia
+3. Gagal jantung kongestive
+4. Kelainan hormone
+5. Penyakit hati (mis serosis, asites, kanker hati)
+6. Pnyakit vena perifer (varises vena, thrombus vena, flebitis
+7. Imobilitas"
+D.0023,Hipovolomia,,Nutrisi dan cairan,"Penurunan volume cairan intravascular, interstisial, dan atau intraselular.","1. Kehilangan cairan aktif
+2. Kegagalan mekanisme regulasi
+3. Peningkatan permeabilitas kapiler
+4. Kekurangan intake cairan
+5. Evaporasi",,,"1. merasa lemah
+2. mengeluh haus","1. pengisian vena menurun
+2. status mental berubah
+3. suhu tubuh meningkat
+4. konsentrasi urin meningkat
+5. berat badan turun tiba-tiba Kondisi Klinis Terkait
+1. penyakit Addison
+2. trauma/pendarahan
+3. luka bakar
+4. AIDS
+5. Penyakit Crohn
+6. Muntah
+7. Diare
+8. Kolitis ulseratif
+9. Hipoalbuminemia",
+D.0024,Ikterik Neonatus,Fisiologis,Nutrisi dan,,,,,,,"1. Neonatus
+2. Bayi prematur Kesiapan Peningkatan"
+D.0025,Kesiapan Peningkatan Keseimbangan Cairan,Fisiologi,Nutrisi dan Cairan,Pola ekuilibrium antara volume cairan dan komposisi kimia cairan tubuh yang cukup untuk memenuhi kebutuhan fisik dan dapat ditingkatkan.,,1. Mengekspresiakan keinginan untuk meningkatkan keseimbangan cairan,"1. Membran mukosa lembab
+2. Asupan makanan dan cairan adekuat untuk kebutuhan harian
+3. Turgor jaringan baik
+4. Tidak ada tanda edema atau dehidrasi",(tidak tersedia),"1. Urin berwarna kuning bening dengan berat jenis dalam rentang norma
+2. Haluaran urin sesuai dengan asupan
+3. Berat badan stabil","1. Gagal jantung
+2. Sindrom iritasi usus
+3. Penyakit addison
+4. Makanan enternal atau parenteral"
+D.0026,Kesiapan Peningkatan Nutrisi,Fisiologis Subkategori : Nutrisi dan Cairan,,Pola asupan nutrisi yang cukup untuk memenuhi kebutuhan metabolisme dan dapat ditingkatkan.,,1. Mengekspresikan keinginan untuk meningkatkan nutrisi,34. Makan teratur dan adekuat,"1. Mengekspresikan pengetahuan tentang pilihan makanan dan cairan yang sehat
+2. Mengikuti standar asupan nutrisi asupan yang tepat (mis. Piramida makanan, pedoman American Diabetic Association atau pedoman lainnya)","1. Penyiapan dan penyimpanan makanan dan minuman yang aman
+2. Sikap terhadap makanan dan minuman sesuai dengan tujuan kesehatan",1. Perilaku upaya peningkatan kesehatan Ketidakstabilan Kadar Glukosa
+D.0027,Ketidakstabilan Kadar Glukosa Darah,Fisiologi,Nutrisi dan,Variasi kadar glukosa naik/turun dari rentang normal.,"Hiperglikemia
+1. Disfungsi pangkreas
+2. Resistensi insulin
+3. Gangguan toleransi glukosa darah
+4. Gangguan glukosa darah puasa Hipoglikemia
+1. Penggunaan insulin atau obat glikemik oral
+2. Hiperinsulinemia (mis. Insulinoma)
+3. Endokrinopati (mis. Kerusakan adrenal atau pituitari)
+4. Disfungsi hati
+5. Disfungsi ginjal kronis
+6. Efek agen farmakologis
+7. Tindakan pembedahan neoplasma
+8. Gangguan metabolik bawaan (mis. Gangguan penyimpanan lisosomal, galaktosemia, gangguan penyimpanan glikogen) Gejala dan tanda mayor:
+Hipoglikemia
+1. Mengantuk
+2. Pusing Hiperglikemia :
+1. Lelah atau lesu Objektif : Hipoglikemia :
+1. Gangguan koordinasi
+2. Kadar glukosa dalam darah atau urine rendah Hiperglikemia :
+1. Kadar gluosa dalam darah atau urin tinggi Gejala dan tanda minor Subjektif: Hipoglikemia
+1. Palpitasi
+2. Mengeluh lapar Hiperglikemia
+1. Mulut kering
+2. Haus meningkat Objektif: Hipoglikemia
+1. Gemetar
+2. Kesadaran menurun
+3. Perilaku aneh
+4. Sulit bicara
+5. Berkeringat Hiperglikemia
+1. Jumlah urine meningkat Kondisi klinis terkait :
+1. Diabetes melitus
+2. Ketoasidosis diabetik
+3. Hipoglikemia
+4. Hiperglikemia
+5. Diabetes gestasional
+6. Penggunaan kortikostiroid Nutrisi parenteral total (TPN)",,,,,
+D.0028,Nutrisi parenteral total (TPN) Menyusui Efektif,Fisiologis,Nutrisi dan,Pemberian ASI secara langsung dari payudaya kepada bayi dan anak yang dapat memenuhi kebutuhan nutrisi,"1. Hormon oksitosin dan prolaktin adekuat
+2. Payudara membesar, alveoli mulai terisi ASI
+3. Tidak ada kelainan pada struktur payudara
+4. Puting menonjol
+5. Bayi Aterm
+6. Tidak ada kelainan bentuk pada mulut bayi
+1. Rawat gabung
+2. Dukungan keluarga dan tenaga kesehatan adekuat
+3. Faktor budaya",1. Ibu merasa percaya diri selama proses menyusui,"1. Bayi melekat pada payudara ibu dengan benar
+2. Ibu mampu memposisikan bayi dengan benar
+3. Miksi bayi lebih dari 8 kali dalam 24 jam
+4. Berat badan bayi meningkat
+5. ASI menetes/menancar
+6. Suplai ASI adekuat
+7. Puting tidak lecet setelah minggu kedua","(tidak tersedia) Objektif
+1. Bayi tidur setelah menyusui
+2. Payudaya ibu kosong setelah menyusui
+3. Bayi tidak rewel dan menangis setelah menyusui",,"1. Status kesehatan ibu baik
+2. Status kesehatan bayi baik Menyusui Tidak Efektif"
+D.0028,Menyusui Tidak Efektif,Fisiologis,Nutrisi dan Cairan,"Kondisi dimana ibu dan bayi mengalami ketidakpuasan atau kesukaran pada proses menyusui Penyebab : Fisiologis 1. Ketidakadekuatan suplai ASI 2. Hmabatan pada neonates (mis. Prematuris, sumbing) 3. Anomaly payudara ibu (mis. Putting yang masuk ke dalam) 4. Ketidakadekuatan refleks oksitosin 5. Ketidakadekuatan refleks menghisap bayi 6. Payudara bengkak 7. Riwayat operasi payudara 8. Kelahiran kembar 1. Tidak rawat gabung 2. Kurang terpapar informasi tentang pentingnya menyusui dan/atau metode menyusui 3. Kurangnya dukungan keluarga 4. Factor budaya",,"1. Kelemahan maternal
+2. Kecemasan maternal","1. Bayi tidak mampu melekat pada payudara ibu
+2. ASI tidak menetas/ memancar
+3. BAK bayi kurang dari 8 kali dalam 24 jam
+4. Nyeri dan/atau lecet terus menerus sehingga minggu kedua",,,"1. Abses payudara
+2. Mastitis
+3. Carpal tunnel syndrom"
+D.0030,Obesitas,Fisiologis,Nutrisi,"Akumulasi lemak berlebih atau apnormal yang tidak sesuai dengan usia dan jenis kelamin, serta melampaui kondisi berat badan lebih (overweight).","1. Kurang aktivitas fisik harian
+2. Kelebihan konsumsi gula
+3. Gangguan kebiasaan makan
+4. Gangguan persepsi makan
+5. Kelebihan konsumsi alkohol
+6. Penggunaan energi kurang dari asupan
+7. Sering mengemil
+8. Sering memakan makanan berminyak/berlemak 9. Faktor keturunan (mis.distribusi jaringan adiposa, pengeluaran energi, aktivitas lipase lipoprotein, sintesis lipit, lipolisis)
+10. Penggunaan makanan formula atau makanan campuran pada bayi.
+11. Asupan kalsium rendah pada anakanak
+12. Berat badan bertambah cepat (selama masa anakanak, selama masa bayi, termasuk minggu pertama, 4 bulan pertama, dan tahun pertama)
+13. Makan padat sebagai sumber makanan utama pada usia <5 bulan",,1. IMT >27 kg/m2 ( pada dewasa ) atau lebih dari presentil ke 95 untuk usia dan jenis kelamin ( pada anak),"(tidak tersedia) Objektif
+1. Tebal lipatan kulit triset > 25 mm",,"1. Gangguan genetik
+2. Faktor keturunan
+3. hipotiroid
+4. diabetes melitus maternal"
+D.0031,Risiko Berat Badan Lebih,Fisiologis Subkategori : Nutrisi dan cairan,,"Berisiko mengalamin akumulasi lemak berlebih atau abnormal yang tidak sesuai dengan usia dan jenis kelamin. Faktor Resiko 1. Kurang aktivitas fisikharian 2. Kelebihan konsumsi gula 3. Gangguan kebiasaan makan 4. Gangguan presepsi makan 5. Kelebihan konsumsi alkohol 6. Penggunaan energi kurang dari asupan 7. Sering mengemil 8. Sering memakan makanan berminyak/berlemak 9. Faktor keturunan (mis. Distribusi jaringan adiposa,pengeluaran energi,aktivitas lipase lipoprotein,sintesis lipid,lipolisis) 10. Penggunaan makanan formula atau makanan campuran pada bayi 11. Asupan kalsium rendah pada anak-anak. 12. Berat badan bertambah cepat ( selama masa anakanak, selama masa bayi, termasuk minggu pertama, 4 bulan pertama, dan tahun pertama) 13. Makanan padat sebagai sumber makanan utama pada usia <5 bulan. 14. Penggunaan otot bantu pernapasan 15. Fase ekspirasi memanjang",,,,,,"1. Gangguan genetik
+2. Hipotiroid
+3. Diabetes melitus gestasional
+4. Pola hidup kurang aktivitas"
+D.0032,Resiko Defisit Nutrisi,Fisiologis,Nutrisi dan,"Beresiko mengalami aupan nutrisi tidak cukup untuk memenuhi kebutuhan metabolisme Faktor Risiko 1. Ketidakmampuan menelan makanan 2. Ketidakmampuan mencerna makanan 3. Ketidakmampuan mengbsorbsi nutrien 4. Peningkatan kebutuhan metbolisme 5. Faktor ekonomi (mis. finansial tiak mencukupi) 6. Faktor psikologis (mis. stress, keengganan untuk makan)",,,,,,"1. Stroke
+2. Parkinson
+3. Mobius syndrome
+4. Cerebral palsy
+5. Cleft lip
+6. Cleft palate
+7. Amyotropic lateral sclerosis
+8. Kerusakan neuromuskular
+9. Luka bakar
+10. Kanker
+11. Infeksi
+12. AIDS
+13. Penyakit Crohn’s
+14. Enterokolitis
+15. Fibrosis kistik"
+D.0033,Risiko disfungsi motilitas gastrointestinal,Fisiologis,,"Risiko peningkatan, penurunan atau tidak efektifnya aktivitas peristaltik pada sistem gastrointestinal. Faktor Risiko 1. Pembedahan abdomen 2. Penurunan sirkulasi gastrointestinal 3. Intoleransi makanan 4. Refluks gastrointestinal 5. Hiperglikemia 6. Imobilitas 7. Proses penuaan 8. Infeksi gastrointestinal 9. Efek agen farmokologis (mis, antibiotik, laksatif, narkotika/opiat) 10. Prematuritas 11. Kecemasan 12. Stres 13. Kurangnya sanitasi pada persiapan makanan",,,,,,"1. Pembedahan abdomen atau usus
+2. Malnutrisi
+3. Anemia
+4. Kecemasan
+5. Kanker empedu
+6. Kolesistektomi
+7. Infeksi pencernaan 8. Gastroesophageal Reflux Disease (GERD)
+9. Dialisis peritoneal
+10. Terapi radiasi
+11. Multiple organ dysfunction syndrome"
+D.0034,Risiko Hipovolemia,Fisiologis Subkategori : Nutrisi dan Cairan,,"Berisiko mengalami penurunan volume cairan intravaskuler, interstisiel, dan/atau intraseluler. Faktor Risiko 1. Kehilangan cairan secara aktif 2. Gangguan absorbsi cairan 3. Usia lanjut 4. Kelebihan berat badan 5. Status hipermetabolik 6. Kegagalan mekanisme regulasi 7. Evaporasi 8. Kekurangan intake cairan 9. Efek agen farmakologis",,,,,,"1. Penyakit Addison
+2. Trauma/pendarahan
+3. Luka bakar
+4. AIDS
+5. Penyakit Crohn
+6. Muntah
+7. Diare
+8. Kolitis ulseratif"
+D.0035,Risiko Ikterik Neonatus,Fisiologis Subkategori : Nutrisi dan Cairan,,"Beresiko mengalami kulit dan membran mukosa neonatus menguning setelah 24 jam kelahiran akibat bilirubin tak terkonjugasi masuk ke dalam sirkulasi Faktor Risiko 1. Penurunan berat badan abnormal > 7-8% pada bayi baru lahir yang menyusu ASI, > 15% pada bayi cukup bulan 2. Pola makan tidak ditetapkan dengan baik 3. Kesulitan transisi ke kehidupan ekstra uterin 4. Usia kurang dari 7 hari 5. Keterlambatan pengeluaran feses (mekonium) 6. Prematuritas (<37 minggu)",,,,,,"1. Neonatus
+2. Bayi prematur"
+D.0035,Risiko Ketidakseimbangan Cairan,Fisiologi,Nutrisi/Cairan,"Berisiko mengalami penurunan,peningkatan atau percepatan perpindahan cairan dari intravaskuler,interstisial atau intraselular Faktor Risiko 1. Prosedur pembedahan mayor 2. Trauma/perdarahan 3. Luka bakar 4. Aferesis 5. Asites 6. Obstruksi intestinal 7. Peradangan pankreas 8. Penyakit ginjal dan kelenjar 9. Disfungsi intestinal",,,,,,"1. Prosedur pembedahan mayor
+2. Penyakit ginjal dan kelenjar
+3. Perdarahan
+4. Luka bakar Resiko Ketidakseimbangan"
+D.0037,Resiko Ketidakseimbangan Elektrolit,Fisiologis,Nutrisi dan,Beresiko mengalami perubahan kadar serum elektrolit Faktor Resiko 1. Ketidakseimbangan cairan (mis. dehidrasi dan intoksikasi air) 2. Kelebihan volume cairan 3. Gangguan mekanisme regulasi (mis. diabetes) 4. Efek samping prosedur (mis. pembedahan) 5. Diare 6. Muntah 7. Disfungsi ginjal 8. Disfungsi regulasi endokrin,,,,,,"1. Gagal ginjal
+2. Anoreksia nervosa
+3. Diabetes melitus
+4. Penyakit Chron
+5. Gastrointeritis
+6. Pankreatiti
+7. Cedera kepala
+8. Kanker
+9. Trauma multipel
+10. Luka bakar
+11. Anemia sel sabit Resiko Keidakstabilan Glukosa"
+D.0038,Resiko Keidakstabilan Glukosa Darah,Fisiologis,Nutrisi dan,,,,,,,"1.Diabetes 2.Ketoasidosis diabetic 3.Hipoglikemia 4.Diabetes gestasional 5.Penggunaan kortikosteroid 6.Nutrisi parenteral total (TPN) Nutrisi/Cairan mengalami darah ke yang dapat seluler . volume Respons sistemik inflamatory syndrome [SIRS])
+1. Perdarahan
+2. Trauma Multipel
+3. Pneumothoraks
+4. Infark miokard
+5. Kardiomiopati
+6. Cedera Medula spinalis
+7. Anafilaksis
+8. Sepsis
+9. Koagulasi intravaskuler diseminata
+10. Sindrom Respons inflamasi sistemik (Systemic inflamatory response syndrome [SIRS]) Keterangan Diagnosis ini ditegakkan pada kondisi gawat darurat yang dapat mengancam jiwa dan intervensi diarahkan untuk penyelamatan jiwa. Gangguan Eliminasi Urin"
+D.0038,Gangguan Eliminasi Urin,Fisiologis,Eliminasi Definisi : Disfungsi,,,,"1. Distensi kandung kemih
+2. Berkemih tidak tuntas (hesitancy)
+3. Volume residu urin meningkat",(tidak tersedia),(tidak tersedia),"1. Infeksi ginjal dan saluran kemih
+2. Hiperglikemi
+3. Trauma
+4. Kanker
+5. Cedera/tumor/infeksi medulla spinalis
+6. Neuropati diabetikum
+7. Neuropati alkoholik
+8. Stroke
+9. Parkinson
+10. Skeloris multipel Obat alpha adrenergic"
+D.0041,Obat alpha adrenergic Inkontinensia Fekal,Fisiologis Sub kategori : Eliminasi Definisi :,,,"1. Kerusakan susunan saraf motorik bawah
+2. Penurunan tonus otot
+3. Gangguan kognitif
+4. Penyalahgunaan laksatif
+5. Kehilangan fungsi pengendalian sfingter rectum
+6. Pascaoperasi pullthrough dan penutupan kolosomi
+7. Ketidakmampuan mencapai kamar kecil
+8. Diare kronis
+9. Stress berlebihan","1. Tidak mampu mengontrol pengeluaran feses
+2. Tidak mampu menunda defekasi",1. Feses keluar sedikit- sedikit dan sering,(tidak tersedia),"1. Bau feses
+2. Kulit perianal kemerahan","1. Spina bifida
+2. Atresia ani
+3. Penyakit Hirschsprung Inkontinensia Urin Berlanjut"
+D.0041,Inkontinensia Urin Berlanjut,Fisiologis,Eliminasi Definisi,,"1. Neuropati arkus refleks
+2. Disfungsi neurologis
+3. Kerusakan refleks kontraksi detrusor
+4. Trauma
+5. Kerusakan medula spinalis
+6. Kelainan anatomis (mis.fistula)","1. Keluar urin konstan tanpa distensi
+2. Nokturia lebih dari 2 kali sepanjang tidur",-,,-,"1. Cedera kepala
+2. Trauma
+3. Tumor
+4. Infeksi medula spinalis
+5. Fistula saluran kemih Inkontinensia Urin Berlebih."
+D.0041,Inkontinensia Urin Berlebih.,Fisilogis,Eliminasi,Kehilangan urin yang tidak terkendali akibat overdistensi kandung kemih.,"1. Blok spingter
+2. Kerusakan atau ketidakadekuatan jalur aferen
+3. Obstruksi jalan keluar urin (mis.impaksi fekal, efek agen farmakologis)
+4. Ketidakadekuatan detrusor (mis.pada kondisi stres atau tidak nyaman, deconditioned voiding)",,"1. Kandungan kemih distensi (bukan berhubungan dengan penyebab reversible akut) atau kandung kemih distensi dengan sering, sedikit berkemih atau dribbling.",,1. Residu urin 100ml atau lebih,"1. Asma
+2. Alergi
+3. Penyakit neurologi: cedera/tumor/infeksi medulla spinalis
+4. Cedera kepala
+5. Sklerosis Multipel
+6. Dimielinisasi saraf
+7. Neuropati diabetikum
+8. Neuropati alcohol
+9. Striktura uretra/leher kandung kemih
+10. Pembesaran prostat
+11. Pembengkakan perineal. Inkontinensia Urin Fungsional"
+D.0041,Inkontinensia Urin Fungsional,Fisiologis,Eliminasi,Pengeluaran urin tidak terkendali karena kesulitan dan tidak mampu mencapai toilet pada waktu yang tepat.,"1. Ketidakmampuan atau penurunan mengenali tanda-tanda berkemih
+2. Penurunan tonus kandung kemih 3. Hambatan mobilisasi
+4. Faktor psikologis: penurunan perhatian pada tanda-tanda keinginan berkemih (depresi, bingung, delirium)
+5. Hambatan lingkungan (toilet jauh, tempat tidur terlalu tinggi, lingkungan baru)
+6. Kehilangan sensorik dan motorik (pada geriatri)
+7. Gangguan penglihatan",1. Mengompol sebelum mencapai atau selama usaha mencapai toilet,(tidak tersedia),"1. Mengompol di waktu pagi hari
+2. Mampu mengosongkan kandung kemih lengkap Objektif (tidak tersedia)",,"1. Cedera kepala
+2. Neuropati alkoholik
+3. Penyakit Parkinson
+4. Penyakit dimielinisasi
+5. Sklerosis multipel
+6. Stroke
+7. Demensia progresif
+8. Depresi Inkontinensia Urin Refleks"
+D.0041,Inkontinensia Urin Refleks,Fisiologis,Eliminasi,Pengeluaran urin yang tidak terkendali pada saat volume kandung kemih tertentu tercapai.,"1. Kerusakan konduksi impuls di atas arkus refleks
+2. Kerusakan jaringan (mis. terapi radiasi)","1. Tidak mengalami sensasi berkemih
+2. Dribbling
+3. Sering buang air kecil
+4. Hesitancy
+5. Nokturia
+6. Enuresis",1. Volume residu urin meningkat,(Tidak tersedia),(Tidak tersedia),"1. Cedera/tumor/infeksi medula spinalis
+2. Cystitis
+3. Pembedahan pelvis
+4. Sklerosis multipel
+5. Kanker kandun kemih atau pelvis
+6. Penyakit Parkinson
+7. Demensia"
+D.0046,Inkontinensia Urin Sters,Fisiologis,Eliminasi,Kebocoran urin mendadak dan tidak dapat dikendalikan karena aktivitas yang meningkatkan tekanan intraabdominal.,"1. Kelemahan intrinsik spinkter uretra
+2. Perubahan degenerasi/non degenerasi otot pelvis
+3. Kekurangan estrogen
+4. Peningkatan tekanan intraabdomen
+5. Kelemahan otot pelvis","Mengeluh keluar urin <50ml saat tekanan abdominal meningkat (mis. saat berdiri, bersin, tertawa, berlari atau mengangkat benda berat)",(tidak ada),"1. Pengeluaran urin ridak tuntas
+2. Urgensi miksi
+3. Frekuensi berkemih meningkat",1. Overdistensi abdomen,"1. Obesitas
+2. Kehamilan/melahirkan
+3. Monopose
+4. Infeksi saluran kemih
+5. Operasi abdomen
+6. Operasi prostat
+7. Penyakit alzheimer
+8. Cedera medula spinalis Inkontinensia Urine Urgensi"
+D.0046,Inkontinensia Urine Urgensi,Fisiologis,Eliminasi,Keluarnya urin tidak terkendali sesaat setelah keinginan yang kuat untuk berkemih (Kebelet),"1. Iritasi reseptor kontraksi kandung kemih.
+2. Penurunan kapasitas kandung kemih.
+3. Hiperaktivitas detrusor dengan kerusakan kontraktilitas kandung kemih.
+4. Efek agen farmakologis (mis. Deuretik)",1. keinginan berkemih yang kuat disertai dengan inkontinensia.,(tidak tersedia),(tidak tersedia),(tidak tersedia),"1. Riwayat penyakit peradangan pelvis dan/atau vagina.
+2. Riwayat penggunaan kateter urin.
+3. Infeksi kandung kemih dan/atau uretra.
+4. Gangguan neurogenic/tumor/infeksi.
+5. Penyakit Parkinson.
+6. Neuropati diabetikum.
+7. Operasi abdomen. Kesiapan Peningkatan Eliminasi"
+D.0048,Kesiapan Peningkatan Eliminasi Urin,Fisiologis,Eliminasi,Pola fungsi sistem perkemihan yang cukup untuk memenuhi kebutuhan eliminasi yang dapat ditingkatkan.,,1. Mengungkapkan keinginan untuk meningkatkan eliminasi urin,"1. Jumlah urin normal
+2. Karakteristik urin normal","(Tidak Tersedia) Objektif
+1. Asupan cairan cukup",,"1. Cedera medula spinalis
+2. Sklerosis multipel
+3. Kehamilan
+4. Trauma pelvis
+5. Pembedahan abdomen
+6. Penyakit prostat"
+D.0049,KONSTIPASI,Fisiologi,Eliminasi,"Penurunan defekasi normal yang disertai pengeluaran feses sulit dan tidak tuntas serta feses kering dan banyak Penyebab fisiologis : 1. Penurunan mobilitas gastrointestinal 2. Ketidakadekuatan Pertumbuhan gigi 3. Ketidak cukupan diet 4. Ketidakcukupan asupan serat 5. Ketidakcukupan asupan cairan 6. Aganglionik (mis. penyakit Hirscprung) 1. Konfusi 2. Depresi 3. Gangguan emosional 1. Perubahan kebiasaan makan (mis. jenis makanan, jadwal makan) 2. Ketidakadekuatan toileting 3. Aktivitas fisik harian kurang dari yang dianjurkan 4. Penyalahgunaan laksatif 5. Efek agen farmakologis 6. Ketidak teraturan kebiasaan defekasi 7. Kebiasaan menahan dorongan defekasi 8. Perubahan lingkungan",,,,,,"1. Lesi/cedera pada medula spinalis
+2. Spina bifida
+3. Stroke
+4. Sklerosis multipel
+5. Penyakit parkinson
+6. Demensia
+7. Hiperparatiroidisme
+8. Hipoparatiroidisme
+9. Ketidakseimbangan elektrolit
+10. Hemoroid
+11. Obesitas
+12. Pasca operasi obstruksi bowel
+13. Kehamilan
+14. Pembesaran prostat
+15. Abses rektal
+16. Fisura anorektal
+17. Striktura anorektal
+18. Prolaps rektal
+19. Ulkus rektal
+20. Rektokel
+21. Tumor
+22. Penyakit hirscprung
+23. Impaksi feses"
+D.0050,Retensi Urine,Fisiologis,Eliminasi,Pengosongan kandung kemih yang tidak lengkap,"1. Peningkatan tekanan uretra
+2. Kerusakan arkus refleks
+3. Blok spingter
+4. Disfungsi neurologis (mis. trauma, penyakit saraf)
+5. Efek agen farmakologis (mis. atropine, belladonna, psikotropik, antihistamin, opiate) Gejala danTandaMayor
+Sensasi penuh pada kandung kemih
+1. Disuria / anuria
+2. Distensi kandung kemih GejaladanTandaMinor
+1. Dribbling
+3. Inkontinensia berlebih
+4. Residu urine 150 ml atau lebih KondisiKlinisTerkait
+1. Benigna prostat hiperplasia
+2. Pembengkakan perineal
+3. Cedera medula spinalis
+4. Rektokel
+5. Tumor disaluran kemih Risiko Inkontinensia Urine",,,,,
+D.0051,Risiko Inkontinensia Urine Urgensi,Fisiologis,Eliminasi,"Berisiko mengalami pengeluaran urin yang tidak terkendali Faktor Risiko 1. Efek samping obat, kopi dan alkohol 2. Hiperrefleks destrussor 3. Gangguan sistem saraf pusat 4. Kerusakan kontraksi kandung kemih: relaksasi spingter tidak terkendali 5. Ketidakefektifan kebiasaan berkemih 6. Kapasitas kandung kemih kecil",,,,,,"1. Infeksi/tumor/batu saluran kemih dan/atau ginjal
+2. Gangguan sistem saraf pusat"
+D.0052,Risiko Konstipasi,Fisiologi Sub kategori : Eliminasi Definisi :,,,,,,,,

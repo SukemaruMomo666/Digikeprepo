@@ -15,7 +15,7 @@ test('guest diarahkan ke login ketika akses admin', function () {
 test('mahasiswa tidak bisa akses halaman admin', function () {
     $mahasiswa = User::factory()->mahasiswa()->create(['is_first_login' => false]);
 
-    foreach (['admin.dashboard', 'admin.users.index', 'admin.sdki.index', 'admin.slki.index', 'admin.siki.index', 'admin.relasi.index', 'admin.log.index', 'admin.data-mahasiswa.index'] as $route) {
+    foreach (['admin.dashboard', 'admin.users.index', 'admin.sdki.index', 'admin.slki.index', 'admin.siki.index', 'admin.relasi.index', 'admin.data-mahasiswa.index'] as $route) {
         $this->actingAs($mahasiswa)->get(route($route))->assertForbidden();
     }
 });
@@ -23,7 +23,7 @@ test('mahasiswa tidak bisa akses halaman admin', function () {
 test('admin bisa mengakses semua halaman admin', function () {
     $admin = User::factory()->admin()->create();
 
-    foreach (['admin.dashboard', 'admin.users.index', 'admin.sdki.index', 'admin.slki.index', 'admin.siki.index', 'admin.relasi.index', 'admin.log.index', 'admin.data-mahasiswa.index'] as $route) {
+    foreach (['admin.dashboard', 'admin.users.index', 'admin.sdki.index', 'admin.slki.index', 'admin.siki.index', 'admin.relasi.index', 'admin.data-mahasiswa.index'] as $route) {
         $this->actingAs($admin)->get(route($route))->assertOk();
     }
 });

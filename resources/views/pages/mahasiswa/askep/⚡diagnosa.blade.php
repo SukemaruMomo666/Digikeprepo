@@ -331,7 +331,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                                             </div>
                                         @endif
 
-                                        {{-- Gejala dan Tanda --}}
+                                        {{-- Gejala dan Tanda (Read-only) --}}
                                         @if ($d['tipe'] !== 'Risiko' && !empty($d['detail']['gejala']))
                                             <div>
                                                 <p class="text-xs font-bold uppercase tracking-wide text-[#7A8FA6] mb-2">Gejala & Tanda Klinis</p>
@@ -347,12 +347,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                                                                         @if (isset($d['detail']['gejala'][$tipeGejala][$jenisGejala]))
                                                                             <div>
                                                                                 <p class="text-[11px] font-semibold text-[#7A8FA6] mb-1">{{ $jenisGejala }}</p>
-                                                                                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                                                                <div class="grid grid-cols-1 gap-x-4 gap-y-1 sm:grid-cols-2">
                                                                                     @foreach ($d['detail']['gejala'][$tipeGejala][$jenisGejala] as $gjl)
-                                                                                        <label class="flex items-start gap-2 cursor-pointer group">
-                                                                                            <input type="checkbox" wire:model="terpilih.{{ $i }}.gejala_dipilih" value="{{ $gjl['deskripsi'] }}" class="mt-0.5 size-4 rounded border-gray-300 text-[#1A9B72] focus:ring-[#1A9B72]">
-                                                                                            <span class="text-sm text-[#1B4F72] group-hover:text-[#1A9B72] leading-tight">{{ $gjl['deskripsi'] }}</span>
-                                                                                        </label>
+                                                                                        <div class="flex items-start gap-2 py-0.5">
+                                                                                            <flux:icon.minus class="mt-1 size-3 shrink-0 text-[#C4D3DF]" />
+                                                                                            <span class="text-sm text-[#1B4F72] leading-tight">{{ $gjl['deskripsi'] }}</span>
+                                                                                        </div>
                                                                                     @endforeach
                                                                                 </div>
                                                                             </div>

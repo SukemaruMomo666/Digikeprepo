@@ -37,12 +37,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
         <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Detail Pasien
         </flux:button>
-        <h1 class="text-2xl font-bold text-[#1B4F72]">Buat Askep Baru</h1>
-        <p class="mt-1 text-sm text-[#7A8FA6]">Mulai proses asuhan keperawatan untuk pasien ini.</p>
+        <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Buat Askep Baru</h1>
+        <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">Mulai proses asuhan keperawatan untuk pasien ini.</p>
     </div>
 
     {{-- Pasien Summary Card --}}
-    <div class="mb-6 max-w-2xl rounded-2xl border border-[#E0EBF5] bg-white p-5">
+    <div class="mb-6 max-w-2xl rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
         <div class="flex items-start gap-4">
             @php
                 $words    = explode(' ', trim($pasien->nama_pasien));
@@ -53,9 +53,9 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
                 {{ $initials }}
             </div>
             <div class="flex-1">
-                <h2 class="text-lg font-bold text-[#1B4F72]">{{ $pasien->nama_pasien }}</h2>
-                <div class="mt-1 flex flex-wrap gap-3 text-sm text-[#7A8FA6]">
-                    <span>No. RM: <span class="font-mono font-medium text-[#1B4F72]">{{ $pasien->no_rm }}</span></span>
+                <h2 class="text-lg font-bold text-[#1B4F72] dark:text-white">{{ $pasien->nama_pasien }}</h2>
+                <div class="mt-1 flex flex-wrap gap-3 text-sm text-[#7A8FA6] dark:text-zinc-400">
+                    <span>No. RM: <span class="font-mono font-medium text-[#1B4F72] dark:text-zinc-200">{{ $pasien->no_rm }}</span></span>
                     <span>•</span>
                     <span>{{ $pasien->umur }} tahun / {{ $pasien->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
                     @if ($pasien->ruang_rawat)
@@ -76,7 +76,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
 
     {{-- Alur 5 Langkah --}}
     <div class="mb-6 max-w-2xl">
-        <h3 class="mb-3 font-semibold text-[#1B4F72]">Alur Asuhan Keperawatan (5 Langkah)</h3>
+        <h3 class="mb-3 font-semibold text-[#1B4F72] dark:text-white">Alur Asuhan Keperawatan (5 Langkah)</h3>
         <div class="space-y-2">
             @foreach ([
                 ['label' => 'Pengkajian', 'desc' => 'Identitas, TTV, EWS, biologis, psikososial, pemeriksaan fisik'],
@@ -85,13 +85,13 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
                 ['label' => 'Implementasi', 'desc' => 'Catat tindakan keperawatan yang telah dilakukan'],
                 ['label' => 'Evaluasi', 'desc' => 'Evaluasi hasil askep berdasarkan kriteria luaran SLKI'],
             ] as $i => $s)
-                <div class="flex items-start gap-3 rounded-xl border border-[#E0EBF5] bg-[#F4F8FB] p-3">
+                <div class="flex items-start gap-3 rounded-xl border border-[#E0EBF5] dark:border-zinc-700 bg-[#F4F8FB] dark:bg-zinc-800 p-3">
                     <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#2E86C1] text-xs font-bold text-white">
                         {{ $i + 1 }}
                     </div>
                     <div>
-                        <p class="font-medium text-[#1B4F72]">{{ $s['label'] }}</p>
-                        <p class="text-xs text-[#7A8FA6]">{{ $s['desc'] }}</p>
+                        <p class="font-medium text-[#1B4F72] dark:text-zinc-100">{{ $s['label'] }}</p>
+                        <p class="text-xs text-[#7A8FA6] dark:text-zinc-400">{{ $s['desc'] }}</p>
                     </div>
                 </div>
             @endforeach

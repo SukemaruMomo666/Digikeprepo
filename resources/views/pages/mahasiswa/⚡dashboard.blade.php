@@ -122,7 +122,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
             <a
                 href="{{ route('mahasiswa.pasien.index') }}"
                 wire:navigate
-                class="text-sm font-medium text-[#2E86C1] hover:text-[#1B4F72] hover:underline"
+                class="text-sm font-medium text-[#2E86C1] hover:text-[#1B4F72] dark:hover:text-white hover:underline"
             >
                 Lihat Semua
             </a>
@@ -131,7 +131,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
         @if ($pasienTerakhir->isEmpty())
             <div class="py-14 text-center">
                 <flux:icon.user-plus class="mx-auto mb-3 size-12 text-[#85B7EB]" />
-                <p class="text-sm text-[#7A8FA6]">Belum ada data pasien.</p>
+                <p class="text-sm text-[#7A8FA6] dark:text-zinc-400">Belum ada data pasien.</p>
                 <div class="mt-4">
                     <a
                         href="{{ route('mahasiswa.pasien.create') }}"
@@ -210,7 +210,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
             </div>
 
             <div class="border-t border-[#E0EBF5] px-6 py-3 dark:border-zinc-700">
-                <p class="text-xs text-[#7A8FA6]">
+                <p class="text-xs text-[#7A8FA6] dark:text-zinc-400">
                     Menampilkan {{ $pasienTerakhir->count() }} dari total {{ $jumlahPasien }} pasien aktif
                 </p>
             </div>

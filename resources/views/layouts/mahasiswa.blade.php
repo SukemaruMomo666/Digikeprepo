@@ -73,15 +73,6 @@
                     Riwayat
                 </flux:sidebar.item>
 
-                <flux:sidebar.item
-                    icon="book-open"
-                    :href="route('mahasiswa.log.index')"
-                    :current="request()->routeIs('mahasiswa.log.*')"
-                    wire:navigate
-                >
-                    Log Pembelajaran
-                </flux:sidebar.item>
-
                 {{-- ── Separator ── --}}
                 <div class="mx-3 my-1 border-t border-white/10"></div>
 
@@ -128,8 +119,6 @@
                 </a>
             </div>
 
-            {{-- Desktop user profile --}}
-            <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
 
         {{-- Mobile Header --}}

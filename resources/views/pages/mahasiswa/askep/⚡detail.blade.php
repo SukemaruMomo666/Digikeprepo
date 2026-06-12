@@ -33,10 +33,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
             <flux:button :href="route('mahasiswa.pasien.show', $askep->pasien_id)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-2">
                 Kembali ke Pasien
             </flux:button>
-            <h1 class="text-2xl font-bold text-[#1B4F72]">Laporan Asuhan Keperawatan</h1>
-            <p class="mt-1 text-sm text-[#7A8FA6]">
-                Pasien: <span class="font-bold text-[#1B4F72]">{{ $askep->pasien->nama_pasien }}</span>
-                <span class="mx-2 text-[#C4D3DF]">|</span>
+            <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Laporan Asuhan Keperawatan</h1>
+            <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">
+                Pasien: <span class="font-bold text-[#1B4F72] dark:text-zinc-200">{{ $askep->pasien->nama_pasien }}</span>
+                <span class="mx-2 text-[#C4D3DF] dark:text-zinc-600">|</span>
                 No. RM: <span class="font-mono font-semibold">{{ $askep->pasien->no_rm }}</span>
             </p>
         </div>
@@ -81,27 +81,27 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
             {{-- 1. Pengkajian LENGKAP --}}
             @if ($askep->pengkajian)
                 @php $p = $askep->pengkajian; @endphp
-                <div class="rounded-2xl border border-[#E0EBF5] bg-white overflow-hidden shadow-sm">
-                    <div class="bg-[#F8FBFE] px-6 py-4 border-b border-[#E0EBF5] flex items-center justify-between gap-2">
+                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 overflow-hidden shadow-sm">
+                    <div class="bg-[#F8FBFE] dark:bg-zinc-900 px-6 py-4 border-b border-[#E0EBF5] dark:border-zinc-700 flex items-center justify-between gap-2">
                         <div class="flex items-center gap-2">
                             <div class="flex size-6 items-center justify-center rounded bg-[#1A9B72] text-[10px] font-bold text-white uppercase">1</div>
-                            <h2 class="font-bold text-[#1B4F72]">PENGKAJIAN DASAR</h2>
+                            <h2 class="font-bold text-[#1B4F72] dark:text-white">PENGKAJIAN DASAR</h2>
                         </div>
                     </div>
                     <div class="p-6 space-y-6">
                         {{-- Identitas PJ & Antropometri --}}
                         <div class="grid gap-4 md:grid-cols-2">
                             <div>
-                                <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Penanggung Jawab</p>
-                                <div class="rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-xs space-y-1 text-[#1B4F72]">
+                                <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6] dark:text-zinc-400">Penanggung Jawab</p>
+                                <div class="rounded-xl border border-gray-100 dark:border-zinc-700 bg-gray-50/50 dark:bg-zinc-700/30 p-3 text-xs space-y-1 text-[#1B4F72] dark:text-zinc-200">
                                     <p><span class="font-bold">Nama:</span> {{ $p->pj_nama ?: '-' }}</p>
                                     <p><span class="font-bold">Umur:</span> {{ $p->pj_umur ?: '-' }}</p>
                                     <p><span class="font-bold">Hubungan/Pekerjaan:</span> {{ $p->pj_pekerjaan ?: '-' }}</p>
                                 </div>
                             </div>
                             <div>
-                                <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Antropometri</p>
-                                <div class="rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-xs space-y-1 text-[#1B4F72] flex gap-4">
+                                <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6] dark:text-zinc-400">Antropometri</p>
+                                <div class="rounded-xl border border-gray-100 dark:border-zinc-700 bg-gray-50/50 dark:bg-zinc-700/30 p-3 text-xs space-y-1 text-[#1B4F72] dark:text-zinc-200 flex gap-4">
                                     <p><span class="font-bold">BB:</span> {{ $p->bb ?: '-' }} kg</p>
                                     <p><span class="font-bold">TB:</span> {{ $p->tb ?: '-' }} cm</p>
                                 </div>
@@ -113,9 +113,9 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                             <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Tanda-Tanda Vital & EWS (Skor: {{ $p->ews_skor }})</p>
                             <div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
                                 @foreach (['TD (mmHg)' => $p->ews_td, 'Nadi (x/m)' => $p->ews_nadi, 'RR (x/m)' => $p->ews_rr, 'Suhu (°C)' => $p->ews_suhu, 'SpO₂ (%)' => $p->ews_spo2, 'Kesadaran' => $p->ews_kesadaran] as $label => $val)
-                                    <div class="rounded-xl border border-gray-100 bg-white p-2 text-center shadow-sm">
-                                        <dt class="text-[9px] font-bold uppercase text-[#7A8FA6]">{{ $label }}</dt>
-                                        <dd class="mt-0.5 text-xs font-black text-[#1B4F72] capitalize">{{ $val ?: '-' }}</dd>
+                                    <div class="rounded-xl border border-gray-100 dark:border-zinc-700 bg-white dark:bg-zinc-700 p-2 text-center shadow-sm">
+                                        <dt class="text-[9px] font-bold uppercase text-[#7A8FA6] dark:text-zinc-400">{{ $label }}</dt>
+                                        <dd class="mt-0.5 text-xs font-black text-[#1B4F72] dark:text-zinc-100 capitalize">{{ $val ?: '-' }}</dd>
                                     </div>
                                 @endforeach
                             </div>
@@ -125,16 +125,16 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                         <div>
                             <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Riwayat Penyakit</p>
                             <div class="grid gap-3 sm:grid-cols-2 text-xs">
-                                <div class="rounded-xl bg-[#F4F8FB] p-3 border border-[#E0EBF5]">
-                                    <p class="font-bold text-[#1B4F72] mb-1">Penyakit Sekarang</p>
-                                    <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                                <div class="rounded-xl bg-[#F4F8FB] dark:bg-zinc-700/50 p-3 border border-[#E0EBF5] dark:border-zinc-700">
+                                    <p class="font-bold text-[#1B4F72] dark:text-zinc-100 mb-1">Penyakit Sekarang</p>
+                                    <ul class="list-disc list-inside text-gray-700 dark:text-zinc-300 space-y-0.5">
                                         <li><span class="font-semibold">Keluhan:</span> {{ is_array($p->riwayat_sekarang) ? ($p->riwayat_sekarang['keluhan_utama'] ?? '-') : '-' }}</li>
                                         <li><span class="font-semibold">Kronologi:</span> {{ is_array($p->riwayat_sekarang) ? ($p->riwayat_sekarang['kronologi'] ?? '-') : '-' }}</li>
                                     </ul>
                                 </div>
-                                <div class="rounded-xl bg-[#F4F8FB] p-3 border border-[#E0EBF5]">
-                                    <p class="font-bold text-[#1B4F72] mb-1">Penyakit Lalu & Keluarga</p>
-                                    <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                                <div class="rounded-xl bg-[#F4F8FB] dark:bg-zinc-700/50 p-3 border border-[#E0EBF5] dark:border-zinc-700">
+                                    <p class="font-bold text-[#1B4F72] dark:text-zinc-100 mb-1">Penyakit Lalu & Keluarga</p>
+                                    <ul class="list-disc list-inside text-gray-700 dark:text-zinc-300 space-y-0.5">
                                         <li><span class="font-semibold">Sakit Lalu:</span> {{ is_array($p->riwayat_lalu) ? ($p->riwayat_lalu['penyakit_anak'] ?? '-') : '-' }}</li>
                                         <li><span class="font-semibold">Alergi:</span> {{ is_array($p->riwayat_lalu) ? ($p->riwayat_lalu['alergi'] ?? '-') : '-' }}</li>
                                         <li><span class="font-semibold">Keluarga:</span> {{ is_array($p->riwayat_keluarga) ? ($p->riwayat_keluarga['penyakit_menurun'] ?? '-') : '-' }}</li>
@@ -163,7 +163,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                         @endphp
                         
                         <div>
-                            <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6]">Pemeriksaan Fisik (Temuan Abnormal)</p>
+                            <p class="mb-2 text-[10px] font-bold uppercase text-[#7A8FA6] dark:text-zinc-400">Pemeriksaan Fisik (Temuan Abnormal)</p>
                             @if(count($abnormalFisik) > 0)
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                     @foreach($abnormalFisik as $sys => $obs)
@@ -193,18 +193,18 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                 <div class="rounded-2xl border border-[#E0EBF5] bg-white overflow-hidden shadow-sm">
                     <div class="bg-[#F8FBFE] px-6 py-4 border-b border-[#E0EBF5] flex items-center gap-2">
                         <div class="flex size-6 items-center justify-center rounded bg-[#1A9B72] text-[10px] font-bold text-white uppercase">2 & 3</div>
-                        <h2 class="font-bold text-[#1B4F72]">DIAGNOSA, LUARAN & INTERVENSI</h2>
+                        <h2 class="font-bold text-[#1B4F72] dark:text-white">DIAGNOSA, LUARAN & INTERVENSI</h2>
                     </div>
-                    <div class="divide-y divide-gray-100">
+                    <div class="divide-y divide-gray-100 dark:divide-zinc-700">
                         @foreach ($askep->diagnosa->sortBy('prioritas') as $d)
                             <div class="p-6">
                                 <div class="flex items-start gap-3 mb-4">
-                                    <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#EBF5FB] text-[10px] font-bold text-[#2E86C1] border border-[#85B7EB]">
+                                    <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#EBF5FB] dark:bg-blue-900/40 text-[10px] font-bold text-[#2E86C1] dark:text-[#85B7EB] border border-[#85B7EB] dark:border-blue-700">
                                         {{ $d->prioritas }}
                                     </div>
                                     <div class="flex-1">
-                                        <p class="text-xs font-mono font-bold text-[#2E86C1]">{{ $d->sdki?->kode_diagnosa }}</p>
-                                        <h3 class="text-base font-black text-[#1B4F72] leading-tight">{{ $d->sdki?->label_diagnosa }}</h3>
+                                        <p class="text-xs font-mono font-bold text-[#2E86C1] dark:text-[#85B7EB]">{{ $d->sdki?->kode_diagnosa }}</p>
+                                        <h3 class="text-base font-black text-[#1B4F72] dark:text-white leading-tight">{{ $d->sdki?->label_diagnosa }}</h3>
                                         
                                         @if(!empty($d->etiologi_dipilih))
                                             <p class="mt-2 text-[11px] text-[#7A8FA6] leading-relaxed">
@@ -224,7 +224,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                 <div class="ml-9 space-y-4">
                                     {{-- SLKI Table --}}
                                     @foreach ($d->luaran as $l)
-                                        <div class="rounded-xl border border-teal-100 bg-teal-50/30 p-4">
+                                        <div class="rounded-xl border border-teal-100 dark:border-teal-900 bg-teal-50/30 dark:bg-teal-900/10 p-4">
                                             <div class="flex justify-between items-start mb-3 border-b border-teal-100 pb-2">
                                                 <div>
                                                     <p class="text-[10px] font-bold text-teal-600 uppercase tracking-widest">Luaran (SLKI)</p>
@@ -298,7 +298,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
             <div class="rounded-2xl border border-[#E0EBF5] bg-white overflow-hidden shadow-sm">
                 <div class="bg-[#F8FBFE] px-6 py-4 border-b border-[#E0EBF5] flex items-center gap-2">
                     <div class="flex size-6 items-center justify-center rounded bg-[#1A9B72] text-[10px] font-bold text-white uppercase">4</div>
-                    <h2 class="font-bold text-[#1B4F72]">LOG IMPLEMENTASI</h2>
+                    <h2 class="font-bold text-[#1B4F72] dark:text-white">LOG IMPLEMENTASI</h2>
                 </div>
                 <div class="p-6">
                     @php
@@ -332,18 +332,18 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
             <div class="rounded-2xl border border-[#E0EBF5] bg-white overflow-hidden shadow-sm">
                 <div class="bg-[#F8FBFE] px-6 py-4 border-b border-[#E0EBF5] flex items-center gap-2">
                     <div class="flex size-6 items-center justify-center rounded bg-[#1A9B72] text-[10px] font-bold text-white uppercase">5</div>
-                    <h2 class="font-bold text-[#1B4F72]">EVALUASI KEPERAWATAN (SOAP)</h2>
+                    <h2 class="font-bold text-[#1B4F72] dark:text-white">EVALUASI KEPERAWATAN (SOAP)</h2>
                 </div>
-                <div class="divide-y divide-gray-100">
+                <div class="divide-y divide-gray-100 dark:divide-zinc-700">
                     @foreach ($askep->diagnosa as $d)
                         @php $ev = $d->evaluasi->first(); @endphp
                         <div class="p-6">
                             <div class="flex items-start gap-3 mb-4">
-                                <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#F4F8FB] text-[10px] font-bold text-[#7A8FA6] border border-[#D0DCE8]">
+                                <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#F4F8FB] dark:bg-zinc-700 text-[10px] font-bold text-[#7A8FA6] dark:text-zinc-300 border border-[#D0DCE8] dark:border-zinc-600">
                                     {{ $d->prioritas }}
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="text-sm font-bold text-[#1B4F72]">{{ $d->sdki?->label_diagnosa }}</h3>
+                                    <h3 class="text-sm font-bold text-[#1B4F72] dark:text-white">{{ $d->sdki?->label_diagnosa }}</h3>
                                     @if($ev)
                                         <div class="mt-1 flex items-center gap-2">
                                             <span class="text-[10px] font-bold text-[#7A8FA6] uppercase">{{ \Carbon\Carbon::parse($ev->tanggal)->translatedFormat('d M Y') }}</span>
@@ -361,7 +361,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                     <div class="space-y-3">
                                         <div>
                                             <p class="text-[10px] font-bold text-[#7A8FA6] uppercase tracking-wider mb-1">Catatan SOAP</p>
-                                            <div class="rounded-xl bg-gray-50 p-3 text-xs text-gray-700 leading-relaxed whitespace-pre-line border border-gray-100">
+                                            <div class="rounded-xl bg-gray-50 dark:bg-zinc-700 p-3 text-xs text-gray-700 dark:text-zinc-300 leading-relaxed whitespace-pre-line border border-gray-100 dark:border-zinc-600">
                                                 {!! nl2br(e($ev->catatan_soap)) ?: 'Tidak ada catatan SOAP.' !!}
                                             </div>
                                         </div>
@@ -375,17 +375,17 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                                         <div>
                                             <p class="text-[10px] font-bold text-[#7A8FA6] uppercase tracking-wider mb-2">Tanda Vital Evaluasi</p>
                                             <div class="grid grid-cols-3 gap-2">
-                                                <div class="rounded-lg bg-white border border-gray-100 p-2 text-center">
-                                                    <p class="text-[8px] font-bold text-gray-400 uppercase">TD</p>
-                                                    <p class="text-xs font-bold text-[#1B4F72]">{{ $ev->tv_td ?: '-' }}</p>
+                                                <div class="rounded-lg bg-white dark:bg-zinc-700 border border-gray-100 dark:border-zinc-600 p-2 text-center">
+                                                    <p class="text-[8px] font-bold text-gray-400 dark:text-zinc-400 uppercase">TD</p>
+                                                    <p class="text-xs font-bold text-[#1B4F72] dark:text-zinc-100">{{ $ev->tv_td ?: '-' }}</p>
                                                 </div>
-                                                <div class="rounded-lg bg-white border border-gray-100 p-2 text-center">
-                                                    <p class="text-[8px] font-bold text-gray-400 uppercase">Nadi</p>
-                                                    <p class="text-xs font-bold text-[#1B4F72]">{{ $ev->tv_nadi ?: '-' }}</p>
+                                                <div class="rounded-lg bg-white dark:bg-zinc-700 border border-gray-100 dark:border-zinc-600 p-2 text-center">
+                                                    <p class="text-[8px] font-bold text-gray-400 dark:text-zinc-400 uppercase">Nadi</p>
+                                                    <p class="text-xs font-bold text-[#1B4F72] dark:text-zinc-100">{{ $ev->tv_nadi ?: '-' }}</p>
                                                 </div>
-                                                <div class="rounded-lg bg-white border border-gray-100 p-2 text-center">
-                                                    <p class="text-[8px] font-bold text-gray-400 uppercase">SpO2</p>
-                                                    <p class="text-xs font-bold text-[#1B4F72]">{{ $ev->tv_spo2 ?: '-' }}%</p>
+                                                <div class="rounded-lg bg-white dark:bg-zinc-700 border border-gray-100 dark:border-zinc-600 p-2 text-center">
+                                                    <p class="text-[8px] font-bold text-gray-400 dark:text-zinc-400 uppercase">SpO2</p>
+                                                    <p class="text-xs font-bold text-[#1B4F72] dark:text-zinc-100">{{ $ev->tv_spo2 ?: '-' }}%</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -411,13 +411,13 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
 
         {{-- Sidebar Info (Kanan) --}}
         <div class="space-y-6">
-            <div class="rounded-2xl border border-[#E0EBF5] bg-[#F8FBFE] p-6 shadow-sm">
-                <h3 class="text-sm font-black text-[#1B4F72] mb-4 uppercase tracking-tighter">Status Evaluasi Akhir</h3>
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-[#F8FBFE] dark:bg-zinc-900 p-6 shadow-sm">
+                <h3 class="text-sm font-black text-[#1B4F72] dark:text-white mb-4 uppercase tracking-tighter">Status Evaluasi Akhir</h3>
                 <div class="space-y-4">
                     @foreach ($askep->diagnosa as $d)
                         @php $ev = $d->evaluasi->first(); @endphp
-                        <div class="rounded-xl bg-white p-4 border border-[#E0EBF5]">
-                            <p class="text-[10px] font-bold text-[#2E86C1] uppercase leading-tight mb-2">{{ $d->sdki?->label_diagnosa }}</p>
+                        <div class="rounded-xl bg-white dark:bg-zinc-800 p-4 border border-[#E0EBF5] dark:border-zinc-700">
+                            <p class="text-[10px] font-bold text-[#2E86C1] dark:text-[#85B7EB] uppercase leading-tight mb-2">{{ $d->sdki?->label_diagnosa }}</p>
                             @if ($ev)
                                 <flux:badge size="sm" color="{{ $ev->analisis === 'Tercapai' ? 'green' : ($ev->analisis === 'Membaik' ? 'blue' : 'amber') }}">
                                     {{ $ev->analisis }}

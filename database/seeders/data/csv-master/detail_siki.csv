@@ -1,0 +1,652 @@
+Kode SDKI,Kode SIKI,Nama SIKI,Definisi,Tindakan Observasi,Tindakan Terapeutik,Edukasi,Kolaborasi
+D.0001,I.01001,,"Melatih pasien yang tidak memiliki kemampuan batuk secara efektif untuk membersihkan laring, trakea dan bronkiolus dari sekret atau benda asing di jalan napas","1. Identifikasi kemampuan batuk
+2. Monitor adanya retensi skutum
+3. Monitor adanya gejala infeksi saluran nafas
+4. Monitor input dan output cairan (mis. Jumlah dan karakteristik)","1. Atur posisi semi-Fowler atau fowler
+2. Pasang perlak dan bengkok di pangkuan pasien
+3. Buang sekret pada tempat sputum","1. Jelaskan tujuan dan prosedur batuk efektif
+2. Anjurkan tarik napas dalam melalui hidung selama 4 detik di tahan sampai 2 detik, kemudian keluarkan dari mulut dengan bibir mencucu (dibulatkan) selama 8 detik
+3. Anjurkan mengulangi tarik napas dalam hingga 3 detik
+4. Anjurkan batuk dengan kuat langsung setelah tarik napas dalam yang ke-3","1. Kolaborasi pemberian mukolitik atau ekspektoran, jika perlu Manajemen Jalan Napas"
+D.0001,I.01011,,Mengidentifikasi dan mengelola kepatenan jalan napas,"1. Monitor pola napas (frekuensi, kedalaman, usaha napas)
+2. Monitor bunyi napas tambahan (mis.gurgling, mengi,wheezing, ronkhi kering)
+3. Monitor sputum (jumlah, warna, aroma)","1. Pertahankan kepatenan jalan napas dengan head-tilt dan chin-lift (jaw-thrust jika curiga trauma survikal)
+2. Posisikan semi-fowler atau fowler
+3. Berikan minuman hangat
+4. Lakukan fisioterapi dada, jika perlu
+5. Berikan oksigen, jika perlu","1. Anjurkn asupan cairan 2000 ml/hari, jika tidak kontraindikasi
+2. Ajarkan teknik batuk efektif","1. Kolaborasi pemberian bronkodilator , ekspektoran, mukolitik, jika perlu"
+D.0001,I.01014,Pemantauan Respirasi,Mengumpulkan dan menganalisis data untuk memastikan kepatenan jalan napas dan keefektifan pertukaran gas.,"1. Monitor frekuensi, irama, kedalaman dan upaya napas
+2. Monitor pola napas (seperti bradypnea, takipnea, hiperventilasi, kussmaul, Cheyne-stokes, biot, ataksik)
+3. Monitor kemampuan batuk efektif
+4. Monitor adanya produksi sputum
+5. Monitor adanya sumbatan jalan napas
+6. Palpasi kesimetrisan ekspansi paru
+7. Auskultasi bunyi napas
+8. Monitor saturasi oksigen
+9. Monitor nilai AGD Penyapihan Ventilasi",,,
+D.0002,I.01021,Mekanik,"Memfasilitasi pasien bernapas tanpa bantuan ventilasi mekanis Tindakan Observasi 1. Periksa kemampuan untuk disapih (meliputi hemodinamik stabil,kondisi optimal,bebas infeksi) 2. Monitor prediktor kemampuan untuk mentolerir penyapihan (mis.tingkat kemampuan bernapas,kapasistas vital,Vd/Vt,MVV,kekuat an inspirasi ,FEV1,tekanan inspirasi negatif) 3. Monitor tanda tanda kelelahan otot pernapasan (mis. Kenaikan PaCO2 mendadak,napas cepat dan dangkal,gerakan dinding abdomen paradoks),hipoksemia, dan hipoksia jaringan saat penyapihan 4. Monitor status cairan dan elektrolit",,"1. Posisikan pasien semi fowler (30-45 derajat)
+2. Lakukan pengisapan jalan napas,jika perlu
+3. Berikan fisioterapi dada,jika perlu
+4. Lakukan uji coba penyapihan (30-120 menit dengan napas spontan yang dibantu ventilator)
+5. Gunakan teknik relaksasi,jika perlu
+6. Hindari pemberian sedasi farmakologis selama percobaan penyapihan
+7. Berikan dukungan psikologis",I. Ajarkan cara pengontrolan napas saat penyapihan,1. Kolaborasi pemberian obat yang meningkatkan kepatenan jalan napas dan pertukaran gas Pemantauan Respirasi
+D.0002,I.01014,Mekanik,"Mengumpulkan dan menganalisis data untuk memastikan kepatenan jalan napas dan keefektifan pertukaran gas. Tindakan Observasi 1. Monitor frekuensi, irama kedalaman dan upaya napas 2. Monitor pola napas (seperti bradipnea,takipnea,hiper ventilasi,kussmaul,Chey ne-stokes,biot,ataksik) 3. Monitor kemampuan batuk efektif 4. Monitor adanya produksi sputum 5. Monitor adanya sumbatan jalan napas 6. Palpasi kesimetrisan ekspansi paru 7. Auskultasi bunyi napas 8. Monitor saturasi oksigen 9. Monitor nilai AGD 10. Monitor hasil x-ray toraks. Terapeutik 1. Atur interval pemantauan respirasi sesuai kondisi pasien 2. Dokumentasi hasil pemantauan Edukasi 1. Jelaskan tujuan dan prosedur pemantauan 2. Informasikan hasil pemantauan, Jika perlu",,,,
+D.0002,I.01014,Pemantauan Respirasi,,,,,
+D.0002,I.01014,Pemantauan Respirasi,"Mengumpulkan dan menganalisis data untuk memastikan kepatenan jalan napas dan keefektifan pertukaran gas Tindakan Observasi 1. Monitor frekuensi irama, kedalaman dan upaya napas 2. Monitor pola napas (seperti bradipnea, takipnea, hiperventilasi, Kussmaul, Cheyne-Stokes, Biot, ataksik) 3. Monitor kemampuan batuk efektif 4. Monitor adanya produksi sputum 5. Monitor adanya sumbatan jalan naps 6. Palpasi kesimetrisan ekspansi paru 7. Auskultasi bunyi napas 8. Monitor saturasi oksigen 9. Monitor nilai AGD 10. Monitor hasil x-ray toraks",,"1. Atur interval pemantauan respirasi sesuai kondisi pasien
+2. Dokumentasikan hasil pemantauan","1. Jelaskan tujuan dan prosedur pemantauan
+2. Informasikan hasil pemantauan, jika perlu",
+D.0002,I.01026,Terapi Oksigen,"Memberikan tambahan oksigen untuk mencegah dan mengatasi kondisi kekurangan oksigen jaringan Tindakan Observasi 1. Monitor kecepatan aliran oksigen 2. Monitor posisi alat terapi oksigen 3. Monitor aliran oksigen secaa periodik dan pastikan fraksi yang diberikan cukup 4. Monitor efektifitas terapi oksigen (mis. Oksimetri, analisa gas darah), jika perlu 5. Monitor kemampuan melepaskan oksigen saat makan 6. Monitor tanda-tanda hipoventilasi 7. Monitor tanda dan gejala toksikasi oksigen dan atelektasis 8. Monitor tingkat kecemasan akibat terapi oksigen 9. Monitor integritas mukosa hidung akibat pemasangan oksigen",,"1. Bersihkan sekret pada mulut, hidung dan trakea, jika perlu
+2. Pertahankan kepatenan jalan napas
+3. Siapkan dan atur peralatan pemberian oksigen
+4. Berikan oksigen tambahan, jika perlu
+5. Tetap berikan oksigen saat pasien ditransportasi
+6. Gunakan perangkat oksigen yang sesuai dengan tingkat mobilitas pasien",1. Ajarkan pasien dan keluarga cara menggunakan oksigen di rumah,"1. Kolaborasi penentuan dosis oksigen
+2. Kolaborasi penggunaan oksigen saat aktivitas dan/atau tidur Manajemen Defibrilasi"
+D.0002,I.02038,Terapi Oksigen,,1. Memeriksa irama pada monitor setelah RJP 2 menit,"1. Melakukan resusitasi jantung paru (RJP) hingga mesin defibrillator siap
+2. Menyiapkan dan menghidupkan mesin defibrilator
+3. Memasang monitor EKG
+4. Memastikan irama EKG henti jantung (VF atau VT tanpa nadi)
+5. Mengatur jumlah energi dengan mode Asynchronized (360 joule untuk monopasi dan 120- 200 joule untu bifasik)
+6. Mengangkat paddle dari mesin dan oleskan jelli pada paddle
+7. Menempelkan paddle sternum (kanan) pada sisi kanan sternum dibawah klavikula dan paddle apeks (kiri) pada garis midaksilaris setinggi elektroda V6
+8. Mengisi energi dengan menekan tombol charger pada paddle atau tombol charger pada mesin defibrilator dan menunggu hingga energi yang diinginkan tercapai
+9. Menghentikan RJP saat defibrillator siap
+10. Meneriakkan bahwa defibrilator telah siap (mis. ”I’m clear, you’re clear, everybody’s clear”)
+11. Memberikan shock dengan menekan tombol pada kedua paddle bersamaan
+12. Angkat paddle dan langsung lanjutkan RJP tanpa menunggu hasil irama yang muncul pada monitor setelah pemberian defibrilasi
+13. Melanjutkan RJP sampai 2 menit",,
+D.0002,I.03139,Resisutasi Cairan,,"1. Mengidentifikasi kelas syok untuk estimasi kehilangan darah
+2. Memonitor status hemodinamik
+3. Memonitor status oksigen
+4. Memonitor kelebihan cairan
+5. Memonitor output cairan tubuh (mis. Urine, cairan nasogastrik, cairan selang dada)
+6. Memonitor nilai BUN, kreatinin, protein total, dan albumin, jika perlu
+7. Memonitor tanda dan gejala edema paru Teraputik
+1. Memasang jalur IV berukuran besar (mis. Nomor 14-16)
+2. Memberikan infus cairan kristaloid 1-2 liter pada dewasa
+3. Memberikan infus cairan kristaloid 20mL/kgBB pada anak
+4. Melakukan kross matching produk darah",,,"1. Berkolaborasi dalam menentukan jenis dan jumlah cairan (mis. Kristaloid, koloid)
+2. Berkolaborasi dalam memberikan produk darah Resusitasi Jantung Paru"
+D.0002,I.02083,Resisutasi Cairan,,"1. Mengidentifikasi keamanan penolong, lingkungan dan pasien
+2. Mengidentifikasi respon pasien (mis. Memanggil pasien, menepuk bahu pasien)
+3. Memonitor nadi karotis dan napas setiap 2 menit atau 5 siklus RJP","1. Memakai alat pelindung diri
+2. Mengaktifkan emergency medical system atau berteriak meminta tolong
+3. Memposisikan pasien terlentang di tempat datar dan keras
+4. Mengatur posisi penolong berlutut di samping korban
+5. Meraba nadi karotis dalam waktu <10 detik
+6. Memberikan rescue breathing jika di temukan ada nadi tetapi tidak ada nafas
+7. Mengkompres dada 30 kali di kombinasikan dengan bantuan napas (ventilasi) 2 kali jika ditemukan tidak ada nadi dan tidak ada napas
+8. Mengkompres dengan tumit telapak tangan menepuk diatas telapak tangan yang lain tegak lurus pada pertengahan dada (seperdua bawah sternum)
+9. Mengkompres dengan kedalaman kompres 5-6 cm dengan kecepatan 100-120 kali per menit
+10. Membersihkan dan membuka jalan nafas dengan head tilt-chin lift atau jaw thurst (jika curiga cedera servikal)
+11. Memberikan bantuan nafas dengan menggunakan Bag Valve mask dengan teknik EC-Clamp
+12. Mengkombinasikan kompresi dan ventilasi selama 2 menit atau sebanyak 5 siklus
+13. Menghentikan RJP jika ditemukan adanya tandatanda kehidupan, penolong yang lebih mahir datang, ditemukan adanya tandatanda kematian biologis, Do Not Resusitation (DNR)",1. Menjelaskan tujuan dan prosedur tindakan kepada keluarga atau pengantar pasien,1. Mengkolaborasikan tim medis untuk bantuan hidup lanjut. Manajemen Jalan Napas
+D.0002,I.01011,Resisutasi Cairan,"Mengidentifikasi dan mengelola kepatenan jalan napas Tindakan Observasi 4. Monitor pola napas (frekuensi, kedalaman, usaha napas) 5. Monitor bunyi napas tambahan (mis. gurgling, mengi, wheezing, ronkhi kering) 6. Monitor sputum (jumlah, warna, aroma)",,"6. Pertahankan kepatenan jalan napas dengan head-tilt dan chin-lift (jaw-thrust jika curiga trauma survikal)
+7. Posisikan semi-fowler atau fowler
+8. Berikan minuman hangat
+9. Berikan oksigen, jika perlu","3. Anjurkn asupan cairan 2000 ml/hari, jika tidak kontraindikasi
+4. Ajarkan teknik batuk efektif Kolaborasi
+1. Kolaborasi pemberian bronkodilator , ekspektoran, mukolitik, jika perlu",
+D.0006,I.01011,Resisutasi Cairan,Mengidentifikasi dan mengelola kepatenan jalan napas,"1. Monitor pola napas (frekuensi, kedalaman, usaha napas)
+2. Monitor bunyi napas tambahan (mis. Gurgling, mengi, wheezing, ronkhi kering)
+3. Monitor sputum (jumlah, warna, aroma)","4. Pertahankan kepatenan jalan napas dengan head ill dan chin lift
+5. Posisikan semi fowler atau fowler
+6. Berikan minuman hangat
+7. Lakukan fisioterapi dada, jika perlu
+8. Lakukan penghisapan lender kurang dari 15 detik
+9. Lakukan hiperoksigenasi sebelum penghisapan endotrakeal
+10. Keluarkan sumbatan benda padat dengan forsep McGill 11. Berikan oksigen, jika perlu","12. Anjurkan asupan carian 2000 ml/hari, jika tidak kontraindikasi
+13. Ajarkan Teknik batuk efektif","14. Kolaborasi pmeberian bronkodilator, ekspektoran, mukolitik, jika perlu"
+D.0006,I.01018,Pencegaha Aspirasi,Mengidentifikasi dan mengurangi risiko masuknya partikel makanan/cairan ke dalam paru-paru,"15. Monitor tingkat kesadaran, batuk, muntah dan kemampuan menelan
+16. Monitor status pernapasan
+17. Monitor bunyi napas terutama setelah makan/minum
+18. Periksa residu gaster sebelum memberi asupan oral
+19. Periksa kepatenan selang nasogastric sebelum memberi asupan oral","20. Posisikan semi fowler (30- 45 derajat) 30 menit sebelum memberi asupan oral
+21. Pertahankan posisi semi fowler pada pasien
+22. Pertahankan kepatenan jalan napas (mis. Teknik head tilt chin lift, jaw thrust, in line)
+23. Perhatikan pengembangan balon endotracheal tube (ETT)
+24. Lakukan penghisapan jalan napas, jika produksi secret meningkat
+25. Sediakan suction di ruangan
+26. Hindari memberi makan melalui selang gastrointestinal, jika residu banyak
+27. Berikan makanan dengan ukuran kecil atau lunak
+28. Berikan obat oral dalam bentuk cair","29. Anjurkan makan secara perlahan
+30. Ajarkan strategi mencegah aspirasi
+31. Ajarkan Teknik mengunyah atau menelan, jika perlu",
+D.0006,I.02038,Manajemen Defibrilasi,,,,,
+D.0006,I.02038,Manajemen Defibrilasi,Mengidentifikasi dan mengelola aliran listrik kuat dengan metode asinkron ke jantung melalui elektroda yang ditempatkan pada permukaan dada,32. Periksa irama pada monitor setelah RJP 2 menit,"33. Lakukan resusitasi jantung paru (RJP) hingga mesin defibrillator siap
+34. Siapkan dan hidupan mesi defibrillator
+35. Pasang monitor EKG
+36. Pastikan irama EKG henti jantung (VF atau VT tanpa nadi)
+37. Atur jumlah energi dengan mode asynchronized (360 joule until ,pmpfasik dan 120-200 joule untuk bifasik)
+38. Angkat paddle dari mesin dan oleskan jeli pada paddle
+39. Tempelkan paddle sternum (kanan) pada sisi kanan sternum di bawah klavikula dan paddle apeks (kiri) pada garis midaksilaris setinggi elektroda V6
+40. Hentikan RJP saat defibrillator siap
+41. Teriak bahwa defibrilaor telah siap (mis. “I am crear, you re clear, everybody’s clear)
+42. Berikan syok dengan menekan tombol pada kedua paddle bersamaan
+43. Angkat paddle dan langsung lanjutkan RJP tanpa menunggu hasil irama yang muncul pada monitor setelah pemberian defibrilasi
+44. Lanjutkan RJP sampai 2 menit",,
+D.0006,I.02083,Resusitasi Jantung Paru,Memberikan pertolongan pertama pada kondisi henti napas dan henti jantung dengan Teknik kombinasi kompresi pada dada dan bantuan napas,"45. Identifikasi keamanan penolong, lingkungan dan pasien
+46. Identifikasi respon pasien (mis. Memanggil pasien, menepuk bahu pasien)
+47. Monitor nadi karotis dan napas setiap 2 menit atau 5 siklus RJP Terapeutik
+48. Pakai alat pelindung diri
+49. Aktifkan emergency medical system atau berteriak meminta tolong
+50. Posisikan pasien telentang di tempat datar dan keras
+51. Atur posisi penolong berlutut di samping korban
+52. Raba nati karotis dalam waktu <10 detik
+53. Berikan rescue breathing jika ditemukan ada nadi tetapi tidak ada napas
+54. Kompresi dada 30 kali dikombinasikan dengan bantuan napas (ventilasi) 2 kali jika ditemukan tidak ada nadi dan tidak ada napas
+55. Kopresi dengan tumit telapak tangan menumpuk diatas telapak tangan yang lain tegak lurus pada pertengahan dada (seperdua bawah sternum)
+56. Kompresi dengan kedalaman kompresi 5-6 cm dengan kecepatan 100-120 kali/menit
+57. Bersihkan dan buka jalan napas dengan head tlit – chin lift atau jaw thrust (jika curiga cedera servikal)
+58. Berikan bantuan napas dengan menggunakan bag valve mask dengan Teknik EC-Clamp
+59. Kombinasikan kompresi dan ventilasi selama 2 menit atau sebanyak 5 siklus
+60. Hentikan RJP jika ditemuakn adanya tanda- tanda kehidupan, penolong yang lebih mahir dating, ditemukan adanya tanda- tanda kematian biologis, do not resuscitation (DNR)",,61. Jelaskan tujuan dan prosedur Tindakan kepada keluarga atau pengantar pasien,62. Kolaborasi tim medis untuk bantuan hidup lanjut
+D.0006,I.02075,Perawatan jantung,,,,,
+D.0006,I.02075,Perawatan jantung,"Mengidentifikasi, merawat dan membatasi komplikasi akibat ketidakseimbangan antara suplai dan konsumsi oksigen miokard","63. Identifikasi tanda/gejala primer penurunan curah jantung (meliputi dispnea, kelelahan, edema, ortopnea, paroxysmal nocturnal dyspnea, peningkatan CVP)
+64. Identifikasi tanda/gejala sekunder penurunan curah jantung (meliputi peningkatan berat badan, hepatomegaly, distensi vena jugularis, palpitasi, ronkhi basah, oliguria, batuk, kulit pucat)
+65. Monitor tekanan darah (termasuk tekanan darah ortostatik) jika perlu
+66. Monitor intake dan output cairan
+67. Monitor berat badan setiap hari pada waktu yang sama
+68. Monitor saturasi oksigen
+69. Monitor keluhan nyeri dada (mis. Intensitas, lokasi, radiasi, durasi, presivitasi yang mengurangi nyeri)
+70. Monitor EKG 12 sadapan
+71. Monitor aritmia (kelainan irama dan frekuensi)
+72. Monitor nilai laboratorium jantung (mis. Elektrolit, enzim jantung, BNP, NTproBNP)
+73. Monitor fungsi alat pacu jantung
+74. Periksa tekanan darah dan frekuensi nadi sebelum dan sesudah aktivitas
+75. Periksa tekanan darah dan frekuensi nadi sebelum pemberian obat (mis. Beta blocker, ACE inhibitor, calcium channel blocker, digoksin)","76. Posisikan pasien semi fowler atau fowler dengan kaki ke bawah atau posisi nyaman
+77. Berikan diet jantung yang sesuai (mis. Batasi asupan kafein, natrium, kolesterol, dan makanan tinggi lemak)
+78. Gunakan stocking elastis atau pneumatic intermiten, sesuai indikasi
+79. Fasilitasi pasien dan keluarga untuk modifikasi gaya hidup sehat
+80. Berikan terapi relaksasi untuk mengurangi stress, jika perlu
+81. Berikan dukungan emosional dan spiritual
+82. Berikan oksigen untuk memperthanakan saturasi oksigen >94%","83. Anjurkan beraktivitas fisik sesuai toleransi
+84. Anjurkan beraktivitas fisik secara bertahap
+85. Anjurkan berhenti merokok
+86. Ajarkan pasien dan keluarga mengukur berat badan harian
+87. Ajarkan pasien dan keluarga mengukur intake dan output cairan harian","88. Kolaborasi pemberian antiaritmia, jika perlu
+89. Rujuk ke program rehabilitasi jantung
+1. Perawatan sirkulasi"
+D.0006,I.02080,Pertolongan Pertama,,,,,
+D.0010,I.02080,Pertolongan Pertama,Memberikan penanganan dasar dan segera pada kondisi kegawat daruratan baik dengan alat maupun tanpa alat,"90. Identifikasi keamanan penolong, pasien, dan lingkungan
+91. Identifikasi respon pasien dengan AVPU (alert, verbal, pain, unresponsive)
+92. Monitor tanda-tanda vital
+93. Monitor karakteristik luka (mis. Drainase, warna, ukuran, bau)","94. Meminta pertolongan, jika perlu
+95. Lakukan RICE (rest, ice, compression, elevation) pada cedera otot ekstremitas
+96. Lakukan penghentian perdarahan (mis. Penekanan, balut tekan, pengaturan posisi)
+97. Bersihkan kulit dari racun atau bahan kimia yang menempel dengan sabun dan air yang mengalir
+98. Lepaskan sengatan dari kulit
+99. Lepaskan gigitan serangga dari kulit menggunakan pinset atau alat yang sesuai",100. Ajarkan Teknik perawatan luka,"101. Kolaborasi pemberian obat-obatan (mis. Antibiotic, profilaksis, vaksi, anti histamin, anti inflamasi, dan analgetic, jika perlu)"
+D.0010,I.02075,Perawatan Jantung,,,,,
+D.0011,I.02075,Perawatan Jantung,"Mengidentifikasi, merawat dan membatasi komplikasi akibat ketidakseimbangan antara suplai dan konsumsi oksigen miokard Tindakan Observasi 1. Identifikasi tanda/gejala penurunan curah jantung (meliputi dispnea, kelelahan, edema, ortopnea, paroxysmal nocturnal dyspnea, peningkatan CVP) 2. Identifikasi tanda/gejala sekunder penurunan curah jantung (meliputi peningkatan berat badan, hepatomegali, distensi vena jugulari, palpitasi, ronkhi basah, oliguria, batuk, kulit pucat) 3. Monitor intake dan output cairan 4. Monitor aritmia (kelainan irama dan frekuensi) 5. Monitor fungsi alat pacu jantung 6. Periksa tekanan darah dan frekuensi nadi sebelum dan sesudah aktivitas Terapeutik 1. Posisikan pasien semi- fowler atau fowler dengan kaki ke bawah atau posisi nyaman 2. Berikan diet jantung yang sesuai (mis. batasi asupan kafein, natrium, kolesterol, dan makanan tinggi lemak) 3. Gunakan stocking elastis atau pneumatik intermiten, sesuai indikasi Edukasi 1. Anjurkan beraktivitas fisik sesuai toleransi 2. Ajarkan pasien dan keluarga mengukur intake dan output cairan harian Kolaborasi 1. Kolaborasi pemberian antiaritmia, jika perlu",,,,
+D.0012,I.02067,Perawatan Jantung,Mengidentifikasi dan menurunkan risiko atau komplikasi stimulus yang menyebabkan perdarahan atau risiko perdarahan Tindakan Observasi - Monitor tanda dan gejala perdarahan - Monitor hematokrit/hemoglobin sebelum dan setelah kehilangan darah,,"- Pertahankan bed rest selama perdarahan
+- Batasi tindakan invasive, jika perlu
+- Hindari pengukuran suhu rektal","- Jelaskan tanda dan gejala perdarahan
+- Anjurkan meningkatkan asupan cairan untuk menghindari konstipasi
+- Anjurkan menghindari aspirin atau antikoagulan
+- Anjurkan meningkatkan asupan makanan dan vitamin K
+- Anjurkan segera melapor jika terjadi perdarahan Kolaborasi
+- Kolaborasi pemberian obat pengontrol perdarahan, jika perlu
+- Kolaborasi pemberian produk darah, jika perlu",
+D.0012,I.02028,Balut tekan,"Membalut luka dengan tekanan untuk mencegah atau menghentikan perdarahan Tindakan Observasi - Monitor perban untuk memantau drainase luka Monitor jumlah dan warna cairan drainase dari luka - Periksa kecepatan dan denyut nadi distal - Periksa akral , kondisi kulit dan pengisian kapiler distal Terapeutik - Pasang sarung tangan - Tinggikan bagian tubuh yang cedera diatass level jantung, jika tidak ada fraktur - Tutup luka dengan kasa tebal - Tekan kasa dengan kuat diatass luka selama - Fiksasi kasa dengan plaster setelah perdarahan berhenti - Terkar arteri (pressure point) yang mengarah ke area perdarahan Memberikan informasi mengenai keamanan dan pencegahan cidera pada anak Tindakan Observasi - Identifikasi kesiapan dan kemampuan menerima informasi Terapeutik - Sediakan materi dan media pendidikan kesehatan - Jadwalkan pendidikan kesehatan sesuai kesepakatan - Berikan kesempatan untuk bertanya Edukasi - Anjurkan memantau anak saat berada di tempat yang beresiko(mis. Luar rumah, balkon, kolam renang) - Anjurkan menutup sumber listrik yang dapat dijangkau - Anjurkan mengatur perabotan rumah tangga - Anjurkan memilih mainan yang sesuai dengan usia anak dan tidak berbahaya - Anjurkan menyimpan benda berbahaya (mis. Pisau, benda tajam lainnya) dan cairan berbahaya(mis. Pembersih lantai, detergen) ditempat yang jauh dari jangkauan ) Anjurkan memberikan pembatas pada area dapur,kamar mandi, kolam Jelaskan kepada orang tua dan anak tentang bahaya lalulintas Anjurkan pengunaan sabuk pengaman saat berkendara Jelaskan keamanan bersepeda pada anak(mis. Mengguanakan helm, menggunakan sepeda sesuai usia) Anjurkan penggunaan stroller(kursi dorong anak), kursi khusus anak dengan aman Anjurkan tidak meletakan anak pada tempat tidur yang tinggi Ajarkan anak tindakan yang dilakuykan saat meraasa dirinya dalam bahaya(mis. Meminta bantuan orang dewasa, berteriak, segera berlari) Edukasi keamanan bayi",,,"- Jelaskan tujuan dan prosedur balut tekan
+- Anjurkan membatasi gerak pada area cidera Edukasi keamanan anak (I. 12378)",
+D.0012,I.12379,Balut tekan,"Menyediakan informasi dan dukungan terhadap pencegahan cedera pada bayi Tindakan Observasi - Identifikasi kesiapan dan kemampuian menerima informasi Terapeutik - Sediakan materi dan media pendidikan kesehatan - Jadwalkan pendidikan kesehatan sesuai kesepakatan - Berikan kesempatan untuk bertanya Edukasi - Anjurkan selalu mengawasi bayi - Anjurkan tidak meninggalkan bayinya sendirian - Anjurkan menjauhkan benda yang beresiko membahayakan bayi(mis. Kantung p;llastik, karet , tali, kain, benda-benda keci, benda tajam, pembersih lantai) - Anjurkan memasang penghalang pada sisi tempat tidur - Anjurkan menutup sumber listrik yang terjangkau oleh bayi - Anjurkan mengatur perabotan rumah tanngga dirumah Anjurkan memberikan pembatas pada area beresiko(mis. Daour, kamar mandi, kolam) Anjurkan mengguanakan kursi dan sabuk pengaman khusus bayi saat berkendara Anjurkan penggunaan sabuk pengaman pada stroller (kursi dorong bayi), kursi khusus bayi dengan aman Anjurkan tidak meletakan bayi pada tempat tidur yang tinggi Manajemen pendarahan",,,,
+D.0013,I.01004,Balut tekan,Mengidentifikasi dan mengelola kehilangan darah saat terjadi perdarahan,"1. Identifikasi penyebab pendarahan
+2. Periksa adanya darah pada muntah, sputum, feses, urine, pengeluaran NGT dan drainase luka, jika perlu
+3. Periksa ukuran dan karakteristik, jika ada
+4. Monitor terjadinya perdarahan (sifat dan jumlah)
+5. Monitor nilai hemoglobin dan hematokrit sebelum dan setelah kehilangan darah
+6. Monitor tekanan darah dan parameter hemodinamik (tekanan vena sentral dan tekanan baji kapiler atau arteri pulmonal), jika ada
+7. Monitor intake dan output cairan
+8. Monitor koagulasi darah (protrombin time(PT), partial thromboplastin time (PTT),fibrinogen,degradasi fibrin,dan jumlah trombosit), jika ada
+9. Monitor deliveri oksigen jaringan (mis. PaO2, SaO2, hemoglobin, dan curah jantung)
+10. Monitor tanda dan gejala perdarahan masif","1. Istirahatkan area yang mengalami perdarahan
+2. Berikan kompres dingin, jika perlu
+3. Lakukan penekanan atau balut tekan, jika perlu
+4. Tinggikan ekstremitas yang mengalami perdarahan
+5. Pertahankan akses IV","1. Jelaskan tanda-tanda perdarahan
+2. Anjurkan melapor jika menemukan tanda-tanda perdarahan
+3. Anjurkan membatasi aktivitas","1. Kolaborasi pemberian cairan, jika perlu
+2. Kolaborasi pemberian transfusi darah, jika perlu"
+D.0013,I.03094,Konseling nutrisi,Memberikan bimbingan dalam melakukan modifikasi asupan nutrisi,"1. Identifikasi kebiasaan makan dan perilaku makan yang akan diubah
+2. Identifikasi kemajuan modifikasi diet secara regular
+3. Monitor intake dan output cairan, nilai hemoglobin, tekanan darah, kenaikan berat badan, dan kebiasaan membeli makanan","1. Bina hubungan terapeutik
+2. Sepakati lama waktu pemberian konseling
+3. Tetapkan tujuan jangka pendek dan jangka Panjang yang realistis
+4. Gunakan standar nutrisi sesuai program diet dalam mengevaluasi kecukupan asupan makanan
+5. Pertimbangkan faktor-faktor yang mempengaruhi pemenuhan kebutuhan gizi (mis. Usia, tahap pertumbuhan dan perkembangan, penyakit)","1. Informasikan perlunya modifikasi diet (misal: penurunan atau penambahan berat badan, pembatasan natrium atau cairan, pengurangan kolesterol
+2. Jelaskan program gizi dan persepsi pasien terhadap diet yang diprogramkan","1. Rujuk pada ahli gizi, jika perlu"
+D.0013,I.02075,Perawatan Jantung Definisi :,,,,,
+D.0014,I.02075,Perawatan Jantung Definisi :,,"1. Monitor tekanan darah (termasuk tekanan darah ortostatik, jika perlu)
+2. Monitor intake dan output cairan saturasi oksigen
+3. Periksa tekanan darah dan frekuensi nadi sebelum dan sesudah aktivitas","1. Posisikan pasien semi-fowler atau fowler dengan kaki kebawah atau posisi nyaman
+2. Berikan diet jantung yang sesuai
+3. Berikan oksigen untuk mempertahankan saturasi oksigen >94%",Anjurkan beraktivitas fisik sesuai toleransi Pencegahan Syok (1.02068),
+D.0015,I.02068,Pencegahan Syok Definisi,,,,,
+D.0016,I.02068,Pencegahan Syok Definisi,,,"1. Memberikan oksigen untuk mempertahankan saturasi oksigen >94 %
+2. Mempersiapkan intubasi dan ventilasi mekanis, jika perlu.
+3. Memasang jalur iv jika perlu
+4. Memasang kateter urine untuk menilai produksi urine,jika perlu
+5. Melakukan skin test untuk mencegah reaksi alergi","2. Menjelaskan penyebab / faktor risiko syok
+3. Menjelaskan tanda dan gejala awal syok
+4. Anjurkan untuk melapor jika menemukan/merasakan tanda dan gejala awal syok
+5. Anjurkan untuk memperbanyak asupan cairan oral
+6. Menganjurkan untuk menghindari alergen Kolaborasi
+1. Kolaborasikan prmberian IV, jika perlu
+2. Kolaborasikan pemberian transfusi darah, jika perlu
+3. Kolaborasikan pemberian antiinflamasi, jika perlu Manajemen Peningkatan",
+D.0017,I.06194,Tekanan Intrakranial,,"1.Identifikasi penyebab peningkatan TIK (mis. lesi, gangguan metabolisme, edema serebral) 2.Monitor tanda/gejala peningkatan TIK (mis. tekanan darah meningkat, tekanan nadi melebar, bradirkardia, pola napas iregular, kesadaran menurun) 3.Monitor MAP (Mean Arterial Pressure) 4.Monitor CVP (Central Venous Pressure), jika perlu
+5. Monitor PAWP, jika perlu
+6. Monitor PAP, jika perlu
+7. Monitor ICP (Intra Cranial Pressure), jika tersedia
+8. Monitor CCP (Cerebral Perfusion Pressure)
+9. Monitor gelombang ICP
+10. Monitor status pernapasan
+11. Monitor intake dan output cairan
+12. Monitor cairan serebrospinalis (mis. warna, konsistensi)","1. Minimalkan stimulus dengan menyediakan lingkungan yang tenang
+2. Berikan posisi semi Fowler
+3. Hindari manuver Valsava
+4. Cegah terjadinya kejang
+5. Hindari penggunaan PEEP
+6. Hindari penggunaan cairan IV hipotonik 7.Atur ventilator agar PaCO2 optimal 8.Pertahankan suhu tubuh normal",,"1. Kolaborasi pemberian sedasi dan anti konvulsan, jika perlu
+2. Kolaborasi pemberian diuretik osmosis, jika perlu
+3. Kolaborasi pemberian pelunak tinja, jika perlu"
+D.0020,I.03101,Manajemen Diare,Mengidentifikasi dan mengelola diare dan dampaknya,"1. Identifikasi penyebab diare (mis. Inflamasi gastrointestinal, iritasi gastrointestinal, proses infeksi, malabsorpsi, ansietas, stress, efek obatobatan, pemberian botol susu)
+2. Identifikasi riwayat pemberian makanan
+3. Identifikasi gejala invaginasi (mis.tangisan keras, kepucatan pada bayi)
+4. Monitor warna,volume,frekuen si,dan konsistensi tinja
+5. Monitor tanda dan gejala hypovolemia (mis. takikardia, nadi teraba lemah, tekanan darah turun, turgor kulit turun, mukosa mulut kering, CRT melambat, BB menurun).
+6. Monitor iritasi dan ulserasi kulit di daerah perianal
+7. Monitor jumlah pengeluaran diare
+8. Monitor keamanan dan penyiapan makanan","1. Berikan asupan cairan oral (mis.larutan garam gula, oralit, Pedialyte, renalyte
+2. Pasang jalur intravena
+3. Berikan cairan intravena (mis. ringer asetat, ringer laktat), jika perlu
+4. Ambil sampel darah untuk pemeriksaan darah lengkap dan elektrolit
+5. Ambil sampel feses untuk kultur,jika perlu","1. Anjurkan makanan porsi kecil dan sering secara bertahap
+2. Anjurkan menghindari makanan pembentuk gas, pedas dan mengandung laktosa
+3. Anjurkan melanjutkan pemberian asi","1. Kolaborasi pemberian obat antimotilitas (mis. loperamide,difenoksilat)
+2. Kolaborasi pemberian obat anti spasmodic / spasmolitis (mis papaverine ekstak belladonna mebeverine)
+3. Kolaborasi pemberian obat pengeras feses (mis. atapulgit, smektif, kaolin-pektin"
+D.0021,I.14551,Pengontrolan Infeksi,,1. Identifikasi pasien-pasien yang mengalami penyakit infeksi menular,"1. Terapikan kewaspadaan universal misalnya cuci tangan aseptic, gunakan alat pelindung diri seperti masker, sarung tangan, pelindung wajah, pelindung mata, aspron, sepatu bot sesuai model transmisi mikroorganisme
+2. Tempatkan pada ruang isolasi bertekanan positif untuk pasien yang mengalami penurunan imunitas
+3. Tempatkan pada ruang isolasi bertekan negative untuk pasien dengan resiko penyebaran inveksi via droplet atau udara
+4. Streriliasai dan desinfeksi alat-alat, furniture, lantai, sesuai kebutuhan
+5. Gunakan hepafilter pada area khusus misalnya kamar operasi
+6. Berika tanda khusus untuk pasien dengan penyakit menular Edukasi :
+1. Ajarkan cara mencuci tangan dengan benar
+2. Ajarkan etika batuk/bersin Manajemen Hipervolemia l.03114)",,
+D.0022,I.03121,Pemantauan Cairan,,"1. Monitor frekuensi dan kekuatan nadi
+2. Monitor frekuensi napas
+3. Monitor tekanan darah
+4. Monitor berat badan
+5. Monitor waktu pengisian kapiler
+6. Monitor elastisistas atau turgor kulit
+7. Monitor jumlah, warna, dan berat jenis urine
+8. Monitor kadar albumin dan protein total
+9. Monitor hasil periksaan serum mis osmolaritas serum, hemtokrit, natrium, kalium, BUN
+10. Monitor intake dan output cairan
+11. Identifikasi tanda-tanda hypovolemia mis. frekuensi nadi meningkat, nadi etraba lemah, tekanan darah menurun, tekanan nadi menyempit, turgor kulit mrnurun, membrane mukosa kering, volume urine menurun, hematokrtit meningkat, haus, lemah, konsentrasi urine meningkat, BB menurun dalam waktu singkat
+12. Identifikais tanda-tanda hypervolemia mis. dispnea, edema perifer, edema anasarca, JPV CPV meningkat, reflex hepatojugular positif, BB menurun dalam aktu singkat
+13. Identifikasi factor resiko ketidakseimbangan cairan mis. prosedur pembedahan mayor, trauma pendarahan, luka bakar, apheresis, obstruksi intestinal, peradangan pancreas, penyakit ginjal dan kelenjar, disfungsi intestinal","1. Atur interval waktu pemantauan sesuai dengan kondisi pasien
+2. Dokumentasikan hasil pemantauan Edukasi :
+1. Jelaskan tujuan dan prosedur pemantauan
+2. Informasikan hasil pemantauan jika perlu",,
+D.0023,I.003116,Definisi :,,"1. Periksa tanda dan gejala hipovolemia (mis. Frekuensi nadi meningkat, nadi teraba lemah, tekanan darah menurun, tekanan nadi menyempit, turgor kulit menurun, membran mukosa kering, volume urin menurun, hematokrit meningkatkan, haus, lemah)
+2. Monitor intake dan ouput cairan Terapeutik :
+3. Hitung kebutuhan cairan
+4. Berikan posisi modified trendelenbung Edukasi :
+5. Anjurkan memperbanyak asupan cairan oral
+6. Anjurkan menghindari perubahan posisi mendadak Kolaborasi :
+7. Kolaborasi pemberian cairan IV isotonis (mis. NaCl, RL)
+8. Kolaborasi pemberian produk darah haluaran,turgor kulit, CRT) Terapeutik :
+2. Lakukan penekanan langsung pada pendarahan eksternal
+3. Berikan posisi syok
+4. Ambil sampel darah untuk pemeriksaan darah lengkap dan elektrolit Kolaborasi :
+5. Kolaborasi pemberian transfusi darah, jika perlu Manejemen pendarahan pervaginam pascapersalinan",,,
+D.0023,I.02045,Definisi :,"Mengidentifikasi dan mengelola kehilangan jumlah darah pervaginam lebih dari 500 cc, dapat terjadi pada proses persalinan (24 jam) dan lebih dari (24 jam) setelah persalinan.","1. identifikasi penyebab kehilangan darah (mis. Atonima uteri atau robekan jalan lahir)
+2. identifikasi keluhan ibu (mis. Keluar banyak darah, pusing, pandangan kabur)
+3. monitor resiko terjadinya perdarahan
+4. monitor jumlah kehilangan darah Terapeutik :
+5. lakukan penekana pada area perdarahan, jika perlu Kolaborasi :
+6. Kolaborasi pemberian transfusi darah, jika perlu Manejemen pendarahan antepartum dipertahankan",,,
+D.0023,I.02042,Definisi :,Mengidentifikasi dan mengelola pendarahan pada kehamilan yang dapat dipertahankan,"1. Identifikasi riwayat kehilangan darah (mis. Jumlah, nyeri, dan adanya bekuan darah)
+2. Identifikasi penyebab perdarahan
+3. Identifikasi riwayat yang berhubungan dengan perdarahan kehamilan awal
+4. Periksa vagina untuk menilai jumlah, konsisten, dan bau perdarahan
+5. Periksa kontraksi uterus atau peningkatan kekuatan tonus otot uterus
+6. Monitor tanda vital ibu berdasarkan kehilangan darah
+7. Monitor intake dan output cairan Terapeutik :
+8. Posisikan ekstremitas bawah lebih tinggi Edukasi :
+9. Anjurkan tirah baring hingga perdarahan berhenti
+10. Anjurkan menurunkan resiko perdarahan (mis.pembatasan merokok, tidak berhubungan seksual, tirah baring, manajemen konstipasi)
+11. Ajarkan cara mengendali pendarahan lama dan baru Kolaborasi :
+12. Kolaborasi pemberian cairan, jika perlu
+13. Kolaborasi pemberian transfusi darah, jika perlu",,,
+D.0023,I.03121,Pemantauan Cairan,Mengumpulkan dan menganalisis data terkait pengaturan keseimbangan cairan,"1. Monitor tekanan darah
+2. Identifikasi tanda tanda hipovolemia (mis. Frekuensi nadi meningkat, nadi teraba lemah, tekanan darah menurun, tekanan nadi menyempit, turgor kulit menurun, membran mukosa kering, volume urine menurun, hematokrit meningkat, haus, lemah, konsentrasi urine meningkat, berat badan menurun dalam waktu singkat)
+3. Identifikasi faktor resiko ketidakseimbangan cairan (mis. Prosedur pembedahan mayor, trauma/perdarahan, luka bakar, aferasis, obstruksi intestinal, peradangan pankreas, penyakit ginjal dan kelenjar, disfungsi intestinal) Terapeutik :
+4. Atur interval waktu pemantauan sesuai dengan kondisi pasien Edukasi :
+5. Anjurkan tirah baring hingga perdarahan berhenti
+6. Anjurkan menurunkan resiko perdarahan (mis.pembatasan merokok, tidak berhubungan seksual, tirah baring, manajemen konstipasi)
+7. Ajarkan cara mengendali pendarahan lama dan baru Kolaborasi :
+8. Informasi hasil pemantauan,",,,
+D.0023,I.03091,Fototerapi Neonatus,,,,,
+D.0024,I.03091,Fototerapi Neonatus,,"1. Monitor ikteri pada sklera dan kulit bayi
+2. Identifikasi kebutuhan cairan sesuai dengan usia gestasi dan berat badan
+3. Monitor suhu dan tanda vital setiap 4 jam sekali 4. Monitor efek samping fototerapi mis. hipertermi, diare, rush pada kulit, penurunan BB 8-10% Terapeutik :
+1. Siapkan lampu fototerapi dan incubator atau kotak bayi
+2. Lepaskan pakaian bayi kecuali popok
+3. Berikan penutup mata pada bayi
+4. Ukur jarak antara lampu dan permukaan kulit bayi 30 cm atau tergantung spesifikais lampu fototerapi
+5. Berikan tubuh bayi terpapar sinar fototrapi secara berkelanjutan
+6. Ganti segra alas dan popok bayi setelah BAK/BAB
+7. Gunakan linen berwarna putih agar memantulakan cahaya sebanyak mungkin Edukasi :
+1. Ajarkan ibu menyusui sekitar 20-30 menit
+2. Ajarkan ibu menyusui seseiring mungkin Kolaborasi :
+1. Kolaborasi pemeriksaan darah vena bilirubin direk dan indirek",,,
+D.0024,I.10338,Perawatan Bayi,,"1. Monitor TTV bayi (terutama suhu 36,5 – 37,5 derajat Celcius","1. Mandikan bayi denga suhu ruangan 21-24 derajat celcius
+2. Mandikan bayi dalam waktu 5-10 menit dan 2 kali dalam sehari
+3. Rawat tali pusat secara terbuka tali pusat tidak dibungkus apapun
+4. Bersihkan pangkal tali pusat lidi kapas yang telah diberi air matang
+5. Kenakan popok bayi di bawah umbilicus jika tali pusat belum terlepas
+6. Lakukan pemijatan bayi
+7. Ganti popok bayi jika basah
+8. Kenakan pakaian bayi dari bahan katun Edukasi :
+1. Anjurkan ibu menyusui sesuai kebutuhan bayi
+2. Ajarkan ibu cara merawat bayi dirumah
+3. Ajarkan cara pemberian makanana pendamping ASI pada bayi >6 bulan",,
+D.0024,I.03098,Manajemen Cairan,,,,,
+D.0025,I.03098,Manajemen Cairan,Megidentifikasi dan mengelola keseimbangan cairan dan mencegah komplikasi akibat ketidakseimbangan cairan,"1. Monitor status hidrasi (mis. frekuensi nadi, kekuatan nadi, akral, pengisian kapiler, kelembapan mukosa, turgor kulit, tekanan darah) 2. Monitor berat badan harian
+3. Monitor berat badan sebelum dan sesudah dialisis
+4. Monitor hasil pemeriksaan laboratorium (mis. hematokrit, Na, K, Cl, berat jenis urine, BUN)
+5. Monitor status hemodinamik (mis. MAP, CVP, PAP, PCWP jika tersedia)","1. Catat intake-output dan hitung balans cairan 24 jam
+2. Berikan asupan cairan, sesuai kebutuhan
+3. Berikan cairan intravena, jika perlu",,"7. Kolaborasi pemberian diuretik, jika perlu"
+D.0025,I.03121,Pemantauan Cairan,Mengumpulkan dan menganalisis data terkait pengaturan keseimbangan cairan,,"1. Atur interval waktu pemantauan sesuai dengan kondisi pasien
+2. Dokumentasikan hasil pemantauan","1. Jelaskan tujuan dan prosedur pemantauan
+2. Informasikan hasil pemantauan, jika perlu",
+D.0026,I.03094,Pemantauan Cairan,Memberikan bimbingan dalam melakukan modifikasi asupan nutrisi.,"1. Identifikasi kebiasaan makan dan perilaku makan yang akan diubah
+2. Identifikasi kemajuan modifikasi diet secara reguler
+3. Monitor intake dan output cairan, nilai hemoglobin, tekanan darah, kenaikan berat badan dan kebiasaan membeli makanan Terapeutik
+1. Bina hubungan terapeutik
+2. Sepakati lama waktu pemberian konseling
+3. Tetapkan tujuan jangka pendek dan jangka panjang yang realistis
+4. Gunakan standar nutrisi sesuai program diet dalam mengevaluasi kecukupan asupan makanan
+5. Pertimbangkan faktor-faktor yang mempengaruhi pemenuhan kebutuhan gizi (mis.usia, tahap pertumbuhan dan perkembangan, penyakit)",,"1. Informasikan perlunya modifikasi diet (mis.penurunan atau penambahan berat badan, pembatasan natrium atau cairan, pengurangan kolestrol)
+2. Jelaskan program gizi dan persepsi pasien terhadap diet yang diprogramkan","1. Rujuk pada ahli gizi, jika perlu Manajemen hiperglikemia"
+D.0026,I.03115,Pemantauan Cairan,,,,,
+D.0027,I.03115,Pemantauan Cairan,Mengidentifikasi dan mengelola kadar glukosa darah diatas normal Tindakan: Observasi : - Identifikasi kemungkinan penyebab hiperglikemia - Monitor tanda dan gejala hiperglikemia Terapeutik: - Berikan asupan cairan oral Edukasi : - Anjurkan menghindari olahraga saat kadar glukosa darah lebih dari 250 mg/dL - Anjurkan monitor kadar glukosa darah secara mandiri - Anjurkan kepatuhan terhadap diet dan olahraga,,,,"- kolaborasi pemberian insulin, jika perlu Kolaborasi pemberian kalium, jika perlu"
+D.0028,I.03093,Pemantauan Cairan,Memberikan bimbingan teknik menyusui yang tepat dalam pemberian makanan bayi. Tindakan Observasi 1. Identifikasi keadaan emosional ibu saat akan dilakukan konseling menyusui 2. Identifikasi keinginan dan tujuan menyusui 3. Identifikasi permasalahan yang ibu alami selama proses menyusui,,"1. Gunakan teknik mendengar aktif (mis. duduk sama tinggi, dengarkan permasalahan ibu)
+2. Berikan pujian terhadap perilaku ibu yang benar",1. Ajarkan teknik menyusui yang tepat sesuai kebutuhan ibu Promosi ASI Eksklusif,
+D.0028,I.03135,Pemantauan Cairan,"Meningkatkan kemampuan ibu dalam memberikan ASI secara eksklusif (0-6 bulan). Tindakan Observasi 1. Identifikasi kebutuhan laktasi bagi ibu pada antenatal, intranatal, dan postnatal",,"1. Fasilitasi ibu melakukan IMD (inisiasi menyusu dini)
+2. Fasilitasi ibu untuk rawat gabung atau rooming in
+3. Gunakan sendok dan cangkir jika bayi belum bisa menyusu
+4. Dukung ibu menyusui dengan mendampingi ibu selama kegiatan menyusui berlangsung
+5. Diskusikan dengan keluarga tentang ASI eksklusif
+6. Siapkan kelas menyusui pada masa prenatal minimal 2 kali dan periode pascapartum minimal 4 kali","1. Jelaskan manfaat menyusui bagi ibu dan bayi
+2. Jelaskan pentingnya menyusui di malam hari untuk mempertahankan dan meningkatkan produksi ASI
+3. Jelaskan tanda-tanda bayi cukup ASI (Mis. berat badan meningkat, BAK lebih dari 10 kali/hari, warna urine tidak pekat)
+4. Jelaskan manfaat rawat gabung (rooming in)
+5. Anjurkan ibu menyusui sesegera mungkin setelah melahirkan
+6. Anjurkan ibu memberikan nutrisi kepada bayi hanya dengan ASI
+7. Anjurkan ibu menyusui sesering mungkin setelah lahir sesuai kebutuhan bayi
+8. Anjurkan ibu menjaga produksi ASI dengan memerah, walaupun kondisi ibu atau bayi terpisah Promosi Laktasi",
+D.0028,I.03138,Pemantauan Cairan,Meningkatkan cakupan ASI eksklusif dan lanjutkan sampai 2 tahun,1. Identifikasi kebutuhan laktasi bagi ibu dan bayi,"1. Fasilitasi ibu saat melakukan IMD
+2. Fasilitasi ibu untuk rawat gabung atau rooming in
+3. Gunakan sendok dan cangkir saat bayi belum bisa menyusu
+4. Dampingi ibu selama kegiatan menyusui berlangsung, jika perlu","1. Jelaskan pentingnya menyusui sampai 2 tahun
+2. Jelaskan manfaat rawat gabung rooming in
+3. Anjurkan menyusui minimal 2 kali selama hamil dan setelah melahirkan 3-4 kali
+4. Adakan kelas edukasi tentang manfaat dan posisi menyusui pada masa prenatal dan periode postpartum
+5. Anjurkan ibu menjaga produksi ASI dengan memerah ASI
+6. Anjurkan ibu untuk memeberikan nutrisi kepada bayi hanya dengan ASI eksklusif selama 6 bulan dan dianjurkan sampai 2 tahun
+7. Anjurkan ibu memberi makanan pendamping ASI setelah 6 bulan
+8. Anjurkan ibu menyusui sesering mungkin segera setelah lahir sesuai kebutuhan bayi",
+D.0028,I.12393,Edukasi Menyusui Tindakan,,,,,
+D.0028,I.12393,Edukasi Menyusui Tindakan,,"1. Identifikasi kesiapan dan kemampuan menerima informasi
+2. Identifikasi tujuan atau keinginan menyusui Terapeutik :
+1. Sediakan materi dan media pendidikan kesehatan
+2. Jadwalkan pendidikan kesehatan sesuai kesepakatan
+3. Berikan kesempatan untuk bertanya
+4. Dukung ibu meningkatkan kepercayaan diri dalam menyusui
+5. Libatkan sistem pendukung : suami, keluarga, tenaga kesehatan dan masyarakat Edukasi :
+1. Berikan konseling menyusui
+2. Jelaskan manfaat menyusui bagi ibu dan bayi
+3. Ajarkan 4 posisi menyusui dan perlekatan dengan benar
+4. Ajarkan perawatan payudara postpartum (mis. memerah ASI, pijat payudara, pijat oksitosin)",,,
+D.0028,I.03093,Konseling Laktasi,,"1. Identifikasi keadaan emosional ibu saat akan dilakukan konseling menyusui
+2. Identifikasi keinginan dan tujuan menyusui
+3. Identifikasi permasalahan yang ibu alami selama proses menyusui Terapeutik :
+1. Gunakan teknik mendengar aktif (mis. duduk sama tinggi, dengarkan permasalahan ibu)
+2. Berikan pujian terhadap perilaku ibu yang benar Edukasi :
+1. Ajarkan teknik menyusui yang tepat dan sesuai kebutuhan ibu Pendampingan Proses Menyusui",,,
+D.0028,I.03130,Konseling Laktasi,,"1. Monitor kemampuan ibu menyusui
+2. Monitor kemampuan bayi menyusu","1. Damping ibu selama kegiatan menyusui berlangsung
+2. Dukung ibu meningkatkan kepercayaan diri untuk menyusui dengan menggunakan boneka saat membantu ibu memposisikan bayinya
+3. Berikan ibu pujian, informasi dan saran terhadap perilaku positif dalam menyusui
+4. Diskusikan masalah selama menyusui (mis. nyeri, bengkak payudara, lecet pada putting dan mencari solusinya) Edukasi :
+1. Ajarkan ibu mengenali tanda- tanda bayi siap menyusu (mis. bayi mencari putting, keluar saliva, memasukan jari ke dalam mulutnya dan bayi menangis)
+2. Ajarkan ibu mengeluarkan ASI untuk diolesi pada putting sebelum dan sesudah menyusui, agar kelenturan putting tetap terjaga
+3. Ajarkan ibu mengarahkan mulut bayi dari arah bawah kearah putting ibu
+4. Ajarkan posisi menyusui (mis. cross cradle, cradle, foot ball dan posisi berbaring yang diikuti dengan perlekatan yang benar
+5. Ajarkan perlekatan yang benar : perut ibu dan bayi berhadapan, tangan-kaki bayi satu garis lurus, mulut bayi terbuka lebar dan dagu bayi menempel pada payudara ibu untuk menghindari lecet pada putting bayudara
+6. Ajarkan memerah ASI dengan posisi jari jam 12-6 dan jam 9- 3
+7. Informasikan ibu untuk menyusui pada saat payudara sampai bayi melepas sendiri putting ibu
+8. Informasikan ibu untuk selalu mengosongkan payudara pada payudara yang belum disusui dengan memerah ASI",,
+D.0028,I.12397,Edukasi Nutrisi Bayi,,"1. Identifikasi kesiapan dan kemampuan ibu atau pengasuh menerima informasi
+2. Identifikasi kemampuan ibu atau pengasuh menyediakan nutrisi","1. Sediakan materi dan media pendidikan kesehatan
+2. Jadwalkan pendidikan kesehatan sesuai kesepakatan
+3. Berikan kesempatan kepada ibu atau pengasuh untuk bertanya","1. Jelaskan tanda-tanda awal rasa lapar (mis. bayi gelisah, membuka mulut dan menggeleng-gelengkan kepala, menjulur-julur lidah, mengisap jari atau tangan)
+2. Anjurkan menghindari pemberian pemanis buatan
+3. Ajarkan perilaku hidup bersih dan sehat (PHBS) (mis. cuci tangan sebelum dan sesudah makan, cuci tangan dengan sabun setelah ke toilet)
+4. Ajarkan cara memilih makanan sesuai dengan usia bayi
+5. Ajarkan cara mengatur frekuensi makan sesuai usia bayi
+6. Anjurkan tetap memberikan ASI saat bayi sakit",
+D.0030,I.03097,Edukasi Nutrisi Bayi,Mengidentifikasi dan mengelola berat badan agar dalam rentang optimal,"1. Identifikasi kondisi kesehatan pasien yang dapat mempengaruhi berat badan Terapeutik
+1. Hitung berat badan ideal pasien
+2. Hitung presentase lemak dan otot pasien
+3. Fasilitasi menentukan target berat badan yang realistis",,"1. Jelaskan hubungan antara asupan makanan, aktivitas fisik, penambahan berat badan dan penurunan berat badan
+2. Jelaskan faktor resiko berat badan lebih dan berat badan kurang
+3. Anjurkan mencatat berat badan setiap minggu, jika perlu
+4. Anjurkan untuk melakukan pencatatan asupan makan, aktivitas fisik dan perubahan berat badan Edukasi Berat Badan Efektif",
+D.0030,I.12365,Edukasi Nutrisi Bayi,Memberikan informasi tentang berat dan presentase lemak tubuh yang optimal Tindakan Observasi 1. Identifikasi kesiapan dan kemampuan menerima informasi,,"1. Sediakan materi dan media edukasi
+2. Jadwalkan pendidikan kesehatan sesuai kesepakatan
+3. Beri kesempatan pada keluarga untuk bertanya","1. Jelaskan hubungan asupan makanan, latihan, peningkatan dan penurunan berat badan
+2. Jelaskan kondisi medis yang dapat mempengaruhi berat badan
+3. Jelaskan risiko kondisi kegemukan (overweight) dan kurus (underweight)
+4. Jelaskan kebiasaan, tradisi, dan budaya, serta faktor genetik yang mempengaruhi berat badan
+5. Ajarkan cara mengelola berat badan secara efektif",
+D.0031,I.12369,Edukasi Diet Definisi,,"1. Mengidentifikasi kemampuan pasien dan keluarga menerima informasi
+2. Mengidentifikasi tingkat pengetahuan saat ini
+3. Mengidentifikasi kebiasaan pola makan saat ini dan masa lalu
+4. Mengidentifikasi persepsi pasien dan keluarga tentang diet yang diprogramkan
+5. Mengidentifikasi keterbatasan finansial untuk menyediakan makanan","1. Mempersiapkan materi,media dan alat peraga
+2. Menjadwalkan waktu yang tepat umtuk memberikan pendidikan kesehatan
+3. Memberikan kesempatan pasien dan keluarga bertanya
+4. Menyediakan rencana makan tertulis,jika perlu","1. Menjelaskan tujuan kepatuhan diet terhadap kesehatan
+2. Menginformasikan makanan yang diperbolehkan dan dilarang
+3. Menginformasikan kemungkinan interaksi obat dan makanan, jika perlu
+4. Menganjurkan mempertahankan posisi semi fowler (30 – 45 derajat) 20-30 menit setelah makan
+5. Menganjurkan mengganti bahan makanan sesuai dengan diet yang diprogramkan
+6. Menganjurkan melakukan olahraga sesuai toleransi
+7. Mengajarkan cara membaca label dan memilih makanan yang sesuai program
+8. Merekomendasikan resep makanan yang sesuai dengan diet, jika perlu","1. Merujuk ke ahli gizi dan sertaakan keluarga, jika perlu"
+D.0031,I.03094,Konseling Nutrisi,Memberikan bimbingan dalam melakukan modifikasi asupan nutrisi.,"1. Mengidentifikasi kebiasaan makan dan perilaku makan yang akan diubah
+2. Mengidentifikasi kemajuan modifikasi diet secara reguler
+3. Memonitor intake dan output cairan, nilai hemoglobin, tekanan darah, kenaikan berat badan, dan kebiasaan membeli makanan. Trapeutik
+1. Membina hubungan trapeutik
+2. Menyepakati lama waktu pemberian konseling
+3. Menetapkan tujuan jangka pendek dan jangka panjang yang realistis
+4. Menggunakan standar nutrisi sesuai program diet dalam mengevaluasi kecukupan asupan makanan
+5. Mempertimbangkan faktor-faktor yang mempengaruhi pemenuhan kebutuhan gizi ( mis. Usia, tahap pertumbuhan dan perkembangan, penyakit ) Edukasi
+1. Menginformasikan perlunya modifikaasi diet ( mis. Penurunan atau penambahan berat badan, pembatasan natrium atau cairan, pengurangan kolestrol )
+2. Menjelaskan program gizi dan persepsi pasien terhadap diet yang diprogramkan Kolaborasi
+1. Rujuk pada ahli gizi, jika perlu",,,
+D.0032,I.03119,Manajemen Nutrisi,"Mengidentifikasi dan mengelola asupan nutrisi Tindakan Observasi 1. Identifikasi status nutrisi 2. Identifikasi alergi dan intoleransi makanan 3. Identifikasi kebutuhan kalori dan nutrien 4. Monitor asupan makanan 5. Monitor berat badan Terapeutik 1. Lakukan oral hygiene sebelum makan, jika perlu 2. Berikan makanan tinggi serat untuk mencegah konstipasi 3. Berikan makanan tinggi kalori dan tinggi protein Edukasi 1. Anjurkan posisi duduk, jika mampu 2. Ajarkan diet yang diprogram",,,,"1. Kolaborasi dengan ahli gizi, untuk menentukan jumlah kalori dan jeni nutrien yang dibutuhkan, jika perlu"
+D.0033,I.12369,Edukasi Diet,"Mengajarkan jumlah, jenis dan jadwal asupan makanan yang diprogramkan Tindakan Observasi 1. Identifikasi kemampuan pasien dan keluarga menerima informasi 2. Identifikasi tingkat pengetahuan saat ini 3. Identifikasi kebiasaan pola makan saat ini dan masa lalu 4. Identifikasi persepsi pasien dan keluarga tentang diet yang diprogramkan 5. Identifikasi keterbatasan finansial untuk meyediakan makanan",,"1. Persiapkan materi, media dan alat peraga
+2. Jadwalkan waktu yang tepat untuk memberikan pendidikan kesenan
+3. Berikan kesempatan pasien dan keluarga bertanya
+4. Sediakan rencana makan tertulis , jika perlu","1. Jelaskan tujuan kepatuhan diet terhadap kesehatan
+2. Informasikan makanan yang diperbolehkan dan dilarang
+3. Informasikan kemungkinan interaksi obat dan makanan, jika perlu
+4. Anjurkan mempertahankan posisi semi Fowler (30-45 derajat) 20-30 menit setelah makan
+5. Anjurkan mengganti bahan makanan sesuai dengan diet yang diprogramkan
+6. Anjurkan melakukan olahraga sesuai toleransi
+7. Ajarkan cara membaca label dan memilih makanan yang sesuai
+8. Ajarkan cara merencanakan makanan yang sesuai
+9. Rekomendasikan resep makanan yang sesuai dengan diet, jika perlu","8. Rujuk ke ahli gizi dan sertakan keluarga, jika perlu Pengontrolan Infeksi"
+D.0033,I.14551,Edukasi Diet,Mengendalikan penyebaran infeksi dan perburukan komplikasi akibat infeksi,1. Identifikasi pasienpasien yang mengalami penyakit infeksi menular.,"1. Terapkan kewaspadaan universal (mis. cuci tangan aseptik, gunakan alat pelindung diri seperti masker, sarung tangan, pelindung wajah, pelindung mata, apron, sepatu bot sesuai model transmisi mikroorganisme)
+2. Tempatkan pada ruang isolasi bertekanan positif untuk pasien yang mengalami penurunan imunitas
+3. Tempatkan pada ruang isolasi bertekanan negatif untuk pasien dengan resiko penyebaran infeksi via droplet atau udara
+4. Sterilisasi dan desinfeksi alat-alat, furnitur, lantai, sesuai kebutuhan
+5. Gunakan hepafilter pada area khusus (mis. kamar operasi)
+6. Berikan tanda khusus untuk pasien-pasien dengan penyakit menular","1. Ajarkan cara mencuci tangan dengan benar
+2. Ajarkan etika batuk dan/atau bersin",
+D.0034,I.03116,Edukasi Diet,"Manajemen hipovolemia adalah intervensi yang dilakukan oleh perawat untuk mengidentifikasi dan mengelola penurunan volume cairan intravaskuler. Tindakan Observasi 1. Periksa tanda dan gejala hipovolemia (mis: frekuensi nadi meningkat, nadi teraba lemah, tekanan darah menurun, tekanan nadi menyempit, turgor kulit menurun, membran mukosa kering, volume urin menurun, hematokrit meningkat, haus, lemah) 2. Monitor intake dan output cairan",,"1. Hitung kebutuhan cairan
+2. Berikan posisi modified Trendelenburg
+3. Berikan asupan cairan oral","1. Anjurkan memperbanyak asupan cairan oral
+2. Anjurkan menghindari perubahan posisi mendadak","1. Kolaborasi pemberian cairan IV isotonis (mis. NaCl, RL)
+2. Kolaborasi pemberian cairan IV hipotonis (mis. Glukosa 2,5%, NaCl 0,4%)
+3. Kolaborasi pemberian cairan koloid (albumin, plasmanate)
+4. Kolaborasi pemberian produk darah"
+D.0035,I.03132,1. Perawatan Neonatus,Mengidentifikasi dan merawat bayi setelah lahir sampai usia 28 hari,"1. Identifikasi kondisi awal bayi setelah lahir (mis. Kecukupan bulan,air ketuban jernih atau bercampur mekonium,menangis spontan,tonus otot)
+2. Monitor tanda vital bayi (terutama suhu) Terapeutik
+1. Lakukan inisiasi menyusui dini (IMD) segera setelah bayi lahir
+2. Berikan vitamin K 1 mg intramuskuler untuk mencegah pendarahan
+3. Mandikan selama 5-10 menit, minimal sehari sekali
+4. Mandikan dengan air hangat (36-37°c)
+5. Gunakan sabun yang mengandung provitamin B5
+6. Oleskan beby oil untuk mempertahankan kelembaban kulit
+7. Rawat tali pusat secara terbuka (tidak dibungkus)
+8. Bersihkan tali pusat dengan air steril atau air matang
+9. Kenakan pakaian dari bahan katun
+10. Selimut untuk mempertahankan kehangatan dan mencegah hipotermia
+11. Ganti popok segera jika basah",,"1. Anjurkan tidak membubuhi apapun pada tali pusat
+2. Ajarkan ibu menyusui bayi setiap 2 jam
+3. Anjuran menyendawakan bayi setelah disusui
+4. Anjurkan ibu mencuci tangan sebelum menyentuh bayi",
+D.0035,I.10338,2. Perawatan Bayi,"Mengidentifikasi dan merawat kesehatan bayi Tindakan Observasi 1. Monitor tanda tanda vital bayi (terutama suhu 36,5°c – 37,5°c) Terapeutik 1. mandikan bayi dengan suhu ruangan 21-24°c 2. Mandikan bayi dalam waktu 5-10 menit dan 2 kali dalam sehari 3. Rawat tali pusat secara terbuka (tali pusat tidak di bungkus apapun) 4. Bersihkan pangkal tali pusat lidi kapas yang telah di beri air matang 5. Kenakan popok bayi dibawah umbilikus jika tali pusat belum terlepas 6. Lakukan pemijatan bayi 7. Ganti popok bayi jika basah 8. Kenakan pakaian bayi dari bahan katun",,,"1. Anjurkan ibu menyusui sesuai kebutuhan bayi
+2. Ajarkan ibu cara merawat bayi di rumah
+3. Ajarkan cara pemberian makanan pendamping ASI pada bayi > 6 bulan",
+D.0035,I.03098,Manajemen Cairan,Mengidentifikasi dan mengelola keseimbangan cairan dan mencegah komplikasi akibat ketidakseimbangan cairan,"1. Monitor status hidrasi (mis. Frekuensi nadi,kekuatan nadi,akral,pengisian kapiler,kelembapan mukosa,turgor kulit,tekanan darah)
+2. Monitor berat badan harian
+3. Monitor berat badan sebelum dan sesudah dialisis
+4. Monitor hasil pemeriksaan laboratorium (mis. hematokrit,Na, K, Cl, berat jenis urine, BUN)
+5. Monitor status hemodinamik (mis. MAP, CVP, PAP, PCWP jika tersedia)","1. Catat intake-output dan hitung balans cairan 24 jam
+2. Berikan asupan cairan, sesuai kebutuhan
+3. Berikan cairan intravena,jika perlu",,"1. Kolaborasi pemberian diuretic,jika perlu."
+D.0035,I.03121,Pemantauan Cairan,Mengumpulkan dan menganalisis data terkait pengaturan keseimbangan cairan.,"1. Monitor frekuensi dan kekuatan nadi
+2. Monitor frekuensi napas
+3. Monitor berat badan
+4. Monitor tekanan darah
+5. Monitor waktu pengisian kapiler
+6. Monitor elastisitas atau turgor kulit
+7. Monitor jumlah,warna dan berat jenis urine
+8. Monitor kadar albumin dan protein total
+9. Monitor hasil pemeriksaan serum (mis.osmolaritas serum, hematocrit, natrium, kalium, BUN)
+10. Monitor intake dan output cairan
+11. Identifikasi tanda-tanda hypovolemia (mis. frekuensi nadi meningkat,nadi teraba lemah,kering,volume urine menurun,hemtokrit meningkat,haus,lemah,kons entrasi urine meningkat, berat badan menurun dalam waktu singkat)
+12. Identifikasi tanda-tanda hypervolemia (mis.dispnea, edema perifer, edema anasarka,JVP meningkat,CVP meningkat, reflek hepatojugular positif, berat badan menurun dalam waktu singkat)
+13. Identifikasi factor resiko ketidakseimbangan cairan (mis.prosedur pembenahan mayor, trauma/perdarahan, luka bakar,apheresis, obstruksi intestinal, peradangan pancreaspenyakit ginjal dan kelenjar, disfungsi intestinal) Terapeutik:
+1. Atur interval waktu pemantauan sesuai dengan kondisi pasien
+2. Dokumentasikan hasil pemantauan",,"1. Jelaskan tujuan dan prosedur pemantauan
+2. Informasikan hasil pemantauan, jika perlu, Pemantauan Elektrolit (L.03122)",
+D.0035,I.04148,Pemantauan Cairan,"Masukan selang kateter urine ke dalam kandung kemih Tindakan Observasi 1. Memeriksa kondisi pasien (mis. Kesadaran, tanda - tanda vital daerah perineal, distensi kandung kemih, inkontinensia urine, refleks berkemih) Terapeutik 6. Menyiapkan peralatan, bahan-bahan dan ruangan tindakan 7. Menyiapkan pasien: membebaskan pakaian bawah dan memposisikan dorsal rekumben (untuk wanita) dan supine (untuk laki-laki) 8. Memasang sarung tangan 9. Membersikan daerah perineal atau preposium dengan cairan NaCl atau aquades 10. Melakukan insersi keteter urine dengan menerapkan prinsip aseptik 11. Menyambungkan kateter urin dengan urine bag 12. Mengisi balon dengan NaCl 0,9% sesuai anjuran pabrik 13. Memfiksasikan selang kateter diatas simpisis atau paha 14. Memastikan kantung urine ditempatkan lebih rendah dari kandung kemih 15. Memberikan label waktu pemasangan",,,"1. Menjelaskan tujuan dan prosedur pemasangan kateter urin
+2. Menganjurkan menarik napas saat insersi selang kateter Perawatan inkontinensia urine",
+D.0035,I.04148,Pemantauan Cairan,Mengidentifikasikan dan merawat pasien yang mengalami pengeluaran urin secara involunter (tidak disadari),"1. Mengidentifikasi penyebab inkontinensia urine (mis. Disfungsi neurologis,gangguan medula spinalis,gangguan refleks destrusor,obat-obatan ,usia,riwayat operasi,gangguan fungsi kognitif)
+2. Mengidentifikasi perasaan dan persepsi pasien terhadap inkontinensia urine yang di alaminya
+3. Memonitoring keefektifan obat, pembedahan dan terapi modalitas berkemih
+4. Memonitoring kebiasaan berkemih","1. Membersihkan genital dan kulit sekitar secara rutin
+2. Memberikan pujian atas keberhasilan mencegah inkontinensia
+3. Membuat jadwal komsumsi obat-obat diuretik
+4. Mengambil sampel urine untuk pemeriksaan urine lengkap atau kultu","1. Menjelaskan definisi, jenis inkontinensia,penyebab inkotinensia urine
+2. menjelaskan program penanganan inkontinensia urine
+3. menjelaskan jenis pakaian dan lingkungan yang mendukung proses berkemih
+4. menganjurkan membatasi komsumsi cairan 2-3 jam menjelang tidur
+5. mengajarkan memantau cairan keluar dan masuk serta pola eliminasi urine
+6. menganjurkan minum minimal 1500 cc /hari, jika tidak kontraindikasi
+7. menganjurkan menghindari kopi, minuman bersoda, teh dan cokelat
+8. menganjurkan komsumsi buah dan sayur untuk menghindari konstipasi","1. rujuk ke ahli inkontinensia, jika perlu Perawatan inkontinensia urin."
+D.0035,I.04163,Pemantauan Cairan,"Mengidentifikasi dan merawat pasien yang mengalami pengeluaran urine secara involunter (tidak disadari). Tindakan Observasi 1. Identifikasi penyebab inkontinensia urine (mis, disfungsi neurologis, gangguan medula spinalis, gangguan refleks destrusor, obat-obatan, usia, riwayat operasi, gangguan fungsi kognitif) 2. Identifikasi perasaan dan persepsi pasien terhadap inkontinensia urine yang dialaminya 3. Monitor keefektifan obat, pembedahan dan terapi modalitas berkemih 4. Monitor kebiasaan BAK",,"1. Bersihkan genital dan kulit sekitar secara rutin
+2. Berikan pujian atas keberhasilan mencegah inkontinensia
+3. Buat jadwal konsumsi obatobatan diuretic
+4. Ambil sampel urine untuk pemeriksaan urine lengkap atau kultur Edukasi
+1. Jelaskan Definisi, jenis inkontinensia, penyebab inkontinensia urine
+2. Jelaskan program penanganan inkontinensia urine
+3. Jelaskan jenis pakaian dan lingkungan yang mendukung proes berkemih
+4. Anjurkan membatasi mengonsumsi cairan 2-3 jam menjelang tidur
+5. Ajarkan memantau cairan keluar dan masuk serta pola eliminasi urine
+6. Anjurkan minum minimal 1500 cc/hari, jika tidak kontraindikasi
+7. Anjurkan menghindari kopi, minuman bersoda, the dan coklat
+8. Anjurkan konsumsi buah dan sayur untuk menghindari konstipasi",,"1. Rujuk ke ahli inkontinensia, jika perlu."
+D.0035,I.04149,Latihan Berkemih,,,,,
+D.0035,I.04149,Latihan Berkemih,"Mengajarkan suatu kemampuan melakukan eliminasi urine. Tindakan Observasi 1. Periksa kembali penyebab gangguan berkemih (mis. kognitif, kehilangan ekstremitas/fungsi ekstremitas, kehilangan penglihatan) 2. Monitor pola dan kemampuan berkemih",,"1. Hindari penggunaan kateter indwelling
+2. Siapkan area toilet yang aman
+3. Sediakan peralatan yang dibutuhkan dekat dan mudah dijangkau (mis. kursi komode, pispot, urinal) Edukasi
+1. Jelaskan arah-arah menuju kamar mandi/toilet pada pasien dengan gangguan penglihatan
+2. Anjurkan intake cairan adekuat untuk mendukung output urine
+3. Anjurkan eliminasi normal dengan beraktivitas dan olahraga sesuai kemampuan Perawatan",,
+D.0035,I.04163,Inkontinensia Urine,"Mengidentifikasi dan merawat pasien yang mengalami pengeluaran urine secara involunter (tidak disadari) Tindakan Observasi 1. Identifikasi penyebab inkontinensia urine (mis. disfungsi neurologis, gangguan medula spinalis, gangguan refleks destrusor, obat-obatan, usia, riwayat operasi, gangguan fungsi kognitif) 2. Identifikasi perasaan dan persepsi pasien terhadap inkontinensia urine yang dialaminya 3. Monitor keefektifan obat, pembedahan dan terapi modalitas berkemih 4. Monitor kebiasaan BAK",,"1. Bersihkan genital dan kulit sekitar secara rutin
+2. Berikan pujian atas keberhasilan mencegah inkontinensia
+3. Buat jadwal konsumsi obatobat diuretik
+4. Ambil sampel urine untuk pemeriksaan urine lengkap atau kultur Edukasi
+1. Jelaskan definisi, jenis inkontinensia, penyebab inkontinensia urine
+2. Jelaskan program penanganan inkontinensia urine
+3. Jelaskan jenis pakaian dan lingkungan yang mendukung proses berkemih
+4. Anjurkan membatasi konsumsi cairan 2-3 jam menjelang tidur
+5. Ajarkan memantau cairan keluar dan masuk serta pola eliminasi urine
+6. Anjurkan minum minimal 1500 cc/hari, jika tidak kontraindikasi
+7. Anjurkan menghindari kopi, minuman bersoda, teh dan cokelat
+8. Anjurkan konsumsi buah dan sayur untuk menghindari konstipasi",,"1. Rujuk ke ahli inkontinensia, jika perlu Kateterisasi Urine (1.04148)"
+D.0046,I.07215,Inkontinensia Urine,Mengajarkan kemampuan meningkatkan otot-otot elevator ani dan urogenitas melalui kontraksi berulang untuk menurunkan inkontinesia urin dan ejakulasi dini. Tindakan Observasi 1. Monitor pengeluaran urine Terapeutik 1. Berikan reinforcement positif selama melakukan latihan dengan benar,,,"1. Anjurkan berbaring
+2. Anjurkan tidak mengkontraksikan perut, kaki dan bokong saat melakukan latihan otot panggul
+3. Anjurkan menambah durasi kontraksi-relaksasi 10 detik dengan siklus 10-12 kali, dilakukan 3-4 kali sehari
+4. Ajarkan mengkontraksikan sekitar ototuretra dan anus seperti menahan BAB/BAK selama 5 detik kemudian dikendurkan dan direlaksasikan dengan siklus 10 kali
+5. Ajarkan mengevaluasi latihan yang dilakukan dengan cara menghentikan urin sesaat saat BAK, seminggu sekali
+6. Anjurkan latihan selama 6-12 minggu","1. Kolaborasi rehabilitas medik untuk mengukur kekuatan kontraksi otot dasar panggul, jika perlu Perawatan Inkontinensia"
+D.0046,I.04163,Urine,"Mengindentifikasi dan merawat pasien yang mengalami pengeluaran urine secara involunter (tidak disadari) Tindakan Observasi 1. Identifikasi penyebab inkotinensia urine (mis. disfungsi neurologis, gangguan medula spinalis, gangguan refleks destrusor, obatobatan, usia, riwayat operasi, gangguan fungsi kognitif) 2. Identifikasi perasaan dan presepsi pasien terhadap inkontinensia urine yang dialaminya 3. Jelaskan jenis pakaian dan lingkuangan yang mendukung proses berkemih 4. Anjurkan membatasi konsumsi cairan 2-3 jam menjelang tidur 5. Ajarkan memantau cairan keluar dan masuk serta pola eliminasi urine 6. Anjurkan minum minimal 1500 cc/hari, jika tidak kontraindikasi 7. Anjurkan menghindari kopi, minuman bersoda, teh dan coklat 8. Anjurkan konsumsi buah dan sayur untuk menghindari konstipasi",,,,"1. Rujuk ke ahli inkontinensia, jika perlu Latihan berkemih"
+D.0046,I.04149,Urine,"Mengajarkan suatu kemampuan melakukan eliminasi urine. Tindakan Observasi 1. Periksa kembali penyebab gangguan berkemih (mis. Kognitif,kehilangan ekstremitas/fungsi ekstremitas,kehilangan penglihatan) 2. Monitor pola dan kemampuan berkemih. Terapeutik 1. Hindari penggunaan kateter indwelling. 2. Siapkan area toilet yang aman. 3. Sediakan peralatan yang dibutuhkan dekat dan mudah dijangkau( mis. Kursi komode,pispot,urinal)",,,"1. Jelaskan arah-arah menuju kamar mandi/toilet pada pasien dengan gangguan penglihatan
+2. Anjurkan intake cairan adekuat untuk mendukung output urine
+3. Anjurkan eliminasi normal dengan beraktivitas dan olahraga sesuai kemampuan. . Manajemen Eliminasi Urine",
+D.0048,I.04152,Urine,"Mengidentifikasi dan mengelola gangguan pola eliminasi urine. Tindakan Obserfasi 1. Identifikasi tanda dan gejala inkontinensia urine. 2. Identifikasi faktor yang menyebabkan retensi atau inkontinensia urine 3. Monitor eliminasi urine (mis. frekuensi, konsistensi, aroma, volume, dan wama)",,"1. Catat waktu-waktu dan haluaran berkemih
+2. Batasi asupan cairan, jika perlu
+3. Ambil sampel urine tengah (midstream) atau kultur","1. Ambil sampel urine tengah (midstream) atau kultur
+2. Ajarkan mengukur asupan cairan dan haluaran urine
+3. Ajarkan mengambil spesimen urine midstream
+4. Ajarkan mengenali tanda berkemih dan waktu yang tepat untuk berkemih
+5. Ajarkan terapi modalitas penguatan otot-otot panggul/berkemihan
+6. Anjurkan minum yang cukup, jika tidak ada kontraindikasi
+7. Anjurkan mengurangi minum menjelang tidur","1. Pemberian obat supositoria uretra, jika perlu"
+D.0049,I.04151,Urine,"Megidentifikasi dan mengelola gangguan pola eliminasi fekal Tindakan Observasi 1. Identifikasi masalah usus dan penggunaan obat pencahar 2. Identifikasi pengobatan yang berefek pada kondisi gastrointestinal 3. Monitor buang air besar (mis. warna, frekuensi, konsistensi, volume) 4. Monitor tanda dan gejala diare, konstipasi, atau impaks",,"1. Berikan air hangat setelah makan
+2. Jadwalkan waktu defekasi bersama pasien
+3. Sediakan makanan tinggi serat","1. Jelaskan jenis makanan yang membantu meningkatkan keteraturan peristaltik usus
+2. Anjurkan mencatat warna, frekuensi, konsistensi, volume feses
+3. Anjurkan meningkatkan aktivitas fisik, sesuai toleransi
+4. Anjurkan pengurangan asupan makanan yang meningkatkan pembentukkan gas
+5. Anjurkan mengkonsumsi makanan yang mengandung tinggi serat
+6. Anjurkan meningkatkan asupan cairan, jika tidak ada kontraindikasi","1. Kolaborasi pemberian obat suppositoria anal, jika perlu"
+D.0050,I.04148,Urine,Memasukkan selang kateter urine ke dalam kandung kemih,"1. Memeriksa kondisi pasien (mis. kesadaran, tandatanda vital, daerah perineal, disntensi kandung kemih, inkontinensia urine, refleks berkemih) Terapeutik
+1. Menyiapkan peralatan, bahan-bahan, dan ruangan tindakan
+2. Menyiapkan pasien: bebaskan pakaian bawah dan posisikan dorsal recumbent (untuk wanita) dan supine (untuk lakilaki)
+3. Memasang sarung tangan
+4. Membersihkan daerah perineal atau periposium dengan cairan NaCl
+5. Melakukan insersi kateter urine dengan menerapkan prinsip aseptik
+6. Menyambungkan kateter urine dengan urine bag
+7. Mengisi balon dengan NaCl 0,9% sesuai dengan anjuran pabrik
+8. Mengfiksasi selang kateter di atas simpisis atau di paha
+9. Memastikan kantung urine ditempatkan lebih rendah dari kandung kemih
+10. Memberikan label waktu pemasangan",,"1. Menjelaskan tujuan dan prosedur pemasangan kateter urine
+2. Menganjurkan menarik napas saat insersi selang kateter Manajemen Eliminasi",
+D.0051,I.04152,Urine,"Mengidentifikasi dan mengelola gangguan pola eliminasi urine Tindakan Observasi 1. Identifikasi tanda dan gejala retensi atau inkontinensia urine 2. Identifikasi faktor yang menyebabkan retensi atau inkontinensia urine 3. Monitor eliminasi urine (mis. frekuensi, konsistensi, aroma, volume, dan warna)",,"1. Catat waktu-waktu dan haluaran berkemih
+2. Batasi asupan cairan, jika perlu
+3. Ambil sampel urine tengah (midstream) atau kultur","1. Ajarkan tanda dan gejala infeksi saluran kemih
+2. Ajarkan mengukur asupan cairan dan haluaran urine
+3. Ajarkan mengambil spesimen urine midstream
+4. Ajarkan mengenali tanda berkemih dan waktu yang tepat untuk berkemih
+5. Ajarkan terapi modalitas penguatan otot-otot panggul/berkemihan
+6. Anjurkan minum yang cukup, jika tidak ada kontraindikasi
+7. Anjurkan mengurangi minum menjelang tidur","1. Kolaborasi pemberian obat supositoria uretra, jika perlu
+1. Pencegahan Konstipasi"

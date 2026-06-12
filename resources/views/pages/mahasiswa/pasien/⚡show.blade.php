@@ -25,14 +25,14 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
         </flux:button>
         <div class="flex items-start justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-[#1B4F72]">{{ $pasien->nama_pasien }}</h1>
-                <p class="mt-1 font-mono text-sm text-[#7A8FA6]">No. RM: {{ $pasien->no_rm }}</p>
+                <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">{{ $pasien->nama_pasien }}</h1>
+                <p class="mt-1 font-mono text-sm text-[#7A8FA6] dark:text-zinc-400">No. RM: {{ $pasien->no_rm }}</p>
             </div>
             <div class="flex items-center gap-2">
                 @if ($pasien->isSelesai())
                     <span class="rounded-full border border-[#5DCAA5] bg-[#E1F5EE] px-3 py-1 text-xs font-semibold text-[#0F6E56]">Askep Selesai</span>
                 @elseif ($pasien->isDraft())
-                    <span class="rounded-full border border-[#85B7EB] bg-[#EBF5FB] px-3 py-1 text-xs font-semibold text-[#1B4F72]">Dalam Pengerjaan</span>
+                    <span class="rounded-full border border-[#85B7EB] dark:border-blue-800 bg-[#EBF5FB] dark:bg-blue-900/30 px-3 py-1 text-xs font-semibold text-[#1B4F72] dark:text-[#85B7EB]">Dalam Pengerjaan</span>
                 @else
                     <span class="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-xs font-semibold text-zinc-500">Belum Ada Askep</span>
                 @endif
@@ -45,47 +45,47 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
         <div class="lg:col-span-2 flex flex-col gap-6">
 
             {{-- Info Pasien --}}
-            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-6">
                 <div class="mb-4 flex items-center justify-between">
-                    <h2 class="font-semibold text-[#1B4F72]">Informasi Pasien</h2>
+                    <h2 class="font-semibold text-[#1B4F72] dark:text-white">Informasi Pasien</h2>
                     <flux:button :href="route('mahasiswa.pasien.edit', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
                         Edit
                     </flux:button>
                 </div>
                 <dl class="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Umur</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->umur }} tahun</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Umur</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->umur }} tahun</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Jenis Kelamin</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Jenis Kelamin</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</dd>
                     </div>
                     @if ($pasien->tanggal_lahir)
                         <div>
-                            <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Tanggal Lahir</dt>
-                            <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->tanggal_lahir->translatedFormat('d F Y') }}</dd>
+                            <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Tanggal Lahir</dt>
+                            <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->tanggal_lahir->translatedFormat('d F Y') }}</dd>
                         </div>
                     @endif
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Agama</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->agama ?? '-' }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Agama</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->agama ?? '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Status Nikah</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->status_perkawinan ?? '-' }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Status Nikah</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->status_perkawinan ?? '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Pekerjaan</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->pekerjaan ?? '-' }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Pekerjaan</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->pekerjaan ?? '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Pendidikan</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->pendidikan ?? '-' }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Pendidikan</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->pendidikan ?? '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">BB / TB</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">BB / TB</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">
                             @if($pasien->bb || $pasien->tb)
                                 {{ $pasien->bb ?? '-' }} kg / {{ $pasien->tb ?? '-' }} cm
                             @else
@@ -94,30 +94,30 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
                         </dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Ruang Rawat</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->ruang_rawat ?? '-' }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Ruang Rawat</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->ruang_rawat ?? '-' }}</dd>
                     </div>
                     <div class="sm:col-span-3">
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Alamat</dt>
-                        <dd class="mt-0.5 text-sm font-medium text-[#1B4F72]">{{ $pasien->alamat ?? '-' }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Alamat</dt>
+                        <dd class="mt-0.5 text-sm font-medium text-[#1B4F72] dark:text-zinc-200">{{ $pasien->alamat ?? '-' }}</dd>
                     </div>
                     <div class="sm:col-span-3">
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Diagnosa Medis</dt>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Diagnosa Medis</dt>
                         <dd class="mt-0.5 text-sm font-bold text-[#D95C3A]">{{ $pasien->diagnosa_medis ?? '-' }}</dd>
                     </div>
                     <div>
-                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6]">Tanggal Masuk</dt>
-                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72]">{{ $pasien->tanggal_masuk->translatedFormat('d F Y') }}</dd>
+                        <dt class="text-[10px] uppercase tracking-wider font-bold text-[#7A8FA6] dark:text-zinc-400">Tanggal Masuk</dt>
+                        <dd class="mt-0.5 text-sm font-semibold text-[#1B4F72] dark:text-zinc-200">{{ $pasien->tanggal_masuk->translatedFormat('d F Y') }}</dd>
                     </div>
                 </dl>
             </div>
 
             {{-- Daftar Askep --}}
-            <div class="rounded-2xl border border-[#E0EBF5] bg-white">
-                <div class="flex items-center justify-between border-b border-[#E0EBF5] px-6 py-4">
-                    <h2 class="font-semibold text-[#1B4F72]">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800">
+                <div class="flex items-center justify-between border-b border-[#E0EBF5] dark:border-zinc-700 px-6 py-4">
+                    <h2 class="font-semibold text-[#1B4F72] dark:text-white">
                         Asuhan Keperawatan
-                        <span class="ml-1 rounded-full bg-[#EBF5FB] px-2 py-0.5 text-xs text-[#2E86C1]">{{ $pasien->askep->count() }}</span>
+                        <span class="ml-1 rounded-full bg-[#EBF5FB] dark:bg-blue-900/30 px-2 py-0.5 text-xs text-[#2E86C1] dark:text-[#85B7EB]">{{ $pasien->askep->count() }}</span>
                     </h2>
                     <a
                         href="{{ route('mahasiswa.pasien.askep.create', $pasien) }}"
@@ -133,7 +133,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
                 @if ($pasien->askep->isEmpty())
                     <div class="py-14 text-center">
                         <flux:icon.clipboard-document-list class="mx-auto mb-3 size-12 text-[#85B7EB]" />
-                        <p class="text-sm text-[#7A8FA6]">Belum ada askep untuk pasien ini.</p>
+                        <p class="text-sm text-[#7A8FA6] dark:text-zinc-400">Belum ada askep untuk pasien ini.</p>
                         <div class="mt-4">
                             <a
                                 href="{{ route('mahasiswa.pasien.askep.create', $pasien) }}"
@@ -147,12 +147,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
                         </div>
                     </div>
                 @else
-                    <div class="divide-y divide-[#E0EBF5]">
+                    <div class="divide-y divide-[#E0EBF5] dark:divide-zinc-700">
                         @foreach ($pasien->askep as $askep)
-                            <div class="flex items-center justify-between px-6 py-4 hover:bg-[#F4F8FB] transition">
+                            <div class="flex items-center justify-between px-6 py-4 hover:bg-[#F4F8FB] dark:hover:bg-zinc-700/50 transition">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2">
-                                        <span class="text-sm font-semibold text-[#1B4F72]">Askep #{{ $askep->id }}</span>
+                                        <span class="text-sm font-semibold text-[#1B4F72] dark:text-zinc-100">Askep #{{ $askep->id }}</span>
                                         <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold
                                             @if ($askep->status === 'selesai') bg-[#E1F5EE] text-[#0F6E56]
                                             @elseif ($askep->status === 'menunggu_review') bg-[#FEF3C7] text-amber-700
@@ -163,7 +163,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
                                             {{ $askep->statusLabel() }}
                                         </span>
                                     </div>
-                                    <div class="mt-0.5 flex items-center gap-2 text-xs text-[#7A8FA6]">
+                                    <div class="mt-0.5 flex items-center gap-2 text-xs text-[#7A8FA6] dark:text-zinc-400">
                                         <span>Step {{ $askep->step_terakhir }}/5</span>
                                         <span>•</span>
                                         <span>{{ $askep->created_at->translatedFormat('d M Y') }}</span>
@@ -199,17 +199,17 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
 
         {{-- Sidebar: Riwayat --}}
         <div class="flex flex-col gap-6">
-            <div class="rounded-2xl border border-[#E0EBF5] bg-white p-5">
-                <h2 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Aktivitas</h2>
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
+                <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">Riwayat Aktivitas</h2>
                 @if ($pasien->riwayat->isEmpty())
-                    <p class="text-sm text-[#7A8FA6]">Belum ada riwayat.</p>
+                    <p class="text-sm text-[#7A8FA6] dark:text-zinc-400">Belum ada riwayat.</p>
                 @else
-                    <ol class="relative border-s border-[#D0DCE8] space-y-4">
+                    <ol class="relative border-s border-[#D0DCE8] dark:border-zinc-700 space-y-4">
                         @foreach ($pasien->riwayat->take(10) as $log)
                             <li class="ms-4">
-                                <div class="absolute -start-1.5 mt-1 size-3 rounded-full border border-white bg-[#85B7EB]"></div>
-                                <p class="text-sm font-medium text-[#1B4F72]">{{ $log->aktivitas }}</p>
-                                <p class="text-xs text-[#7A8FA6]">{{ $log->created_at->diffForHumans() }}</p>
+                                <div class="absolute -start-1.5 mt-1 size-3 rounded-full border border-white dark:border-zinc-800 bg-[#85B7EB]"></div>
+                                <p class="text-sm font-medium text-[#1B4F72] dark:text-zinc-200">{{ $log->aktivitas }}</p>
+                                <p class="text-xs text-[#7A8FA6] dark:text-zinc-400">{{ $log->created_at->diffForHumans() }}</p>
                             </li>
                         @endforeach
                     </ol>

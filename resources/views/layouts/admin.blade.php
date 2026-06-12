@@ -96,14 +96,6 @@
 
                 <flux:sidebar.group heading="Monitoring" class="grid">
                     <flux:sidebar.item
-                        icon="clock"
-                        :href="route('admin.log.index')"
-                        :current="request()->routeIs('admin.log.*')"
-                        wire:navigate
-                    >
-                        Log Aktivitas
-                    </flux:sidebar.item>
-                    <flux:sidebar.item
                         icon="eye"
                         :href="route('admin.data-mahasiswa.index')"
                         :current="request()->routeIs('admin.data-mahasiswa.*')"

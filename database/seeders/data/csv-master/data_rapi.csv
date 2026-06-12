@@ -1,0 +1,52 @@
+Kode SDKI,Nama SDKI,Kategori,Subkategori,Kode SLKI,Nama SLKI,Kode SIKI,Nama SIKI
+D.0001,Bersihan Jalan Napas Tidak Efektif,Fisiologis,Respirasi,L.01001,Bersihan Jalan Nafas,"I.01001, I.01011, I.01014",Latihan Batuk Efektif; Manajemen Jalan Napas; Pemantauan Respirasi
+D.0002,Gangguan Penyapihan Ventilator,Fisiologis,Respirasi,L.01002,Penyapihan ventilator,"I.01021, I.01014",Mekanik; Pemantauan Respirasi
+D.0003,Gangguan Pertukaran Gas,Fisiologis,Respirasi,L.01003,Pertukaran Gas,"I.01014, I.01026",Pemantauan Respirasi; Terapi Oksigen
+D.0004,Gangguan Ventilasi Spontan,Fisiologis,Respirasi,L.02015,Sirkulasi Spontan,"I.02038, I.03139, I.02083",Manajemen Defibrilasi; Resusitasi Cairan; Resusitasi Jantung Paru
+D.0005,Pola Napas Tidak Efektif,Fisiologis,Respirasi,L.01004,Pola Napas,I.01011,Manajemen Jalan Napas
+D.0006,Risiko Aspirasi,Fisiologis,Respirasi,L.01006,Tingkat Aspirasi,"I.01011, I.01018, I.02038",Manajemen Jalan Napas; Pencegahan Aspirasi; Manajemen Defibrilasi
+D.0007,Gangguan Sirkulasi Spontan,Fisiologis,Sirkulasi,L.02015,Sirkulasi Spontan,"I.02038, I.02083, I.02075",Manajemen Defibrilasi; Resusitasi Jantung Paru; Perawatan Jantung
+D.0008,Penurunan Curah Jantung,Fisiologis,Sirkulasi,L.02008,Curah Jantung,I.02075,Perawatan Jantung
+D.0009,Perfusi Perifer Tidak Efektif,Fisiologis,Sirkulasi,L.02015,Sirkulasi Spontan,I.02080,Pertolongan Pertama
+D.0010,Risiko Gangguan Sirkulasi Spontan,Fisiologis,Sirkulasi,L.02015,Sirkulasi Spontan,"I.02080, I.02075",Pertolongan Pertama; Perawatan Jantung
+D.0011,Risiko Penurunan Curah Jantung,Fisiologis,Sirkulasi,L.02008,Curah Jantung,I.02075,Perawatan Jantung
+D.0012,Risiko Perdarahan,Fisiologis,Sirkulasi,L.02017,Tingkat Perdarahan,"I.02067, I.02028, I.12379","Pencegahan Perdarahan; Balut tekan; dilakuykan saat meraasa dirinya dalam bahaya(mis. Meminta bantuan orang dewasa, berteriak, segera berlari)"
+D.0013,Risiko Perfusi Gastrointestinal Tidak Efektif,Fisiologis,Sirkulasi,L.02010,Perfusi Gastrointestinal,"I.01004, I.03094, I.02075",Manajemen pendarahan; Konseling nutrisi; Perawatan Jantung
+D.0014,Risiko Perfusi Miokard Tidak Efektif,Fisiologis,Sirkulasi,L.02011,Perfusi Miokard,I.02075,Perawatan Jantung
+D.0015,Risiko Perfusi Perifer Tidak Efektif,Fisiologis,Sirkulasi,L.02011,Perfusi Perifer,I.02068,Pencegahan Syok
+D.0016,Risiko Perfusi Renal Tidak Efektif,Fisiologis,Sirkulasi,L.02013,Perfusi Renal,I.02068,Pencegahan Syok
+D.0017,Risiko Perfusi Serebral Tidak Efektif,Fisiologis,Sirkulasi,L.02014,Perfusi Serebral,I.06194,Tekanan Intrakranial
+D.0018,Berat Badan Lebih,Fisiologis,Nutrisi dan Cairan,L.03018,Berat badan,,
+D.0019,Defisit Nutrisi,Fisiologis,Nutrisi dan Cairan,L.03018,Berat badan,,
+D.0020,Diare,Fisiologis,Nutrisi,L.04033,Eliminasi Fekal,I.03101,Manajemen Diare
+D.0021,Disfungsi Motilitas Gastrointestinal,Fisiologis,Nutrisi dan Cairan,L.03033,Tingkat Nyeri,I.14551,Pengontrolan Infeksi
+D.0022,Hipervolemia,Fisiologis,Nutrisi dan Cairan,L.03020,Keseimbangan Cairan,I.03121,Pemantauan Cairan
+D.0023,Hipovolemia,Fisiologis,Nutrisi dan Cairan,L.03020,Keseimbangan Cairan,"I.003116, I.02045, I.02042, I.03121, I.03091",Manejemen Hipovolemia; Manejemen pendarahan pervaginam pascapersalinan; antepartum dipertahankan; Pemantauan Cairan; Fototerapi Neonatus
+D.0024,Ikterik Neonatus,Fisiologis,Nutrisi dan Cairan,L.14125,Integritas Kulit dan Jaringan,"I.03091, I.10338, I.03098",Fototerapi Neonatus; Perawatan Bayi; Manajemen Cairan
+D.0025,Kesiapan Peningkatan Keseimbangan Cairan,Fisiologis,Nutrisi dan Cairan,L.03020,Keseimbangan Cairan,"I.03098, I.03121",Manajemen Cairan; Pemantauan Cairan
+D.0026,Kesiapan Peningkatan Nutrisi,Fisiologis,Nutrisi dan Cairan,L.03030,Status Nutrisi,"I.03094, I.03115",Konseling Nutrisi; Manajemen hiperglikemia
+D.0027,Ketidakstabilan Kadar Glukosa Darah,Fisiologis,Nutrisi dan Cairan,L.03022,Ketidakstabilan glukosa kadar darah,I.03115,Manajemen hiperglikemia
+D.0028,Menyusui Efektif,Fisiologis,Nutrisi dan Cairan,L.03029,Status Menyusui,"I.03093, I.03135, I.03138, I.12393",Konseling Laktasi; Promosi ASI Eksklusif; Promosi Laktasi; 8. Anjurkan ibu menyusui sesering mungkin segera setelah lahir sesuai kebutuhan bayi
+D.0029,Menyusui Tidak Efektif,Fisiologis,Nutrisi dan Cairan,L.03029,Status Menyusui,"I.12393, I.03093, I.03130, I.12397",8. Anjurkan ibu menyusui sesering mungkin segera setelah lahir sesuai kebutuhan bayi; Konseling Laktasi; Pendampingan Proses Menyusui; 8. Informasikan ibu untuk selalu mengosongkan payudara pada payudara yang belum disusui dengan memerah ASI
+D.0030,Obesitas,Fisiologis,Nutrisi,L.03018,Berat Badan,"I.03097, I.12365","Manajemen berat badan; 4. Anjurkan untuk melakukan pencatatan asupan makan, aktivitas fisik dan perubahan berat badan"
+D.0031,Risiko Berat Badan Lebih,Fisiologis,Nutrisi dan Cairan,L.03018,Berat Badan,"I.12369, I.03094",5. Ajarkan cara mengelola berat badan secara efektif; Konseling Nutrisi
+D.0032,Risiko Defisit Nutrisi,Fisiologis,Nutrisi dan Cairan,L.03030,Status Nutrisi,I.03119,Manajemen Nutrisi
+D.0033,Risiko Disfungsi Motilitas Gastrointestinal,Fisiologis,,L.03023,Motilitas Gastrointestinal,"I.12369, I.14551",I.12369; Pengontrolan Infeksi
+D.0034,Risiko Hipovolemia,Fisiologis,Nutrisi dan Cairan,L.03028,Status Cairan Membaik,I.03116,Manajemen Hipovolemia
+D.0035,Risiko Ikterik Neonatus,Fisiologis,Nutrisi dan Cairan,L.14125,Integritas Kulit dan Jaringan,"I.03132, I.10338",1. Perawatan Neonatus; 2. Perawatan Bayi
+D.0036,Risiko Ketidakseimbangan Cairan,Fisiologis,Nutrisi dan Cairan,L.03020,Keseimbangan cairan,"I.03098, I.03121",Manajemen Cairan; Pemantauan Cairan
+D.0037,Risiko Ketidakseimbangan Elektrolit,Fisiologis,Nutrisi dan Cairan,L.03021,Keseimbangan Elektrolit,,
+D.0038,Risiko Ketidakstabilan Kadar Glukosa Darah,Fisiologis,Nutrisi dan Cairan,L.03022,Kestabilan glukosa darah,,
+D.0040,Gangguan Eliminasi Urin,Fisiologis,Eliminasi,L.04034,Eliminasi Urine,,
+D.0041,Inkontinensia Fekal,Fisiologis,Eliminasi,L.04034,Eliminasi Urine,,
+D.0042,Inkontinensia Urin Berlanjut,Fisiologis,Eliminasi,L.04036,Kontinensia Urine,I.04148,Kateterisasi Urine
+D.0043,Inkontinensia Urin Berlebih,Fisiologis,Eliminasi,L.04036,Kontinensia urin,"I.04163, I.04149",Perawatan inkontinensia urin.; Latihan Berkemih
+D.0044,Inkontinensia Urin Fungsional,Fisiologis,Eliminasi,L.04036,Kontinensia Urine,"I.04149, I.04163",Latihan Berkemih; Inkontinensia Urine
+D.0045,Inkontinensia Urin Refleks,Fisiologis,Eliminasi,L.04036,Kontinensia Urine,,
+D.0046,Inkontinensia Urin Sters,Fisiologis,Eliminasi,L.04036,Kontinensia Urine,"I.07215, I.04163",Latihan Otot Panggul; Urine
+D.0047,Inkontinensia Urine Urgensi,Fisiologis,Eliminasi,L.04036,Kontinensia urine,I.04149,Latihan Berkemih
+D.0048,Kesiapan Peningkatan Eliminasi Urin,Fisiologis,Eliminasi,L.04036,Kontinensia urine,I.04152,Manajemen Eliminasi Urine
+D.0049,Konstipasi,Fisiologis,Eliminasi,L.04033,Eliminasi fekal,I.04151,Manajemen eliminasi fekal
+D.0050,Retensi Urine,Fisiologis,Eliminasi,L.04034,Eliminasi Urine,I.04148,Katerisasi Urine
+D.0051,Risiko Inkontinensia Urine Urgensi,Fisiologis,Eliminasi,L.04036,Kontinensia Urine,I.04152,Urine
+D.0052,Risiko Konstipasi,Fisiologis,Eliminasi,L.04036,Kontinensia Urine,,

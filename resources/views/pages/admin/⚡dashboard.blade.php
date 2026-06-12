@@ -131,7 +131,6 @@ new #[Layout('layouts.admin')] #[Title('Dashboard Admin')] class extends Compone
                         ['route' => 'admin.slki.index',           'icon' => 'clipboard-document-check', 'label' => 'Data Master SLKI'],
                         ['route' => 'admin.siki.index',           'icon' => 'clipboard-document-list','label' => 'Data Master SIKI'],
                         ['route' => 'admin.relasi.index',         'icon' => 'arrows-right-left',      'label' => 'Mapping Relasi'],
-                        ['route' => 'admin.log.index',            'icon' => 'clock',                  'label' => 'Log Aktivitas'],
                         ['route' => 'admin.data-mahasiswa.index', 'icon' => 'eye',                    'label' => 'Data Mahasiswa'],
                     ] as $item)
                         <a
