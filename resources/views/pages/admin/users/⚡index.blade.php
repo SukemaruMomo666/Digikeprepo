@@ -27,6 +27,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
     // Edit / Reset state
     public ?int $editId = null;
     public ?int $resetId = null;
+    public bool $showReset = false;
     public string $resetPassword = '';
 
     public bool $showForm = false;
@@ -149,6 +150,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
     {
         $this->resetId = $id;
         $this->resetPassword = '';
+        $this->showReset = true;
     }
 
     public function resetPassword(): void
@@ -160,6 +162,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
             'is_first_login' => true,
         ]);
 
+        $this->showReset = false;
         $this->dispatch('toast', variant: 'success', message: 'Password berhasil direset.');
         $this->reset('resetId', 'resetPassword');
     }
@@ -318,7 +321,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
     </flux:modal>
 
     {{-- Modal Reset Password --}}
-    <flux:modal wire:model.live="resetId" class="max-w-sm">
+    <flux:modal wire:model="showReset" class="max-w-sm">
         <flux:heading size="lg">Reset Password</flux:heading>
         <flux:text class="mb-4 text-sm">Masukkan password baru. Mahasiswa akan diwajibkan ganti password saat login berikutnya.</flux:text>
 
@@ -331,7 +334,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
         />
 
         <div class="mt-6 flex justify-end gap-2">
-            <flux:button variant="ghost" wire:click="$set('resetId', null)">Batal</flux:button>
+            <flux:button variant="ghost" wire:click="$set('showReset', false)">Batal</flux:button>
             <flux:button variant="primary" wire:click="resetPassword">Reset</flux:button>
         </div>
     </flux:modal>
