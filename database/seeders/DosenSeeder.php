@@ -59,6 +59,18 @@ class DosenSeeder extends Seeder
             }
         }
 
-        $this->command->info('DosenSeeder: 1 akun dosen berhasil dibuat dan ditugaskan.');
+        User::updateOrCreate(
+            ['nim_nip' => '199302032025062005'],
+            [
+                'name' => 'Rahmawati Dian Nurani, S.Kep., Ners., M.Kep.',
+                'email' => 'rahmawati.dian@digikep.test',
+                'role' => 'dosen',
+                'password' => Hash::make('199302032025062005'),
+                'is_first_login' => false,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $this->command->info('DosenSeeder: akun dosen berhasil dibuat.');
     }
 }
