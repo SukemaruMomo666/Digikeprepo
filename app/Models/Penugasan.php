@@ -12,6 +12,7 @@ class Penugasan extends Model
     protected $fillable = [
         'mahasiswa_id',
         'dosen_id',
+        'tipe_dosen',
         'angkatan',
         'kelas',
         'stase',
@@ -20,6 +21,8 @@ class Penugasan extends Model
         'periode_mulai',
         'periode_selesai',
     ];
+
+    const TIPE_OPTIONS = ['Dosen Wali', 'Dosen Klinik', 'Dosen Pengampu', 'Dosen Penguji', 'Lainnya'];
 
     protected $casts = [
         'periode_mulai' => 'date',

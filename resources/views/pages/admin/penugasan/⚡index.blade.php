@@ -18,6 +18,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
     public string $bulkKelas    = '';
     public string $bulkAngkatan = '';
     public ?int   $bulkDosenId  = null;
+    public string $bulkTipe     = 'Dosen Wali';
     public string $bulkStase    = '';
     public string $bulkRs       = '';
     public string $bulkBangsal  = '';
@@ -30,6 +31,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
     public bool    $showForm        = false;
     public ?int    $mahasiswa_id    = null;
     public ?int    $dosen_id        = null;
+    public string  $tipe_dosen      = 'Dosen Wali';
     public ?string $angkatan        = null;
     public ?string $kelas           = null;
     public ?string $stase           = null;
@@ -69,7 +71,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 
         foreach ($mahasiswas as $mhs) {
             Penugasan::updateOrCreate(
-                ['mahasiswa_id' => $mhs->id],
+                ['mahasiswa_id' => $mhs->id, 'tipe_dosen' => $this->bulkTipe],
                 [
                     'dosen_id'        => $this->bulkDosenId,
                     'kelas'           => $mhs->kelas,
@@ -84,7 +86,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
         }
 
         $this->bulkPreview = false;
-        $this->reset('bulkKelas', 'bulkAngkatan', 'bulkDosenId', 'bulkStase', 'bulkRs', 'bulkBangsal', 'bulkMulai', 'bulkSelesai');
+        $this->reset('bulkKelas', 'bulkAngkatan', 'bulkDosenId', 'bulkTipe', 'bulkStase', 'bulkRs', 'bulkBangsal', 'bulkMulai', 'bulkSelesai');
         $this->dispatch('toast', variant: 'success', message: count($mahasiswas) . ' penugasan berhasil disimpan.');
     }
 
@@ -101,24 +103,26 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 
     public function openCreate(): void
     {
-        $this->reset('mahasiswa_id', 'dosen_id', 'angkatan', 'kelas', 'stase', 'rs', 'bangsal', 'periode_mulai', 'periode_selesai', 'editId');
+        $this->reset('mahasiswa_id', 'dosen_id', 'tipe_dosen', 'angkatan', 'kelas', 'stase', 'rs', 'bangsal', 'periode_mulai', 'periode_selesai', 'editId');
+        $this->tipe_dosen = 'Dosen Wali';
         $this->showForm = true;
     }
 
     public function openEdit(int $id): void
     {
         $p = Penugasan::findOrFail($id);
-        $this->editId         = $id;
-        $this->mahasiswa_id   = $p->mahasiswa_id;
-        $this->dosen_id       = $p->dosen_id;
-        $this->angkatan       = $p->angkatan;
-        $this->kelas          = $p->kelas;
-        $this->stase          = $p->stase;
-        $this->rs             = $p->rs;
-        $this->bangsal        = $p->bangsal;
-        $this->periode_mulai  = $p->periode_mulai?->format('Y-m-d');
-        $this->periode_selesai= $p->periode_selesai?->format('Y-m-d');
-        $this->showForm       = true;
+        $this->editId          = $id;
+        $this->mahasiswa_id    = $p->mahasiswa_id;
+        $this->dosen_id        = $p->dosen_id;
+        $this->tipe_dosen      = $p->tipe_dosen ?? 'Dosen Wali';
+        $this->angkatan        = $p->angkatan;
+        $this->kelas           = $p->kelas;
+        $this->stase           = $p->stase;
+        $this->rs              = $p->rs;
+        $this->bangsal         = $p->bangsal;
+        $this->periode_mulai   = $p->periode_mulai?->format('Y-m-d');
+        $this->periode_selesai = $p->periode_selesai?->format('Y-m-d');
+        $this->showForm        = true;
     }
 
     public function save(): void
@@ -126,6 +130,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
         $data = $this->validate([
             'mahasiswa_id'    => 'required|exists:users,id',
             'dosen_id'        => 'required|exists:users,id',
+            'tipe_dosen'      => 'required|string|max:50',
             'angkatan'        => 'nullable|string|max:10',
             'kelas'           => 'nullable|string|max:10',
             'stase'           => 'nullable|string|max:100',
@@ -146,7 +151,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
         }
 
         $this->showForm = false;
-        $this->reset('mahasiswa_id', 'dosen_id', 'angkatan', 'kelas', 'stase', 'rs', 'bangsal', 'periode_mulai', 'periode_selesai', 'editId');
+        $this->reset('mahasiswa_id', 'dosen_id', 'tipe_dosen', 'angkatan', 'kelas', 'stase', 'rs', 'bangsal', 'periode_mulai', 'periode_selesai', 'editId');
     }
 
     public function hapus(int $id): void
@@ -243,7 +248,15 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
                     <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">2. Isi Detail Penugasan</h2>
                     <div class="space-y-3">
                         <div>
-                            <label class="mb-1 block text-xs font-semibold text-[#7A8FA6] dark:text-zinc-400 uppercase tracking-wider">Dosen Pembimbing <span class="text-red-500">*</span></label>
+                            <label class="mb-1 block text-xs font-semibold text-[#7A8FA6] dark:text-zinc-400 uppercase tracking-wider">Tipe Dosen <span class="text-red-500">*</span></label>
+                            <flux:select wire:model="bulkTipe">
+                                @foreach(\App\Models\Penugasan::TIPE_OPTIONS as $tipe)
+                                    <flux:select.option value="{{ $tipe }}">{{ $tipe }}</flux:select.option>
+                                @endforeach
+                            </flux:select>
+                        </div>
+                        <div>
+                            <label class="mb-1 block text-xs font-semibold text-[#7A8FA6] dark:text-zinc-400 uppercase tracking-wider">Dosen <span class="text-red-500">*</span></label>
                             <flux:select wire:model="bulkDosenId" placeholder="Pilih Dosen" searchable>
                                 @foreach($dosens as $d)
                                     <flux:select.option :value="$d->id">{{ $d->name }}</flux:select.option>
@@ -352,7 +365,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
                     <thead>
                         <tr class="border-b border-[#E0EBF5] dark:border-zinc-700 bg-[#F4F8FB] dark:bg-zinc-900/50">
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Mahasiswa</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Dosen Pembimbing</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Dosen Pembimbing / Tipe</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Stase / RS</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1B4F72] dark:text-zinc-400">Periode</th>
                             <th class="px-4 py-3"></th>
@@ -372,7 +385,11 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
                                 </td>
                                 <td class="px-4 py-3">
                                     <p class="text-sm text-[#1B4F72] dark:text-zinc-200">{{ $item->dosen->name }}</p>
-                                    <p class="font-mono text-xs text-[#7A8FA6] dark:text-zinc-400">{{ $item->dosen->nim_nip }}</p>
+                                    <p class="font-mono text-xs text-[#7A8FA6] dark:text-zinc-400">
+                                        <span class="inline-flex items-center rounded-full bg-[#EBF5FB] dark:bg-blue-900/30 px-2 py-0.5 text-[10px] font-semibold text-[#2E86C1] dark:text-blue-300">
+                                            {{ $item->tipe_dosen ?? 'Dosen Wali' }}
+                                        </span>
+                                    </p>
                                 </td>
                                 <td class="px-4 py-3">
                                     <p class="text-sm font-medium text-[#1B4F72] dark:text-zinc-200">{{ $item->stase ?? '-' }}</p>
@@ -423,8 +440,15 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
                         @endforeach
                     </flux:select>
                 </div>
-                <div class="col-span-2">
-                    <flux:select wire:model="dosen_id" label="Dosen Pembimbing" placeholder="Pilih Dosen" searchable>
+                <div>
+                    <flux:select wire:model="tipe_dosen" label="Tipe Dosen">
+                        @foreach(\App\Models\Penugasan::TIPE_OPTIONS as $tipe)
+                            <flux:select.option value="{{ $tipe }}">{{ $tipe }}</flux:select.option>
+                        @endforeach
+                    </flux:select>
+                </div>
+                <div>
+                    <flux:select wire:model="dosen_id" label="Dosen" placeholder="Pilih Dosen" searchable>
                         @foreach($dosens as $d)
                             <flux:select.option :value="$d->id">{{ $d->name }}</flux:select.option>
                         @endforeach
