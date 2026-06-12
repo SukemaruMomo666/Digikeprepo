@@ -63,6 +63,7 @@ class ImportMahasiswaExcelSeeder extends Seeder
                     'email' => null,
                     'password' => Hash::make($nimMhs),
                     'role' => 'mahasiswa',
+                    'kelas' => $kelas,
                     'is_first_login' => true,
                 ]
             );

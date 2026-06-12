@@ -35,11 +35,23 @@
                 <flux:sidebar.group heading="Kelola User" class="grid">
                     <flux:sidebar.item
                         icon="academic-cap"
+                        :href="route('admin.data-mahasiswa.index')"
+                        :current="request()->routeIs('admin.data-mahasiswa.*')"
+                        wire:navigate
+                    >
+                        Data Mahasiswa
+                        @php $countPending = \App\Models\Askep::where('status', \App\Models\Askep::STATUS_MENUNGGU_REVIEW)->count(); @endphp
+                        @if($countPending > 0)
+                            <flux:badge size="sm" color="amber" inset="top bottom">{{ $countPending }}</flux:badge>
+                        @endif
+                    </flux:sidebar.item>
+                    <flux:sidebar.item
+                        icon="user-group"
                         :href="route('admin.users.index')"
                         :current="request()->routeIs('admin.users.*')"
                         wire:navigate
                     >
-                        Mahasiswa
+                        Kelola Akun
                     </flux:sidebar.item>
                     <flux:sidebar.item
                         icon="identification"
@@ -94,22 +106,6 @@
                     </flux:sidebar.item>
                 </flux:sidebar.group>
 
-                <flux:sidebar.group heading="Monitoring" class="grid">
-                    <flux:sidebar.item
-                        icon="eye"
-                        :href="route('admin.data-mahasiswa.index')"
-                        :current="request()->routeIs('admin.data-mahasiswa.*')"
-                        wire:navigate
-                    >
-                        Data Mahasiswa
-                        @php
-                            $countAllPending = \App\Models\Askep::where('status', \App\Models\Askep::STATUS_MENUNGGU_REVIEW)->count();
-                        @endphp
-                        @if ($countAllPending > 0)
-                            <flux:badge size="sm" color="amber" inset="top bottom">{{ $countAllPending }}</flux:badge>
-                        @endif
-                    </flux:sidebar.item>
-                </flux:sidebar.group>
             </flux:sidebar.nav>
 
             <flux:spacer />
