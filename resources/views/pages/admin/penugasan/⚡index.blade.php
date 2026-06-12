@@ -172,9 +172,9 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
                   ->orWhere('nim_nip', 'like', "%{$this->search}%")
             ))
             ->orderBy(
-                User::select('kelas')->whereColumn('users.id', 'penugasans.mahasiswa_id')->limit(1)
+                User::select('kelas')->whereColumn('users.id', 'penugasan.mahasiswa_id')->limit(1)
             )
-            ->latest('penugasans.id')
+            ->latest('penugasan.id')
             ->paginate(20);
 
         $mahasiswaMassal = $this->bulkPreview ? $this->getMahasiswaMassal()->load('penugasanSebagaiMahasiswa') : collect();
