@@ -243,14 +243,100 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
         }
 
         if ($section === 'all' || $section === 'fisik') {
+            // Array fields (checkbox groups) harus di-init sebagai [] bukan null
+            $arrayFields = [
+                'fisik_penglihatan'    => ['pupil', 'otot_mata', 'fungsi_penglihatan'],
+                'fisik_pendengaran'    => ['kondisi_telinga'],
+                'fisik_wicara'         => ['gangguan'],
+                'fisik_pernafasan'     => ['jalan_nafas', 'sputum_warna', 'suara_nafas'],
+                'fisik_kardiovaskuler' => ['warna_kulit', 'edema_lokasi', 'bunyi_jantung', 'nyeri_karakter'],
+                'fisik_saraf'          => ['kelainan'],
+                'fisik_pencernaan'     => ['isi_muntah', 'warna_muntah', 'nyeri_karakter', 'warna_feces', 'konsistensi_feces', 'abdomen'],
+                'fisik_endokrin'       => ['kelainan'],
+                'fisik_urogenital'     => ['perubahan_pola'],
+                'fisik_integumen'      => ['warna_kulit', 'keadaan_kulit'],
+                'fisik_muskuloskeletal'=> ['kelainan_bentuk'],
+            ];
+
             foreach ($this->pengkajianData as $key => $val) {
-                $this->pengkajianData[$key]['is_abnormal'] = false;
-                $this->pengkajianData[$key]['data'] = [];
+                $data = [];
+                foreach ($arrayFields[$key] ?? [] as $f) {
+                    $data[$f] = [];
+                }
+                $this->pengkajianData[$key] = ['is_abnormal' => false, 'data' => $data];
             }
-            // Set some specific defaults if needed
-            $this->pengkajianData['fisik_penglihatan']['data'] = ['posisi' => 'Simetris', 'kelopak' => 'Normal', 'konjungtiva' => 'Ananemis', 'sklera' => 'Anikterik', 'pupil' => 'Isokor', 'fungsi' => 'Baik'];
-            $this->pengkajianData['fisik_pernafasan']['data'] = ['jalan' => 'Bersih', 'pernafasan' => 'Normal', 'suara' => 'Vesikuler', 'irama' => 'Teratur'];
-            $this->pengkajianData['fisik_kardiovaskuler']['data'] = ['bunyi' => 'S1 S2 Tunggal', 'nadi' => 'Kuat', 'akral' => 'Hangat'];
+
+            // Preset normal per sistem (field names sesuai partial)
+            $this->pengkajianData['fisik_penglihatan']['data'] = array_merge(
+                $this->pengkajianData['fisik_penglihatan']['data'],
+                ['posisi_mata' => 'simetris', 'kelopak_mata' => 'normal', 'konjungtiva' => 'normal',
+                 'sklera' => 'anikterik', 'kornea' => 'normal', 'kacamata' => 'tidak', 'lensa_kontak' => 'tidak',
+                 'pupil' => ['isokor'], 'fungsi_penglihatan' => ['baik'], 'otot_mata' => ['tidak_ada_kelainan']]
+            );
+            $this->pengkajianData['fisik_pendengaran']['data'] = array_merge(
+                $this->pengkajianData['fisik_pendengaran']['data'],
+                ['daun_telinga' => 'normal', 'cairan_telinga' => 'tidak_ada', 'tinnitus' => 'tidak',
+                 'fungsi_pendengaran' => 'normal', 'alat_bantu' => 'tidak', 'perasaan_penuh' => 'tidak',
+                 'kondisi_telinga' => ['normal']]
+            );
+            $this->pengkajianData['fisik_wicara']['data'] = array_merge(
+                $this->pengkajianData['fisik_wicara']['data'],
+                ['gangguan' => ['tidak_ada']]
+            );
+            $this->pengkajianData['fisik_pernafasan']['data'] = array_merge(
+                $this->pengkajianData['fisik_pernafasan']['data'],
+                ['sesak' => 'tidak_sesak', 'otot_bantu' => 'tidak', 'irama' => 'teratur',
+                 'kedalaman' => 'normal', 'batuk' => 'tidak', 'batuk_jenis' => 'tidak_ada',
+                 'sputum_konsistensi' => 'tidak_ada', 'sputum_darah' => 'tidak',
+                 'jalan_nafas' => ['bersih'], 'sputum_warna' => ['tidak_ada'], 'suara_nafas' => ['normal']]
+            );
+            $this->pengkajianData['fisik_kardiovaskuler']['data'] = array_merge(
+                $this->pengkajianData['fisik_kardiovaskuler']['data'],
+                ['irama_nadi' => 'teratur', 'denyut' => 'kuat', 'distensi_vena_kanan' => 'tidak',
+                 'distensi_vena_kiri' => 'tidak', 'temperatur_kulit' => 'hangat', 'edema' => 'tidak',
+                 'irama_jantung' => 'teratur', 'nyeri_dada' => 'tidak', 'nyeri_timbul' => 'tidak_ada',
+                 'warna_kulit' => ['normal'], 'edema_lokasi' => ['tidak_ada'],
+                 'bunyi_jantung' => ['normal'], 'nyeri_karakter' => ['tidak_ada']]
+            );
+            $this->pengkajianData['fisik_saraf']['data'] = array_merge(
+                $this->pengkajianData['fisik_saraf']['data'],
+                ['kesadaran' => 'compos_mentis', 'pupil' => 'isokor', 'reaksi_cahaya_kanan' => 'positif',
+                 'reaksi_cahaya_kiri' => 'positif', 'peningkatan_tik' => 'tidak',
+                 'gcs_e' => 4, 'gcs_m' => 6, 'gcs_v' => 5,
+                 'kelainan' => ['tidak_ada']]
+            );
+            $this->pengkajianData['fisik_pencernaan']['data'] = array_merge(
+                $this->pengkajianData['fisik_pencernaan']['data'],
+                ['gigi_caries' => 'tidak', 'gigi_palsu' => 'tidak', 'stomatitis' => 'tidak',
+                 'lidah_kotor' => 'tidak', 'saliva' => 'normal', 'muntah' => 'tidak',
+                 'mual' => 'tidak', 'nafsu_makan' => 'baik', 'nyeri_perut' => 'tidak',
+                 'hepar' => 'tidak_teraba',
+                 'isi_muntah' => ['tidak_ada'], 'warna_muntah' => ['tidak_ada'],
+                 'nyeri_karakter' => ['tidak_ada'], 'warna_feces' => ['coklat'],
+                 'konsistensi_feces' => ['normal'], 'abdomen' => ['normal']]
+            );
+            $this->pengkajianData['fisik_endokrin']['data'] = array_merge(
+                $this->pengkajianData['fisik_endokrin']['data'],
+                ['nafas_bau_keton' => 'tidak', 'gangren' => 'tidak', 'gangren_warna' => 'tidak_ada',
+                 'gangren_bau' => 'tidak', 'exopthalmus' => 'tidak', 'tremor' => 'tidak',
+                 'kelenjar_tiroid' => 'tidak',
+                 'kelainan' => ['tidak_ada']]
+            );
+            $this->pengkajianData['fisik_urogenital']['data'] = array_merge(
+                $this->pengkajianData['fisik_urogenital']['data'],
+                ['bak_kontrol' => 'terkontrol', 'bak_warna' => 'kuning_jernih',
+                 'distensi_kandung_kemih' => 'tidak', 'nyeri_pinggang' => 'tidak', 'pembesaran_prostat' => 'tidak',
+                 'perubahan_pola' => ['tidak_ada']]
+            );
+            $this->pengkajianData['fisik_integumen']['data'] = array_merge(
+                $this->pengkajianData['fisik_integumen']['data'],
+                ['turgor' => 'baik',
+                 'warna_kulit' => ['normal'], 'keadaan_kulit' => ['baik']]
+            );
+            $this->pengkajianData['fisik_muskuloskeletal']['data'] = array_merge(
+                $this->pengkajianData['fisik_muskuloskeletal']['data'] ?? [],
+                ['kelainan_bentuk' => ['tidak_ada']]
+            );
         }
 
         Flux::toast(variant: 'success', text: "Preset " . ($section === 'all' ? 'lengkap' : $section) . " diterapkan.");
