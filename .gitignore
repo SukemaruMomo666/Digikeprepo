@@ -22,3 +22,28 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# AI Agent folders
+/.agents/
+/.claude/
+/.codex/
+.mcp.json
+
+# Local debug and utility scripts
+/all_routes.txt
+/check_db.php
+/check_users.php
+/convert_excel.py
+/debug_csv.php
+/debug_seeder.php
+/get_stats.php
+/students_extracted.csv
+
+# Other
+boost.json
+RENCANA.md
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
