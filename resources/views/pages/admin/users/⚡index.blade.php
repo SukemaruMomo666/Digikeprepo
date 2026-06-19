@@ -28,7 +28,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
     public ?int $editId = null;
     public ?int $resetId = null;
     public bool $showReset = false;
-    public string $resetPassword = '';
+    public string $newPassword = '';
 
     public bool $showForm = false;
 
@@ -149,22 +149,22 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
     public function openReset(int $id): void
     {
         $this->resetId = $id;
-        $this->resetPassword = '';
+        $this->newPassword = '';
         $this->showReset = true;
     }
 
     public function resetPassword(): void
     {
-        $this->validate(['resetPassword' => ['required', 'string', 'min:6']]);
+        $this->validate(['newPassword' => ['required', 'string', 'min:6']]);
 
         User::findOrFail($this->resetId)->update([
-            'password'       => Hash::make($this->resetPassword),
+            'password'       => Hash::make($this->newPassword),
             'is_first_login' => true,
         ]);
 
         $this->showReset = false;
         $this->dispatch('toast', variant: 'success', message: 'Password berhasil direset.');
-        $this->reset('resetId', 'resetPassword');
+        $this->reset('resetId', 'newPassword');
     }
 
     // ── Delete ────────────────────────────────────────────────────────────────
@@ -326,7 +326,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Mahasiswa')] class extends Compon
         <flux:text class="mb-4 text-sm">Masukkan password baru. Mahasiswa akan diwajibkan ganti password saat login berikutnya.</flux:text>
 
         <flux:input
-            wire:model="resetPassword"
+            wire:model="newPassword"
             label="Password Baru"
             type="password"
             placeholder="Minimal 6 karakter"
