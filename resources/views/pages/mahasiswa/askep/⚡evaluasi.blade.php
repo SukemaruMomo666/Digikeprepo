@@ -291,7 +291,7 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                             @endif
 
                             {{-- Tanggal, Jam, Hari ke- --}}
-                            <div class="grid grid-cols-3 gap-3">
+                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
                                 <div>
                                     <label class="text-xs font-medium text-[#7A8FA6]">Tanggal Evaluasi</label>
                                     <input
@@ -412,19 +412,21 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                                                                         </div>
                                                                     </div>
                                                                     
-                                                                    <div class="flex flex-col items-center">
+                                                                    <div class="flex flex-col items-start md:items-center">
                                                                         <p class="text-[9px] font-bold uppercase tracking-wider text-[#2E86C1] mb-1">Skor Akhir Evaluasi</p>
-                                                                        <div class="flex gap-1 bg-white p-1 rounded border border-[#D0DCE8]">
-                                                                            <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight flex items-center justify-center">{{ $k['opsi_skor'][1] }}</span>
-                                                                            @for ($s = 1; $s <= 5; $s++)
-                                                                                <label class="cursor-pointer">
-                                                                                    <input type="radio" wire:model="rencana.{{ $dIdx }}.evaluasi.skor_indikator.{{ $kId }}" value="{{ $s }}" class="peer sr-only" />
-                                                                                    <span class="flex size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB]" title="{{ $s }}. {{ $k['opsi_skor'][$s] }}">
-                                                                                        {{ $s }}
-                                                                                    </span>
-                                                                                </label>
-                                                                            @endfor
-                                                                            <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight flex items-center justify-center">{{ $k['opsi_skor'][5] }}</span>
+                                                                        <div class="flex items-center gap-1 bg-white p-1 rounded border border-[#D0DCE8]">
+                                                                            <span class="hidden sm:flex text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight items-center justify-center">{{ $k['opsi_skor'][1] }}</span>
+                                                                            <div class="flex gap-1">
+                                                                                @for ($s = 1; $s <= 5; $s++)
+                                                                                    <label class="cursor-pointer">
+                                                                                        <input type="radio" wire:model="rencana.{{ $dIdx }}.evaluasi.skor_indikator.{{ $kId }}" value="{{ $s }}" class="peer sr-only" />
+                                                                                        <span class="flex size-6 sm:size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB]" title="{{ $s }}. {{ $k['opsi_skor'][$s] }}">
+                                                                                            {{ $s }}
+                                                                                        </span>
+                                                                                    </label>
+                                                                                @endfor
+                                                                            </div>
+                                                                            <span class="hidden sm:flex text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight items-center justify-center">{{ $k['opsi_skor'][5] }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
