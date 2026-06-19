@@ -200,7 +200,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Kelola Penugasan</h1>
         <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">Plot mahasiswa ke dosen pembimbing secara massal atau individual.</p>

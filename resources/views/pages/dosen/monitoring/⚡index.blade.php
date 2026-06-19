@@ -46,7 +46,7 @@ new #[Layout('layouts.dosen')] #[Title('Monitoring Progress Askep')] class exten
     }
 }; ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-8">
         <h2 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Monitoring Progress Askep</h2>
         <p class="text-sm text-[#7A8FA6] dark:text-zinc-400 mt-1">Pantau status pengerjaan dan review Asuhan Keperawatan mahasiswa bimbingan Anda.</p>

@@ -79,7 +79,7 @@ new #[Layout('layouts.dosen')] #[Title('Review Askep')] class extends Component
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     {{-- Header --}}
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

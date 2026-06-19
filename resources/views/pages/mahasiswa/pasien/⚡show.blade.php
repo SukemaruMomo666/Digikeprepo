@@ -18,7 +18,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <flux:button :href="route('mahasiswa.pasien.index')" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Daftar Pasien

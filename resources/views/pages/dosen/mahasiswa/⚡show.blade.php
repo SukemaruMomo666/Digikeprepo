@@ -43,7 +43,7 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
     }
 }; ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6 flex items-center gap-3">
         <flux:button :href="route('dosen.mahasiswa.index')" variant="ghost" icon="arrow-left" wire:navigate />
         <div>
