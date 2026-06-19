@@ -224,17 +224,17 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
 <div class="p-4 md:p-6">
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 4])
 
-    <div class="mb-5 flex items-start justify-between gap-4">
+    <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div>
             <div class="mb-2 flex items-center gap-2">
-                <span class="flex size-8 items-center justify-center rounded-lg bg-[#E1F5EE] text-[#0F6E56]">
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#E1F5EE] text-[#0F6E56]">
                     <flux:icon.clipboard-document-check class="size-4" />
                 </span>
                 <h2 class="text-xl font-bold text-[#1B4F72]">Tahap 4: Implementasi Keperawatan</h2>
             </div>
             <p class="text-sm text-[#7A8FA6]">Dokumentasikan tindakan yang dilakukan berdasarkan rencana SIKI.</p>
         </div>
-        <span class="shrink-0 rounded-full bg-[#E1F5EE] px-3 py-1 text-xs font-bold text-[#0F6E56]">Rencana disetujui</span>
+        <span class="self-start rounded-full bg-[#E1F5EE] px-3 py-1 text-xs font-bold text-[#0F6E56] sm:shrink-0">Rencana disetujui</span>
     </div>
 
     @if (empty($implementasi))
