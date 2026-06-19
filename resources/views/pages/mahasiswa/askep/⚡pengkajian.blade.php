@@ -664,30 +664,59 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:input wire:model="biologis_nyeri.r" label="R (Radiasi/Region)" />
                     <flux:input wire:model="biologis_nyeri.t" label="T (Waktu/Time)" />
                     
-                    <div class="sm:col-span-2">
-                        <label class="mb-2 block text-sm font-bold text-[#1B4F72]">S (Skala Nyeri 0-10)</label>
-                        <div class="flex flex-col gap-2">
-                            <div class="flex items-center justify-between px-1">
-                                <span class="text-[10px] font-bold text-green-600">Tidak Nyeri</span>
-                                <span class="text-[10px] font-bold text-amber-500">Nyeri Sedang</span>
-                                <span class="text-[10px] font-bold text-red-600">Nyeri Hebat</span>
+                    <div class="sm:col-span-2"
+                         x-data="{ skala: {{ !empty($biologis_nyeri['s']) ? (int)$biologis_nyeri['s'] : 0 }} }">
+                        <label class="mb-3 block text-sm font-bold text-[#1B4F72]">S (Skala Nyeri 0-10)</label>
+                        <div class="rounded-xl border border-[#E0EBF5] bg-white p-4">
+                            {{-- Angka besar di tengah --}}
+                            <div class="mb-4 flex items-center justify-center">
+                                <div class="flex size-16 items-center justify-center rounded-full border-4 text-3xl font-black transition-colors"
+                                    :class="{
+                                        'border-green-400 text-green-600 bg-green-50': skala <= 3,
+                                        'border-amber-400 text-amber-600 bg-amber-50': skala >= 4 && skala <= 6,
+                                        'border-red-400 text-red-600 bg-red-50': skala >= 7
+                                    }">
+                                    <span x-text="skala"></span>
+                                </div>
                             </div>
-                            <div class="flex gap-1 overflow-x-auto pb-2 no-scrollbar">
-                                @foreach (range(0, 10) as $skala)
-                                    <label class="flex-1 cursor-pointer min-w-[2.5rem]">
-                                        <input type="radio" wire:model="biologis_nyeri.s" value="{{ $skala }}" class="peer sr-only" />
-                                        <div @class([
-                                            'flex h-10 items-center justify-center rounded-lg border-2 text-sm font-black transition',
-                                            'border-green-100 text-green-700 bg-green-50/30 peer-checked:bg-green-500 peer-checked:border-green-500 peer-checked:text-white' => $skala == 0,
-                                            'border-green-100 text-green-700 bg-green-50/30 peer-checked:bg-green-500 peer-checked:border-green-500 peer-checked:text-white' => $skala >= 1 && $skala <= 3,
-                                            'border-amber-100 text-amber-700 bg-amber-50/30 peer-checked:bg-amber-500 peer-checked:border-amber-500 peer-checked:text-white' => $skala >= 4 && $skala <= 6,
-                                            'border-red-100 text-red-700 bg-red-50/30 peer-checked:bg-red-500 peer-checked:border-red-500 peer-checked:text-white' => $skala >= 7,
-                                        ])>
-                                            {{ $skala }}
-                                        </div>
-                                    </label>
+
+                            {{-- Label kiri-tengah-kanan --}}
+                            <div class="mb-2 flex justify-between text-[10px] font-bold">
+                                <span class="text-green-600">Tidak Nyeri</span>
+                                <span class="text-amber-500">Nyeri Sedang</span>
+                                <span class="text-red-600">Nyeri Hebat</span>
+                            </div>
+
+                            {{-- Slider --}}
+                            <input
+                                type="range"
+                                min="0" max="10" step="1"
+                                wire:model="biologis_nyeri.s"
+                                x-model.number="skala"
+                                class="w-full cursor-pointer"
+                                :style="`accent-color: ${ skala <= 3 ? '#22c55e' : skala <= 6 ? '#f59e0b' : '#ef4444' }`"
+                            />
+
+                            {{-- Tick angka --}}
+                            <div class="mt-1 flex justify-between px-0.5">
+                                @foreach (range(0, 10) as $n)
+                                    <span class="text-[9px] text-zinc-400">{{ $n }}</span>
                                 @endforeach
                             </div>
+
+                            {{-- Deskripsi teks --}}
+                            <p class="mt-3 text-center text-xs font-medium transition-colors"
+                               :class="{
+                                   'text-green-600': skala <= 3,
+                                   'text-amber-600': skala >= 4 && skala <= 6,
+                                   'text-red-600': skala >= 7
+                               }">
+                                <span x-show="skala == 0">Tidak ada nyeri</span>
+                                <span x-show="skala >= 1 && skala <= 3">Nyeri ringan</span>
+                                <span x-show="skala >= 4 && skala <= 6">Nyeri sedang</span>
+                                <span x-show="skala >= 7 && skala <= 9">Nyeri hebat</span>
+                                <span x-show="skala == 10">Nyeri tak tertahankan</span>
+                            </p>
                         </div>
                     </div>
 
