@@ -12,13 +12,11 @@
             <flux:sidebar.header>
                 <div class="flex items-center gap-2.5 px-1 py-1">
                     {{-- Logo Polsub --}}
-                    <div class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm overflow-hidden">
-                        @if (file_exists(public_path('images/logo-polsub.png')))
-                            <img src="{{ asset('images/logo-polsub.png') }}" alt="Logo Polsub" class="size-7 object-contain" />
-                        @else
-                            <flux:icon.shield-check class="size-5 text-white" />
-                        @endif
-                    </div>
+                    @if (file_exists(public_path('images/logo-polsub.png')))
+                        <img src="{{ asset('images/logo-polsub.png') }}" alt="Logo Polsub" class="size-9 shrink-0 object-contain" />
+                    @else
+                        <flux:icon.shield-check class="size-9 shrink-0 text-white" />
+                    @endif
                     <div>
                         <p class="text-sm font-bold leading-tight text-white">DIGIKEP</p>
                         <p class="text-[10px] leading-tight text-white/60">Politeknik Negeri Subang</p>
@@ -125,13 +123,11 @@
         <flux:header class="lg:hidden border-b-0 bg-[#1B4F72] shadow-primary">
             <flux:sidebar.toggle class="lg:hidden text-white hover:bg-white/20" icon="bars-2" inset="left" />
             <div class="flex items-center gap-2 ms-2">
-                <div class="flex size-7 shrink-0 items-center justify-center rounded-lg bg-white/20 overflow-hidden">
-                    @if (file_exists(public_path('images/logo-polsub.png')))
-                        <img src="{{ asset('images/logo-polsub.png') }}" alt="Logo Polsub" class="size-5 object-contain" />
-                    @else
-                        <flux:icon.shield-check class="size-4 text-white" />
-                    @endif
-                </div>
+                @if (file_exists(public_path('images/logo-polsub.png')))
+                    <img src="{{ asset('images/logo-polsub.png') }}" alt="Logo Polsub" class="size-7 shrink-0 object-contain" />
+                @else
+                    <flux:icon.shield-check class="size-7 shrink-0 text-white" />
+                @endif
                 <span class="text-sm font-bold text-white">DIGIKEP</span>
             </div>
             <flux:spacer />
