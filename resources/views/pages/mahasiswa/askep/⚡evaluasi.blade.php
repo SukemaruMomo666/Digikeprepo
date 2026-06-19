@@ -210,7 +210,7 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 5])
 
     <div class="mb-4">

@@ -221,7 +221,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 4])
 
     <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">

@@ -170,7 +170,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 2])
 
     <div class="mb-4">

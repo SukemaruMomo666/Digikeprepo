@@ -305,7 +305,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 3])
 
     <div class="mb-4">

@@ -426,12 +426,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     {{-- Stepper --}}
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 1])
 
     <div class="mb-5 overflow-hidden rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white">
-        <div class="flex flex-col gap-4 border-b border-[#E0EBF5] dark:border-zinc-700 p-5 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col gap-4 border-b border-[#E0EBF5] dark:border-zinc-700 p-3 sm:p-4 md:flex-row md:items-center md:justify-between">
             <div>
                 <div class="mb-2 flex items-center gap-2">
                     <span class="flex size-8 items-center justify-center rounded-lg bg-[#E1F5EE] text-[#0F6E56]">
@@ -491,7 +491,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     {{-- ── Tab: Identitas ── --}}
     @if ($tab === 'identitas')
         <div class="space-y-4">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Identitas Pasien</h3>
                 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <flux:input :value="$askep->pasien->nama_pasien" label="Nama" disabled />
@@ -509,7 +509,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                 </div>
             </div>
 
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Identitas Penanggung Jawab</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     <flux:input wire:model="pj_nama" label="Nama Penanggung Jawab" placeholder="Nama lengkap" />
@@ -531,7 +531,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     {{-- ── Tab: TTV & EWS ── --}}
     @if ($tab === 'ttv')
         <div class="space-y-4">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <h3 class="font-semibold text-[#1B4F72]">Tanda-Tanda Vital</h3>
                     <button
@@ -591,7 +591,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Anthropometri --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Antropometri</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     <flux:input wire:model="bb" label="Berat Badan (kg)" type="number" step="0.1" placeholder="60.0" />
@@ -608,7 +608,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     {{-- ── Tab: Riwayat ── --}}
     @if ($tab === 'riwayat')
         <div class="space-y-6">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Penyakit Sekarang</h3>
                 <div class="grid gap-4">
                     <flux:textarea wire:model="riwayat_sekarang.keluhan_utama" label="Keluhan Utama" placeholder="Apa yang dirasakan pasien saat ini?" rows="2" />
@@ -616,7 +616,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:textarea wire:model="riwayat_sekarang.harapan" label="Harapan Pasien" placeholder="Apa yang diharapkan pasien dari perawatan ini?" rows="2" />
                 </div>
             </div>
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Penyakit Masa Lalu</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     <flux:input wire:model="riwayat_lalu.penyakit_anak" label="Penyakit Masa Anak" placeholder="Campak, cacar, dll." />
@@ -625,7 +625,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:input wire:model="riwayat_lalu.pengobatan_terakhir" label="Pengobatan Terakhir" placeholder="Obat yang rutin dikonsumsi?" />
                 </div>
             </div>
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Keluarga</h3>
                 <div class="grid gap-4">
                     <flux:input wire:model="riwayat_keluarga.jumlah_anggota" label="Jumlah Anggota Keluarga" placeholder="Berapa orang dalam satu rumah?" />
@@ -649,7 +649,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
         </div>
         <div class="space-y-6 pb-8">
             {{-- Nyeri --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="bolt" class="size-4 text-[#2E86C1]" />
@@ -721,7 +721,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Oksigenasi --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="cloud" class="size-4 text-[#2E86C1]" />
@@ -738,7 +738,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Nutrisi & Cairan --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="beaker" class="size-4 text-[#2E86C1]" />
@@ -757,7 +757,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Eliminasi --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="arrow-path" class="size-4 text-[#2E86C1]" />
@@ -776,7 +776,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Aktivitas & Istirahat --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="arrow-trending-up" class="size-4 text-[#2E86C1]" />
@@ -795,7 +795,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Kardiovaskuler --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="heart" class="size-4 text-[#2E86C1]" />
@@ -811,7 +811,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Personal Hygiene & Seksualitas --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="user" class="size-4 text-[#2E86C1]" />
@@ -839,7 +839,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             <flux:button wire:click="setNormal('psikososial')" size="xs" variant="ghost" icon="check-circle">Set Semua Normal</flux:button>
         </div>
         <div class="space-y-6">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Psikologi & Emosional</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     <flux:input wire:model="psiko_emosi.ekspresi" label="Ekspresi Wajah" />
@@ -847,7 +847,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:textarea wire:model="psiko_emosi.saat_marah_sedih" label="Saat Marah/Sedih apa yang dilakukan?" rows="2" class="sm:col-span-2" />
                 </div>
             </div>
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Spiritual</h3>
                 <div class="grid gap-4">
                     <flux:input wire:model="psiko_spiritual.agama" label="Agama / Keyakinan" />
@@ -869,7 +869,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             <flux:button wire:click="setNormal('fisik')" size="xs" variant="ghost" icon="check-circle">Set Semua Normal</flux:button>
         </div>
         <div class="space-y-5 pb-8">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Keadaan Umum</h3>
                 <flux:textarea wire:model="fisik_umum" label="Deskripsi umum pasien (tampak sakit, pucat, dll.)" rows="2" />
             </div>
