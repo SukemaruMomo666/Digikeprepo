@@ -666,57 +666,52 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     
                     <div class="sm:col-span-2"
                          x-data="{ skala: {{ !empty($biologis_nyeri['s']) ? (int)$biologis_nyeri['s'] : 0 }} }">
-                        <label class="mb-3 block text-sm font-bold text-[#1B4F72]">S (Skala Nyeri 0-10)</label>
-                        <div class="rounded-xl border border-[#E0EBF5] bg-white p-4">
-                            {{-- Angka besar di tengah --}}
-                            <div class="mb-4 flex items-center justify-center">
-                                <div class="flex size-16 items-center justify-center rounded-full border-4 text-3xl font-black transition-colors"
+                        {{-- Header: label + angka + deskripsi sejajar --}}
+                        <div class="mb-2 flex items-center justify-between">
+                            <label class="text-sm font-bold text-[#1B4F72]">S (Skala Nyeri 0-10)</label>
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg font-black transition-colors"
                                     :class="{
-                                        'border-green-400 text-green-600 bg-green-50': skala <= 3,
-                                        'border-amber-400 text-amber-600 bg-amber-50': skala >= 4 && skala <= 6,
-                                        'border-red-400 text-red-600 bg-red-50': skala >= 7
+                                        'text-green-600': skala <= 3,
+                                        'text-amber-500': skala >= 4 && skala <= 6,
+                                        'text-red-600': skala >= 7
+                                    }"
+                                    x-text="skala"></span>
+                                <span class="text-xs font-medium transition-colors"
+                                    :class="{
+                                        'text-green-600': skala <= 3,
+                                        'text-amber-500': skala >= 4 && skala <= 6,
+                                        'text-red-600': skala >= 7
                                     }">
-                                    <span x-text="skala"></span>
-                                </div>
+                                    <span x-show="skala == 0">Tidak ada nyeri</span>
+                                    <span x-show="skala >= 1 && skala <= 3">Nyeri ringan</span>
+                                    <span x-show="skala >= 4 && skala <= 6">Nyeri sedang</span>
+                                    <span x-show="skala >= 7 && skala <= 9">Nyeri hebat</span>
+                                    <span x-show="skala == 10">Nyeri tak tertahankan</span>
+                                </span>
                             </div>
+                        </div>
 
-                            {{-- Label kiri-tengah-kanan --}}
-                            <div class="mb-2 flex justify-between text-[10px] font-bold">
-                                <span class="text-green-600">Tidak Nyeri</span>
-                                <span class="text-amber-500">Nyeri Sedang</span>
-                                <span class="text-red-600">Nyeri Hebat</span>
-                            </div>
+                        {{-- Slider --}}
+                        <input
+                            type="range"
+                            min="0" max="10" step="1"
+                            wire:model="biologis_nyeri.s"
+                            x-model.number="skala"
+                            class="w-full cursor-pointer"
+                            :style="`accent-color: ${ skala <= 3 ? '#22c55e' : skala <= 6 ? '#f59e0b' : '#ef4444' }`"
+                        />
 
-                            {{-- Slider --}}
-                            <input
-                                type="range"
-                                min="0" max="10" step="1"
-                                wire:model="biologis_nyeri.s"
-                                x-model.number="skala"
-                                class="w-full cursor-pointer"
-                                :style="`accent-color: ${ skala <= 3 ? '#22c55e' : skala <= 6 ? '#f59e0b' : '#ef4444' }`"
-                            />
-
-                            {{-- Tick angka --}}
-                            <div class="mt-1 flex justify-between px-0.5">
-                                @foreach (range(0, 10) as $n)
-                                    <span class="text-[9px] text-zinc-400">{{ $n }}</span>
-                                @endforeach
-                            </div>
-
-                            {{-- Deskripsi teks --}}
-                            <p class="mt-3 text-center text-xs font-medium transition-colors"
-                               :class="{
-                                   'text-green-600': skala <= 3,
-                                   'text-amber-600': skala >= 4 && skala <= 6,
-                                   'text-red-600': skala >= 7
-                               }">
-                                <span x-show="skala == 0">Tidak ada nyeri</span>
-                                <span x-show="skala >= 1 && skala <= 3">Nyeri ringan</span>
-                                <span x-show="skala >= 4 && skala <= 6">Nyeri sedang</span>
-                                <span x-show="skala >= 7 && skala <= 9">Nyeri hebat</span>
-                                <span x-show="skala == 10">Nyeri tak tertahankan</span>
-                            </p>
+                        {{-- Tick angka + label --}}
+                        <div class="mt-1 flex justify-between px-0.5">
+                            @foreach (range(0, 10) as $n)
+                                <span class="text-[9px] text-zinc-400">{{ $n }}</span>
+                            @endforeach
+                        </div>
+                        <div class="mt-0.5 flex justify-between px-0.5 text-[9px] font-bold">
+                            <span class="text-green-600">Tidak Nyeri</span>
+                            <span class="text-amber-500">Nyeri Sedang</span>
+                            <span class="text-red-600">Nyeri Hebat</span>
                         </div>
                     </div>
 
