@@ -30,7 +30,7 @@ new #[Title('Video Tutorial')] class extends Component {
                 allowfullscreen>
             </iframe>
         </div>
-        <div class="p-5">
+        <div class="p-3 sm:p-5">
             <h3 class="font-bold text-[#1B4F72] dark:text-white">Panduan Lengkap Pengerjaan Askep</h3>
             <p class="mt-2 text-sm leading-relaxed text-[#7A8FA6] dark:text-zinc-400">
                 Mulai dari menambah pasien, mengisi pengkajian, menetapkan diagnosa SDKI, merencanakan luaran SLKI dan intervensi SIKI, mencatat implementasi, hingga evaluasi akhir dan pengiriman ke dosen pembimbing.

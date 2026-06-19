@@ -54,19 +54,19 @@ new #[Layout('layouts.dosen')] #[Title('Monitoring Progress Askep')] class exten
 
     {{-- Stats Cards --}}
     <div class="mb-8 grid gap-4 grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5 shadow-sm">
+        <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5 shadow-sm">
             <p class="text-xs font-bold uppercase tracking-wider text-[#7A8FA6] dark:text-zinc-400">Total Askep</p>
             <p class="mt-2 text-2xl font-black text-[#1B4F72] dark:text-white">{{ $stats['total'] }}</p>
         </div>
-        <div class="rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30 p-5 shadow-sm">
+        <div class="rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30 p-3 sm:p-5 shadow-sm">
             <p class="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">Butuh Review</p>
             <p class="mt-2 text-2xl font-black text-amber-600 dark:text-amber-300">{{ $stats['pending'] }}</p>
         </div>
-        <div class="rounded-2xl border border-[#85B7EB]/30 dark:border-blue-800 bg-[#F0F7FE] dark:bg-blue-900/20 p-5 shadow-sm">
+        <div class="rounded-2xl border border-[#85B7EB]/30 dark:border-blue-800 bg-[#F0F7FE] dark:bg-blue-900/20 p-3 sm:p-5 shadow-sm">
             <p class="text-xs font-bold uppercase tracking-wider text-[#2E86C1] dark:text-[#85B7EB]">Dalam Revisi</p>
             <p class="mt-2 text-2xl font-black text-[#1B4F72] dark:text-white">{{ $stats['revisi'] }}</p>
         </div>
-        <div class="rounded-2xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30 p-5 shadow-sm">
+        <div class="rounded-2xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30 p-3 sm:p-5 shadow-sm">
             <p class="text-xs font-bold uppercase tracking-wider text-green-700 dark:text-green-400">Sudah Disetujui</p>
             <p class="mt-2 text-2xl font-black text-green-600 dark:text-green-300">{{ $stats['disetujui'] }}</p>
         </div>

@@ -141,7 +141,7 @@ new #[Title('Panduan')] class extends Component {
 
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($panduan as $item)
-            <div class="rounded-2xl flex flex-col items-start border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 transition hover:shadow-sm">
+            <div class="rounded-2xl flex flex-col items-start border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-900 p-3 sm:p-5 transition hover:shadow-sm">
                 <div class="mb-3 inline-flex size-10 items-center justify-center rounded-xl" style="background-color: {{ $item['color'] }}20">
                     <flux:icon :icon="$item['icon']" class="size-5" style="color: {{ $item['color'] }}" />
                 </div>
@@ -157,7 +157,7 @@ new #[Title('Panduan')] class extends Component {
         @endforeach
     </div>
 
-    <div class="mt-8 rounded-2xl border border-[#85B7EB] dark:border-blue-900/50 bg-[#EBF5FB] dark:bg-blue-900/20 p-5">
+    <div class="mt-8 rounded-2xl border border-[#85B7EB] dark:border-blue-900/50 bg-[#EBF5FB] dark:bg-blue-900/20 p-3 sm:p-5">
         <div class="flex items-start gap-3">
             <flux:icon.information-circle class="mt-0.5 size-5 shrink-0 text-[#2E86C1] dark:text-blue-400" />
             <div>

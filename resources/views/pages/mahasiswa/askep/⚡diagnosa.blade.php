@@ -278,7 +278,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
 
                             {{-- Detail & Form (Tampil jika expanded) --}}
                             @if ($d['is_expanded'])
-                                <div class="p-5 border-t border-[#E0EBF5] space-y-5 bg-white">
+                                <div class="p-3 sm:p-5 border-t border-[#E0EBF5] space-y-5 bg-white">
                                     @if ($d['detail'])
                                         {{-- Definisi --}}
                                         @if ($d['detail']['definisi'])
@@ -382,7 +382,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                                         @endif
 
                                     @else
-                                        <div class="rounded-lg border border-dashed border-[#D0DCE8] p-5 text-center">
+                                        <div class="rounded-lg border border-dashed border-[#D0DCE8] p-3 sm:p-5 text-center">
                                             <flux:icon.server class="mx-auto mb-2 size-6 text-[#85B7EB]" />
                                             <p class="text-sm text-[#7A8FA6]">Gagal memuat detail dari master data SDKI.</p>
                                         </div>

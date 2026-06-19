@@ -449,7 +449,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                 Semua Normal
             </button>
         </div>
-        <div class="grid gap-3 p-5 sm:grid-cols-3">
+        <div class="grid gap-3 p-3 sm:p-5 sm:grid-cols-3">
             <div class="rounded-xl bg-[#F8FBFE] p-4">
                 <p class="text-xs font-semibold uppercase tracking-wide text-[#7A8FA6]">Pasien</p>
                 <p class="mt-2 text-sm font-bold text-[#1B4F72]">{{ $askep->pasien->nama_pasien }}</p>

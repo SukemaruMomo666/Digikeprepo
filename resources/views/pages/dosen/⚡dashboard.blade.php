@@ -46,7 +46,7 @@ new #[Layout('layouts.dosen')] #[Title('Dashboard Dosen')] class extends Compone
 
     {{-- Alert Pending Review --}}
     @if ($stats['pending_review'] > 0)
-        <div class="mb-8 flex items-center justify-between gap-4 rounded-2xl border-2 border-[#1A9B72] bg-emerald-50 p-5 shadow-sm dark:bg-emerald-950/20 dark:border-emerald-900">
+        <div class="mb-8 flex items-center justify-between gap-4 rounded-2xl border-2 border-[#1A9B72] bg-emerald-50 p-3 sm:p-5 shadow-sm dark:bg-emerald-950/20 dark:border-emerald-900">
             <div class="flex items-center gap-4">
                 <div class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-800 dark:text-emerald-100">
                     <flux:icon.envelope-open class="size-7" />

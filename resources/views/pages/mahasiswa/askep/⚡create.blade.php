@@ -42,7 +42,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
     </div>
 
     {{-- Pasien Summary Card --}}
-    <div class="mb-6 max-w-2xl rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
+    <div class="mb-6 max-w-2xl rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5">
         <div class="flex items-start gap-4">
             @php
                 $words    = explode(' ', trim($pasien->nama_pasien));

@@ -205,7 +205,7 @@ new #[Layout('layouts.dosen')] #[Title('Review Askep')] class extends Component
 
                         <div class="divide-y divide-zinc-100">
                             @foreach ($askep->diagnosa as $d)
-                                <div class="p-5">
+                                <div class="p-3 sm:p-5">
                                     <div class="flex items-start gap-3">
                                         <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-teal-50 text-xs font-bold text-teal-700 border border-teal-100">
                                             {{ $d->prioritas }}
@@ -302,7 +302,7 @@ new #[Layout('layouts.dosen')] #[Title('Review Askep')] class extends Component
                     
                     <div class="divide-y divide-zinc-100">
                         @foreach ($askep->diagnosa as $d)
-                            <div class="p-5">
+                            <div class="p-3 sm:p-5">
                                 <flux:text size="sm" class="font-bold text-zinc-400 uppercase mb-4 block">Diagnosa: {{ $d->sdki?->label_diagnosa }}</flux:text>
                                 
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">

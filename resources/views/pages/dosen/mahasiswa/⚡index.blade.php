@@ -57,7 +57,7 @@ new #[Layout('layouts.dosen')] #[Title('Daftar Mahasiswa Bimbingan')] class exte
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             @foreach ($mahasiswaList as $tugas)
                 @php $mhs = $tugas->mahasiswa; @endphp
-                <div class="group relative overflow-hidden rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5 shadow-sm transition hover:border-[#2E86C1] hover:shadow-md">
+                <div class="group relative overflow-hidden rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5 shadow-sm transition hover:border-[#2E86C1] hover:shadow-md">
                     <div class="flex items-start gap-4">
                         <div class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#F4F8FB] dark:bg-zinc-700 text-lg font-bold text-[#2E86C1] dark:text-[#85B7EB] group-hover:bg-[#EBF5FB] dark:group-hover:bg-zinc-600">
                             {{ $mhs->initials() }}

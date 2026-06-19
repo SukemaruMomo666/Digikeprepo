@@ -63,7 +63,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
 
     {{-- Alert Revisi --}}
     @if ($askep->status === 'perlu_revisi' && $askep->catatan_dosen)
-        <div class="mb-6 rounded-2xl border-2 border-red-200 bg-red-50 p-5">
+        <div class="mb-6 rounded-2xl border-2 border-red-200 bg-red-50 p-3 sm:p-5">
             <div class="flex items-start gap-3">
                 <flux:icon.exclamation-triangle class="mt-0.5 size-5 shrink-0 text-red-600" />
                 <div>
@@ -88,7 +88,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                             <h2 class="font-bold text-[#1B4F72] dark:text-white">PENGKAJIAN DASAR</h2>
                         </div>
                     </div>
-                    <div class="p-6 space-y-6">
+                    <div class="p-3 sm:p-6 space-y-6">
                         {{-- Identitas PJ & Antropometri --}}
                         <div class="grid gap-4 md:grid-cols-2">
                             <div>
@@ -197,7 +197,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                     </div>
                     <div class="divide-y divide-gray-100 dark:divide-zinc-700">
                         @foreach ($askep->diagnosa->sortBy('prioritas') as $d)
-                            <div class="p-6">
+                            <div class="p-3 sm:p-6">
                                 <div class="flex items-start gap-3 mb-4">
                                     <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#EBF5FB] dark:bg-blue-900/40 text-[10px] font-bold text-[#2E86C1] dark:text-[#85B7EB] border border-[#85B7EB] dark:border-blue-700">
                                         {{ $d->prioritas }}
@@ -300,7 +300,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                     <div class="flex size-6 items-center justify-center rounded bg-[#1A9B72] text-[10px] font-bold text-white uppercase">4</div>
                     <h2 class="font-bold text-[#1B4F72] dark:text-white">LOG IMPLEMENTASI</h2>
                 </div>
-                <div class="p-6">
+                <div class="p-3 sm:p-6">
                     @php
                         $semuaLog = $askep->diagnosa->flatMap->intervensi->flatMap->implementasi->sortByDesc('tanggal');
                     @endphp
@@ -337,7 +337,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
                 <div class="divide-y divide-gray-100 dark:divide-zinc-700">
                     @foreach ($askep->diagnosa as $d)
                         @php $ev = $d->evaluasi->first(); @endphp
-                        <div class="p-6">
+                        <div class="p-3 sm:p-6">
                             <div class="flex items-start gap-3 mb-4">
                                 <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#F4F8FB] dark:bg-zinc-700 text-[10px] font-bold text-[#7A8FA6] dark:text-zinc-300 border border-[#D0DCE8] dark:border-zinc-600">
                                     {{ $d->prioritas }}
@@ -411,7 +411,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Askep')] class extends Compon
 
         {{-- Sidebar Info (Kanan) --}}
         <div class="space-y-6">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-[#F8FBFE] dark:bg-zinc-900 p-6 shadow-sm">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-[#F8FBFE] dark:bg-zinc-900 p-3 sm:p-6 shadow-sm">
                 <h3 class="text-sm font-black text-[#1B4F72] dark:text-white mb-4 uppercase tracking-tighter">Status Evaluasi Akhir</h3>
                 <div class="space-y-4">
                     @foreach ($askep->diagnosa as $d)
