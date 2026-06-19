@@ -430,18 +430,18 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                                                                                                     <p class="text-[10px] font-bold uppercase tracking-wider text-[#7A8FA6]">Skor Awal</p>
                                                                                                 </div>
                                                                                                 <div class="flex items-center justify-between bg-white rounded border border-[#D0DCE8] p-1">
-                                                                                                    <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][1] }}</span>
-                                                                                                    <div class="flex gap-1">
+                                                                                                    <span class="hidden sm:block text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][1] }}</span>
+                                                                                                    <div class="flex flex-1 justify-around sm:flex-none sm:justify-start gap-1">
                                                                                                         @foreach (range(1, 5) as $skor)
                                                                                                             <label class="cursor-pointer">
                                                                                                                 <input type="radio" wire:model="rencana.{{ $dIdx }}.luaran.{{ $lIdx }}.skor_indikator.{{ $kriteria['id'] }}.awal" value="{{ $skor }}" class="peer sr-only" />
-                                                                                                                <span class="flex size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB] dark:bg-blue-900/30" title="{{ $skor }}. {{ $kriteria['opsi_skor'][$skor] }}">
+                                                                                                                <span class="flex size-6 sm:size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB] dark:bg-blue-900/30" title="{{ $skor }}. {{ $kriteria['opsi_skor'][$skor] }}">
                                                                                                                     {{ $skor }}
                                                                                                                 </span>
                                                                                                             </label>
                                                                                                         @endforeach
                                                                                                     </div>
-                                                                                                    <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][5] }}</span>
+                                                                                                    <span class="hidden sm:block text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][5] }}</span>
                                                                                                 </div>
                                                                                             </div>
 
@@ -451,18 +451,18 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                                                                                                     <p class="text-[10px] font-bold uppercase tracking-wider text-[#0F6E56]">Skor Target</p>
                                                                                                 </div>
                                                                                                 <div class="flex items-center justify-between bg-white dark:bg-zinc-900 rounded border border-[#1A9B72]/30 dark:border-emerald-500/30 p-1">
-                                                                                                    <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][1] }}</span>
-                                                                                                    <div class="flex gap-1">
+                                                                                                    <span class="hidden sm:block text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][1] }}</span>
+                                                                                                    <div class="flex flex-1 justify-around sm:flex-none sm:justify-start gap-1">
                                                                                                         @foreach (range(1, 5) as $skor)
                                                                                                             <label class="cursor-pointer">
                                                                                                                 <input type="radio" wire:model="rencana.{{ $dIdx }}.luaran.{{ $lIdx }}.skor_indikator.{{ $kriteria['id'] }}.target" value="{{ $skor }}" class="peer sr-only" />
-                                                                                                                <span class="flex size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#1A9B72] peer-checked:text-white hover:bg-[#E1F5EE]" title="{{ $skor }}. {{ $kriteria['opsi_skor'][$skor] }}">
+                                                                                                                <span class="flex size-6 sm:size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#1A9B72] peer-checked:text-white hover:bg-[#E1F5EE]" title="{{ $skor }}. {{ $kriteria['opsi_skor'][$skor] }}">
                                                                                                                     {{ $skor }}
                                                                                                                 </span>
                                                                                                             </label>
                                                                                                         @endforeach
                                                                                                     </div>
-                                                                                                    <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][5] }}</span>
+                                                                                                    <span class="hidden sm:block text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][5] }}</span>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
