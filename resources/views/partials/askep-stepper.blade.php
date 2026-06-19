@@ -83,5 +83,3 @@
         @endforeach
     </div>
 </nav>
-
-</nav>
