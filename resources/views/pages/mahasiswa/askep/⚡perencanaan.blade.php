@@ -416,60 +416,57 @@ new #[Layout('layouts.mahasiswa')] #[Title('Perencanaan Askep')] class extends C
                                                         <div class="overflow-hidden rounded-lg border border-[#CDEFE4] bg-white">
                                                             @foreach ($l['kriteria'] as $kIdx => $kriteria)
                                                                 <div wire:key="kriteria-{{ $d['diagnosa_id'] }}-{{ $l['slki_id'] }}-{{ $kriteria['id'] }}" class="border-b border-[#E6F5F0] p-3 last:border-b-0">
-                                                                    <div class="flex items-start gap-3">
-                                                                        <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#E1F5EE] text-[11px] font-bold text-[#0F6E56]">
-                                                                            {{ $kriteria['urutan'] }}
-                                                                        </span>
-                                                                        <div class="min-w-0 flex-1">
-                                                                            <div class="flex flex-wrap items-center gap-2">
-                                                                                <p class="text-sm font-medium text-[#1B4F72]">{{ $kriteria['deskripsi'] }}</p>
-                                                                                <span class="rounded-full bg-[#F4F8FB] px-2 py-0.5 text-[10px] font-semibold text-[#7A8FA6]">{{ $kriteria['arah'] }}</span>
-                                                                            </div>
+                                                                    <div class="flex flex-wrap items-center gap-1.5 mb-2">
+                                                                        <span class="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#E1F5EE] text-[10px] font-bold text-[#0F6E56]">{{ $kriteria['urutan'] }}</span>
+                                                                        <p class="text-sm font-medium text-[#1B4F72] flex-1 min-w-0">{{ $kriteria['deskripsi'] }}</p>
+                                                                        <span class="rounded-full bg-[#F4F8FB] px-2 py-0.5 text-[10px] font-semibold text-[#7A8FA6]">{{ $kriteria['arah'] }}</span>
+                                                                    </div>
+                                                                    <div class="min-w-0">
 
-                                                                            <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg bg-[#F4F8FB] p-3 border border-[#E0EBF5]">
-                                                                                {{-- Skor Awal --}}
-                                                                                <div>
-                                                                                    <div class="mb-2 flex items-center justify-between">
-                                                                                        <p class="text-[10px] font-bold uppercase tracking-wider text-[#7A8FA6]">Skor Awal</p>
-                                                                                    </div>
-                                                                                    <div class="flex items-center justify-between bg-white rounded border border-[#D0DCE8] p-1">
-                                                                                        <span class="hidden sm:block text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][1] }}</span>
-                                                                                        <div class="flex flex-1 justify-around sm:flex-none sm:justify-start gap-1">
+                                                                            <div class="mt-3 rounded-lg bg-[#F4F8FB] p-3 border border-[#E0EBF5]">
+                                                                                <div class="flex flex-col sm:flex-row sm:items-end gap-2">
+                                                                                    {{-- Skor Awal --}}
+                                                                                    <div class="flex-1">
+                                                                                        <p class="text-[10px] font-bold uppercase tracking-wider text-[#7A8FA6] mb-1.5">Skor Awal</p>
+                                                                                        <div class="flex bg-white rounded border border-[#D0DCE8] p-1 gap-1">
                                                                                             @foreach (range(1, 5) as $skor)
-                                                                                                <label class="cursor-pointer">
+                                                                                                <label class="cursor-pointer flex-1">
                                                                                                     <input type="radio" wire:model="rencana.{{ $dIdx }}.luaran.{{ $lIdx }}.skor_indikator.{{ $kriteria['id'] }}.awal" value="{{ $skor }}" class="peer sr-only" />
-                                                                                                    <span class="flex size-6 sm:size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB] dark:bg-blue-900/30" title="{{ $skor }}. {{ $kriteria['opsi_skor'][$skor] }}">
+                                                                                                    <span class="flex w-full items-center justify-center py-1.5 rounded-sm text-sm font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB]" title="{{ $skor }}. {{ $kriteria['opsi_skor'][$skor] }}">
                                                                                                         {{ $skor }}
                                                                                                     </span>
                                                                                                 </label>
                                                                                             @endforeach
                                                                                         </div>
-                                                                                        <span class="hidden sm:block text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][5] }}</span>
+                                                                                        <div class="mt-1 flex justify-between text-[9px] text-[#7A8FA6] px-0.5">
+                                                                                            <span>{{ $kriteria['opsi_skor'][1] }}</span>
+                                                                                            <span>{{ $kriteria['opsi_skor'][5] }}</span>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
 
-                                                                                {{-- Skor Target --}}
-                                                                                <div>
-                                                                                    <div class="mb-2 flex items-center justify-between">
-                                                                                        <p class="text-[10px] font-bold uppercase tracking-wider text-[#0F6E56]">Skor Target</p>
-                                                                                    </div>
-                                                                                    <div class="flex items-center justify-between bg-white dark:bg-zinc-900 rounded border border-[#1A9B72]/30 dark:border-emerald-500/30 p-1">
-                                                                                        <span class="hidden sm:block text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][1] }}</span>
-                                                                                        <div class="flex flex-1 justify-around sm:flex-none sm:justify-start gap-1">
+                                                                                    <flux:icon.arrow-down class="size-4 shrink-0 text-[#7A8FA6] self-center sm:hidden" />
+                                                                                    <flux:icon.arrow-right class="size-4 shrink-0 text-[#7A8FA6] mb-5 hidden sm:block" />
+
+                                                                                    {{-- Skor Target --}}
+                                                                                    <div class="flex-1">
+                                                                                        <p class="text-[10px] font-bold uppercase tracking-wider text-[#0F6E56] mb-1.5">Skor Target</p>
+                                                                                        <div class="flex bg-white rounded border border-[#1A9B72]/30 p-1 gap-1">
                                                                                             @foreach (range(1, 5) as $skor)
-                                                                                                <label class="cursor-pointer">
+                                                                                                <label class="cursor-pointer flex-1">
                                                                                                     <input type="radio" wire:model="rencana.{{ $dIdx }}.luaran.{{ $lIdx }}.skor_indikator.{{ $kriteria['id'] }}.target" value="{{ $skor }}" class="peer sr-only" />
-                                                                                                    <span class="flex size-6 sm:size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#1A9B72] peer-checked:text-white hover:bg-[#E1F5EE]" title="{{ $skor }}. {{ $kriteria['opsi_skor'][$skor] }}">
+                                                                                                    <span class="flex w-full items-center justify-center py-1.5 rounded-sm text-sm font-bold text-[#1B4F72] transition peer-checked:bg-[#1A9B72] peer-checked:text-white hover:bg-[#E1F5EE]" title="{{ $skor }}. {{ $kriteria['opsi_skor'][$skor] }}">
                                                                                                         {{ $skor }}
                                                                                                     </span>
                                                                                                 </label>
                                                                                             @endforeach
                                                                                         </div>
-                                                                                        <span class="hidden sm:block text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight">{{ $kriteria['opsi_skor'][5] }}</span>
+                                                                                        <div class="mt-1 flex justify-between text-[9px] text-[#7A8FA6] px-0.5">
+                                                                                            <span>{{ $kriteria['opsi_skor'][1] }}</span>
+                                                                                            <span>{{ $kriteria['opsi_skor'][5] }}</span>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             @endforeach

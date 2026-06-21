@@ -303,28 +303,28 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
                 @if ($aktifIntervensi)
                     {{-- Form Tambah Implementasi --}}
                     <div class="rounded-2xl border border-[#E0EBF5] bg-white p-5 sm:p-6 shadow-sm">
-                        <div class="mb-5 border-b border-[#E0EBF5] pb-4 flex justify-between items-start">
-                            <div>
-                                <h3 class="text-lg font-bold text-[#1B4F72]">{{ $aktifIntervensi['siki_label'] }}</h3>
-                                <p class="text-sm text-[#7A8FA6] mt-1">Catat pelaksanaan intervensi ini.</p>
+                        <div class="mb-5 border-b border-[#E0EBF5] pb-4">
+                            <div class="flex items-start justify-between gap-2 flex-wrap">
+                                <h3 class="text-base sm:text-lg font-bold text-[#1B4F72] flex-1 min-w-0">{{ $aktifIntervensi['siki_label'] }}</h3>
+                                <span class="rounded-full bg-[#EBF5FB] px-3 py-1 text-xs font-bold text-[#2E86C1] border border-[#D0DCE8] shrink-0">{{ $aktifIntervensi['siki_kode'] }}</span>
                             </div>
-                            <span class="rounded-full bg-[#EBF5FB] px-3 py-1 text-xs font-bold text-[#2E86C1] border border-[#D0DCE8]">{{ $aktifIntervensi['siki_kode'] }}</span>
+                            <p class="text-sm text-[#7A8FA6] mt-1">Catat pelaksanaan intervensi ini.</p>
                         </div>
 
                         <form wire:submit.prevent="simpanLog({{ $aktivitasAktif }})" class="space-y-6">
                             {{-- Waktu & Shift --}}
-                            <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 bg-[#F4F8FB] dark:bg-zinc-800/80 p-4 rounded-xl border border-[#E0EBF5] dark:border-zinc-700">
-                                <div class="col-span-2 sm:col-span-1">
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 bg-[#F4F8FB] dark:bg-zinc-800/80 p-4 rounded-xl border border-[#E0EBF5] dark:border-zinc-700">
+                                <div class="sm:col-span-1">
                                     <flux:select wire:model="formTambah.{{ $aktivitasAktif }}.shift" label="Shift">
                                         <flux:select.option value="Pagi">Pagi</flux:select.option>
                                         <flux:select.option value="Siang">Siang</flux:select.option>
                                         <flux:select.option value="Malam">Malam</flux:select.option>
                                     </flux:select>
                                 </div>
-                                <div class="col-span-1 sm:col-span-1">
+                                <div class="sm:col-span-1">
                                     <flux:input wire:model="formTambah.{{ $aktivitasAktif }}.waktu" type="time" label="Waktu" required />
                                 </div>
-                                <div class="col-span-1 sm:col-span-2">
+                                <div class="sm:col-span-2">
                                     <flux:input wire:model="formTambah.{{ $aktivitasAktif }}.tanggal" type="date" label="Tanggal" required />
                                 </div>
                             </div>
@@ -471,9 +471,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Implementasi Askep')] class extends 
         </div>
 
         {{-- Navigasi Bawah --}}
-        <div class="mt-8 flex items-center justify-between border-t border-[#E0EBF5] pt-5">
+        <div class="mt-8 flex items-center justify-between gap-3 border-t border-[#E0EBF5] pt-5">
             <flux:button :href="route('mahasiswa.askep.perencanaan', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
-                Kembali ke Perencanaan
+                <span class="sm:hidden">Kembali</span>
+                <span class="hidden sm:inline">Kembali ke Perencanaan</span>
             </flux:button>
             <button
                 wire:click="selesaikanLangkah"

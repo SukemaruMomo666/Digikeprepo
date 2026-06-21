@@ -28,7 +28,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
         <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Detail Pasien
         </flux:button>
-        <div class="flex items-start justify-between">
+        <div class="flex flex-wrap items-start justify-between gap-2">
             <div>
                 <flux:heading size="xl" level="1">Asuhan Keperawatan</flux:heading>
                 <flux:text class="mt-1">{{ $pasien->nama_pasien }} &bull; No. RM: {{ $pasien->no_rm }}</flux:text>
@@ -109,11 +109,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
         @foreach ($pasien->diagnosaPasien as $dp)
             <flux:card class="mb-4" wire:key="dp-show-{{ $dp->id }}">
                 {{-- Diagnosa --}}
-                <div class="flex items-start justify-between mb-4">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
+                <div class="flex items-start justify-between gap-2 mb-4">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
                             <flux:badge color="blue">{{ $dp->diagnosa->kode_diagnosa }}</flux:badge>
-                            <flux:heading size="md" level="3">{{ $dp->diagnosa->label_diagnosa }}</flux:heading>
+                            <flux:heading size="md" level="3" class="leading-snug">{{ $dp->diagnosa->label_diagnosa }}</flux:heading>
                         </div>
                         @if ($dp->data_subjektif || $dp->data_objektif)
                             <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
@@ -139,21 +139,21 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
 
                 {{-- Luaran per Diagnosa --}}
                 @foreach ($dp->luaranPasien as $lp)
-                    <div class="ml-4 mb-4 last:mb-0 pl-4 border-l-2 border-violet-300 dark:border-violet-700" wire:key="lp-show-{{ $lp->id }}">
-                        <div class="flex items-center gap-2 mb-2">
-                            <flux:icon.arrow-right class="size-4 text-violet-500" />
+                    <div class="ml-2 sm:ml-4 mb-4 last:mb-0 pl-3 sm:pl-4 border-l-2 border-violet-300 dark:border-violet-700" wire:key="lp-show-{{ $lp->id }}">
+                        <div class="flex flex-wrap items-center gap-1.5 mb-2">
+                            <flux:icon.arrow-right class="size-4 text-violet-500 shrink-0" />
                             <flux:badge color="violet" size="sm">{{ $lp->luaran->kode_luaran }}</flux:badge>
-                            <span class="font-medium text-sm">{{ $lp->luaran->label_luaran }}</span>
+                            <span class="font-medium text-sm leading-snug">{{ $lp->luaran->label_luaran }}</span>
                         </div>
 
                         {{-- Intervensi per Luaran --}}
                         @if ($lp->intervensiPasien->isNotEmpty())
-                            <div class="ml-6 flex flex-col gap-1">
+                            <div class="ml-3 sm:ml-6 flex flex-col gap-1">
                                 @foreach ($lp->intervensiPasien as $ip)
-                                    <div class="flex items-center gap-2 text-sm" wire:key="ip-show-{{ $ip->id }}">
+                                    <div class="flex flex-wrap items-center gap-1.5 text-sm" wire:key="ip-show-{{ $ip->id }}">
                                         <flux:icon.arrow-right class="size-3 text-green-500 shrink-0" />
                                         <flux:badge color="green" size="sm">{{ $ip->intervensi->kode_intervensi }}</flux:badge>
-                                        <span>{{ $ip->intervensi->label_intervensi }}</span>
+                                        <span class="leading-snug">{{ $ip->intervensi->label_intervensi }}</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -165,14 +165,15 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
     @endif
 
     {{-- Aksi Footer --}}
-    <div class="flex items-center gap-3 mt-6">
+    <div class="flex flex-wrap items-center gap-3 mt-6">
         @if ($pasien->isDraft())
             <flux:button :href="$pasien->nextAskepStep()" variant="primary" icon-trailing="arrow-right" wire:navigate>
                 Lanjutkan Askep
             </flux:button>
         @endif
-        <flux:button :href="route('mahasiswa.pasien.index')" variant="ghost" wire:navigate>
-            Kembali ke Daftar Pasien
+        <flux:button :href="route('mahasiswa.pasien.index')" variant="ghost" icon="arrow-left" wire:navigate>
+            <span class="sm:hidden">Daftar Pasien</span>
+            <span class="hidden sm:inline">Kembali ke Daftar Pasien</span>
         </flux:button>
     </div>
 </div>
