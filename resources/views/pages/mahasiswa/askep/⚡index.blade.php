@@ -36,7 +36,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Semua Askep')] class extends Compone
 };
 ?>
 
-<div>
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <flux:heading size="xl" level="1">Semua Askep</flux:heading>
         <flux:text class="mt-1">Daftar seluruh asuhan keperawatan yang pernah dikerjakan.</flux:text>

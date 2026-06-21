@@ -31,7 +31,7 @@ export default defineConfig({
     server: {
         host: '0.0.0.0', 
         hmr: {
-            host: '192.168.1.20', // Isi dengan IP Wi-Fi kamu
+            host: '192.168.1.5', // Isi dengan IP Wi-Fi kamu
         },
     },
 });

@@ -23,7 +23,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Hasil Askep')] class extends Compone
 };
 ?>
 
-<div>
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Detail Pasien

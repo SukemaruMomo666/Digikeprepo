@@ -879,7 +879,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     @endif
 
     {{-- ── Navigation Buttons ── --}}
-    <div class="mt-6 flex items-center justify-between border-t border-[#E0EBF5] dark:border-zinc-700 pt-4">
+    <div class="mt-6 flex items-center justify-between gap-3 border-t border-[#E0EBF5] dark:border-zinc-700 pt-4">
         <flux:button
             :href="route('mahasiswa.pasien.show', $askep->pasien_id)"
             variant="ghost"
@@ -889,11 +889,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             Kembali
         </flux:button>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
             <button
                 wire:click="simpan"
                 wire:loading.attr="disabled"
-                class="rounded-xl border border-[#85B7EB] px-4 py-2 text-sm font-semibold text-[#2E86C1] hover:bg-[#EBF5FB] transition"
+                class="hidden sm:block rounded-xl border border-[#85B7EB] px-4 py-2 text-sm font-semibold text-[#2E86C1] hover:bg-[#EBF5FB] transition"
             >
                 <span wire:loading.remove wire:target="simpan">Simpan</span>
                 <span wire:loading wire:target="simpan">Menyimpan...</span>
@@ -902,10 +902,13 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             <button
                 wire:click="simpanLanjut"
                 wire:loading.attr="disabled"
-                class="inline-flex items-center gap-2 rounded-xl px-5 py-2 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
+                class="inline-flex items-center gap-2 rounded-xl px-4 sm:px-5 py-2 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
                 style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
             >
-                <span wire:loading.remove wire:target="simpanLanjut">Simpan & Lanjut</span>
+                <span wire:loading.remove wire:target="simpanLanjut">
+                    <span class="sm:hidden">Simpan & Lanjut</span>
+                    <span class="hidden sm:inline">Simpan & Lanjut ke Diagnosa</span>
+                </span>
                 <span wire:loading wire:target="simpanLanjut">Menyimpan...</span>
                 <flux:icon.arrow-right class="size-4" wire:loading.remove wire:target="simpanLanjut" />
             </button>

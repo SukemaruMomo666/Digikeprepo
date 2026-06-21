@@ -32,7 +32,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Arsip Pengkajian')] class extends Co
 };
 ?>
 
-<div>
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <flux:heading size="xl" level="1">Arsip Pengkajian</flux:heading>
         <flux:text class="mt-1">Dokumen asuhan keperawatan yang sudah selesai dikerjakan.</flux:text>

@@ -247,11 +247,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
                 </div>
             @else
                 {{-- max-h-96 setara dengan 24rem, cukup untuk scroll tanpa menghabiskan tinggi layar --}}
-                <div class="space-y-3 max-h-96 overflow-y-auto pr-2 pb-2">
+                <div class="space-y-3 max-h-96 overflow-y-auto pr-2 pt-1 pb-2">
                     @foreach ($terpilih as $i => $d)
                         <div class="rounded-xl border border-[#E0EBF5] bg-white overflow-hidden transition-all {{ $d['is_expanded'] ? 'ring-2 ring-[#85B7EB] shadow-md' : '' }}">
                             {{-- Header (Selalu Tampil) --}}
-                            <div class="flex items-start gap-3 p-4 bg-[#F8FBFE] dark:bg-zinc-800 cursor-pointer" wire:click="toggleExpand({{ $i }})">
+                            <div class="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-[#F8FBFE] dark:bg-zinc-800 cursor-pointer" wire:click="toggleExpand({{ $i }})">
                                 <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-[#2E86C1] text-xs font-bold text-white shadow-sm mt-0.5">
                                     {{ $d['prioritas'] }}
                                 </div>
@@ -397,7 +397,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
     </div>
 
     {{-- Navigation --}}
-    <div class="mt-6 flex items-center justify-between border-t border-[#E0EBF5] pt-4">
+    <div class="mt-6 flex items-center justify-between gap-3 border-t border-[#E0EBF5] pt-4">
         <flux:button :href="route('mahasiswa.askep.pengkajian', $askep)" variant="ghost" icon="arrow-left" wire:navigate>
             Kembali
         </flux:button>
@@ -408,7 +408,10 @@ new #[Layout('layouts.mahasiswa')] #[Title('Diagnosa SDKI')] class extends Compo
             class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
             style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
         >
-            <span wire:loading.remove wire:target="simpanLanjut">Simpan & Lanjut ke Perencanaan</span>
+            <span wire:loading.remove wire:target="simpanLanjut">
+                <span class="sm:hidden">Simpan & Lanjut</span>
+                <span class="hidden sm:inline">Simpan & Lanjut ke Perencanaan</span>
+            </span>
             <span wire:loading wire:target="simpanLanjut">Menyimpan...</span>
             <flux:icon.arrow-right class="size-4" wire:loading.remove wire:target="simpanLanjut" />
         </button>
