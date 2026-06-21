@@ -34,7 +34,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Riwayat Aktivitas')] class extends C
 };
 ?>
 
-<div>
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <flux:heading size="xl" level="1">Riwayat Aktivitas</flux:heading>
         <flux:text class="mt-1">Semua aktivitas yang tercatat pada data pasien Anda.</flux:text>

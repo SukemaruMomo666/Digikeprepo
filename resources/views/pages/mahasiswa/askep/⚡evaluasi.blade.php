@@ -210,7 +210,7 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 5])
 
     <div class="mb-4">
@@ -233,7 +233,7 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                     {{-- Header --}}
                     <button
                         wire:click="toggleDiagnosa({{ $dIdx }})"
-                        class="flex w-full items-center justify-between px-5 py-4 text-left hover:bg-[#F4F8FB] transition"
+                        class="flex w-full items-center justify-between px-3 sm:px-5 py-3 sm:py-4 text-left hover:bg-[#F4F8FB] transition"
                     >
                         <div class="flex items-center gap-3">
                             <div class="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#2E86C1] text-xs font-bold text-white">
@@ -268,7 +268,7 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                     </button>
 
                     @if ($terbuka === $dIdx)
-                        <div class="border-t border-[#E0EBF5] px-5 py-5 space-y-5">
+                        <div class="border-t border-[#E0EBF5] px-3 sm:px-5 py-4 space-y-5">
 
                             {{-- Luaran yang ditetapkan --}}
                             @if (! empty($d['luaran']))
@@ -291,7 +291,7 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                             @endif
 
                             {{-- Tanggal, Jam, Hari ke- --}}
-                            <div class="grid grid-cols-3 gap-3">
+                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
                                 <div>
                                     <label class="text-xs font-medium text-[#7A8FA6]">Tanggal Evaluasi</label>
                                     <input
@@ -324,7 +324,7 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                                 <label class="text-xs font-medium text-[#7A8FA6]">Catatan SOAP</label>
                                 <textarea
                                     wire:model="rencana.{{ $dIdx }}.evaluasi.catatan_soap"
-                                    rows="4"
+                                    rows="6"
                                     placeholder="S: Subjektif — keluhan yang disampaikan pasien&#10;O: Objektif — hasil pemeriksaan&#10;A: Analisis — kesimpulan kondisi&#10;P: Planning — rencana selanjutnya"
                                     class="mt-1 w-full rounded-lg border border-[#D0DCE8] px-3 py-2 text-sm resize-none focus:border-[#2E86C1] focus:outline-none focus:ring-2 focus:ring-[#2E86C1]/20"
                                 ></textarea>
@@ -412,19 +412,21 @@ $this->redirectRoute('mahasiswa.askep.show', $this->askep, navigate: true);
                                                                         </div>
                                                                     </div>
                                                                     
-                                                                    <div class="flex flex-col items-center">
+                                                                    <div class="mt-2 md:mt-0">
                                                                         <p class="text-[9px] font-bold uppercase tracking-wider text-[#2E86C1] mb-1">Skor Akhir Evaluasi</p>
-                                                                        <div class="flex gap-1 bg-white p-1 rounded border border-[#D0DCE8]">
-                                                                            <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight flex items-center justify-center">{{ $k['opsi_skor'][1] }}</span>
+                                                                        <div class="flex bg-white p-1 rounded border border-[#D0DCE8] gap-1">
                                                                             @for ($s = 1; $s <= 5; $s++)
-                                                                                <label class="cursor-pointer">
+                                                                                <label class="cursor-pointer flex-1">
                                                                                     <input type="radio" wire:model="rencana.{{ $dIdx }}.evaluasi.skor_indikator.{{ $kId }}" value="{{ $s }}" class="peer sr-only" />
-                                                                                    <span class="flex size-7 items-center justify-center rounded-sm text-xs font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB]" title="{{ $s }}. {{ $k['opsi_skor'][$s] }}">
+                                                                                    <span class="flex w-full items-center justify-center py-1.5 rounded-sm text-sm font-bold text-[#1B4F72] transition peer-checked:bg-[#2E86C1] peer-checked:text-white hover:bg-[#EBF5FB]" title="{{ $s }}. {{ $k['opsi_skor'][$s] }}">
                                                                                         {{ $s }}
                                                                                     </span>
                                                                                 </label>
                                                                             @endfor
-                                                                            <span class="text-[9px] font-medium text-[#7A8FA6] w-12 text-center leading-tight flex items-center justify-center">{{ $k['opsi_skor'][5] }}</span>
+                                                                        </div>
+                                                                        <div class="mt-1 flex justify-between text-[9px] text-[#7A8FA6] px-0.5">
+                                                                            <span>{{ $k['opsi_skor'][1] }}</span>
+                                                                            <span>{{ $k['opsi_skor'][5] }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>

@@ -32,7 +32,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Detail Pasien
@@ -42,7 +42,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Buat Askep Baru')] class extends Com
     </div>
 
     {{-- Pasien Summary Card --}}
-    <div class="mb-6 max-w-2xl rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
+    <div class="mb-6 max-w-2xl rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5">
         <div class="flex items-start gap-4">
             @php
                 $words    = explode(' ', trim($pasien->nama_pasien));

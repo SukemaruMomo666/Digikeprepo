@@ -44,7 +44,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Data Pasien')] class extends Compone
 };
 ?>
 
-<div>
+<div class="p-2 md:p-4">
     <div class="flex items-center justify-between mb-6">
         <div>
             <flux:heading size="xl" level="1">Data Pasien</flux:heading>

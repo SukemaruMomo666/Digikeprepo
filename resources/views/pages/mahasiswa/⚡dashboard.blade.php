@@ -39,7 +39,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     {{-- Page Header --}}
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">
@@ -75,7 +75,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
     {{-- Stat Cards --}}
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6 mb-6">
         {{-- Total Pasien — Navy Primary --}}
-        <div class="relative overflow-hidden rounded-2xl p-6 shadow-primary" style="background: linear-gradient(135deg, #2E86C1, #1B4F72)">
+        <div class="relative overflow-hidden rounded-2xl p-4 sm:p-6 shadow-primary" style="background: linear-gradient(135deg, #2E86C1, #1B4F72)">
             <div class="relative z-10">
                 <flux:icon.users class="mb-3 size-8 text-white/90" />
                 <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Total Pasien</p>
@@ -87,7 +87,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
         </div>
 
         {{-- Total Diagnosa — Teal Health --}}
-        <div class="relative overflow-hidden rounded-2xl p-6 shadow-lg" style="background: linear-gradient(135deg, #1A9B72, #0F6E56)">
+        <div class="relative overflow-hidden rounded-2xl p-4 sm:p-6 shadow-lg" style="background: linear-gradient(135deg, #1A9B72, #0F6E56)">
             <div class="relative z-10">
                 <flux:icon.clipboard-document-list class="mb-3 size-8 text-white/90" />
                 <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Diagnosa</p>
@@ -99,7 +99,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Dashboard')] class extends Component
         </div>
 
         {{-- Askep Selesai — Deep Navy --}}
-        <div class="relative overflow-hidden rounded-2xl p-6 shadow-lg" style="background: linear-gradient(135deg, #1B4F72, #0A2D45)">
+        <div class="relative overflow-hidden rounded-2xl p-4 sm:p-6 shadow-lg" style="background: linear-gradient(135deg, #1B4F72, #0A2D45)">
             <div class="relative z-10">
                 <flux:icon.check-badge class="mb-3 size-8 text-white/90" />
                 <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Selesai</p>

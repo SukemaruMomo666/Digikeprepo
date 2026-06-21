@@ -43,7 +43,7 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
     }
 }; ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6 flex items-center gap-3">
         <flux:button :href="route('dosen.mahasiswa.index')" variant="ghost" icon="arrow-left" wire:navigate />
         <div>
@@ -55,7 +55,7 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
     <div class="grid gap-6 lg:grid-cols-[350px_1fr]">
         {{-- Sidebar Profil --}}
         <div class="space-y-6">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-6 shadow-sm text-center">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-4 sm:p-6 shadow-sm text-center">
                 <div class="mx-auto flex size-20 items-center justify-center rounded-2xl bg-[#F4F8FB] dark:bg-zinc-700 text-3xl font-bold text-[#2E86C1] dark:text-[#85B7EB]">
                     {{ $mahasiswa->initials() }}
                 </div>
@@ -74,7 +74,7 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
                 </div>
             </div>
 
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-6 shadow-sm">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-4 sm:p-6 shadow-sm">
                 <h4 class="mb-4 text-xs font-bold uppercase tracking-wider text-[#7A8FA6] dark:text-zinc-400">Informasi Penugasan</h4>
                 <dl class="space-y-4">
                     <div>
@@ -106,7 +106,7 @@ new #[Layout('layouts.dosen')] #[Title('Detail Mahasiswa')] class extends Compon
 
             <div class="grid gap-4 sm:grid-cols-1">
                 @forelse ($askepList as $askep)
-                    <div class="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5 shadow-sm transition hover:border-[#2E86C1]">
+                    <div class="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5 shadow-sm transition hover:border-[#2E86C1]">
                         <div class="flex items-center gap-4">
                             <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#EBF5FB] dark:bg-blue-900/30 text-[#2E86C1] dark:text-[#85B7EB]">
                                 <flux:icon.clipboard-document-list class="size-5" />

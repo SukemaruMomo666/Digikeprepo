@@ -12,7 +12,7 @@ new #[Title('Video Tutorial')] class extends Component {
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Video Tutorial</h1>
         <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">Panduan lengkap cara mengerjakan Asuhan Keperawatan di DIGIKEP.</p>
@@ -30,7 +30,7 @@ new #[Title('Video Tutorial')] class extends Component {
                 allowfullscreen>
             </iframe>
         </div>
-        <div class="p-5">
+        <div class="p-3 sm:p-5">
             <h3 class="font-bold text-[#1B4F72] dark:text-white">Panduan Lengkap Pengerjaan Askep</h3>
             <p class="mt-2 text-sm leading-relaxed text-[#7A8FA6] dark:text-zinc-400">
                 Mulai dari menambah pasien, mengisi pengkajian, menetapkan diagnosa SDKI, merencanakan luaran SLKI dan intervensi SIKI, mencatat implementasi, hingga evaluasi akhir dan pengiriman ke dosen pembimbing.

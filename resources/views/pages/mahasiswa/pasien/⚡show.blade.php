@@ -18,7 +18,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <flux:button :href="route('mahasiswa.pasien.index')" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Daftar Pasien
@@ -45,7 +45,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
         <div class="lg:col-span-2 flex flex-col gap-6">
 
             {{-- Info Pasien --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-6">
                 <div class="mb-4 flex items-center justify-between">
                     <h2 class="font-semibold text-[#1B4F72] dark:text-white">Informasi Pasien</h2>
                     <flux:button :href="route('mahasiswa.pasien.edit', $pasien)" variant="ghost" icon="pencil" size="sm" wire:navigate>
@@ -199,7 +199,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Detail Pasien')] class extends Compo
 
         {{-- Sidebar: Riwayat --}}
         <div class="flex flex-col gap-6">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5">
                 <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">Riwayat Aktivitas</h2>
                 @if ($pasien->riwayat->isEmpty())
                     <p class="text-sm text-[#7A8FA6] dark:text-zinc-400">Belum ada riwayat.</p>

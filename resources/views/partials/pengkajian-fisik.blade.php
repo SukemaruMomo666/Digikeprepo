@@ -75,11 +75,11 @@
 @endphp
 
 @foreach ($fisikSystems as $key => $meta)
-<div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-800"
+<div class="rounded-2xl border border-gray-200 bg-white p-3 sm:p-5 dark:border-zinc-700 dark:bg-zinc-800"
      wire:key="{{ $key }}">
 
     {{-- Card header --}}
-    <div class="mb-5 flex items-center justify-between">
+    <div class="mb-3 sm:mb-5 flex items-center justify-between">
         <div class="flex items-center gap-3">
             <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-bold text-polsub dark:bg-orange-900/30">
                 {{ $meta['num'] }}
@@ -178,7 +178,7 @@
     </div>
 
     @elseif ($key === 'fisik_hematologi')
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {!! $textInput('fisik_hematologi', 'hb', 'Hemoglobin (Hb)', 'gr/dl') !!}
         {!! $textInput('fisik_hematologi', 'ht', 'Hematokrit (Ht)', 'Vol%') !!}
         {!! $textInput('fisik_hematologi', 'leukosit', 'Leukosit', 'ribu/ul') !!}
@@ -330,7 +330,7 @@
     </div>
 
     @elseif ($key === 'fisik_imun')
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
         {!! $textInput('fisik_imun', 'suhu', 'Suhu Tubuh', '°C') !!}
         {!! $textInput('fisik_imun', 'bb_sebelum', 'BB Sebelum Sakit', 'kg') !!}
         {!! $textInput('fisik_imun', 'bb_sesudah', 'BB Sesudah Sakit', 'kg') !!}

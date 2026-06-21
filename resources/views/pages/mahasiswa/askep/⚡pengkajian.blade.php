@@ -426,12 +426,12 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     {{-- Stepper --}}
     @include('partials.askep-stepper', ['askep' => $askep, 'step' => 1])
 
     <div class="mb-5 overflow-hidden rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white">
-        <div class="flex flex-col gap-4 border-b border-[#E0EBF5] dark:border-zinc-700 p-5 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col gap-4 border-b border-[#E0EBF5] dark:border-zinc-700 p-3 sm:p-4 md:flex-row md:items-center md:justify-between">
             <div>
                 <div class="mb-2 flex items-center gap-2">
                     <span class="flex size-8 items-center justify-center rounded-lg bg-[#E1F5EE] text-[#0F6E56]">
@@ -449,7 +449,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                 Semua Normal
             </button>
         </div>
-        <div class="grid gap-3 p-5 sm:grid-cols-3">
+        <div class="grid gap-3 p-3 sm:p-5 sm:grid-cols-3">
             <div class="rounded-xl bg-[#F8FBFE] p-4">
                 <p class="text-xs font-semibold uppercase tracking-wide text-[#7A8FA6]">Pasien</p>
                 <p class="mt-2 text-sm font-bold text-[#1B4F72]">{{ $askep->pasien->nama_pasien }}</p>
@@ -491,7 +491,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     {{-- ── Tab: Identitas ── --}}
     @if ($tab === 'identitas')
         <div class="space-y-4">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Identitas Pasien</h3>
                 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <flux:input :value="$askep->pasien->nama_pasien" label="Nama" disabled />
@@ -509,7 +509,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                 </div>
             </div>
 
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Identitas Penanggung Jawab</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     <flux:input wire:model="pj_nama" label="Nama Penanggung Jawab" placeholder="Nama lengkap" />
@@ -531,7 +531,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     {{-- ── Tab: TTV & EWS ── --}}
     @if ($tab === 'ttv')
         <div class="space-y-4">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <h3 class="font-semibold text-[#1B4F72]">Tanda-Tanda Vital</h3>
                     <button
@@ -591,7 +591,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Anthropometri --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Antropometri</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     <flux:input wire:model="bb" label="Berat Badan (kg)" type="number" step="0.1" placeholder="60.0" />
@@ -608,7 +608,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     {{-- ── Tab: Riwayat ── --}}
     @if ($tab === 'riwayat')
         <div class="space-y-6">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Penyakit Sekarang</h3>
                 <div class="grid gap-4">
                     <flux:textarea wire:model="riwayat_sekarang.keluhan_utama" label="Keluhan Utama" placeholder="Apa yang dirasakan pasien saat ini?" rows="2" />
@@ -616,7 +616,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:textarea wire:model="riwayat_sekarang.harapan" label="Harapan Pasien" placeholder="Apa yang diharapkan pasien dari perawatan ini?" rows="2" />
                 </div>
             </div>
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Penyakit Masa Lalu</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     <flux:input wire:model="riwayat_lalu.penyakit_anak" label="Penyakit Masa Anak" placeholder="Campak, cacar, dll." />
@@ -625,7 +625,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:input wire:model="riwayat_lalu.pengobatan_terakhir" label="Pengobatan Terakhir" placeholder="Obat yang rutin dikonsumsi?" />
                 </div>
             </div>
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Riwayat Keluarga</h3>
                 <div class="grid gap-4">
                     <flux:input wire:model="riwayat_keluarga.jumlah_anggota" label="Jumlah Anggota Keluarga" placeholder="Berapa orang dalam satu rumah?" />
@@ -649,7 +649,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
         </div>
         <div class="space-y-6 pb-8">
             {{-- Nyeri --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="bolt" class="size-4 text-[#2E86C1]" />
@@ -664,30 +664,54 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:input wire:model="biologis_nyeri.r" label="R (Radiasi/Region)" />
                     <flux:input wire:model="biologis_nyeri.t" label="T (Waktu/Time)" />
                     
-                    <div class="sm:col-span-2">
-                        <label class="mb-2 block text-sm font-bold text-[#1B4F72]">S (Skala Nyeri 0-10)</label>
-                        <div class="flex flex-col gap-2">
-                            <div class="flex items-center justify-between px-1">
-                                <span class="text-[10px] font-bold text-green-600">Tidak Nyeri</span>
-                                <span class="text-[10px] font-bold text-amber-500">Nyeri Sedang</span>
-                                <span class="text-[10px] font-bold text-red-600">Nyeri Hebat</span>
+                    <div class="sm:col-span-2"
+                         x-data="{ skala: {{ !empty($biologis_nyeri['s']) ? (int)$biologis_nyeri['s'] : 0 }} }">
+                        {{-- Header: label + angka + deskripsi sejajar --}}
+                        <div class="mb-2 flex items-center justify-between">
+                            <label class="text-sm font-bold text-[#1B4F72]">S (Skala Nyeri 0-10)</label>
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg font-black transition-colors"
+                                    :class="{
+                                        'text-green-600': skala <= 3,
+                                        'text-amber-500': skala >= 4 && skala <= 6,
+                                        'text-red-600': skala >= 7
+                                    }"
+                                    x-text="skala"></span>
+                                <span class="text-xs font-medium transition-colors"
+                                    :class="{
+                                        'text-green-600': skala <= 3,
+                                        'text-amber-500': skala >= 4 && skala <= 6,
+                                        'text-red-600': skala >= 7
+                                    }">
+                                    <span x-show="skala == 0">Tidak ada nyeri</span>
+                                    <span x-show="skala >= 1 && skala <= 3">Nyeri ringan</span>
+                                    <span x-show="skala >= 4 && skala <= 6">Nyeri sedang</span>
+                                    <span x-show="skala >= 7 && skala <= 9">Nyeri hebat</span>
+                                    <span x-show="skala == 10">Nyeri tak tertahankan</span>
+                                </span>
                             </div>
-                            <div class="flex gap-1 overflow-x-auto pb-2 no-scrollbar">
-                                @foreach (range(0, 10) as $skala)
-                                    <label class="flex-1 cursor-pointer min-w-[2.5rem]">
-                                        <input type="radio" wire:model="biologis_nyeri.s" value="{{ $skala }}" class="peer sr-only" />
-                                        <div @class([
-                                            'flex h-10 items-center justify-center rounded-lg border-2 text-sm font-black transition',
-                                            'border-green-100 text-green-700 bg-green-50/30 peer-checked:bg-green-500 peer-checked:border-green-500 peer-checked:text-white' => $skala == 0,
-                                            'border-green-100 text-green-700 bg-green-50/30 peer-checked:bg-green-500 peer-checked:border-green-500 peer-checked:text-white' => $skala >= 1 && $skala <= 3,
-                                            'border-amber-100 text-amber-700 bg-amber-50/30 peer-checked:bg-amber-500 peer-checked:border-amber-500 peer-checked:text-white' => $skala >= 4 && $skala <= 6,
-                                            'border-red-100 text-red-700 bg-red-50/30 peer-checked:bg-red-500 peer-checked:border-red-500 peer-checked:text-white' => $skala >= 7,
-                                        ])>
-                                            {{ $skala }}
-                                        </div>
-                                    </label>
-                                @endforeach
-                            </div>
+                        </div>
+
+                        {{-- Slider --}}
+                        <input
+                            type="range"
+                            min="0" max="10" step="1"
+                            wire:model="biologis_nyeri.s"
+                            x-model.number="skala"
+                            class="w-full cursor-pointer"
+                            :style="`accent-color: ${ skala <= 3 ? '#22c55e' : skala <= 6 ? '#f59e0b' : '#ef4444' }`"
+                        />
+
+                        {{-- Tick angka + label --}}
+                        <div class="mt-1 flex justify-between px-0.5">
+                            @foreach (range(0, 10) as $n)
+                                <span class="text-[9px] text-zinc-400">{{ $n }}</span>
+                            @endforeach
+                        </div>
+                        <div class="mt-0.5 flex justify-between px-0.5 text-[9px] font-bold">
+                            <span class="text-green-600">Tidak Nyeri</span>
+                            <span class="text-amber-500">Nyeri Sedang</span>
+                            <span class="text-red-600">Nyeri Hebat</span>
                         </div>
                     </div>
 
@@ -697,7 +721,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Oksigenasi --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="cloud" class="size-4 text-[#2E86C1]" />
@@ -714,7 +738,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Nutrisi & Cairan --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="beaker" class="size-4 text-[#2E86C1]" />
@@ -733,7 +757,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Eliminasi --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="arrow-path" class="size-4 text-[#2E86C1]" />
@@ -752,7 +776,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Aktivitas & Istirahat --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="arrow-trending-up" class="size-4 text-[#2E86C1]" />
@@ -771,7 +795,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Kardiovaskuler --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="heart" class="size-4 text-[#2E86C1]" />
@@ -787,7 +811,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             </div>
 
             {{-- Personal Hygiene & Seksualitas --}}
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <flux:icon icon="user" class="size-4 text-[#2E86C1]" />
@@ -815,7 +839,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             <flux:button wire:click="setNormal('psikososial')" size="xs" variant="ghost" icon="check-circle">Set Semua Normal</flux:button>
         </div>
         <div class="space-y-6">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Psikologi & Emosional</h3>
                 <div class="grid gap-4 sm:grid-cols-2">
                     <flux:input wire:model="psiko_emosi.ekspresi" label="Ekspresi Wajah" />
@@ -823,7 +847,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
                     <flux:textarea wire:model="psiko_emosi.saat_marah_sedih" label="Saat Marah/Sedih apa yang dilakukan?" rows="2" class="sm:col-span-2" />
                 </div>
             </div>
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Spiritual</h3>
                 <div class="grid gap-4">
                     <flux:input wire:model="psiko_spiritual.agama" label="Agama / Keyakinan" />
@@ -845,7 +869,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             <flux:button wire:click="setNormal('fisik')" size="xs" variant="ghost" icon="check-circle">Set Semua Normal</flux:button>
         </div>
         <div class="space-y-5 pb-8">
-            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-4 sm:p-6">
+            <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white p-3 sm:p-4">
                 <h3 class="mb-4 font-semibold text-[#1B4F72]">Keadaan Umum</h3>
                 <flux:textarea wire:model="fisik_umum" label="Deskripsi umum pasien (tampak sakit, pucat, dll.)" rows="2" />
             </div>
@@ -855,7 +879,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
     @endif
 
     {{-- ── Navigation Buttons ── --}}
-    <div class="mt-6 flex items-center justify-between border-t border-[#E0EBF5] dark:border-zinc-700 pt-4">
+    <div class="mt-6 flex items-center justify-between gap-3 border-t border-[#E0EBF5] dark:border-zinc-700 pt-4">
         <flux:button
             :href="route('mahasiswa.pasien.show', $askep->pasien_id)"
             variant="ghost"
@@ -865,11 +889,11 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             Kembali
         </flux:button>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
             <button
                 wire:click="simpan"
                 wire:loading.attr="disabled"
-                class="rounded-xl border border-[#85B7EB] px-4 py-2 text-sm font-semibold text-[#2E86C1] hover:bg-[#EBF5FB] transition"
+                class="hidden sm:block rounded-xl border border-[#85B7EB] px-4 py-2 text-sm font-semibold text-[#2E86C1] hover:bg-[#EBF5FB] transition"
             >
                 <span wire:loading.remove wire:target="simpan">Simpan</span>
                 <span wire:loading wire:target="simpan">Menyimpan...</span>
@@ -878,10 +902,13 @@ new #[Layout('layouts.mahasiswa')] #[Title('Pengkajian')] class extends Componen
             <button
                 wire:click="simpanLanjut"
                 wire:loading.attr="disabled"
-                class="inline-flex items-center gap-2 rounded-xl px-5 py-2 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
+                class="inline-flex items-center gap-2 rounded-xl px-4 sm:px-5 py-2 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
                 style="background: linear-gradient(135deg, #2E86C1, #1B4F72)"
             >
-                <span wire:loading.remove wire:target="simpanLanjut">Simpan & Lanjut</span>
+                <span wire:loading.remove wire:target="simpanLanjut">
+                    <span class="sm:hidden">Simpan & Lanjut</span>
+                    <span class="hidden sm:inline">Simpan & Lanjut ke Diagnosa</span>
+                </span>
                 <span wire:loading wire:target="simpanLanjut">Menyimpan...</span>
                 <flux:icon.arrow-right class="size-4" wire:loading.remove wire:target="simpanLanjut" />
             </button>

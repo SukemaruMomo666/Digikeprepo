@@ -89,7 +89,7 @@ new #[Layout('layouts.admin')] #[Title('Data Mahasiswa')] class extends Componen
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6 flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Data Mahasiswa</h1>

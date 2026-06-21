@@ -200,7 +200,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 };
 ?>
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-[#1B4F72] dark:text-white">Kelola Penugasan</h1>
         <p class="mt-1 text-sm text-[#7A8FA6] dark:text-zinc-400">Plot mahasiswa ke dosen pembimbing secara massal atau individual.</p>
@@ -234,7 +234,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 
             {{-- Form kiri --}}
             <div class="lg:col-span-2 space-y-5">
-                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
+                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5">
                     <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">1. Pilih Target Mahasiswa</h2>
                     <div class="space-y-3">
                         <div>
@@ -259,7 +259,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
                     @error('bulkKelas') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
                 </div>
 
-                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5">
+                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5">
                     <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">2. Isi Detail Penugasan</h2>
                     <div class="space-y-3">
                         <div>
@@ -302,7 +302,7 @@ new #[Layout('layouts.admin')] #[Title('Kelola Penugasan')] class extends Compon
 
             {{-- Preview kanan --}}
             <div class="lg:col-span-3">
-                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-5 h-full">
+                <div class="rounded-2xl border border-[#E0EBF5] dark:border-zinc-700 bg-white dark:bg-zinc-800 p-3 sm:p-5 h-full">
                     <h2 class="mb-4 font-semibold text-[#1B4F72] dark:text-white">Preview Mahasiswa yang Akan Di-plot</h2>
 
                     @if(!$bulkPreview)

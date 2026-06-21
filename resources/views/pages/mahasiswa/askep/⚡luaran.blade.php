@@ -81,7 +81,7 @@ new #[Layout('layouts.mahasiswa')] #[Title('Luaran SLKI')] class extends Compone
 };
 ?>
 
-<div>
+<div class="p-2 md:p-4">
     <div class="mb-6">
         <flux:button :href="route('mahasiswa.pasien.diagnosa', $pasien)" variant="ghost" icon="arrow-left" size="sm" wire:navigate class="mb-4">
             Kembali ke Diagnosa
@@ -120,9 +120,9 @@ new #[Layout('layouts.mahasiswa')] #[Title('Luaran SLKI')] class extends Compone
                                     class="mt-0.5"
                                 />
                                 <div>
-                                    <div class="flex items-center gap-2">
+                                    <div class="flex flex-wrap items-center gap-1.5">
                                         <flux:badge size="sm" color="violet">{{ $luaran->kode_luaran }}</flux:badge>
-                                        <span class="font-medium text-sm">{{ $luaran->label_luaran }}</span>
+                                        <span class="font-medium text-sm leading-snug">{{ $luaran->label_luaran }}</span>
                                     </div>
                                     @if ($luaran->definisi)
                                         <flux:text class="text-xs text-zinc-500 mt-1">{{ $luaran->definisi }}</flux:text>
@@ -135,12 +135,13 @@ new #[Layout('layouts.mahasiswa')] #[Title('Luaran SLKI')] class extends Compone
             </flux:card>
         @endforeach
 
-        <div class="flex items-center gap-3 mt-2">
-            <flux:button type="submit" variant="primary" icon-trailing="arrow-right">
-                Simpan & Lanjut ke Intervensi
+        <div class="flex items-center justify-between gap-3 mt-2">
+            <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" icon="arrow-left" wire:navigate>
+                Kembali
             </flux:button>
-            <flux:button :href="route('mahasiswa.pasien.show', $pasien)" variant="ghost" wire:navigate>
-                Simpan Nanti
+            <flux:button type="submit" variant="primary" icon-trailing="arrow-right">
+                <span class="sm:hidden">Simpan & Lanjut</span>
+                <span class="hidden sm:inline">Simpan & Lanjut ke Intervensi</span>
             </flux:button>
         </div>
     </form>
