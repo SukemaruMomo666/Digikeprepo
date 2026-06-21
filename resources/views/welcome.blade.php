@@ -124,7 +124,7 @@
                 </div>
             </section>
 
-            <section id="data-master" class="py-16">
+            {{-- <section id="data-master" class="py-16">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
                         @foreach ([
@@ -143,7 +143,7 @@
                         @endforeach
                     </div>
                 </div>
-            </section>
+            </section> --}}
 
             <section id="fitur" class="py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
