@@ -28,10 +28,10 @@ export default defineConfig({
             ignored: ['**/storage/framework/views/**'],
         },
     },
-    server: {
-        host: '0.0.0.0', 
-        hmr: {
-            host: '192.168.1.5', // Isi dengan IP Wi-Fi kamu
-        },
-    },
+    // server: {
+    //     host: '0.0.0.0', 
+    //     hmr: {
+    //         host: '192.168.1.5', // Isi dengan IP Wi-Fi kamu
+    //     },
+    // },
 });
