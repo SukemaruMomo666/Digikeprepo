@@ -124,26 +124,7 @@
                 </div>
             </section>
 
-            <section id="data-master" class="py-16">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                        @foreach ([
-                            ['value' => '149', 'label' => 'Diagnosa SDKI', 'text' => 'text-[#2E86C1]', 'dot' => 'bg-[#2E86C1]'],
-                            ['value' => '110', 'label' => 'Luaran SLKI', 'text' => 'text-[#1A9B72]', 'dot' => 'bg-[#1A9B72]'],
-                            ['value' => '73', 'label' => 'Intervensi SIKI', 'text' => 'text-[#1B4F72]', 'dot' => 'bg-[#2E86C1]'],
-                            ['value' => '5', 'label' => 'Tahap Askep', 'text' => 'text-[#0A2D45]', 'dot' => 'bg-[#1A9B72]'],
-                        ] as $item)
-                            <div class="rounded-2xl border border-[#D8E8F5] bg-white p-6 shadow-[0_1px_4px_rgba(27,79,114,0.06)]">
-                                <div class="flex items-center justify-between gap-3">
-                                    <p class="text-sm font-bold text-[#7A8FA6]">{{ $item['label'] }}</p>
-                                    <span class="size-2 rounded-full {{ $item['dot'] }}"></span>
-                                </div>
-                                <p class="mt-4 text-4xl font-black {{ $item['text'] }}">{{ $item['value'] }}</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
+            {{-- Stats section hidden --}}
 
             <section id="fitur" class="py-20">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
